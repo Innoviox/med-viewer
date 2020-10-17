@@ -12,7 +12,6 @@ print(db.get_all())
 @app.route('/logout', methods=['POST'])
 def logout():
     session['user'] = None
-    session['error'] = None
     session['message'] = f'Logged out'
 
     return redirect(url_for('index'))
@@ -28,7 +27,6 @@ def login():
         f = user['fields']
         if f['username'] == username and f['password'] == password:
             session['user'] = username
-            session['error'] = None
             session['message'] = f'Logged in as {username}'
             return redirect(url_for('index'))
 
@@ -41,15 +39,17 @@ def create():
     password = request.form['password']
 
     session['user'] = username
-    session['error'] = None
     session['message'] = f'Logged in as {username}'
 
     db.insert({'username': username, 'password': password})
     return redirect(url_for('index'))
 
 @app.route('/')
-def index():
-    msg = session.get('message')
-    if msg:
+def index(msg=None, error=None):
+    if msg := session.get('message'):
         session['message'] = None
-    return render_template('index.html', user=session.get('user'), error=session.get('error'), message=msg)
+
+    if error := session.get('error'):
+        session['error'] = None
+
+    return render_template('index.html', user=session.get('user'), error=error, message=msg)
