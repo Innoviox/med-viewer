@@ -33,7 +33,7 @@ def medrxiv_pdfs(outdir='pdfs/'):
         for l in tqdm.tqdm(links):
             article = make_soup(l['href'], site='https://www.medrxiv.org')
             file = article.find("a", {"class": "article-dl-pdf-link"})
-            title = article.find("h1", {"id": "page-title"}).text
+            title = l['href'].split("/")[-1]
 
             open("pdfs/" + title + ".pdf", "wb").write(requests.get('https://www.medrxiv.org' + file['href']).content)
 
