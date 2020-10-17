@@ -7,16 +7,17 @@ import os
 
 make_soup = lambda url, site='': bs4.BeautifulSoup(requests.get(site + url).text, features='lxml')
 
+
 def biorxiv_pdfs():
     # Retrieve abstracts from biorxiv
     r = requests.get('https://api.biorxiv.org/covid19/0')
     content_dict = json.loads(r.content)
 
-
     # Retrieving abstracts is easy - PDFs are hard to obtain
     for paper in content_dict["collection"]:
         print(paper["rel_title"])
         print(paper["rel_abs"])
+
 
 def medrxiv_pdfs(out_dir='pdfs/'):
     if not os.path.exists(out_dir):
@@ -37,5 +38,6 @@ def medrxiv_pdfs(out_dir='pdfs/'):
             title = l['href'].split("/")[-1]
 
             open(out_dir + title + ".pdf", "wb").write(requests.get('https://www.medrxiv.org' + file['href']).content)
+
 
 medrxiv_pdfs()
