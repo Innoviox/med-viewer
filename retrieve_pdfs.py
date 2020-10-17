@@ -18,15 +18,16 @@ def biorxiv_pdfs():
         print(paper["rel_title"])
         print(paper["rel_abs"])
 
-def medrxiv_pdfs(outdir='pdfs/'):
-    if not os.path.exists(outdir):
-        os.mkdir(outdir)
+def medrxiv_pdfs(out_dir='pdfs/'):
+    if not os.path.exists(out_dir):
+        os.mkdir(out_dir)
 
     url = "https://www.medrxiv.org/content/early/recent?page={}"
 
+    start_page = 0
     max_pages = 1218
 
-    for page in range(max_pages):
+    for page in range(start_page, max_pages):
         soup = make_soup(url.format(page))
 
         links = soup.findAll("a", {"class": "highwire-cite-linked-title"})
@@ -35,6 +36,6 @@ def medrxiv_pdfs(outdir='pdfs/'):
             file = article.find("a", {"class": "article-dl-pdf-link"})
             title = l['href'].split("/")[-1]
 
-            open("pdfs/" + title + ".pdf", "wb").write(requests.get('https://www.medrxiv.org' + file['href']).content)
+            open(out_dir + title + ".pdf", "wb").write(requests.get('https://www.medrxiv.org' + file['href']).content)
 
 medrxiv_pdfs()
