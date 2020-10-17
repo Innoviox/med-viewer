@@ -4,7 +4,7 @@ import pandas as pd
 csv_file = "papers.csv"
 df = pd.read_csv(csv_file)
 df = df.iloc[:, 1:]  # don't use ids
-n_components = 100
+n_components = 50
 pca = PCA(n_components=n_components)
 pca.fit(df)
 pca_df = pd.DataFrame(pca.transform(df), columns=['PCA%i' % i for i in range(n_components)], index=df.index)
