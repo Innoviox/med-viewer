@@ -1,5 +1,6 @@
 import requests
 import bs4
+import tqdm
 
 import json
 import os
@@ -26,10 +27,10 @@ def medrxiv_pdfs(outdir='pdfs/'):
     max_pages = 1218
 
     for page in range(max_pages):
-        soup = make_soup(url.format(max_pages))
+        soup = make_soup(url.format(page))
 
         links = soup.findAll("a", {"class": "highwire-cite-linked-title"})
-        for l in links:
+        for l in tqdm.tqdm(links):
             article = make_soup(l['href'], site='https://www.medrxiv.org')
             file = article.find("a", {"class": "article-dl-pdf-link"})
             title = article.find("h1", {"id": "page-title"}).text
