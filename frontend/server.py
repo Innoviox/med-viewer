@@ -7,8 +7,6 @@ app.secret_key = open("secret_key").read()
 key = open("airtable_key").read()
 db = airtable.Airtable('appvViVoTQrAVwGwR', 'hackgt', key)
 
-print(db.get_all())
-
 @app.route('/logout', methods=['POST'])
 def logout():
     session['user'] = None
@@ -19,7 +17,6 @@ def logout():
 
 @app.route('/login', methods=['POST'])
 def login():
-    print(request.form)
     username = request.form['username']
     password = request.form['password']
 
@@ -37,6 +34,12 @@ def login():
 def create():
     username = request.form['username']
     password = request.form['password']
+
+    for user in db.get_all():
+        f = user['fields']
+        if f['username'] == username:
+            session['error'] = f'Username {username} already exists'
+            return redirect(url_for('index'))
 
     session['user'] = username
     session['message'] = f'Logged in as {username}'
