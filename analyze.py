@@ -1,16 +1,24 @@
 from sklearn.feature_extraction.text import TfidfVectorizer
+import numpy as np
 import json
+import pickle
 
-with open("raw_papers.json") as json_file:
+with open("article_db.json") as json_file:
     raw_papers = json.load(json_file)
 
 ids = []
-abstracts = []
+txt_paths = []
 max_features = 5000
 
 for i, key in enumerate(raw_papers):
     ids.append(key)
-    abstracts.append(raw_papers[key]["rel_abs"])
+    raw_papers[key]["id"] = i # paper id -> index corresponds to the position in collection of vectors
+    txt_paths.append(raw_papers[key]["path"])
+
+def corpus(paths):
+    for p in paths:
+        with open(p, "r") as f:
+            yield f.read()
 
 # Settings courtesy of arxiv-sanity-preserver
 v = TfidfVectorizer(input='content',
@@ -21,9 +29,12 @@ v = TfidfVectorizer(input='content',
         norm='l2', use_idf=True, smooth_idf=True, sublinear_tf=True,
         max_df=1.0, min_df=1)
 
-X = v.fit_transform(abstracts)
-print(v.get_feature_names())
+data = {}
+X = v.fit_transform(corpus(txt_paths))
 
-print(X.shape)
-print(X.todense())
+data['X'] = X
+data['vectorizer'] = v
+data['db'] = raw_papers
 
+with open('analyzed.pkl', 'wb') as f:
+    pickle.dump(data, f)

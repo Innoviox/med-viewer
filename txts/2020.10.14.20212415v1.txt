@@ -1,0 +1,791 @@
+     medRxiv preprint doi: https://doi.org/10.1101/2020.10.14.20212415.this version posted October 16, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                       It is made available under a CC-BY-NC-ND 4.0 International license .
+ 1 CoViD-19, learning from the past: A wavelet and cross-correlation analysis of the epidemic
+ 2 dynamics looking to emergency calls and Twitter trends in Italian Lombardy region
+ 3
+ 4 Bruno Alessandro Rivieccio1*¶, Alessandra Micheletti2¶, Manuel Maffeo3,4, Matteo Zignani5,
+ 5 Alessandro Comunian6, Federica Nicolussi7, Silvia Salini7, Giancarlo Manzi7, Francesco Auxilia3,8,
+ 6 Mauro Giudici6, Giovanni Naldi2, Sabrina Gaito5, Silvana Castaldi3,9&, Elia Biganzoli10&
+ 7
+   1
+ 8    Department of Laboratory Medicine, Division of Anatomic Pathology, Niguarda Hospital, Milan,
+ 9 Italy
+   2
+10   Department of Environmental Science and Policy, University of Milan, Milan, Italy
+   3
+11   Department of Biomedical Sciences for Health, University of Milan, Milan, Italy
+   4
+12   Public Health Post Graduate School, University of Milan, Milan, Italy
+   5
+13   Department of Computer Science, University of Milan, Milan, Italy
+   6
+14   Department of Earth Sciences, University of Milan, Milan, Italy
+   7
+15    Department of Economics, Management and Quantitative Methods & Data Science Research
+16 Center, University of Milan, Milan, Italy
+   8
+17   ASST FBF-Sacco, Milan, Italy
+   9
+18    Fondazione IRCCS Ca’ Granda Ospedale Maggiore, Milan, Italy
+   10
+19     Department of Clinical Sciences and Community Health & Data Science Research Center,
+20 University of Milan, Milan, Italy
+21
+   *
+22   Corresponding author
+23 E-mail: brunoalessandro.rivieccio@ospedaleniguarda.it
+24
+   ¶
+25   These authors contributed equally to this work.
+        NOTE: This preprint reports new research that has not been certified by peer review and should not be used to guide clinical practice.
+   &
+26    These senior authors also contributed equally to this work.
+                                                                          1
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.14.20212415.this version posted October 16, 2020. The copyright holder for this
+    preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                   perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+27 Abstract
+28           The first case of Coronavirus Disease 2019 in Italy was detected on February the 20 th in
+29 Lombardy region. Since that date, Lombardy has been the most affected Italian region by the
+30 epidemic, and its healthcare system underwent a severe crisis during the outbreak. From a public
+31 health point of view, therefore, it is fundamental to provide healthcare services with tools that can
+32 reveal a possible new epidemic burden with a certain time anticipation, which is the main aim of the
+33 present study. Moreover, the sequence of law decrees to face the epidemic and the large amount of
+34 news generated in the population feelings of anxiety and suspicion. Considering this whole complex
+35 context, it is easily understandable how people “overcrowded” social media with messages dealing
+36 with the pandemic, and emergency numbers were overwhelmed by the calls. Thus, in order to find
+37 potential predictors of a possible second epidemic wave, we analyzed data both from Twitter and
+38 from emergency services comparing them to the daily infected time series at a regional level. Since
+39 our principal goal is to forecast a possible new ascending phase of the epidemic, we performed a
+40 wavelet analysis in the time-frequency plane, to finely discriminate over time the anticipation
+41 capability of the considered potential predictors. In addition, a cross-correlation analysis has been
+42 performed to find a synthetic indicator of the time delay between the predictor and the infected time
+43 series. Our results show that Twitter data are more related to social and political dynamics, while
+44 the emergency calls trends can be further evaluated as a powerful tool to potentially forecast a new
+45 burden. Since we analyzed aggregated regional data, and taking into account also the huge
+46 geographical heterogeneity of the epidemic spread, a future perspective would be to conduct the
+47 same analysis on a more local basis.
+48
+49
+50
+51
+                                                                       2
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.14.20212415.this version posted October 16, 2020. The copyright holder for this
+    preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                   perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+52 Introduction
+53
+54           On February the 20th the first Italian case of Coronavirus Disease 2019 (CoViD-19) due to
+55 secondary transmission outside China was identified in Codogno, Lombardy region [1]. In the
+56 following days the number of cases started to rise not only in Lombardy but also in other Italian
+57 regions, although Lombardy remained and is still the most affected region in Italy [2]. At the time
+58 of writing (October the 4th), 325,329 cases have been identified in Italy, out of which 108,065 in
+59 Lombardy region [3].
+60           The progressive decrease of CoViD-19 cases should not let our guard down, indeed it is
+61 clear that, since the beginning of Severe Acute Respiratory Syndrome Coronavirus 2 (SARS-CoV-
+62 2) pandemic, public health has suffered from the absence of a proper preparedness plan to face an
+63 episode which was unexpected and unpredictable and has heavily impacted on the territorial and
+64 hospital healthcare services. Planning has a fundamental role nowadays but it can be adequate only
+65 if the next possible pandemic peak can be effectively foreseen by means of a predictive tool which
+66 accounts for all the available signals. In order to do so, it is of paramount importance to learn from
+67 what happened during the first peak to be prepared for the potential next one.
+68           The SARS-CoV-2 outbreak in Italy has been characterized by a massive spread of news
+69 coming from both official and unofficial sources leading to what has been defined as infodemia, an
+70 over-abundance of information – some accurate and some not – that has made hard for people to
+71 find trustworthy sources and reliable guidance needed [4].
+72           Infodemia on SARS-CoV-2 created the perfect field to build suspicion in the population,
+73 which was scared and not prepared to face this outbreak. It is understandable how the rapid increase
+74 of the cases number, the massive spread of news and the adoption of laws to face this outbreak led
+75 to a feeling of anxiety in the population, whose everyday life changed very quickly.
+                                                                       3
+
+     medRxiv preprint doi: https://doi.org/10.1101/2020.10.14.20212415.this version posted October 16, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                       It is made available under a CC-BY-NC-ND 4.0 International license .
+ 76           A way to assess the dynamic burden of social anxiety is a context analysis of major social
+ 77 networks activities over the internet. To this aim Twitter represents a possible ideal tool, because of
+ 78 the focused role of the tweets according to the more urgent needs of information and
+ 79 communication, rather than general aspects of social projection and debate as in the case of
+ 80 Facebook, which could provide slower responses for the fast individual and social context evolution
+ 81 dynamics [5].
+ 82           Taking into account this specific context, it is easy to understand why the 112 emergency
+ 83 number service in Lombardy region was suddenly overwhelmed by an enormous number of calls
+ 84 that rapidly overcame its capacity to cope and compromised the possibility to identify those patients
+ 85 who needed immediate medical assistance [6].
+ 86           As pointed out by the Scientific Italian Society for Medical Emergency (SIEMS), the
+ 87 number of calls to 112 for the Milan province was 5,086 on February the 16th, before the outbreak,
+ 88 and rapidly increased to 6,798 on February the 21st and to 10,657 on February the 22nd [7].
+ 89           The emergency service in Lombardy region is organized through three first-level PSAPs
+ 90 (public-safety answering points), called CUR-NUE (Unique answering operating room / point –
+ 91 European emergency number), which forward the call to the most appropriate service, i.e. Police,
+ 92 Fire Department or Medical emergency rescue service. So, after the first assessment, calls requiring
+ 93 medical assistance are sent to one of the four second-level PSAPs called SOREU (Regional
+ 94 Operating Rooms for Medical Emergency and Urgency), depending on the geographical area the
+ 95 call is coming from in order to evaluate the patient and decide the most appropriate intervention.
+ 96           Lombardy region, from an administrative point of view, is made up of twelve provinces, and
+ 97 the management of medical emergency calls occur in four operating rooms which receive these
+ 98 calls from different sets of provinces, namely:
+ 99    SOREU delle Alpi (SRA) from the provinces of Bergamo, Brescia and Sondrio;
+100    SOREU dei Laghi (SRL) from the provinces of Como, Lecco and Varese;
+101    SOREU Metropolitana (SRM) from the provinces of Milan and Monza-Brianza;
+                                                                        4
+
+     medRxiv preprint doi: https://doi.org/10.1101/2020.10.14.20212415.this version posted October 16, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                       It is made available under a CC-BY-NC-ND 4.0 International license .
+102     SOREU della Pianura (SRP) from the provinces of Cremona, Lodi, Mantova and Pavia.
+103           Some of the non-urgent calls received by the four SOREU do not need, though, an
+104 ambulance dispatch, so not all the calls result in a medical rescue mission: in the latter cases the
+105 patients are recommended by SOREU medical technicians to consult other medical services such as
+106 general practitioners. Moreover, during the epidemic, according to specific internal procedures,
+107 SOREU medical technicians answering to the emergency calls, in the case of signs and/or
+108 symptoms evocative of CoViD-19 but not life threatening, advised patients to wait for a recall by a
+109 public health medical doctor: after this re-evaluation call, it was up to these medical doctors the
+110 final decision on the management of the case (ambulance dispatch or home quarantine).
+111           To reduce the burden of calls to the emergency number which occurred during the first days
+112 of the outbreak, it was necessary to redirect non-urgent calls, especially those asking for
+113 information, to other services. According to European Emergency Number Association guidelines
+114 [8], Lombardy region created a regional toll-free number for CoViD-19, the first one in Italy. Other
+115 Italian regions created their own one in the following weeks, as well as other European countries
+116 like Spain, Germany, Croatia, which were facing similar issues [9].
+117           The 24/24-hour toll-free number was settled on February the 23rd by AREU (Regional
+118 Emergency Service Agency) and, although it helped to funnel non-urgent calls, it was not enough
+119 because of the huge number of calls: for example on the second day it received more than 400,000
+120 calls.
+121           Calls to the emergency services could be an important and helpful indicator of the spread of
+122 the infection among the population, taking into account the possibility to analyze data regarding the
+123 municipality from which the calls originated and the motivations that induced people to ask for fast
+124 medical support. Statistical models could be used to assess the association of these data with new
+125 cases of CoViD-19 in order to predict new epidemic hotspots on a municipal scale, or with a
+126 smaller spatial scale for big cities.
+                                                                        5
+
+     medRxiv preprint doi: https://doi.org/10.1101/2020.10.14.20212415.this version posted October 16, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                       It is made available under a CC-BY-NC-ND 4.0 International license .
+127           In addition to usual public health indicators, social media data may also be used as probes of
+128 the people behaviour according to the recent trends of digital epidemiology. As mobile technology
+129 continues to evolve and proliferate, social media are expected to occupy an increasingly prominent
+130 role in the field of infectious diseases [10-12] .
+131           A recent systematic review concluded that the inclusion of online data in surveillance
+132 systems has improved the disease prediction ability over traditional syndromic surveillance systems
+133 and Twitter was the most common social network analyzed for this aim [13].
+134           Despite some limitations and concerns, a better understanding of the behavioural change
+135 induced by social media can strengthen mathematical modelling efforts and assist in the
+136 development of public policy so as to make the best use of this increasingly ubiquitous resource in
+137 controlling the spread of disease [11].
+138           Aim of the study is to understand the correlation between the users calls to the emergency
+139 services and the spread of the infection in the population during the first peak of the CoViD-19
+140 outbreak in Lombardy region of Italy, the first world hotspot after the Chinese raise in Wuhan.
+141 Furthermore, the joint analysis with Twitter trends related to emergency was performed to better
+142 understand the most important population concerns according to the infection dynamics. Overall,
+143 the joint active monitoring of the communication dynamics over emergency calls and social
+144 networks like Twitter could provide an integrated means for the adaptive management of
+145 information delivery as well as the optimization of the rescue logistic and finally it could provide
+146 relevant anticipation on the outbreak. These aspects appear of critical importance for CoViD-19
+147 surveillance, and for the preparedness of emergency and strategic plans [14].
+148
+149
+150
+151
+                                                                        6
+
+     medRxiv preprint doi: https://doi.org/10.1101/2020.10.14.20212415.this version posted October 16, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                       It is made available under a CC-BY-NC-ND 4.0 International license .
+152 Materials and methods
+153
+154 Data
+155           In the present work, we analyzed the following time series:
+156    PSAP-II SOREU-118 daily incoming calls from 2020.02.18 to 2020.03.30 [15];
+157    PSAP-I CUR NUE-112 daily incoming calls from 2020.02.18 to 2020.03.30 [16];
+158    toll-free number daily incoming calls from 2020.02.23 to 2020.03.30 [16];
+159    daily Twitter data (tweets, replies, likes, retweets) from 2020.02.18 to 2020.06.29 [17];
+160    daily infected from 2020.02.24 (the first day since which Italian Department for Civil Defense
+161     has provided data) to 2020.06.29 [3].
+162           Data about SOREU-118, NUE-112 and toll-free number daily incoming calls were only
+163 available at a regional level. The very first days of the NUE and toll-free number time series have
+164 been discarded due to the very intense population panic reaction which reflected into a very huge
+165 amount of calls (whose peak was even higher than the following, new cases-related one).
+166 Particularly, in the case of NUE they were inappropriate non-urgent calls (most of all for
+167 information need), so they were not forwarded to the corresponding SOREU: indeed, in the SOREU
+168 time series we do not observe any peak in the very first days. Moreover, this choice is justified if we
+169 consider that – in case of a new epidemic burden – there would not be such a powerful reaction, so
+170 to the aim of predictability we can take into account just the subsequent new increase in the calls to
+171 NUE and toll-free number, which is more related to the CoViD-19 dynamics. Twitter data, instead,
+172 differently from the emergency calls, were not geolocalized. Finally, daily new cases have been
+173 collected at the province level and then aggregated at the regional level.
+174
+175
+176
+                                                                        7
+
+     medRxiv preprint doi: https://doi.org/10.1101/2020.10.14.20212415.this version posted October 16, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                       It is made available under a CC-BY-NC-ND 4.0 International license .
+177 Twitter data analysis
+178           The monitoring of the communication dynamics on online social media has been conducted
+179 on Twitter [18]. Specifically, the Twitter Search API (Application Programming Interface) was
+180 used to collect all the tweets in Italian language containing the keywords “112” or “118” in the
+181 body text. The data span the period from 2020.02.18 to 2020.06.29. In addition, the text of the
+182 tweets was further filtered to identify the most common keywords related to the emergency,
+183 bringing to the manual identification of 290 keywords. To identify them, a POS (Part of Speech)-
+184 tagger was run on each tweet, keeping the lemma of nouns and verbs. Then, all the terms which
+185 occurred in the tweet corpus less than five times were discarded. Finally, all the tweets that did not
+186 contain any keyword in the text were excluded from the Twitter dataset, leading to 5,989 statuses
+187 used for the purpose of this paper. Since both the timestamp and the number of likes, retweets and
+188 replies at the moment of the data collection were available for each tweet, it was possible to
+189 reconstruct four time series related to the dynamics of the emergency calls on Twitter: 1) the
+190 production of new statuses per day, 2) the number of retweets of new statuses per day, 3) the
+191 number of likes per day, and 4) the number of replies per day. The latter is a first indicator of the
+192 level of discussions triggered by the tweets, while the second one and the third one represent an
+193 early approximation of the endorsement to the content of the tweet.
+194
+195 Wavelet analysis
+196           Wavelets represent a powerful tool to analyze localized variations of non-stationary power
+197 at many different frequencies in time series: the decomposition of the signal information in the
+198 time-frequency domain, indeed, allows to bring out variability and its changes over time [19-22].
+199 Particularly, wavelets can “capture” and detect in the time-frequency (scale) plane long-period (low
+200 frequency) trends (properly called trends or backgrounds), and short-period (high frequency) trends
+201 (called anomalies or discontinuities). Anomalies, despite their limited spatio-temporal location,
+                                                                        8
+
+     medRxiv preprint doi: https://doi.org/10.1101/2020.10.14.20212415.this version posted October 16, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                       It is made available under a CC-BY-NC-ND 4.0 International license .
+202 possess a huge amount of information content, thus it is of primary importance to reveal them
+203 adequately. Among the others, the wavelet transform has relevant features such as a good capability
+204 of time-frequency localization (useful to analyze signals changing over time), and offers the
+205 possibility of a multi-resolution representation over different scales [19]. Wavelets transforms,
+206 differently from other series expansions, are thus a suitable tool to identify both a trend in a
+207 nonparametric form, keeping significant local peaks, and variations from the trend [23-24].
+208           In order to identify the trends, all the time series were first smoothed using a moving
+209 average linear filter of a 7-days amplitude, decomposed through the wavelet transforms and then
+210 normalized to their maximum values. Tweets-dependent data (daily number of replies, likes and
+211 retweets) were also previously normalized to the correspondent number of daily tweets.
+212           Details on the adopted continuous wavelet transform (CWT) and related measures are
+213 reported in the Supplementary material. Briefly, first of all, the CWT of all the signal was
+214 computed, together with the magnitude of the wavelet transform (using the modulus of the complex
+215 values). After that, for each pair of time series, the following quantities were calculated: the
+216 magnitude-squared wavelet coherence (MSWC), the wavelet cross-spectrum (WCS), the cone of
+217 influence, the phase coherence relationship (using the argument of the complex values), the time
+218 delay between the two signals (using the phase lag values). Each value of scale was converted to the
+219 equivalent Fourier value of frequency, and thus to the correspondent period. However, note that the
+220 relationship between scale and frequency is only an approximation, since there is not a precise
+221 correspondence between the two: among others, Meyers and coll. (1993) proposed a method for the
+222 conversion from scales to “pseudo-frequencies” [25].
+223           Wavelet coherence and cross-spectrum analysis provides a detailed both time- and
+224 frequency-localized information on the phase lag and thus on the time delay between the compared
+225 signals, thanks to the decomposition through CWT, but lacks a global view of the trends and their
+226 relative shifts over time. Thus, in order to give a synthetic and unique indicator of the similarity
+                                                                        9
+
+     medRxiv preprint doi: https://doi.org/10.1101/2020.10.14.20212415.this version posted October 16, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                       It is made available under a CC-BY-NC-ND 4.0 International license .
+227 over time between the signals, we also performed a time domain analysis estimating their cross-
+228 correlation sequence.
+229
+230 Time lag estimation through cross-correlation analysis
+231           In signal processing, another way to determine the similarity of two discrete time sequences
+232 is the cross-correlation. Indeed, since cross-correlation measures the relation between a vector x and
+233 time-shifted (lagged) copies of another vector y as a function of the lag itself, it allows also a time-
+234 delay analysis between the signals. Moreover, by revealing their relative displacement in time, the
+235 lag at which there is the maximum correlation can be considered as the time shift necessary to align
+236 the series x and y by sliding y backward (negative lag, in case y has a delay compared to x) or
+237 forward (positive lag, in case y displays an anticipation respect to x). To this aim, we computed the
+238 cross-correlation function between the time series, at different lags. The lag with the maximum
+239 cross-correlation value was thus identified as the “typical time delay” leading the lagged signal.
+240           A 90% confidence interval was computed both for the cross-correlation values and for the
+241 lag corresponding to the cross-correlation function peak, i.e. for the days of delay. We used two
+242 different methods to calculate the interval estimation in order to compare parametric and non-
+243 parametric estimates: 1) a Fisher’s z statistics through the Fisher’s z-transformation [26]; 2) a Monte
+244 Carlo method through a surrogate time series with the same auto-correlation of the original one, for
+245 1,000 simulations [27]. Details and notes on these two confidence interval computation methods are
+246 provided in the Supplementary material.
+247           Cross-correlation could also be estimated using wavelets, specifically through a maximal
+248 overlap discrete wavelet transform (MODWT): it would have been our intention to complete the
+249 analysis with wavelets, but since emergency calls time series are made up of few samples, there are
+250 not enough non-boundary coefficients, even at the first level, to compute the wavelet cross-
+                                                                        10
+
+     medRxiv preprint doi: https://doi.org/10.1101/2020.10.14.20212415.this version posted October 16, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                       It is made available under a CC-BY-NC-ND 4.0 International license .
+251 correlation function for a sufficient number of lags (see explanation about the edge effects in the
+252 Supplementary material).
+253
+254           All the previous reported analyses were performed using MatLab R2020a, The MathWorks
+255 Inc.
+256
+257
+258 Results
+259
+260 Wavelet analysis
+261           As already pointed out before, the following daily regional aggregated data were considered:
+262    toll-free number incoming calls,
+263    NUE-112 incoming calls,
+264    SOREU-118 incoming calls.
+265 In addition, we compared also Twitter data to the number of regional daily infected patients.
+266           The WCS and the MSWC were calculated for each of these time series in relation to the data
+267 of regional daily infected. Indeed, both wavelet cross-power spectrum and coherence, through the
+268 CWT, can show areas in the time-frequency space where two signals share common harmonic
+269 components. In particular, the focus will be on the areas for which coherence is higher than 0.5
+270 (indicated by the arrows, see Figs 1-7), since for lower values of coherence the phase lag is not
+271 reliable.
+272           In the following figures (Figs 1-7), the time courses of the smoothed and normalized series
+273 are displayed on the left, whereas the WCS/MSWC representation is on the right. In the time
+274 courses charts, the daily infected curve is in red, while the potential predictor curve is in blue. In the
+275 WCS/MSWC charts, the x axis represents time (days), the y axis (logarithmic scale) represents scale
+                                                                        11
+
+     medRxiv preprint doi: https://doi.org/10.1101/2020.10.14.20212415.this version posted October 16, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                       It is made available under a CC-BY-NC-ND 4.0 International license .
+276 (which has been converted to the equivalent Fourier frequency, cycles/day), and the color scale
+277 represents the MSWC. The cone of influence, where edge effects should be considered, is shown as
+278 a white dashed line. For areas where the coherence exceeds 0.5, the charts display arrows to show
+279 the phase lag between the two signals. The arrows, which do not represent vectors since the length
+280 is not proportional to the intensity, are spaced in time and scale. The direction of the arrows
+281 designates the relative phase on the unit circle: a rightward-pointing arrow indicates in-phase
+282 coherence relationship of the two signals (                             ; a leftward-pointing arrow indicates anti-phase
+283 coherence relationship (                        . The corresponding lag in time depends on the duration of the
+284 cycle (period).
+285
+286 Fig 1. Regional toll-free number daily incoming calls vs. daily infected time courses and
+287 wavelet analysis. On the left, the smoothed (7-days amplitude moving average) and normalized
+288 time courses are displayed (toll-free number calls in blue, daily infected in red); on the right, WCS
+289 and MSWC chart is shown (see text for explanation).
+290
+291 Fig 2. Regional NUE daily incoming calls vs. daily infected time courses and wavelet analysis.
+292 On the left, the smoothed (7-days amplitude moving average) and normalized time courses are
+293 displayed (NUE calls in blue, daily infected in red); on the right, WCS and MSWC chart is shown
+294 (see text for explanation).
+295
+296 Fig 3. Regional SOREU daily incoming calls vs. daily infected time courses and wavelet
+297 analysis. On the left, the smoothed (7-days amplitude moving average) and normalized time
+298 courses are displayed (SOREU calls in blue, daily infected in red); on the right, WCS and MSWC
+299 chart is shown (see text for explanation).
+300
+                                                                        12
+
+     medRxiv preprint doi: https://doi.org/10.1101/2020.10.14.20212415.this version posted October 16, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                       It is made available under a CC-BY-NC-ND 4.0 International license .
+301 Fig 4. Daily number of tweets vs. regional daily infected time courses and wavelet analysis. On
+302 the left, the smoothed (7-days amplitude moving average) and normalized time courses are
+303 displayed (tweets in blue, daily infected in red); on the right, WCS and MSWC chart is shown (see
+304 text for explanation).
+305
+306 Fig 5. Daily number of likes vs. regional daily infected time courses and wavelet analysis. On
+307 the left, the smoothed (7-days amplitude moving average) and normalized time courses are
+308 displayed (likes in blue, daily infected in red); on the right, WCS and MSWC chart is shown (see
+309 text for explanation).
+310
+311 Fig 6. Daily number of retweets vs. regional daily infected time courses and wavelet analysis.
+312 On the left, the smoothed (7-days amplitude moving average) and normalized time courses are
+313 displayed (retweets in blue, daily infected in red); on the right, WCS and MSWC chart is shown
+314 (see text for explanation).
+315
+316 Fig 7. Daily number of replies vs. regional daily infected time courses and wavelet analysis. On
+317 the left, the smoothed (7-days amplitude moving average) and normalized time courses are
+318 displayed (replies in blue, daily infected in red); on the right, WCS and MSWC chart is shown (see
+319 text for explanation).
+320
+321           Looking at the time courses, it is evident a large anticipation (about two weeks) of the
+322 emergency calls trends with respect to the epidemic dynamics: if we consider the peaks of the
+323 curves, indeed, while the infected time series reaches its maximum at day 29, the toll-free number
+324 and SOREU calls peak occur at day 15 (time delay -14 days), and the NUE calls curve reaches the
+325 peak at day 16 (time delay -13 days). However, wavelet analysis does not reveal any strong
+326 coherence for all these pair of signals: specifically, among all the previously mentioned time series,
+                                                                        13
+
+     medRxiv preprint doi: https://doi.org/10.1101/2020.10.14.20212415.this version posted October 16, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                       It is made available under a CC-BY-NC-ND 4.0 International license .
+327 the only one for which wavelet analysis does not display any relevant coherence compared to daily
+328 new cases data is that of regional toll-free number incoming calls (Fig 1). Instead, NUE regional
+329 data and daily infected signals (Fig 2) display coherence over days from 18 to 22 at frequencies
+330 around 0.25 cycles/day, with a phase lag from -126.4° to -134.7°, corresponding to a time delay
+331 from 2.5 days to 2.6 days. Interestingly, days from 18 to 22 are confined between the two peaks,
+332 since the NUE calls curve reaches the peak at day 16, while the infected curve reaches its maximum
+333 at day 29. Not surprisingly, wavelet cross-spectrum and coherence analysis between regional daily
+334 incoming calls to SOREU and infected people (Fig 3) shows an anomaly less limited over time and
+335 over scale (frequency band ranging from 0.25 cycles/day to 0.37 cycles/day, time interval from day
+336 17 to day 28), with a phase shift between -72.1° and -111.2°, leading to a time delay of about 2.4
+337 days.
+338        Even if not geolocalized, we finally compared regional epidemic time series with Twitter data
+339 (Figs 4–7): just considering the time courses, it is evident that the best potential predictor is the
+340 tweets time series (peaks at day 22 and day 29, respectively for daily number of tweets and infected
+341 curve). Indeed, since replies, likes and retweets are variables dependent on the original tweets, they
+342 are delayed in time: likes and retweets reach the peak at day 28, just one day before new cases,
+343 loosing almost all the anticipation capability, while the maximum value of replies is achieved even
+344 later than the peak of the infected curve, at day 33. Wavelet analysis, focused on the predictability,
+345 confirms this consideration:
+346    in the case of daily tweets (Fig 4) it detects two relevant areas of high coherence in the time-
+347     frequency plane:
+348           o a trend at the lowest frequencies (from 0.02 cycles/day to 0.03 cycles/day), with the
+349               phase relationship shifting from in-phase coherence to a maximum lag of 31.8° (time
+350               delay 2.6 days),
+                                                                        14
+
+     medRxiv preprint doi: https://doi.org/10.1101/2020.10.14.20212415.this version posted October 16, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                       It is made available under a CC-BY-NC-ND 4.0 International license .
+351           o and a time-localized anomaly before the infected peak around the frequency of 0.25
+352               cycles/day, with a phase-lag ranging from 73.0° (day 20, 0.37 cycles/day) to 116.3° (day
+353               27, 0.23 cycles/day) and a subsequent time delay between 0.5 and 1.4 days;
+354    for the number of daily likes (Fig 5) just a trend localized in the first half of the observation
+355     period and at the lowest frequencies is captured, with a maximum phase lag of 65.3° at 0.06
+356     cycles/day, corresponding to a time shift of 3.0 days;
+357    daily number of retweets (Fig 6) display a similar trend more localized in the frequencies
+358     domain (from 0.04 cycles/day to 0.08 cycles/day), with a phase shift always near 0° (in the
+359     range between -26.7° and 19.6°);
+360    finally, the replies time series (Fig 7) shows a background even more localized both in time and
+361     frequency, and an anomaly around the frequency of 0.14 cycles/day from day 19 to day 33, both
+362     with a coherence value around 0.6.
+363
+364 Twitter trends
+365           The next figures (Figs 8-9) display raw data about Twitter trends (tweets, replies, retweets
+366 and likes).
+367
+368 Fig 8. Twitter trends (1). The trends of daily number of new statuses about emergency calls (cyan
+369 line) and of replies (blue line) they sparked are shown here. The vertical green dotted lines indicate
+370 the principal episodes related to the lockdown policies in Italy.
+371
+372 Fig 9. Twitter trends (2). The trends of daily number of retweets (green line) and of likes (red line)
+373 are shown here.
+374
+                                                                        15
+
+     medRxiv preprint doi: https://doi.org/10.1101/2020.10.14.20212415.this version posted October 16, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                       It is made available under a CC-BY-NC-ND 4.0 International license .
+375           It is evident that, concerning the dynamics of communications and the context on social
+376 media, Twitter activity (Figs 8–9) is not so strictly related to the epidemic dynamics, since it is
+377 triggered most of all by social, political and chronicle news, which drive an emotional participation
+378 of the users. Indeed, the first increase in all these time series (tweets, replies, likes and retweets),
+379 from day -3 to day 1, precedes just the establishment of the red areas in Codogno and Vo’ Euganeo,
+380 while the second peak of daily tweets (Fig 8) at day 20 is related to the death of an operator of SRA
+381 due to CoViD-19. Moreover, likes and retweets (Fig 9) trends look more aligned to the
+382 announcements about lockdown policies.
+383
+384 Cross-correlation and time delay analysis
+385           While wavelet decomposition allows a detailed analysis in both the time and frequency
+386 domains, it lacks a unique, global indication of the shift over time between two signals: to this aim,
+387 we performed also a time delay analysis estimating the cross-correlation sequence for each pair of
+388 time series. This analysis has been conducted only for the three cases for which WCS/MSWC
+389 revealed a strong coherence in the ascending phase (before both the peaks or between them), which
+390 is the most important from a public health monitoring point of view. These time series are the
+391 following: (i) daily regional incoming calls to NUE-112 (Fig 10); (ii) daily regional incoming calls
+392 to SOREU-118 (Fig 11); (iii) daily number of new tweets (Fig 12). In the following figures, the
+393 maximum of each function is depicted in red, and the confidence limits for the peak lag, deduced by
+394 the 90% z-Fisher confidence bounds of the cross-correlation values, are reported below the figures,
+395 in the caption. Negative lags denote by how many days the time series of infected patients should be
+396 shifted backward over time to be “aligned” with the predictor.
+397
+398 Fig 10. Cross-correlation sequence estimate between NUE regional incoming calls and daily
+399 infected. The blue lines represent the 90% confidence interval (CI) limits computed through a z-
+                                                                        16
+
+     medRxiv preprint doi: https://doi.org/10.1101/2020.10.14.20212415.this version posted October 16, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                       It is made available under a CC-BY-NC-ND 4.0 International license .
+400 transformation. The maximum value of the cross-correlation function is depicted in red. Peak lag
+401 [CI]: -3 days [-8,1].
+402
+403 Fig 11. Cross-correlation sequence estimate between SOREU regional incoming calls and
+404 daily infected. The blue lines represent the 90% confidence interval (CI) limits computed through a
+405 z-transformation. The maximum value of the cross-correlation function is depicted in red. Peak lag
+406 [CI]: -5 days [-11,1].
+407
+408 Fig 12. Cross-correlation sequence estimate between daily number of new tweets and daily
+409 infected. The blue lines represent the 90% confidence interval (CI) limits computed through a z-
+410 transformation. The maximum value of the cross-correlation function is depicted in red. Peak lag
+411 [CI]: -6 days [-8,-2].
+412
+413           In addition, a sensitivity analysis of these results with respect to the amplitude of the initial
+414 smoothing with a moving average filter was performed. The results are reported in Table 1.
+415
+416 Table 1. Sensitivity tests on the uncertainty in the location of the cross-correlation function
+417 peak. Different moving-average amplitudes have been used to test the robustness of the results of
+418 the confidence intervals (C.I.) computed through the z-transformation.
+                                             NUE calls                 SOREU calls                       tweets
+                    n. days         peak lag            C.I.        peak lag        C.I.        peak lag        C.I.
+                        4                  -4         [-10,0]           -5        [-11,1]             -6       [-8,-3]
+                        5                  -4          [-9,0]           -5        [-11,1]             -6       [-8,-3]
+                        6                  -4          [-9,1]           -5        [-11,1]             -5       [-8,-2]
+                                                                        17
+
+     medRxiv preprint doi: https://doi.org/10.1101/2020.10.14.20212415.this version posted October 16, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                       It is made available under a CC-BY-NC-ND 4.0 International license .
+419                     7                  -3          [-8,1]           -5        [-11,1]             -6       [-8,-2]
+420
+                        8                  -3          [-8,1]           -4        [-11,1]             -5       [-8,-2]
+421
+                        9                  -2          [-8,1]           -4        [-10,0]             -5       [-8,-2]
+422
+423                    10                  -2          [-8,1]           -3        [-10,1]             -5       [-8,-2]
+424
+425
+426           Changes in the results when the amplitude of the window is varying are relatively small
+427 (Table 1), consequently it can be assumed that our results are robust with respect to this parameter.
+428           Similar and consistent results have been obtained with the Monte Carlo method described in
+429 the Supplementary material (Figs 13-15).
+430
+431 Fig 13. Cross-correlation analysis through a Monte Carlo simulation method for the regional
+432 NUE daily incoming calls vs. the daily infected time series. A random phase test (see
+433 Supplementary material) has been performed (1,000 simulations) to compute the time lag to “align”
+434 the signals and the corresponding confidence interval (C.I.): time lag = -4 days (C.I. -11,1).
+435
+436 Fig 14. Cross-correlation analysis through a Monte Carlo simulation method for the regional
+437 SOREU daily incoming calls vs. the daily infected time series. A random phase test (see
+438 Supplementary material) has been performed (1,000 simulations) to compute the time lag to “align”
+439 the signals and the corresponding confidence interval (C.I.): time lag = -6 days (C.I. -13,1).
+440
+441 Fig 15. Cross-correlation analysis through a Monte Carlo simulation method for the daily new
+442 tweets vs. the daily infected time series. A random phase test (see Supplementary material) has
+443 been performed (1,000 simulations) to compute the time lag to “align” the signals and the
+444 corresponding confidence interval (C.I.): time lag = -3 days (C.I. -11,4).
+                                                                        18
+
+     medRxiv preprint doi: https://doi.org/10.1101/2020.10.14.20212415.this version posted October 16, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                       It is made available under a CC-BY-NC-ND 4.0 International license .
+445 Discussion
+446
+447           Lombardy region has been the epicentre of the CoViD-19 epidemic in the Western
+448 Countries [28]. After the detection of the first case, on February the 20th, national and regional
+449 health authorities put in place several strategies to limit the spread of the infection and deal with the
+450 consequences of the increasing number of cases [29-31]. Indicators that can reveal and anticipate a
+451 rise of cases are of paramount importance to support the planning and interventions of the health
+452 service organization. Our study shows that the number of calls to emergency services could be a
+453 good indicator that can anticipate the need for hospitalization. However, some considerations about
+454 the analysis we conducted seem to be appropriate. With respect to wavelet analysis, wavelet
+455 decomposition in the time-scale plane has the advantage of giving a huge, precise and detailed
+456 amount of information both about time localization and frequency components. Nonetheless, this
+457 kind of analysis has also some limitations. First of all, time and frequency resolutions, according to
+458 uncertainty Heisenberg principle, are inversely proportional. Secondly, the edge effects affect the
+459 reliability of the results in the time-scale plane outside the cone of influence (see Supplementary
+460 material for an explanation), so that for the lowest frequencies the time interval with reliable results
+461 is very short. Lastly, one must consider also the band-pass filtering action of the CWT: indeed, the
+462 frequency spectrum bounds are a function of the number of samples of the signal (see
+463 Supplementary material for a detailed explanation), so the availability of data over time could
+464 represents a limitation for this kind of analysis. In our specific instance, it can be noticed that the
+465 inferior limit of the frequency domain in the case of Twitter data is much lower than the one of the
+466 daily regional emergency calls time series (112, 118, toll-free number), just because much more
+467 samples for the Twitter data are available (Figs 1-7). Consequently, in the cases of the calls to the
+468 emergency services, the ability of wavelet decomposition in revealing hidden signals and trends at
+469 the lowest frequencies is limited by the poor number of collected data. This limitation also affects
+                                                                        19
+
+     medRxiv preprint doi: https://doi.org/10.1101/2020.10.14.20212415.this version posted October 16, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                       It is made available under a CC-BY-NC-ND 4.0 International license .
+470 the WCS/MSWC computation and the possibility of detecting large time delays between the
+471 signals. This occurs because the lowest frequencies are cut off by the wavelet band-pass filter, so
+472 the duration of a cycle corresponding to the inferior limit of the frequency spectrum (i.e. the longest
+473 period of the band) is shorter than the time delay between the two signals. Thus, the large
+474 anticipation in the ascending phase evident from the time courses (see in the results the delays
+475 between the peak days) cannot be captured by WCS/MSWC. A future perspective would be to
+476 obtain and analyze a more complete set of data over the time scale: as already explained, with a
+477 greater number of samples, indeed, the minimum spectrum frequency gets lower, the corresponding
+478 duration of a cycle (i.e. the maximum period) increases and consequently wavelet analysis through
+479 CWT could be able to detect larger time delays between the signals. Moreover, even if aggregated
+480 regional data allow us to capture the “sum” of the effects of different local situations with probable
+481 a greater anticipation capability, if we consider the enormous geographical heterogeneity of CoViD-
+482 19 spread, regional data possess a limited usefulness for public health monitoring and preparedness
+483 with respect to a possible second wave of the epidemic. One more future direction would be to
+484 analyze these data at a more local level, such as for each SOREU and each province (NUTS-3
+485 level), or even municipalities, of Lombardy region. To supply the lack of generality of wavelet
+486 analysis, we performed also a time lag analysis through the cross-correlation function. Once again,
+487 the limited number of data affected our results: indeed, while the peaks of the emergency calls
+488 anticipated that of daily new cases by about two weeks (Figs 2-3), the delay of the cross-correlation
+489 function peak is much lower both for NUE calls (-3 days and -4 days, respectively for the original
+490 data and the modelled time series, see Figs 10 and 13) and for SOREU calls (-5 days and -6 days,
+491 respectively for the original data and the surrogate time series, see Figs 11 and 14). This can be
+492 explained just looking at the time courses (Figs 2-3): the availability of emergency calls data is such
+493 that we can observe a great part of the descending phase, whereas for the infected curve an initial
+494 decrease is visible only during the last days of the corresponding observation period. With this
+495 perspective, consequently, it would be useful to analyze a more complete dataset. Several other
+                                                                        20
+
+     medRxiv preprint doi: https://doi.org/10.1101/2020.10.14.20212415.this version posted October 16, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                       It is made available under a CC-BY-NC-ND 4.0 International license .
+496 indicators are currently under investigation and many of them will provide useful information, but
+497 we should not only rely on indicators focused on detecting an increase in new cases, because the
+498 main impact on the health system is more related to the characteristics of the infected population
+499 rather than to the number of infected people.
+500           The severe countermeasures put in place, such as the national lockdown, had a deep impact
+501 on the population from several points of view, not only on the health system. It is therefore
+502 important to take into account the social reaction to the crisis and analyzing it is part of the public
+503 health response. Our analysis shows that Twitter trends correlate more with social factors rather
+504 than with the number of cases (Figs 8-9). This finding suggests that a thorough analysis of social
+505 media would improve our understanding about what the most common worries, fears and feelings
+506 of the population are, in order to address them through a public health strategy that should include a
+507 proper use of social media to inform the population. Among all the Twitter data, only the daily
+508 number of new tweets reveals some anticipation capability with respect to the epidemic curve:
+509 wavelet analysis, indeed, detects a trend at the lowest frequencies, and a phase-lagged anomaly in a
+510 frequency range centred around 0.25 cycles/day that occurs just between the two peaks (Fig 4). This
+511 finding is confirmed and consistent both with the 7-days distance of the two curve peaks and with
+512 the cross-correlation analysis (maximum at -6 days and -3 days lags, respectively for the original
+513 data and the modelled time series, with small confidence intervals, see Figs 12 and 15).
+514
+515
+516 References
+517
+518 1. Cereda, D, Tirani M, Rovida F, Demicheli V, Ajelli M, Poletti P, et al. The early phase of the
+519     COVID-19 outbreak in Lombardy, Italy. arXiv:2003.09320v1 [Preprint]. 2020 [submitted 2020
+520     March 20; cited 2020 October 5]. Available from: https://arxiv.org/abs/2003.09320v1
+                                                                        21
+
+     medRxiv preprint doi: https://doi.org/10.1101/2020.10.14.20212415.this version posted October 16, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                       It is made available under a CC-BY-NC-ND 4.0 International license .
+521 2. Rivieccio BA, Luconi E, Boracchi P, Pariani E, Romanò L, Salini S, et al. Heterogeneity of
+522     COVID-19 outbreak in Italy. Acta Biomed. 2020; 91:31-4.
+523 3. Italian Department for Civil Defense [Internet]. CoViD-19 Italia. Monitoraggio situazione.[cited
+524     2020 October 5]. Available from: https://github.com/pcm-dpc/COVID-19. Italian.
+525 4. WHO. Novel Coronavirus (2019-nCoV) situation report - 13. 2020 Feb 2. Available from:
+526     https://www.who.int/docs/default-source/coronaviruse/situation-reports/20200202-sitrep-13-
+527     ncov-v3.pdf
+528 5. Odlum M, Yoon S. What can we learn about the Ebola outbreak from tweets? Am J Infect
+529     Control. 2015;43(6):563‐71.
+530 6. Castaldi S, Maffeo M, Rivieccio BA, Zignani M, Manzi G, Nicolussi F, et al. Monitoring
+531     emergency calls and social networks for COVID-19 surveillance. To learn for the future: the
+532     outbreak experience of the Lombardia region in Italy. Acta Biomed. 2020;91:29-33.
+533 7. vita.it [Internet]. Coronavirus, numeri di emergenza presi d’assalto. [posted 2020 February 24;
+534     cited 2020 October 5]. Available from: http://www.vita.it/it/article/2020/02/24/coronavirus-
+535     numeri-di-emergenza-presi-dassalto/154125/. Italian.
+536 8. EENA. EENA recommendations for Emergency Services Organisations during the COVID-19
+537     outbreak. Available from: https://eena.org/knowledge-hub/documents/eena-recommendations-
+538     for-emergency-services-organisations-during-the-covid-19-outbreak/
+539 9. EENA. Appendix. Data and strategies per country on emergency calls & public warning during
+540     COVID-19 outbreak. Available from: https://eena.org/knowledge-hub/documents/data-and-
+541     strategies-per-country-on-emergency-calls-public-warning-during-covid-19
+542 10. Chen E, Lerman K, Ferrara E. Tracking social media discourse about the COVID-19 pandemic:
+543     development of a public coronavirus Twitter data set. JMIR Public Health Surveill [Internet].
+544     2020         Apr-Jun               [cited       2020         October        5];6(2):e19723.           Available            from:
+545     https://publichealth.jmir.org/2020/2/e19273/
+                                                                        22
+
+     medRxiv preprint doi: https://doi.org/10.1101/2020.10.14.20212415.this version posted October 16, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                       It is made available under a CC-BY-NC-ND 4.0 International license .
+546 11. Sooknanan J, Comissiong DMG. Trending on social media: integrating social media into
+547     infectious disease dynamics. Bull Math Biol. 2020;82:86.
+548 12. twitter.com [Internet]. The COVID tracking project. [cited 2020 October 5]. Available from:
+549     https://twitter.com/covid19tracking
+550 13. Gupta A, Katarya R. Social media based surveillance systems for healthcare using machine
+551     learning: a systematic review. J Biomed Inform. 2020;108:103500.
+552 14. Castaldi S, Romanò L, Pariani E, Garbelli C, Biganzoli E. COVID-19: the end of lockdown
+553     what next? Acta Biomed. 2020;91:236-8.
+554 15. ilsole24ore.com [Internet]. Chiamate al 118, in Lombardia oltre il 30% per motivi respiratori e
+555     infettivi. Picco il 16 marzo. [posted 2020 April 7; cited 2020 October 5]. Available from:
+556     https://www.ilsole24ore.com/art/chiamate-118-lombardy-oltre-30percento-motivi-respiratori-e-
+557     infettivi-picco-16-marzo-ADEYHnI?refresh_ce=1. Italian.
+558 16. ilsole24ore.com [Internet]. In Lombardia calano le telefonate al 112, il picco il 12 marzo. Resta
+559     elevato il rapporto con i ricoveri. [posted 2020 April 4; cited 2020 October 5]. Available from:
+560     https://www.ilsole24ore.com/art/in-lombardy-calano-telefonate-112-picco-13-marzo-resta-
+561     elevato-rapporto-i-ricoveri-ADp1r3H. Italian.
+562 17. twitter.com             [Internet].            [cited         2020        October            5].      Available            from:
+563     https://twitter.com/search?q=(118%20OR%20112)%20lang%3Ait%20until%3A2020-06-
+564     29%20since%3A2020-02-18&src=typed_query
+565 18. Bali R, Sarkar D, Lantz B, Lesmeister C. R: unleash machine learning techniques. Birmingham
+566     (UK): Packt Publishing Ltd; 2016.
+567 19. Daubechies I. The wavelet transform time-frequency localization and signal analysis. IEEE
+568     Trans Inform Theory. 1990;36:961-1004.
+569 20. Stoica P, Moses R. Spectral analysis of signals. Upper Saddle River (NJ): Prentice Hall; 2005.
+570 21. Tian F, Tarumi T, Liu H, Zhang R, Chalak L. Wavelet coherence analysis of dynamic cerebral
+571     autoregulation in neonatal hypoxic-ischemic encephalopathy. Neuroim Clin. 2016;11:124-32.
+                                                                        23
+
+     medRxiv preprint doi: https://doi.org/10.1101/2020.10.14.20212415.this version posted October 16, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                       It is made available under a CC-BY-NC-ND 4.0 International license .
+572 22. Torrence C, Compo GP. A practical guide to wavelet analysis. Bull Am Metereol Soc.
+573     1998;79:61-78.
+574 23. Ogden        . Essential wavelets for statistical applications and data analysis.                                 asel (C ):
+575        ir h user; 1997.
+576 24. Percival DB, Walden AT. Wavelet methods for time series analysis. Cambridge (UK):
+577     Cambridge University Press; 2000.
+578 25. Meyers SD, Kelly                G, O’Brien JJ. An introduction to wavelet analysis in oceanography and
+579     meteorology: with application to the dispersion of Yanai waves. Monthly Weather Rev.
+580     1993;121:2858-66.
+581 26. Fisher RA. On the ‘probable error’ of a coefficient of correlation deduced from a small
+582     sample. Metron. 1921;1:3-32.
+583 27. Ebisuzaki W. A method to estimate the statistical significance of a correlation when the data are
+584     serially correlated. J Climate. 1997;10(9):2147-53.
+585 28. euronews.com [Internet]. Coronavirus: more than a third of people in Italy’s COVID-19
+586     epicentre estimated to have had disease. [posted 2020 April 28; cited 2020 October 5].
+587     Available          from:          https://www.euronews.com/2020/04/28/coronavirus-more-than-a-third-of-
+588     people-in-italy-s-covid-19-epicentre-estimated-to-have-ha
+589 29. Disposizioni attuative del decreto-legge 23 febbraio 2020, n. 6, recante misure urgenti in
+590     materia di contenimento e gestione dell'emergenza epidemiologica da COVID-19, Italian Prime
+591     Minister Decree, Gazzetta Ufficiale Serie Generale n. 45 (Feb 23, 2020). Italian.
+592 30. Misure straordinarie ed urgenti per contrastare l’emergenza epidemiologica da COVID-19 e
+593     contenere gli effetti negativi sullo svolgimento dell’attività giudiziaria. Italian Law Decree n.
+594     11, Gazzetta Ufficiale Serie Generale n. 60 (Mar 8, 2020). Italian.
+595 31. Costituzione          dell’Unità         di    Crisi     dell’emergenza        sanitaria       in   ordine    all’emergenza
+596     epidemiologica da COVID-19 e relativa Task Force. Lombardy Region Secretariat Decree n.
+                                                                        24
+
+     medRxiv preprint doi: https://doi.org/10.1101/2020.10.14.20212415.this version posted October 16, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                       It is made available under a CC-BY-NC-ND 4.0 International license .
+597     3287          (Mar             12,         2020).          Available         from:           https://www.openpolis.it/wp-
+598     content/uploads/2020/05/DECRETO-3287-DEL-12NMARZO-2020.pdf. Italian.
+599 32. Dziedziech K, Nowak A, Hasse A, Uhl T, Staszewski WJ. Wavelet-based analysis of time-
+600     variant adaptive structures. Philos Trans A Math Phys Eng Sci. 2018;13:376(2126):20170245.
+601 33. Grinsted A, Moore JC, Jevrejeva S. Application of the cross-wavelet transform and wavelet
+602     coherence to geophysical time series. Nonlin Proc Geophys. 2004;11:561-6.
+603 34. Maraun, Kurths DJ, Holschneider M. Nonstationary Gaussian processes in wavelet domain:
+604     synthesis, estimation and significance testing. Phys Rev E. 2007;75(1 Pt 2):016707.
+605 35. Torrence C, Webster P. Interdecadal changes in the ESNO-Monsoon System. J Clim.
+606     1999;12:2679-90.
+                                                                        25
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

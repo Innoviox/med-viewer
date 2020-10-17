@@ -20,13 +20,14 @@ def biorxiv_pdfs():
 
 
 def medrxiv_pdfs(out_dir='pdfs/'):
+    papers_db = {}
     if not os.path.exists(out_dir):
         os.mkdir(out_dir)
 
     url = "https://www.medrxiv.org/content/early/recent?page={}"
 
     start_page = 0
-    max_pages = 1218
+    max_pages = 20
 
     for page in range(start_page, max_pages):
         soup = make_soup(url.format(page))
@@ -34,10 +35,16 @@ def medrxiv_pdfs(out_dir='pdfs/'):
         links = soup.findAll("a", {"class": "highwire-cite-linked-title"})
         for l in tqdm.tqdm(links):
             article = make_soup(l['href'], site='https://www.medrxiv.org')
+
             file = article.find("a", {"class": "article-dl-pdf-link"})
+            doi = "/".join(article.find("span", {"class": "highwire-cite-metadata-doi"}).text.strip().split('/')[-2:])
+
             title = l['href'].split("/")[-1]
+
+            name = l.find('span').text
+            papers_db[doi] = {"title": name, "path": "txts" + "/" + title + ".txt"}
 
             open(out_dir + title + ".pdf", "wb").write(requests.get('https://www.medrxiv.org' + file['href']).content)
 
-
-medrxiv_pdfs()
+    with open("article_db.json", "w") as f:
+        json.dump(papers_db, f)

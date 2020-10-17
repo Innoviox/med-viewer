@@ -1,0 +1,674 @@
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209106.this version posted October 13, 2020. The copyright holder for this
+ preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                perpetuity.
+                                        All rights reserved. No reuse allowed without permission.
+  PREDICTED INFECTION RISK FOR AEROSOL
+  TRANSMISSION OF SARS-COV-2
+  Martin Kriegel1, Udo Buchholz2, Petra Gastmeier3, Peter Bischoff3, Inas Abdelgawad4, Anne
+  Hartmann1
+  1
+    Technical University of Berlin, Hermann-Rietschel-Institut
+  2
+    Robert-Koch-Institute, Department for Infectious Disease Epidemiology
+  3
+    Charité-University Medicine Berlin, Institute for Hygiene and Environmental Medicine
+  4
+    Public Health Department Berlin Spandau
+  Address for correspondence:
+  Prof. Dr.-Ing. Martin Kriegel
+  Hermann-Rietschel-Institut
+  TU Berlin
+  m.kriegel@tu-berlin.de
+  Author contributions:
+  MK extended the existing models and performed the calculation. UB and IA supplied the data
+  for retrospective analysis to validate the model. PG, PB, UB and IA evaluated the results from
+  a medical point of view. AH performed the literature research and the review of the models
+  and calculations. MK and AH drafted the manuscript. All authors contributed to the
+  interpretation of the results, critically revised the paper and agreed on the final version for
+  submission.
+   NOTE: This preprint reports new research that has not been certified by peer review and should not be used to guide clinical practice.
+
+   medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209106.this version posted October 13, 2020. The copyright holder for this
+    preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                   perpetuity.
+                                           All rights reserved. No reuse allowed without permission.
+ 1   Abstract
+ 2   Currently, airborne transmission is seen as the most important transmission path for SARS-
+ 3   CoV-2. In this investigation, a models of other researchers with the aim to predict an infection
+ 4   risk for exposed persons in a room through aerosols emitted by an infectious case-patient
+ 5   were extended. As a novelty – usually neglected – parameters or boundary conditions, namely
+ 6   the non-stationarity of aerosol and the half life of aerosolized virus, were included and a new
+ 7   method for determining the quanta emission rate based on measurements of the particle
+ 8   emission rate and respiratory rate at different types of activities was implemented.
+ 9   As a second step, the model was applied to twelve outbreaks to compare the predicted
+10   infection risk with the observed attack rate. To estimate a “credible interval” of the predicted
+11   infection risk the quanta emission rate, the respiratory rate as well as the air volume flow were
+12   varied.
+13   In nine out of twelve outbreaks, the calculated predicted infection risk via aerosols was found
+14   to be in the range the attack rate (with the variation of the boundary conditions) and reasons
+15   for the observed larger divergence were discussed.
+16   The validation was considered successful and therefore, the use of the model could be
+17   recommended to predict the risk of an infection via aerosols in given situations. Furthermore,
+18   appropriate preventive measures can be designed.
+19
+20   Introduction
+21   The respiratory route is the main mode of transmission for the virus causing COVID-19
+22   (SARS-CoV-2) [1, 2, 3]. The virus is transported on particles that can enter the respiratory
+23   tract. Whereas larger particles (droplets) are only able to stay in the air for a short time and
+24   just in the near field (approx. 1.5 m), because they settle down quickly, smaller particles
+25   (called aerosols) are also concentrated in the near field and in addition can follow the air flow
+
+   medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209106.this version posted October 13, 2020. The copyright holder for this
+    preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                   perpetuity.
+                                           All rights reserved. No reuse allowed without permission.
+26   and cause infections in the far field. Epidemiologically, short-range transmission (through
+27   aerosols or droplets) is distinguished from long-range transmission (aerosol).
+28   In order to perform an infection risk assessment for the airborne transmission in the far field
+29   and to introduce appropriate preventive measures, it would be necessary to know the amount
+30   of aerosols produced by an infected person during various activities, how many viruses stick
+31   to the aerosols and how many viruses are necessary to cause an infection. However, this
+32   information is usually available very late during the course of a pandemic, if it can be
+33   determined at all. Another well-known approach is to use retrospective analysis of infection
+34   outbreaks that are very probably due to far field transmission to determine a virus-laden
+35   aerosol concentration. Exposed people have inhaled the virus-laden aerosols according to
+36   their respiratory volume flow. The approach presented here corresponds to a combination of
+37   known measured source rates of respiratory aerosols at different activities and the
+38   retrospective analysis of previous infection incidents with the aim to calculate a predicted
+39   infection risk via aerosols and to calculate the necessary air volume flow to reduce the risk of
+40   COVID-19 infections.
+41
+42   State of the Art
+43   The so-called aerosols (liquid or solid particles in a dispersed phase with a fluid) as well as
+44   droplets differ by size. The particles, which are transported in a fluid over a longer distance,
+45   are called aerosols. Droplets are stronger influenced by gravitation and are depositing more
+46   rapidly. Depending on the fluid velocity the size of particles, which can be transported in air
+47   for a longer distance, is different. In internal spaces with typical air velocities of up to 0.2 m/s
+48   particles smaller than 10 μm will be distributed by air very well, with a higher air velocity
+49   larger particles may be transported in air as well.
+
+   medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209106.this version posted October 13, 2020. The copyright holder for this
+    preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                   perpetuity.
+                                           All rights reserved. No reuse allowed without permission.
+50   SARS-CoV-2 was found to be transmitted via close contact as well as over distance in
+51   internal spaces, whereby in distant transmission so-called super-spreading events are more
+52   probable [1, 2, 4].
+53   In 1978, Riley et al. [5] evaluated a measles outbreak in a suburban elementary school. Based
+54   on the number of susceptible persons (S), which have been infected (D) during each stage of
+55   infection, the risk (P) for an infection in this stage has been calculated regarding equation (1).
+56   Therefore, the risk for an infection has been defined as the percentage of infected persons
+57   from the number of pupils not already infected or vaccinated.
+              𝐷                                                                                                                  (1)
+      𝑃=
+              𝑆
+58   A Poisson-distribution of the risk of infection has been assumed as well as a stationary and
+59   evenly distributed concentration of the pathogens in the room air. Equation (2) shows the
+60   Poisson-distribution.
+      𝑃 = 1 − 𝑒 −𝜆                                                                                                              (2)
+61   Therefore, Wells defined in 1955 [6] a size called quantum as the number of emitted
+62   infectious units, where the probability to get infected is 1 − 𝑒 −1 = 63.2%. Hence, a quantum
+63   can be seen as a combination of the amount of emitted aerosols with the virus transported on
+64   them and a critical dose, which may result in an infection in 63.2 % of the exposed persons.
+65   Using the quantum concept as well as equation (2) has been combined by Riley [5] to
+66   equation (3).
+      𝑃 = 1 − 𝑒 −𝐼∙𝑞∙𝑄𝑏∙𝑡/𝑄                                                                                                     (3)
+67   In equation (3), the number of infectious persons (I), the quanta emission rate depending on
+68   the activity (q), the pulmonary ventilation rate of exposed susceptible persons (Qb), the
+69   duration of stay (t) and the volume flow of pathogen free air (Q) was used. The quotient q/Q
+70   represents the quanta concentration.
+
+   medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209106.this version posted October 13, 2020. The copyright holder for this
+    preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                   perpetuity.
+                                           All rights reserved. No reuse allowed without permission.
+71   In poorly ventilated rooms, the assumption of a stationary concentration of quanta is not
+72   justified, because of the long time, which is necessary until the stationary concentration is
+73   reached. The normalized time-dependent concentration process can be calculated according to
+74   equation (4) and is shown in Figure 1. How rapidly the concentration of a human emitted
+75   contamination in a room raises depends on the air exchange rate (ACH) and the time (t). This
+76   relative concentration (crel) can be seen as an increase in the concentration compared to the
+77   volume flow.
+      𝑐𝑟𝑒𝑙 = 1 − 𝑒 −𝐴𝐶𝐻∙𝑡                                                                                                       (4)
+78
+79
+80   Figure 1: Relative concentration curve as a function of air exchange rate and time.
+81
+82   In all published studies identified ideal mixing ventilation was assumed, which means that
+83   aerosols are evenly distributed in the room air. To avoid this assumption Noakes and Sleigh
+84   [7] divided the room air into different zones, which are themselves considered to be well
+85   mixed and have a uniform concentration. This should make it possible to calculate local
+86   differences in concentration and thus locally differing infection risks. Furthermore, other
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209106.this version posted October 13, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+ 87   studies, which focus on the unsteady conditions mostly use the boundary condition of a
+                                                               𝑞𝑢𝑎𝑛𝑡𝑎
+ 88   starting concentration of 𝑐(𝑡 = 0) = 0                           . Gammaitoni and Nucci [8] implemented the
+                                                                  𝑚³
+ 89   starting condition of 𝑐(𝑡 = 0) = 𝑐0 as well as the number of exposed susceptible people,
+ 90   which may also change over time depending on their immune status.
+ 91
+ 92   To estimate the risk of infection in a given setting by a given infectious person with the
+ 93   Wells-Riley-equation either the quanta emission rate or the P have to be known. In the
+ 94   beginning of an epidemic, both values are unknown. Dai and Zhao [9] correlated and
+ 95   calculated q for SARS-CoV-2 based on the basic reproduction number (R0) known from
+ 96   former outbreaks of MERS, tuberculosis, Influenza as well as SARS-CoV-1 and published
+ 97   the equation (5). If R0 is known, q can be estimated as proposed by Dai and Zhao [9]. For
+ 98   SARS-CoV-2 the average basic reproduction number has been estimated to be 3.28 [10], 3.32
+ 99   [11] and 3.77 [12].
+       𝑞 = −30.27958 − 44.81536 ∙ 𝑅0 + 19.67934 ∙ 𝑅02                                                                           (5)
+100
+101   In various studies of infection occurrences associated with SARS-CoV-2, q was determined
+102   using the Wells-Riley equation. Different authors [9, 13] found a range of 22 to 61 quanta/h
+103   with an assumed low activity (breathing, speaking) and values of 341 to 1190 quanta/h when
+104   singing.
+105
+106   The virus can be transported on particles in air and the emission of aerosols can be used as an
+107   indicator for the emission of virus, but a correlation between q and the aerosol emission rate
+108   (E) has not been investigated so far. In measurements at the Hermann-Rietschel-Institute
+109   (HRI) of Technical University of Berlin [14, 15] the particle emission rates during breathing,
+110   speaking, coughing as well as singing was measured. During breathing through the nose about
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209106.this version posted October 13, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+111   25 particles/s was emitted and during coughing about 13,700 particles/cough, whereas it can
+112   be seen that depending on the activity a wide range of particle emission rates can be found.
+113   The transmission of a pathogen via aerosols is also influenced by the stability of the virus in
+114   the environment. In an experimental study van Doremalen et al [16] measured the decrease of
+115   infectious virus in air and on different surfaces and compared SARS-CoV-1 and SARS-CoV-
+116   2. Under the given conditions, the half-life of SARS-CoV-2 as well as SARS-CoV-1 was
+117   about 1.1 h.
+118   The longer aerosols stay in the room air the proportion of inactivated virus is increasing. The
+119   age of air is depending on the airflow as well as the position of the source of pollutants. At
+120   each point in the room, a local age of air can be calculated. The age of air (τn) can be used as a
+121   measure to evaluate the air quality. For an ideal mixing ventilation, the mean age of air is
+122   equal to the nominal time constant, which can be calculated using equation (6) as the quotient
+123   of the room volume (V) and the air volume flow (Q).
+                𝑉
+       𝜏𝑛 =                                                                                                                     (6)
+                𝑄
+124   Besides the number of emitted pathogen-laden aerosols, the number of inhaled pathogens is
+125   playing an important role as well with regard to the assessment of the risk of infection. The
+126   pulmonary ventilation rate may differ with different activities. Gupta et al. [17] performed a
+127   study with 25 healthy adults and found a sine wave for mere breathing, but a more constant
+128   volume flow during talking.
+129   In measurements with athletes as well as sedentary persons a maximum volume flow for the
+130   athletes of 200 l/min (12 m³/h) was found by Córdova and Latasa [18].
+131   To measure the airflow without movement restrictions, a helmet was used by Jiang et al. [19]
+132   in 32 subjects (16 males, 16 females) during speaking with different volumes as well as
+133   during singing.
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209106.this version posted October 13, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+134   A comparison between a machine-learning based model and measurements of respiratory rate
+135   was performed by Dumond et al. [20].
+136   As a conclusion, the following average values can be used for adults:
+137            low activity (breathing while lying): 0.45 m3/h [19]
+138            low activity (breathing while sitting, standing or talking): 0.54 m3/h [19, 20]
+139            singing: 0.65 m3/h [21]
+140            mid activity (physical work): 0.9 m3/h [20]
+141            sports: 1.2 m3/h [18, 20]
+142   For children, the lung volume is smaller. Therefore, the respiratory rate for children aged 14
+143   can be assumed to be 0.45 m3/h for low activity (breathing while sitting, standing, talking)
+144   [22].
+145
+146   Methods
+147   Extension of the Wells-Riley equation for calculating the Predicted Infection Risk via
+148   Aerosols (PIRA)
+149   The Wells-Riley equation can be summarized as equation (7). To calculate the predicted
+150   infection risk via aerosols (PIRA) in the far field of a room the concentration of quanta (c(t))
+151   and the respiratory rate (Qb) has to be known. The integration of c(t) can be understood as the
+152   amount of particles inhaled per m3/h. With Qb the number of inhaled quanta can therefore be
+153   calculated.
+       𝑃𝐼𝑅𝐴 = 1 − 𝑒 (− ∫[𝑐(𝑡)]∙𝑄𝑏)                                                                                              (7)
+154   Equation (5) can be used for the definition of the quantum emission. This leads to a quanta
+155   emission rate of q = 40 1/h at an assumed mean R0 = 3.35. The mathematical approximation
+156   presented by Dai und Zhao [9] can be optimized by equation (8), see Figure 2. For Figure 2
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209106.this version posted October 13, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+157   the quanta emission rate has been correlated with R0 of tuberculosis [23, 24], Influenza [23,
+158   25], MERS [26, 27] and SARS-CoV [23, 28].
+159   Equation (8) results in q = 139 1/h for an assumed mean R0 = 3.35. Because of the high
+160   variance of the q as well as R0 given in the currently available literature the difference
+161   between the q calculated regarding equation (5) and equation (8) seems reasonable.
+162   Figure 2: Relationship between quanta emission rate and R0 according Dai and Zhao [9]
+163
+       𝑞0 = 2.7618 ∙ (𝑒 1.1761∙𝑅0 − 1)                                                                                          (8)
+164
+165   q is influenced by the activity of the person as was shown by Buonanno et al. [29]. Therefore,
+166   the measured aerosol emission rates 𝐸 [14, 15] were correlated with the calculated quanta
+167   emission rates influenced by the activity 𝑞𝑎 by equation (9). For low-activity (breathing,
+168   talking, sitting, standing) a basic volume flow Qb,o and normal activity = low activity
+169   (breathing, talking, sitting, standing) with a basic emission rate of E0 was used. Furthermore,
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209106.this version posted October 13, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+170   the basic q (q0) was calculated with usage of R0 regarding equation (8). With these
+171   specifications qa can be calculated.
+                      𝐸 𝑄𝑏                                                                                                      (9)
+        𝑞𝑎 = 𝑞0 ∙         ∙
+                     𝐸0 𝑄𝑏,0
+                         𝑚3                              𝑃
+        𝑄𝑏,0 = 0.54           ;          𝐸0 = 100 𝑠 [15]
+                          ℎ
+172
+173   The effect of e.g. mouth-nose protection can be considered by using their filtration efficiency
+174   (FMNS) like in equation (10) which however will not be further considered in the following.
+        𝑞𝑎,𝑀𝑁𝑆 = 𝐹𝑀𝑁𝑆 ∙ 𝑞𝑎                                                                                                      (10)
+175
+176   It is known that the infectivity of an infected person depends on the disease progression over
+177   time [30]. This is shown qualitatively in Figure 3. With a simplified mathematical approach,
+178   this can be integrated into the quanta source rate. An equation could be implemented to take
+179   this into account.
+180
+181   Figure 3: Infectivity depending on the disease progression
+182
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209106.this version posted October 13, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+183   Under experimental conditions, the half-life of virus was measured as 1.1 h [16]. Thus, the
+184   number of emitted infectious quanta at time t (qa(t)) is calculated according to equation (11).
+                                                           361
+       𝑞𝑎 (𝑡) = 𝑞𝑎 ∙ 𝑒 (−0.5776∙𝑡) = 𝑞𝑎 ∙ 𝑒 (−625∙𝑡)                                                                            (11)
+185   The concentration of quanta during the increase cI(t) can be calculated according to equation
+186   (12) with the number of infectious persons (n).
+                    𝑞𝑎 (𝑡)
+       𝑐𝐼 (𝑡) =              ∙ 𝑛 ∙ (1 − 𝑒 (−𝐴𝐶𝐻∙𝑡) )                                                                            (12)
+                      𝑄
+187   An additional case is considered that if the time t is longer than the age of the air τn, most of
+188   the virus-laden aerosols have left the room with the exhaust, before the inactivation can take
+189   place. Therefore, this concentration during the steady state situation is called cτ(t).
+       𝑞𝑎,𝜏 = 𝑞𝑎 ∙ 𝑒 (−0.5776∙𝜏𝑛)                                                                                            (13)
+                    𝑞𝑎,𝜏
+       𝑐𝜏 (𝑡) =           ∙ 𝑛 ∙ (1 − 𝑒 (−𝐴𝐶𝐻∙𝑡) )                                                                            (14)
+                     𝑄
+190   with τn regarding equation (6)
+191
+192   For calculating the risk of infection the unsteady concentrations cI and cτ has to be used, to
+193   include the time-dependent increase in concentration and to include the time-dependent
+194   viability of the virus, otherwise the result could be overestimated or underestimated.
+195   For equation (7) the integration of cI(t) and cτ(t) is necessary.
+                  𝑡
+       𝐶𝐼 = ∫ 𝑐𝐼 (𝑡)
+                0
+                                                                                                                              361
+                                                                                                                                          (15)
+                                                                                          𝐴𝐶𝐻∙𝑡                     −𝐴𝐶𝐻∙𝑡−       ∙𝑡
+           𝑞𝑎 ∙ (390625 ∙ 𝐴𝐶𝐻 − ((390625 ∙ 𝐴𝐶𝐻 + 225625) ∙ 𝑒                                     − 225625) ∙ 𝑒                625 )
+       =
+                                                      𝑄 ∙ (225625 ∙ 𝐴𝐶𝐻 + 130321)
+                   𝑡≥𝜏𝑛
+                                    𝑞𝑎,𝜏 ∙ 𝑒 −𝐴𝐶𝐻∙(𝑡+𝜏𝑛) ∙ (𝐴𝐶𝐻 ∙ (𝑡 − 𝜏𝑛 ) ∙ 𝑒 𝐴𝐶𝐻∙(𝑡+𝜏𝑛) − 𝑒 𝐴𝐶𝐻∙𝑡 + 𝑒 𝐴𝐶𝐻∙𝜏𝑛 )
+       𝐶𝜏 = ∫           𝑐𝜏 (𝑡) =                                                                                                          (16)
+                 𝜏                                                              𝑄 ∙ 𝐴𝐶𝐻
+196
+197   The Predicted Infection Risk via Aerosols can be calculated by equation (17) and (18).
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209106.this version posted October 13, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+       𝑃𝐼𝑅𝐴 = 1 − 𝑒 (−(𝐶𝐼(𝑡=𝜏)+𝐶𝜏)∙𝑄𝑏)                       𝑡 > 𝜏𝑛                                                             (17)
+       𝑃𝐼𝑅𝐴 = 1 − 𝑒 (−(𝐶𝐼)∙𝑄𝑏)                                𝑡 ≤ 𝜏𝑛                                                            (18)
+198
+199        For the calculation of PIRA the following assumptions must be considered:
+200            the aerosols are ideally mixed in the room
+201            the near field (up to approx. 1.5 m distance from the emitting person) can contain a
+202             much higher virus-laden aerosol concentration
+203            the air, which is introduced into the room, is free of virus-laden aerosols (e.g. outside
+204             air)
+205            no deposition of small particles is considered, because the settling time is longer than
+206             the stability of the virus and the deposition rate would therefore be substantially
+207             smaller than the inactivation
+208            the concentration of aerosols at the beginning is 0
+209   Results
+210   The PIRA calculation model was validated by using parameters of several known outbreaks
+211   during the SARS-CoV-2 pandemic. Twelve different scenarios either scientifically published
+212   or registered by the local health authorities were selected (A-L). The boundary conditions for
+213   the calculations of these situations can be found in Table 1.
+
+214 Table 1: Boundary conditions of SARS-CoV-2 outbreaks for the retrospective calculation of PIRA
+                                A          B            C           D           E       F          G            H          I           J           K           L
+     V in m3                     3000        1200         60*         630          254    830         180         150         150          47        170       60***
+     n                               1           1           1           1            1      1          1            1          1           1           1            1
+     qa in 1/h                    232        4213         139         139          139   4213         116         116         139        139         139          139
+     Qb in m3/h                    0.9        0.65        0.54        0.54        0.54    0.65       0.45        0.45        0.54        0.54        0.54        0,54
+     Q in m3/h                   1600        200*        200*     4000**           50*   200*      1500*       1500*        400*           75       200*    1260***
+     exposure time t in h            8         2.5        1.66           8          1.5    2.5 4.5***** 1.5***** 4.5*****                 1.2           2          11
+     Attack Rate****
+                                 26%         91%         34%           5%         58%    87%         10%          6%         43%        45%         17%          63%
+     in %
+    *due to partly missing information, assumptions were made, especially for window ventilation. The assumptions are based on information from the persons
+    involved on how the windows were opened and closed in combination with weather data at the time.
+    ** It was assumed that the local regulations for fresh air supply were fulfilled.
+    ***Geometry and Ventilation Rate due to [31]
+    ****Attack Rate was simplified as percentage of persons infected. No separation regarding infection attack rate (measured serologically) and illness attack rate
+    (persons with symptoms or laboratory-confirmed) was performed.
+    ***** It was assumed that a school lesson lasts 45 minutes.
+
+      Setting                Country Remarks
+    A Slaughterhouse [32]    Germany
+    B Choir rehearsal Berlin Germany not yet scientifically published, investigated by Robert-Koch-Institute
+    C Bus Tour [33]          China
+    D Call Center [34]       Korea   The attack rate is mentioned as 43 % in the publication. However, the infection occurred almost exclusively
+                                     on one half of the 11th floor. The local attack rate is therefore actually significantly higher. In Table 1 an
+                                     attack rate of 5% was given, because only persons who had shown symptoms were quarantined. If one
+                                     includes the persons who showed symptoms up to and including 04.02., the attack rate is 5 %.
+    E Club Meeting           Germany not yet scientifically published, investigated by Robert-Koch-Institute
+    F Choir rehearsal Skagiq USA
+      [13]
+    G School Berlin 1        Germany not yet scientifically published, investigated by Public Health Department Berlin Spandau
+    H School Berlin 2        Germany not yet scientifically published, investigated by Public Health Department Berlin Spandau
+    I School Israel [35]     Israel
+    J Restaurant [1, 36]     China
+    K Meeting                Germany not yet scientifically published, investigated by Robert-Koch-Institute
+    L Aircraft [37]          -
+215
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209106.this version posted October 13, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+216   The infection events used for the validation of the model are shown in Table 1 with the
+217   necessary parameters for the calculation. In the following, the comparison between the
+218   documented Attack Rate (AR) and the PIRA is drawn.
+219   The q used here was calculated according to equation (9) with the assumption that the cases
+220   emitted particles as measured in [14, 15]. Due to the high spread of the particle emission E
+221   and the unknown proportions of breathing, speaking, singing and shouting as well as the
+222   respiratory volume flows, simplified a-priori assumptions were made. To take into account
+223   the effects of the uncertainties regarding q, Qb and especially with window ventilation on Q,
+224   these values were further varied - q by +/- 20%, Qb by +/- 20% and Q by +/- 50%,
+225   individually and in combination, which then lead to a minimum PIRA and maximum PIRA.
+226   Figure 4 presents PIRA and the minima and maxima calculated with the different variants.
+227   The red dots show the documented AR.
+228
+229   Figure 4: Comparison between PIRA with the variants Min and Max to the documented AR
+230   assuming that all cases were caused by long-range transmission
+231
+232   In nine out of twelve outbreaks, the attack rate lies in the Min Max values of the calculated
+233   PIRA (see Table 2).
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209106.this version posted October 13, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+234   Table 2: Results of the Calculation of PIRA and comparsion with the documented AR
+                                   A        B         C       D        E        F      G       H      I       J         K       L
+        PIRA                       25% 92% 35% 13% 16% 97% 13%                                   4% 48% 40% 21%                 44%
+        Min                        17% 79% 19%                  6% 10% 88%               6%      2% 26% 35% 11%                 22%
+        Max                        35% 99% 58% 30% 24% 99% 31% 11% 75% 56% 36%                                                  80%
+        AR (documented) 26% 91% 34%                             5% 58% 87% 10%                   6% 43% 45% 17%                 63%
+235
+236   From the PIRA model, it can be calculated how much volume flow per hour of exposure time
+237   is required to not exceed a certain PIRA. The results are shown in Figure 5. It can be seen that
+238   for a PIRA of 10% a volume flow of clean air of 750 m³/h and hour of exposure has to be
+239   supplied to the room (see Table 3), whereas for two hours 1500 m³/h will be necessary for the
+240   same PIRA.
+241   As a regression of the calculated results presented in Figure 5 equation (19) was derived.
+242   Using equation (19) the required volume flow per hour of exposure time can be calculated.
+243   This information refers to the steady state if the product of ACH and t is higher than 5.0, see
+244   Figure 1. If the product is smaller, correspondingly lower volume flows lead to the respective
+245   PIRA.
+                           1
+       𝑄𝑠𝑝 = 75 ∙                                                                                                              (19)
+                       𝑃𝐼𝑅𝐴
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209106.this version posted October 13, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+246
+247   Figure 5: Required specific volume flow per hour exposure time with regard to meeting a
+248   specific PIRA
+249
+250   Table 3 lists practical examples of the required volume flows depending on the exposure time
+251   and PIRA.
+252   Table 3: Required volume flow at a certain exposure time for a defined PIRA
+                                                                                              PIRA
+                                                              1%                5%              10%
+                                             1      7500 m3/h         1500 m3/h           750 m3/h
+              exposure
+                                             2 15000 m3/h             3000 m3/h         1500 m3/h
+               time in h
+                                             3 22500 m3/h             4500 m3/h         2250 m3/h
+253   Another type of evaluation shows the possible number of infected persons in relation to the
+254   person-related volume flow and the number of persons in a room (see Figure 6), if several
+255   exposed persons are in a room and each person would have 6 m3 of room volume available. If
+256   more volume flow is available to each person, the result changes marginally and tends
+257   towards a lower PIRA. For an exposure time of two hours a volume flow of 20 m³/(h·Per)
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209106.this version posted October 13, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+258   resulted in five probably infected persons in a room with 20, 40 or 100 persons, but of course
+259   only one probably infected person in a room with two persons. For a volume flow of
+260   60 m³/(h·Per) the number decreases to two probably infected persons in a room with 20, 40 or
+261   100 persons, but of course stayed at one probably person for just two persons in a room.
+262
+263   Figure 6: Number of persons probably infected according to a specific volume flow
+264
+265   Discussion
+266   For the first time with a q based on R0 the PIRA was calculated for different known SARS-
+267   CoV-2 outbreaks. In addition, the necessary air volume flows to reduce the risk of infection
+268   were calculated.
+269   In Table 4 the q-values are compared according to the stationary equation (3) and the PIRA
+270   model under the boundary conditions of Table 1. Large differences between the same
+271   activities were observed in the calculation of steady-state.
+272   First of all, in comparison, with fixed q according to equation (9) very good agreement can be
+273   achieved with the documented AR in the retrospectively considered cases A, B, C, H, I, J, K.
+274
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209106.this version posted October 13, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+275   Table 4: comparison steady state and unsteady calculated quanta
+                                                                                q in 1/h
+                                   A        B         C       D        E        F       G       H      I        J        K        L
+       q steady state            255      344       275      965       67     449     808 2545 223            144       411     330
+       q unsteady                232 4213 139                139      139 4213 116             116    139     139       139     139
+276
+277   In outbreak D, the documentation does not clearly show how large the actual AR was for the
+278   area under consideration. Due to the fact, that only the person who showed symptoms was
+279   isolated, it is possible that in the meantime, additional persons, who were already infected by
+280   the index case may have infected others (e.g. presymptomatically) leading to the high AR.
+281   In outbreak E, there is only little documentation of the infection process, and further contact
+282   between some of the persons has occurred in a restaurant afterwards. Furthermore, it has not
+283   been determined whether the infection can be attributed to only one person. The high AR after
+284   a short time of exposure allows the conclusion that either two index persons were present or
+285   that the exposure time was prolonged by the meeting in a restaurant.
+286   In outbreak F, the group was not together for the entire time and some of the subjects
+287   continued rehearsing in another room. For this reason, the exposure time for the whole group
+288   was lower and therefore this may account for the lower AR than calculated by PIRA is given.
+289   In outbreak L an air exchange rate of 21 1/h was assumed. A relatively small change in the
+290   assumed volume flow has a significant influence on the result of PIRA (where the total
+291   exposure time was used). Furthermore, it cannot be excluded that droplet transmission may
+292   also have happened.
+293   Secondly, many assumptions were made, therefore it is not clear if the formula is already
+294   optimal, perhaps further optimization during the course of the pandemic is possible if further
+295   knowledge is available.
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209106.this version posted October 13, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+296   Third, the calculation model does not consider the sedimentation behavior of particles. It is
+297   known that at higher air velocities and especially at high turbulence the sedimentation
+298   behavior increases. In typical indoor air flows this decrease is about 10 % per hour. Compared
+299   to the uncertainty of the overall emission rate, this effect is not significant.
+300   Fourth, the calculation model assumes a homogeneous distribution of the particles in the room
+301   air. Practically however the ventilation effectiveness is locally very different. The differences
+302   can be slightly greater than 100%.
+303   Finally, it must be noted that the aerosol concentration is significantly higher in the near field
+304   of the emitting person and the results of PIRA are not valid within the generally accepted
+305   1.5 m distance rules.
+306
+307   Conclusion
+308   It was shown in this investigation that it was possible to calculate the risk of an infection via
+309   aerosols for situations where the long-distance transmission is more important. By using the
+310   model presented here, a good agreement to previous infection outbreaks in different settings
+311   and different attack rates was achieved. Previous retrospectively determined quanta emission
+312   rates usually assumed a stationary state. However, if the concentration process is important
+313   for the total amount of inhaled virus-laden aerosols (usually at ACH x t < 5), then a stationary
+314   observation leads to an incorrect boundary condition. The time-dependent viability of the
+315   virus also plays a significant role. Here, the influence of the viability is higher at low air
+316   change rates compared with high ones, because the virus stays in the room air for a longer
+317   time period and the proportion of inactivated pathogens increase. However, the effect of time-
+318   dependent viability is not that important that a low air change rate has an overall positive
+319   effect.
+320   To reduce the risk of infection via aerosols the necessary volume flow of virus-free air
+321   depending on the exposure time can be seen in Figure 5. This figure may be helpful to
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209106.this version posted October 13, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+322   implement measures, like increasing the virus-free air supply rate. Furthermore, the number of
+323   exposed persons has to be kept in mind. An infection risk of 60% may result in one infected
+324   person in a two-person office, but in 60 infected persons in a room with 100 persons.
+325   Predicting the infection risk via aerosols and knowing the important parameters can help in the
+326   selection of appropriate preventive actions.
+327
+328   Declarations
+329   The authors received no specific funding for this work.
+330   The authors declare no competing interests.
+331   The authors declare that they followed the appropriate research guidelines.
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209106.this version posted October 13, 2020. The copyright holder for this
+ preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                perpetuity.
+                                        All rights reserved. No reuse allowed without permission.
+  Literature
+  [1] Y. Li, H. Qian, J. Hang, X. Chen, L. Hong, P. Liang, J. Li, S. Xiao, J. Wie, L. Liu und M.
+          Kang, „Evidence for probable aerosol transmission of SARS-CoV-2 in a poorly ventilated
+          restaurant,“ Preprint medXRiv, 2020.
+  [2] G. Correia, L. Rodrigues, M. Gameiro da Silva und T. Gonçalves, „Airborne route and bad
+          use of ventilation systems as non-neglible factors in SARS-CoV-2 transmission,“ Medical
+          Hypotheses, Bd. 141, 2020.
+  [3] L. Ferretti, C. Wymant, M. Kendall, L. Zhao, A. Nurtay, L. Abeler-Dörner, M. Parker, D.
+          Bonsall und C. Fraser, „Quantifying SARS-CoV-2 transmission suggests epidemic control
+          with digital contact tracing,“ Science, Bd. eabb6936, p. 368, 2020.
+  [4] L. Morawska und J. Cao, „Airborne transmission of SARS-CoV-2: The world should face the
+          reality,“ Environment International, Bd. 139, 2020.
+  [5] E. Riley, G. Murphy und R. Riley, „Airborne Spread of Measles in a Suburban Elementary
+          School,“ American Journal of Epidemiology, Bd. 107, Nr. 5, pp. 421-432, 1978.
+  [6] W. Wells, Airborne contagion and air hygiene: an ecological study of droplet infections, 1955.
+  [7] C. Noakes und A. Sleigh, „Applying the Wells-Riley equation to the risk of airborne infection
+          in hospital environments: The importance of stochastic and proximity effects,“ in Indoor Air,
+          Copenhagen, Denmark, 2008.
+  [8] L. Gammaitoni und M. Nucci, „Using a Mathematical Model to Evaluate the Efficacy of TB
+          Control Measures,“ Emerging Infectious Diseases, Bd. 3, Nr. 3, pp. 335-342, 1997.
+  [9] H. Dai und B. Zhao, „Association of the infection probability of COVID-19 with ventilation
+          rates in confined spaces,“ Building Simulations, 2020.
+  [10] y. Liu, G. AA., A. Wilder-Smith und J. Rocklöv, „The reproductive number of COVID-19 is
+          hisher compared to SARS coronavirus,“ Journal of Travel Medicine, pp. 1-4, 2020.
+  [11] Y. Alimohamadi, M. Taghdir und M. Sepandi, „The Estimate of the Basic Reproduction
+          Number of Novel Coronavirus disease (COVID-19): A Systematic Review and Meta-
+          Analysis,“ Journal of Preventive Medicine and Public Health, Bd. March, 2020.
+  [12] Y.-F. Lin, Q. Duan, Y. Zhou, T. Yuan, P. Li, T. Fitzpatrick, F. Leiwen, A. Feng, G. Luo, Y.
+          Zhan, B. Liang, S. Fan, Y. Lu, B. Wang, Z. Wang, H. Zhao, Y. Gao, M. Li, D. Chen, X. Chen,
+          Y. Ao, L. Li, W. D. X. Cai, Y. Shu und H. Zhou, „Spread and Impact of COVID-19 in China:
+          A Systematic Review and Synthesis of Predictions From Transmission-Dynamic
+          Models,“ frontiers in Medicine, 2020.
+  [13] S. Miller, W. Nazaroff, J. Jimenez, A. Boerstra, G. Buonanno, S. Dancer, J. Kurnitski, L.
+          Marr, L. Morawska und C. Noakes, „Transmission of SARS-CoV-2 by inhalation of
+          respiratory aerosol in the Skagit Valley Chorale superspreading event,“ Preprint medXRiv,
+          2020.
+  [14] D. Mürbe, M. Kriegel, J. Lange, H. Rotheudt und M. Fleischer, „Aerosol emission is
+          inscreased in professional singing,“ Preprint, 2020.
+  [15] A. Hartmann, J. Lange, H. Rotheudt und M. Kriegel, „Emission rate and particle size of
+          bioaerosols during breathing, speaking and coughing,“ Preprint, 2020.
+  [16] N. van Doremalen, T. Bushmaker, D. Morris, M. Holbrook, A. Gamble, B. Williamson, A.
+          Tamin, J. T. N. Harcourt, S. Gerber, J. Lloyd-Smith, E. de Wit und V. Munster, „Aerosol and
+          Surface Stability of SARS-CoV-2 as Compared with SARS-CoV-1,“ New England Journal of
+          Medicine, Bde. %1 von %2April, 16, p. 382, 2020.
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209106.this version posted October 13, 2020. The copyright holder for this
+ preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                perpetuity.
+                                        All rights reserved. No reuse allowed without permission.
+  [17] J. Gupta, C.-H. Lin und Q. Chen, „Characterizing exhaled airflow from breathing and
+          talking,“ Indoor Air, Bd. 20, pp. 31-39, 2010.
+  [18] A. Córdova und I. Latasa, „Respiratory flows as a method for safely preventing the coronvirus
+          transmission (COVID-19),“ Apunts Sports Medicine, Bd. 55, pp. 81-85, 2020.
+  [19] J. Jiang, R. Hanna, M. Willey und A. Rieves, „The measurement of airflow using Singing
+          helmet that allows free movement of the jaw,“ Journal of Voice, Bd. 30, Nr. 6, pp. 641-648,
+          2016.
+  [20] R. Dumond, S. Gastinger, H. Rahman, A. Le Faucheur, P. Quinton, H. Kang und J. Prioux,
+          „Estimation of respiratory colume from thoracoabdominal breathing distances: comparison of
+          two models of machine learning,“ European Journal of Applied Physiology, Bd. 117, pp.
+          1533-1555, 2017.
+  [21] B. Binazzi, B. Lanini, R. Bianchi, I. Romagnoli, M. Nerini, F. Gigliotti, R. M.-E. J. Duranti
+          und G. Scano, „Breathing Pattern and kinematics in normal subjects during speech, singing
+          and loud whispering,“ Acta Physiologica, Bd. 186, pp. 233-246, 2006.
+  [22] Spektrum Akademischer Verlag, Heidelberg, „Lexikon der Biologie,“ spektrum.de, 1999.
+          [Online]. Available:
+          https://www.spektrum.de/lexika/showpopup.php?lexikon_id=9&art_id=5744&nummer=1988.
+          [Zugriff am 05 Oktober 2020].
+  [23] B. Stephens, „HVAC Filtration and the Wells-Riley approach to assessing risks of infectious
+          airborne diseases,“ 2013.
+  [24] S.-C. Chen, C.-M. Liao, S.-S. Li und S.-H. You, „A Probabilistic Transmission Model to
+          Assess Infection Risk from Mycobacterium Tuberculosis in Commercial Passenger
+          Trains,“ Risk Analysis, Bd. 31, Nr. 6, pp. 930-939, 2011.
+  [25] G. Chowell, H. Nishiura und L. M. A. Bettencourt, „Comparative estimation of the
+          reproduction number of pandemic influenza from daily case notification data,“ Journal of the
+          Royal Society Interface, Bd. 4, pp. 155-166, 2006.
+  [26] B. J. Coburn und S. Blower, „Predicting the potential for within-flight transmission and global
+          dissemination of MERS,“ The Lancet, Nr. 14, 2014.
+  [27] WHO, „WHO MERS Global Summary and Assessment of Risk,“ WHO, 2019.
+  [28] WHO, „Consensus document on the epidemiology of severe acute respiratory syndrome
+          (SARS),“ WHO, 2003.
+  [29] G. Buonanno, L. Stabile und L. Morawska, „Estimation of airborne viral transmission: Quanta
+          emission rate of SARS-CoV-2 for infection risk assessment,“ Environment International, Bd.
+          141, 2020.
+  [30] X. He, E. H. Y. Lau, P. Wu, X. Deng, J. Wang, X. Hao, Y. C. Lau, J. Y. Wong, Y. Guan, X.
+          Tan, X. C. Y. Mo, B. Lio, W. Chen, F. Hu, Q. Zhang, M. Zhong, Y. Wu, L. Zhao, F. Zhang,
+          C. B. J., F. Li und G. M. Leung, „Author Correction: Temporal Dynamics in viral shedding
+          and transmissibilitiy of COVID-19,“ Nature Medicine, 2020.
+  [31] N. A. o. Sciences, The Airliner Cabin Environment and the Health of Passengers and Crew,
+          United States of America: National Academy Press, 2002.
+  [32] T. Günther, M. Czech-Sioli, D. Indenbirken, A. Robitailles, P. Tenhaken, M. Exner, M.
+          Ottinger, N. Fischer, A. Grundhoff und M. M. Brinkmann, „Investigation of a superspreading
+          event preceding the largest meat processing plant-related SARS-Coronavirus 2 outbreak in
+          Germany,“ Preprint, 2020.
+  [33] Y. Shen, C. Li, H. Dong, Z. Wang, L. Martinez, Z. Sun, A. Handel, Z. Chen, E. Chen, M.
+          Ebel, F. Wang, B. Yi, H. Wang, X. Wang, A. Wang, B. Chen, Y. Qi, L. Liang, Y. Li, F. Ling,
+          J. Chen und G. Xu, „Community Outbreak Investigation of SARS-CoV-2 Transmission
+          Among Bus Riders in Eastern China,“ JAMA International Medicine, 2020.
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209106.this version posted October 13, 2020. The copyright holder for this
+ preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                perpetuity.
+                                        All rights reserved. No reuse allowed without permission.
+  [34] S. Park, Y.-M. Kim, S. Lee, B.-J. Na, C. Kim, J.-i. Kim, H. Kim, Y. Kim, Y. Park, I. Huh, H.
+          Kim, H. Yoon, H. Jang, K. Kim, Y. Chang, I. Kim, H. Lee, J. Gwack, S. Kim, M. Lim, S.
+          Kweon, Y. Choe, O. Park und E. Jeong, „Coronavirus Disease Outbreak in Call Center, South
+          Korea,“ Emerging Infectious Diseases, Bd. 26, Nr. 8, pp. 1666-1670, 2020.
+  [35] C. Stein-Zamir, N. Abramson, H. Shoob, E. Libal, M. Bitan, T. Cardash, R. Cayam und I.
+          Miskin, „A large COVID-19 outbreak in a high school 10 days after schools' reopening,
+          Israel, May 2020,“ Eurosurveillance, 2020.
+  [36] J. Lu, J. Gu, K. Li, C. Xu, W. Su, Z. Lai, D. Zhou, C. Yu, B. Xu und Z. Yang, „COVID-19
+          Outbreak Associated with Air Conditioning in Restaurant, Guangzhou, China,“ Emerging
+          Infectious Diseases, Bd. 26, Nr. 7, pp. 1628-1631, 2020.
+  [37] N. C. Khanh, P. Q. Thai, H.-L. Quach, N.-A. H. Thi, P. C. Dinh, T. N. Duong, L. T. Q. Mai,
+          N. D. Nghia, T. T. A., L. N. Quang, T. D. Quang, T.-T. Nguyen, F. Vogt und D. D. Anh,
+          „Transmission of Severe Acute Respiratory Syndrome Coronavirus 2 During Ling
+          Flight,“ Emerging Infectious Diseases, Bd. 26, Nr. 11, 2020.
+  [38] G. Buonanno, L. Morawska und L. Stabile, „Quantitative Assessment of the Risk of Airborne
+          Transmission of SARS-COV-2-Infection: Prospective and Retrospective
+          Applications,“ Preprint MedXRiv, 2020.

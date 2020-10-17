@@ -1,0 +1,700 @@
+  medRxiv preprint doi: https://doi.org/10.1101/2020.09.23.20191726.this version posted October 15, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                              All rights reserved. No reuse allowed without permission.
+                                                             IEEE TRANSACTIONS ON MEDICAL IMAGING, VOL. XX, NO. XX, XXXX 2020                    1
+      SCOAT-Net: A Novel Network for Segmenting
+    COVID-19 Lung Opacification from CT Images
+        Shixuan Zhao, Zhidan Li, Yang Chen, Wei Zhao, Xingzhi Xie, Jun Liu∗ , Di Zhao∗ , and Yongjie Li∗
+   Abstract— Coronavirus disease 2019 (COVID-19) caused                       reaction (RT-PCR) is the gold standard for diagnosing COVID-
+by severe acute respiratory syndrome coronavirus 2                            19 [6], but it also has the disadvantages of a high false-negative
+(SARS-CoV-2) has spread worldwide at a rapid rate. As                         rate [7]–[9] and the inability to provide information about the
+of yet, there is no clinically automated tool to quantify
+the infection of COVID-19 patients, which is of great sig-                    patient’s condition.
+nificance for judging the disease development and treat-                         COVID-19 has certain typical visible imaging features,
+ment response of patients. Automatic segmentation of                          such as lung opacification caused by ground-glass opacities
+lung opacification from computed tomography (CT) images                       (GGO), consolidation, and pulmonary fibrosis, which can be
+shows excellent potential for this purpose but still faces                    observed in thoracic computed tomography (CT) images [9]–
+some challenges, including the complexity and variability
+features of the opacity regions, the small difference be-                     [11]. Therefore, CT can be used as an essential tool for
+tween the infected and healthy tissues, and the noise of                      clinical diagnosis. CT can also directly reflect changes in lung
+CT images. However, due to limited medical resources, it                      inflammation during the treatment process and is a crucial
+is impractical to obtain a large amount of data in a short                    indicator for evaluating the treatment effect [6]. However, in
+time, which further hinders the training of deep learning                     the course of treatment, the need for repeated inspections leads
+models. To answer these challenges, we proposed a novel
+spatial- and channel-wise coarse-to-fine attention network                    to a sharp increase in the workload of radiologists. In addition,
+(SCOAT-Net), inspired by the biological vision mechanism,                     the assessment of inflammation requires a comparison of
+for the segmentation of COVID-19 lung opacification from                      the region of lesions before and after treatment. Quantitative
+CT images. SCOAT-Net has a spatial-wise attention module                      diagnosis by radiologists is inefficient and subjective and is
+and a channel-wise attention module to attract the self-                      difficult to be widely promoted. Artificial intelligence (AI)
+attention learning of the network, which serves to extract
+the practical features at the pixel and channel level suc-                    technology may gradually come to play an important role in
+cessfully. Experiments show that our proposed SCOAT-Net                       CT evaluation of COVID-19 by enabling the evaluation to be
+achieves better results compared to state-of-the-art image                    carried out more quickly and accurately. AI can also realize
+segmentation networks.                                                        the rapid response by integrating multiple functionalities,
+   Index Terms— COVID-19, convolution neural network,                         such as diagnosis [12], segmentation [13], and quantitative
+segmentation, lung opacification, attention mechanism                         analysis [14], assisting doctors in rapid screening, differential
+                                                                              diagnosis, disease course tracking, and efficacy evaluation to
+                                                                              improve the ability to handle COVID-19. In this study, we
+                         I. I NTRODUCTION                                     focus on the segmentation of COVID-19 lung opacification
+                                                                              from CT images.
+T      HE Coronavirus disease 2019 (COVID-19), which is
+       caused by severe acute respiratory syndrome coronavirus
+2 (SARS-CoV-2), has become an ongoing pandemic [1]–
+                                                                                 Benefiting from the rapid development of deep learning
+                                                                              [15], many excellent convolution neural networks (CNNs)
+[4]. As of 9 September 2020, there have been 212 countries                    have been applied to medical image analysis tasks and have
+with outbreaks, a total of 27,486,960 cases diagnosed, and                    achieved the most advanced performance [12], [16], [17].
+894,983 deaths, and the number of infected people continues to                CNNs can be applied in various image segmentation tasks due
+increase [5]. Clinically, reverse transcription-polymerase chain              to their excellent expression ability and data-driven adaptive
+                                                                              feature extraction model. However, the success of any CNN
+   ∗ Corresponding author: Jun Liu (junliu123@csu.edu.cn), Di Zhao            is inseparable from the accurate manual labeling of a large
+(zhaodi@ict.ac.cn), and Yongjie Li (liyj@uestc.edu.cn).                       number of training images by medical personnel, so CNNs
+   Shixuan Zhao, Zhidan Li, and Yongjie Li are with the MOE Key Lab for       are not suitable for all tasks. COVID-19 lung opacification
+Neuroinformation, School of Life Science and Technology, University of
+Electronic Science and Technology of China, Chengdu, China.                   segmentation based on CT images is an arduous task that has
+   Yang Chen is with the West China Biomedical Big Data Center, West          the following problems. First, in the emergency situation of
+China Hospital, Sichuan University, Chengdu, China.                           the COVID-19 outbreak, it is difficult to obtain enough data
+   Wei Zhao, Xingzhi Xie and Jun Liu is with the Department of Radi-
+ology, The Second Xiangya Hospital, Central South University, No.139          with accurate labels to train deep learning models in a short
+Middle Renmin Road, Changsha, Hunan, China                                    time due to limited medical resources. Second, the infection
+   Jun Liu is with the Department of Radiology Quality Control Center,        areas in a CT slice show various features such as different
+Changsha, Hunan, China
+   Di Zhao is with the Institute of Computing Technology, Chinese             sizes, positions, and textures, and there is no distinct boundary,
+Academy of Sciences, Beijing, China                                           which increases the difficulty of segmentation. Third, due
+          NOTE: This preprint reports new research that has not been certified by peer review and should not be used to guide clinical practice.
+
+  medRxiv preprint doi: https://doi.org/10.1101/2020.09.23.20191726.this version posted October 15, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+2                                             All rights reserved. No reuse allowed  without permission.
+                                                                              IEEE TRANSACTIONS    ON MEDICAL IMAGING, VOL. XX, NO. XX, XXXX 2020
+to the complexity of the medical images, the lung opacity                    areas such as the trachea, blood vessels, emphysema back-
+area is quite similar to other lung tissues and structures,                  ground, and the CNNs method calculations based on the local
+making it challenging to identify. Several works [18]–[20]                   image, leading inevitably to the overfitting of irrelevant in-
+have tried to solve these challenges from the perspectives                   formation of the model. We designed the spatial-wise module
+of reducing manual depiction time, using noisy labels, and                   to generate attention maps in feature extraction, suppressing
+implementing semi-supervised learning, and have achieved                     irrelevant information, and enhancing essential information
+specific results. Our approach in this study is derived from                 in the spatial domain. Given the large intra-class differences
+the attention learning mechanism, which makes full use of                    between opacity regions, the channel-wise module can select
+the inherent extraordinary self-attention ability of CNN to                  and reorganize the spatial domain features.
+make the network generate attention maps and make the                           Based on this method, we propose a spatial and channel-
+attention vectors in the training process weight the spatial                 wise coarse-to-fine attention network (SCOAT-Net) and use it
+domain feature and channel domain feature. The areas and                     to solve the segmentation task of COVID-19 lung opacifica-
+features activated by the network can diagnose the target area               tion. Compared with traditional CNNs, our model recognizes
+more accurately. Furthermore, a series of studies [21]–[23]                  the opacity area better, making it more suitable for complex
+have proved the effectiveness of the attention mechanism for                 medical imaging tasks. The contributions of this paper are
+classification and segmentation tasks.                                       threefold:
+   The attention mechanism stems from the study of biological                   • We propose a novel coarse-to-fine attention network
+vision mechanisms [24], particularly selective attention, a                        for segmentation of COVID-19 lung opacification from
+characteristic of human vision. In cognitive neuroscience, it                      CT images, which utilizes embedded spatial-wise and
+is believed that an individual cannot receive and pay attention                    channel-wise attention modules and achieves state-of-the-
+to all stimuli due to the bottleneck of information processing.                    art performance (i.e., an average Dice similarity coeffi-
+Humans selectively focus on some information while ignoring                        cient, or DSC, of 0.8948).
+other visible information. The feature integration theory pro-                  • We use the self-attention method so that the neural
+posed by Treisman [25] uses a spotlight to describe the spatial                    network can generate attention maps without external
+selectivity of attention metaphorically. This model points out                     region of interest (ROI) supervision. Furthermore, we
+that visual processing is divided into two stages. In the first                    use this method to understand the training process of the
+stage, visual processing quickly and spontaneously performs                        network by observing the areas that the network focuses
+low-level feature extraction, including orientation, brightness,                   on in different stages and increasing the interpretability
+and color, from the visual input in various dimensions in a                        of the neural network.
+parallel manner. In the second stage, visual processing will                    • We verify the robustness and compatibility of the SCOAT-
+locate objects based on the features of the previous stage,                        Net on different types of CT scans and confirm that it
+generate a map of locations, and dynamically assemble the                          has specific data migration capability. Moreover, it can
+low-level features of each dimension of the activation area into                   provide a quantitative assessment of pulmonary involve-
+high-level features. Generally speaking, essential areas attract                   ment, a difficult task for radiologists, and thus enhance
+the attention of the visual system more strongly. Wolfe believes                   the clinical follow-up of patient disease development and
+that the attention mechanism uses not only the bottom-up                           treatment response.
+information of the image but also top-down information of
+the high-level visual organization structure [26], and the high-
+                                                                                                   II. R ELATED W ORKS
+level information can effectively filter out a large amount of
+irrelevant information.                                                      A. Segmentation Networks
+   This work is inspired by the biological vision mechanism                     Deep neural networks (DNNs) have shown excellent per-
+and proposes a novel attention learning method. We use a                     formance for many automatic image segmentation tasks. Zhao
+traditional CNN to complete the extraction of local image                    et al. proposed the pyramid scene parsing network (PSPNet)
+features spontaneously. After that, we generate an attention                 [27], which introduces global pyramid pooling into the fully
+map based on the low-level features of the previous stage                    convolutional network (FCN) to make the global and local
+to activate the spatial response of the feature, then calculate              information act on the prediction target together. DeeplabV3
+the attention vector based on the feature interdependence of                 [28], [29] proposed the ASPP (atrous spatial pyramid pool-
+the activation area to activate the channel response of the                  ing) module to make the segmentation model perform better
+feature, and finally complete the reorganization of the high-                on multi-scale objects. U-Net [13] was introduced by Ron-
+level features. The attention map and attention vector contain               neberger et al. based on the encoder-decoder structure that is
+top-down information fed back to the current local features in               widely used in medical image segmentation due to its excellent
+the form of gating. We call this attention process a coarse-                 performance. It uses skip connections to connect the high-level
+to-fine process, which is a hybrid domain attention mode that                low-resolution semantic feature map and the low-level high-
+includes spatial-wise and channel-wise attention modules.                    resolution structural feature map of the encoder and decoder so
+   We believe that the attention learning method proposed                    that the network output has a better spatial resolution. Oktay et
+above aids the issues faced by segmenting COVID-19 lung                      al. [21] proposed the attention gate model and applied it to the
+opacification. The lung CT slices of patients with pneumonia                 U-Net model, which improved the sensitivity and prediction
+contain tissue structures easily confused with inflammation                  accuracy of the model without increasing the calculation cost.
+
+  medRxiv preprint doi: https://doi.org/10.1101/2020.09.23.20191726.this version posted October 15, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+AUTHOR et al.: PREPARATION OF PAPERS FOR All       rights
+                                                IEEE      reserved. NoAND
+                                                      TRANSACTIONS       reuse   allowed (OCTOBER
+                                                                            JOURNALS     without permission.
+                                                                                                      2020)                                            3
+                                        L                                                                 L
+    X0,0         X0,1            X0,2       X0,3            X0,4    X0,0            X0,1         X0,2         X0,3       X0,4
+                                                                                                                                      Down-sampling
+           X1,0         X1,1           X1,2          X1,3                   X1,0          X1,1           X1,2       X1,3
+                                                                                                                                      Up-sampling
+                 X2,0            X2,1       X2,2                                    X2,0         X2,1         X2,2                    Skip connection
+                                                                                                                                Xi, j Convolution
+                       X3,0            X3,1                                               X3,0           X3,1                         Spatial-wise
+                                                                                                                                      attention module
+                                                                                                                                      Channel-wise
+                                 X4,0                                                            X4,0                           Xi, j
+                                                                                                                                      attention module
+                                                                                                                                 L    Loss function
+                             (a) UNet++                                                    (b) SCOAT-Net
+Fig. 1. Comparison of UNet++ (a) and the proposed SCOAT-Net (b).
+UNet++ [30] uses a series of nested and dense skip paths                          C. Attention Mechanism
+to connect the encoder and decoder sub-networks based on                             More and more attempts have been focused on the combina-
+the U-NET framework, which further reduces the semantic                           tion of deep learning and visual attention mechanisms, which
+relationship between the encoder and decoder and achieves                         can be roughly divided into two categories: external-attention
+better performance in liver segmentation tasks.                                   mechanisms and self-attention mechanisms. An external-
+                                                                                  attention mechanism allows the network to learn to generate
+                                                                                  an attention map during the training process by conducting
+B. Artificial Intelligence for COVID-19 based on CT                               ROI supervision externally so that the region activated by the
+   The segmentation of lung opacification based on CT images                      network can accurately diagnose disease changes. One study
+is an integral part of COVID-19 image processing, and there                       [23], [38] applied this mechanism to the diagnosis of COVID-
+are many related works on this topic. Using the lungs and                         19 and glaucoma, and the sensitivity was greatly improved. In
+pulmonary opacities manually segmented by experts as stan-                        contrast, a self-attention mechanism does not rely on external
+dards, Cao et al. [31] and Huang et al. [32] developed a CT                       ROI supervision but rather exploits the intrinsic self-attention
+image prediction model based on CNNs to monitor COVID-                            ability of CNN. Self-attention consists of two parts, among
+19 disease development, and it showed excellent potential for                     which spatial-wise attention [21], [39], [40] redistributes the
+the quantification of lung involvement. Some studies [33]–                        network’s attention at the pixel level of the feature map
+[37] trained segmentation models with CT and segmentation                         to achieve more precise location, and channel-wise attention
+templates of abnormal lung cases, which can extract the                           [41] redistributes the attention at the channel level to instruct
+areas related to lung diseases, making the learning process                       the network in selecting practical features. In [42], spatial
+of pneumonia type classification easier in the next steps. The                    and channel dimension attention were combined with parallel
+deep learning model relies on a large amount of data training,                    mode to jointly guide network training, which captured rich
+and it is impractical to collect a large amount of data with                      contextual dependencies to address the segmentation task.
+professional labels in a short time. Several research groups                      Chen et al. [43] proposed SCA-CNN for the task of image
+[18]–[20] attempted to solve this challenge from the perspec-                     captioning, which incorporated spatial- and channel-wise at-
+tives of reducing manual delineation time, using noisy labels,                    tention mechanisms. Zhang et al. [22] proposed an attention
+and implementing semi-supervised learning. VB-Net [18] has                        learning method with the higher layer feature as the attention
+a perfect effect on the segmentation of COVID-19 infection                        mask of the lower layer feature, which can achieve the best
+regions. The mean percentage of infection (POI) estimation                        performance in skin lesion classification.
+error for automatic segmentation and manual segmentation
+on the verification set is only 0.3%. In particular, it adopts                                                III. M ETHOD
+a human-in-the-loop strategy to reduce the time of manual de-                        UNet++ is an excellent image segmentation network which
+lineation significantly. Wang et al. [19] proposed noise-robust                   has achieved high-grade performance in medical imaging
+Dice loss and applied it in COPLE-Net, which surpasses other                      tasks. It contains dense connections that make the contex-
+anti-noise training methods to learn COVID-19 pneumonia                           tual information of different scales closely related. However,
+lesion segmentation in noisy labels. Inf-Net [20] uses a parallel                 although this complicated connection method improves the
+partial decoder to aggregate high-level features and generate                     generalization ability of the model, it also causes information
+a global map to enhance the boundary area. It also uses a                         redundancy and weak convergence of the loss function on a
+semi-supervised segmentation framework to achieve excellent                       small data set. Medical images have the characteristics of high
+performance in lung infection area segmentation.                                  complexity and noise, which cause model overfitting when
+
+  medRxiv preprint doi: https://doi.org/10.1101/2020.09.23.20191726.this version posted October 15, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+4                                                                All rights reserved. No reuse allowed          without permission.
+                                                                                                         IEEE TRANSACTIONS        ON MEDICAL IMAGING, VOL. XX, NO. XX, XXXX 2020
+                               𝑥𝑥 𝑖𝑖,𝑗𝑗 : 𝐻𝐻𝑢𝑢 𝑊𝑊𝑢𝑢 𝐶𝐶𝑢𝑢                                                                     𝐹𝐹𝐿𝐿              Attention Vector
+                                                                                                                                               𝑥𝑥𝑉𝑉 : 1 × 1 × 𝐶𝐶𝑚𝑚
+      Xi, j
+                                                             Attention Map                                         𝐹𝐹𝑃𝑃
+                         ℋ𝑅𝑅
+                                                             𝑖𝑖,𝑗𝑗+1
+                                                           𝑥𝑥𝑀𝑀 : 𝐻𝐻𝑢𝑢 𝑊𝑊𝑢𝑢 × 1                                                                                       𝑥𝑥 𝑖𝑖,𝑗𝑗+1 : 𝐻𝐻𝑢𝑢 𝑊𝑊𝑢𝑢 𝐶𝐶𝑢𝑢
+                                                                                                                                         ℋ𝑅𝑅2
+                                ℋ𝑆𝑆
+                          ℋ𝑅𝑅                                                             𝑥𝑥𝑐𝑐 : 𝐻𝐻𝑢𝑢 𝑊𝑊𝑢𝑢 𝐶𝐶𝑚𝑚   ℋ𝑅𝑅
+                                                                                                                                                         Xi, j                    Xi, j+1
+                          𝐹𝐹𝑈𝑈
+     Xi+1, j                   𝑥𝑥 𝑖𝑖+1,𝑗𝑗 : 𝐻𝐻𝑑𝑑 𝑊𝑊𝑑𝑑 𝐶𝐶𝑑𝑑
+                                                                                                                                                                   Xi+1, j
+                Spatial-Wise Attention Module                                                       Channel-Wise Attention Module
+Fig. 2. Illustration of spatial-wise attention module and channel-wise attention module.
+the amount of training data is insufficient. The SCOAT-Net                                             by all the filters to calculate the attention map of the image and
+proposed in this work redesigns the connection structure of                                            adjust the target area of the network adaptively. The output of
+UNet++ and introduces the attention learning mechanism. It                                             the spatial-wise attention module is contacted with the feature
+extracts the spatial and channel features from coarse to fine                                          maps of the same layer to enter the channel-wise attention
+with only a few added parameters and obtains more accurate                                             module, as shown in the orange circle. The channel-wise
+segmentation results.                                                                                  attention module calculates the interdependence between the
+                                                                                                       channels and adaptively recalibrates the information response
+A. Structure of the Lung Opacification Segmentation                                                    of the channel. Additionally, in each convolution module, we
+Network                                                                                                use the residual block to train our network.
+   Fig. 1 compares the basic structures of UNet++ and the pro-
+                                                                                                       B. Spatial-Wise Attention
+posed SCOAT-Net. Inheriting the basic structure of UNet++,
+SCOAT-Net is composed of an encoder and a decoder con-                                                       The proposed spatial-wise attention module emphasizes
+nected by skip connections. The encoder extracts the informa-                                          attention at the pixel level, making the network pay attention to
+tion of the semantic level of the image and provides a rela-                                           the key formation and ignore irrelevant information. Normally,
+tively coarse location, using a max-pooling layer as a down-                                           in a CNN, the features extracted by the network change from
+sampling module. The decoder reconstructs the segmentation                                             simple low-level features to complex high-level features with
+template from the semantic information. It uses U-shaped skip                                          the deepening of the convolutional layers. When calculating
+connections to receive the corresponding low-level features of                                         the attention map, we can not only use the information of
+the encoder and calculate the final segmentation result. The                                           single-layer features but also combine the upper and lower
+upsampling module of the decoder uses the bilinear inter-                                              features of different resolutions. The final output of this
+polation layer instead of the deconvolution layer to improve                                           module is expressed as xs ∈ RHu ×Wu ×Cu , which is given
+the resolution of the feature map. This method dramatically                                            by (1) and (2):
+reduces the number of parameters as well as the calculation                                                      xi,j+1    = HS HR xi,j + HR FU (xi+1,j ) ,
+                                                                                                                                                                                
+                                                                                                                   M                                                                              (1)
+cost, and it has good performance on small-scale datasets.
+                                                                                                                        xs = (1 + xi,j+1
+                                                                                                                                      M   ) · FU (xi+1,j ),                                       (2)
+   We reconstruct the connection at the top of the network
+(except for the bottom layer X0,j ) and introduce the attention                                        where the function HR (·) stands for the convolution of size
+module. This causes the calculation of the attention mechanism                                         1 × 1 followed by a batch normalization and a ReLU, used for
+to act on the high-level semantic information and keep the                                             feature integration. HS (·) denotes the convolution of size 1×1
+bottom layer of the detailed image information as much as                                              followed by a batch normalization and a sigmoid activation
+possible, resulting in fine, high-resolution segmentation. The                                         function, used for feature integration and generation of the
+proposed attention module consists of two parts: the spatial-                                          attention maps. FU (·) is the up-sampling operation with a
+wise attention module and the channel-wise attention module.                                           bilinear interpolation function. The input of this module is
+   We use context feature maps with different resolutions                                              composed of the upper layer feature xi,j ∈ RHu ×Wu ×Cu and
+as information of different dimensions for the spatial-wise                                            the lower layer feature xi+1,j ∈ RHd ×Wd ×Cd , where xi,j
+attention module, as shown in the green circle of Fig. 1, which                                        represents the output of each convolution module Xi,j . xM ∈
+can combine all the multi-dimensional feature maps extracted                                           RHu ×Wu ×1 is the attention map generated by this module,
+
+  medRxiv preprint doi: https://doi.org/10.1101/2020.09.23.20191726.this version posted October 15, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+AUTHOR et al.: PREPARATION OF PAPERS FOR All   IEEErights reserved. NoAND
+                                                      TRANSACTIONS     reuse allowed (OCTOBER
+                                                                          JOURNALS    without permission.
+                                                                                                 2020)                                                 5
+which uses the saliency information in the spatial position                   D. Loss Function
+to weigh the input features to complete the redistribution of
+                                                                                 SCOAT-Net has a deep supervision strategy, which can
+the feature attention at the pixel level. The attention map                   use any one of the segmentation branch outputs (x0,j , j ∈
+generated by the sigmoid function is normalized between 0                     1, 2, 3, 4) to calculate the loss or use the output of all branches
+and 1, and the output response will be weakened after point                   to calculate the average of the loss. The choice depends on the
+multiplication with the current feature map. Nested structure                 tasks and data. By combining binary cross-entropy (BCE) loss
+uses of this method will lead to over-fitting or the degradation              and dice coefficient loss [44], we use a hybrid loss function
+                                                                              for segmentation as follows:
+of model performance caused by the gradient’s disappearance.
+To improve this phenomenon, inspired by the ResNet, we add                      Lseg = Lbce + α × Ldice
+the original features xi+1,j after weighting them by xi,j+1       M    , as                    N
+shown in (2). The final output xs is sent to the next channel-                              1 X                                                     
+                                                                                      =−            Yb · log(σ(Ŷb )) + (1 − Yb ) · log(σ(1 − Ŷb ))
+wise attention module.                                                                     N
+                                                                                              b=1
+                                                                                         2α × Y · Ŷ
+                                                                                      −                 ,                                            (7)
+                                                                                          Y 2 + Yˆ2
+C. Channel-Wise Attention
+   The input xc ∈ RHu ×Wu ×Cm of the proposed channel-wise                    where Y = {Y1 , Y2 , · · · , Yb } denotes the ground truths, Ŷ
+attention module is obtained by concatenating the spatial-wise                denotes the predicted probabilities, N indicates the batch size,
+attention module’s output xs with the feature map of the same                 and σ(·) corresponds to the sigmoid activation function. This
+layer, as in (3):                                                             hybrid loss includes pixel-level and batch-level information,
+                              h      j−1       i                            which helps the network parameters to be better optimized.
+                       xc = xi,k k=0 , xs ,                             (3)
+where [·] represents concatenation. xg ∈ R1×1×Cm is the                       E. Evaluation Metrics
+channel-wise statistical information calculated by xc through
+                                                                                 To evaluate the performance of lung opacification segmen-
+a global average pooling layer, as in (4), which can reflect the
+                                                                              tation, we measure the Dice similarity coefficient (DSC),
+response degree on each feature map.
+                                                                              sensitivity (SEN), positive predicted value (PPV), volume
+                                              Hu XWu                          accuracy (VA), regional level precision (RLP), and regional
+                                     1        X
+          xg = FP (xc ) =                              xc (i, j).       (4)   level recall (RLR) between the segmentation results and the
+                               Hu × Wu i=1 j=1                                ground truth, which are defined as follows.
+We want the module to adaptively learn the feature channels                                   2|Va ∩ Vb |               |Va ∩ Vb |
+                                                                                   DSC =                    , SEN =                 ,
+that require more attention, and we also want it to learn                                     |Va | + |Vb |                |Vb |
+the interdependence between channels. Inspired by the SENet                                                                                         (8)
+                                                                                              |Va ∩ Vb |                 2abs(|Va | − |Vb |)
+[41], we pass xg through two fully connected (FC) layers                           PPV =                  , VA=1−                            ,
+                                                                                                  |Va |                     |Va | + |Vb |
+with parameters ω1 and ω2 to obtain the attention vector
+xV ∈ R1×1×Cm of the channel, as in (5):                                       where Va and Vb refer to the segmented volumes by the model
+                                                                              and the ground truth, respectively. In addition to the above
+                 xV = FL (xg ) = σ (ω2 ρ (ω1 xg )) ,                    (5)   voxel-level evaluation indicators, we also design the regional-
+                                                                              level evaluation indicators RLP and RLR, as in (9):
+where ρ(·) refers to the ReLU activation function, and σ(·)
+refers to the sigmoid activation function. A structure con-                                                   Np             Nt
+                                                                                                   RLP =         , RLR =          .                 (9)
+taining two fully connected layers, which reduces the com-                                                    Na             Nb
+plexity and improves the generalization ability of the model,
+is adopted here. The fully connected layer of parameter                       Na denotes the total number of connected regions of the
+        Cm
+ω1 ∈ R r ×Cm reduces the feature channels’ dimension with                     model prediction result, Np denotes the number of real opacity
+reduction ratio r (r = 16 in this experiment). In contrast, the               regions predicted by the model, Nb denotes the total number
+fully connected layer of parameter ω2 ∈ RCm × r recombines
+                                                          Cm
+                                                                              of real opacitiy regions, and Nt denotes the number of real
+the feature channels to increase its dimension to Cm . The                    opacity regions predicted by the model. If the center of the
+attention vector xV finally weights the input feature map                     connected area predicted by the model is in a real opacity
+xc , and after the convolution operation completes the feature                region, then we accept that the predicted connected area is
+extraction, it is added to itself to obtain the final output                  correct. We calculate the center of the connected area as:
+xi,j+1 ∈ RHu ×Wu ×Cu , as in (6):
+                                                                                    u = arg min max kui − vj k , (ui ∈ U, vj ∈ V ),               (10)
+                                                                                                i      j
+                  i,j+1       2
+                x       =   HR   (xV   · xc ) + HR (xc ),               (6)
+                                                                              where U represents the point set of a single connected area
+          2
+where HR    (·) represents the two-layer convolution for feature              of the prediction result, and V represents the point set of its
+extraction.                                                                   edge.
+
+  medRxiv preprint doi: https://doi.org/10.1101/2020.09.23.20191726.this version posted October 15, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+6                                             All rights reserved. No reuse allowed  without permission.
+                                                                              IEEE TRANSACTIONS     ON MEDICAL IMAGING, VOL. XX, NO. XX, XXXX 2020
+                IV. E XPERIMENT         AND   R ESULTS                       predict the entire opacity area better, but it also causes the
+A. Data and Implementation                                                   PPV and RLP performance to decline because it yields more
+                                                                             false-positive predictions. The hybrid loss function combining
+   This study and its procedures were approved by the local                  BCE and Dice with parameter α (we set α = 0.5 in the
+ethics committees. All methods were performed in accordance                  experiments) produced the best results. Except for SEN and
+with the relevant guidelines and regulations. Written informed               RLR, which were slightly lower than Dice, the other indicators
+consent from the study patients was not required. The data                   were the best. The box plot shown in Fig. 3 demonstrates
+contained 19 lung CT scans of COVID-19 patients obtained                     the performance of our proposed network with the BCE-Dice
+using SOMATOM Definition AS and 1117 lung opacification                      loss function. In 19 cases, the model we proposed exhibited
+segmentation delineated by radiologists on the single-slice CT.              excellent performance. The medians of DSC, SEN, and PPV
+Additionally, we prepared a total of eight lung CT scans of two              were all higher than 0.9, and the medians of VA, RLP, and
+patients scanned at different times using SOMATOM go.Top,                    PLR were higher than 0.95, even though one or two cases did
+and these scans were used to test the compatibility of our                   not achieve excellent results.
+model in different device types. We performed five-fold cross-
+validation to test the results. The input images were single-
+layer CT images, which were in the size of 512×512 pixels                         1
+to ensure the high resolution of the result and were normalized
+before being sent to the network. The sketch templates of the                   0.9
+radiologists served as the ground truth, so they were used to
+calculate the loss function with the final output of the network.               0.8
+We used the gradient descent algorithm with Adam to optimize
+                                                                                0.7
+the loss function that updates the network parameters. The
+learning rate was set to 0.01, which was multiplied by 0.1 after                0.6
+every ten epoch decays. When the iterative result converged,
+we adjusted the learning rate to 0.001 for training again.                      0.5
+The learning rate decay strategy remained unchanged, and                                DSC       SEN      PPV         VA        PLP       PLR
+the iteration was set to 50 times. The final results of training
+in this warm-up [46] method will be slightly improved. All                   Fig. 3. The segmentation performances of SCOAT-Net with BCE-Dice
+                                                                             loss function.
+experiments were conducted on an NVIDIA RTX GPU, and
+the proposed SCOAT-Net was implemented based on a Pytorch
+framework.                                                                                                   TABLE II
+                                                                                Q UANTITATIVE   EVALUATION OF DEFFERENT NETWORKS FOR LUNG
+                                 TABLE I                                      OPACIFICATION SEGMENTATION .    T HE BCE-D ICE    LOSS WAS USED FOR
+  Q UANTITATIVE  EVALUATION OF    SCOAT-N ET    WITH DEFFERENT LOSS                                         TRAINING .
+         FUNCTIONS FOR LUNG OPACIFICATION SEGMENTATION .
+                                                                                                                       Results (%)
+                                           Results (%)                                 Methods         DSC    SEN      PPV     VA    RLP     RLR
+       Loss functions      DSC     SEN     PPV      VA     RLP   RLR             PSPNet [27]          85.08   84.95   85.84   92.32  90.71   86.06
+    MAE [47]              85.74   84.97   83.52   91.78    82.49 84.77           ESPNetv2 [50]        86.06   83.38   89.67   91.03  75.45   90.45
+    IOU [48]              88.10   86.36   90.47   94.69    92.28 88.17           DenseASPP [51]       85.46   83.80   89.09   91.48  87.81   88.23
+    BCE                   88.53   86.85   91.43   94.70    92.47 89.93           DeepLabV3+ [28]      87.43   86.23   89.46   94.72  91.95   90.58
+    Dice [44]             86.79   89.24   85.38   90.78    86.77 92.30           U-Net [13]           84.72   82.23   87.90   91.13  92.00   87.68
+    Focal [49]            87.73   87.28   87.93   93.86    88.18 88.96           CE-Net [52]          78.77   78.62   81.04   80.39  79.24   82.08
+    BCE-Dice (α = 0.5)    89.48   88.74   90.64   95.26    93.66 91.94           Attention U-Net [21] 85.64   84.87   86.69   94.94  91.44   86.30
+                                                                                 UNet++ [30]          84.82   83.55   86.35   94.23  89.51   85.19
+                                                                                 Proposed             89.48   88.74   90.64   95.26  93.66   91.94
+B. Results on Lung Opacification Segmentation
+   The aim of this experiment was to evaluate the performance                C. Comparison of Different Networks
+of our proposed SCOAT-Net with different loss functions for                     We compared our proposed SCOAT-Net with other popular
+lung opacification segmentation. We used six different loss                  segmentation algorithms for lung opacification segmentation.
+functions, namely MAE [47], IOU [48], BCE, Dice [44],                        The BCE-Dice loss function was used to train these networks.
+Focal [49], and BCE-Dice, to train the proposed network with                 The quantitative evaluation of these networks was calculated
+the same strategy and hyper-parameters, and the quantitative                 by cross-validation, as shown in Table II. ESPNetv2 had good
+comparison is listed in Table I. It is evident that IOU, BCE,                PPV and RLR, but RLP was extremely low, which shows that
+and Focal had excellent segmentation performance, and their                  the lightweight models could not achieve excellent region-level
+DSCs were the highest. Among them, Focal was superior to                     segmentation results on complex medical image segmentation
+IOU and BCE in terms of SEN but slightly inferior in terms                   tasks. DeepLabV3+ achieved an excellent result in Table
+of PPV and RLP. It is worth noting that Dice had a more                      II, which perhaps results from the good adaptability of its
+significant performance in terms of SEN and RLR. Dice can                    atrous spatial pyramid pooling module designed for semantic
+
+  medRxiv preprint doi: https://doi.org/10.1101/2020.09.23.20191726.this version posted October 15, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+AUTHOR et al.: PREPARATION OF PAPERS FOR All     rights
+                                              IEEE      reserved. NoAND
+                                                    TRANSACTIONS     reuse allowed (OCTOBER
+                                                                        JOURNALS   without permission.
+                                                                                             2020)                                               7
+                            Case #1                  Case #2                Case #3                    Case #4                  Case #5
+   Ground
+   Truth
+   PSPNet
+   ESPNetv3
+   DeepLabV3+
+   U-Net
+   Attention
+   U-Net
+   UNet++
+   SCOAT-Net
+Fig. 4. Visual comparison of segmentation performance of different models trained with BCE-Dice loss function. The red curves represent the
+ground truth, and the cyan curves represent the results of the model.
+segmentation. U-Net, which has an excellent performance in                  work.
+many medical image segmentation tasks, had excellent RLP                       Our proposed SCOAT-Net achieved the best performance
+but the lowest SEN. Although most of the predicted regions                  among the compared networks. It more effectively identified
+were correct, the voxel prediction could not capture all opacity            and segmented the pulmonary opacities by using spatial-
+regions. Compared with U-Net, which has a more complex                      and channel-wise attention modules. Fig. 4 shows a visual
+structure and more connections, UNet++ had slightly improved                comparison of the results of each network. In the case #1 to the
+performance in DSC, SEN, and VA, but it had a significant                   case #4, SCOAT-Net had the best segmentation performance,
+drop in RLP and RLR, which shows that its dense connection                  not only effectively hitting the target opacity region but also
+improved the model’s generality. However, it did not achieve                producing the least difference between the segmentation area
+excellent results on the relatively small dataset used in this              and the ground truth. However, SCOAT-Net also returned some
+
+  medRxiv preprint doi: https://doi.org/10.1101/2020.09.23.20191726.this version posted October 15, 2020. The copyright holder for this preprint
+     (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+8                                             All rights reserved. No reuse allowed without permission.
+                                                                              IEEE TRANSACTIONS   ON MEDICAL IMAGING, VOL. XX, NO. XX, XXXX 2020
+                                                                                    1,1                      2,2                         1,3
+           Ground Truth            UNet++               SCOAT-Net                 𝑥𝑥𝑀𝑀                     𝑥𝑥𝑀𝑀                        𝑥𝑥𝑀𝑀
+ Case #1
+ Case #2
+ Case #3
+Fig. 5. Visualization of the segmentation results and attention maps of our methods on three COVID-19 cases. The red area is the lung
+opacification segmentation of the ground truth and the models of UNet++ and our SCOAT-Net, and yellow arrows highlight the local differences of
+the segmentation results.
+unsatisfactory segmentation results, as shown in the case #5             we designed not only effectively weights the feature map but
+of Fig. 4. Most of the models, including our model, failed               also further helps us understand the training process of the
+to predict this tiny opacity region. Although PSPNet makes a             neural network, which improves its interpretability.
+valid prediction, it also makes false-positive predictions (e.g.,           Furthermore, we also introduced the attention module from
+case #1) and false-negative predictions (e.g., case #3), which           other studies into UNet++ and compared the results with that
+lead to a decline in the overall performance.                            of our SCOAT-Net, as shown in Table III. AttentionV1 uses
+                                                                         the attention module of residual attention network [39], At-
+D. Effectiveness of the Attention Module                                 tentionV2 imitates the connection structure of Attention UNet
+                                                                         [21], and AttentionV3 uses the pyramid attention module of
+   In this experiment, we verified the performance of the
+                                                                         Wang et al. [40]. Compared with the baseline UNet++, all the
+attention module on the lung opacification segmentation task.
+                                                                         networks obtained the significantly improved DSC and RLR.
+Our SCOAT-Net uses a total of six spatial-wise attention
+                                                                         SCOAT-Net and AttentionV2 had outstanding performance
+modules, as shown in the green circle in Fig. 1. These modules
+                                                                         in SEN, and SCOAT-Net, AttentionV2, and AttentionV3 had
+can adaptively generate attention maps with the focused area
+                                                                         significantly improved RLP. The results show that the attention
+information of the network. The early stage of our network
+                                                                         module can improve the segmentation performance while only
+is defined as the position that closes to the input and passes
+                                                                         increasing a few parameters of the network, especially for the
+fewer convolution layers. The later stage is defined as the
+                                                                         recognition of the target area.
+position that closes to the output and passes more convolution
+layers. We selected three different stages of attention maps for
+                                                                                                           TABLE III
+display, and the order from the early stage to the late stage
+                                                                           Q UANTITATIVE   EVALUATION OF DEFFERENT ATTENTION MODULE FOR
+is x1,1   2,2        1,3
+    M , xM , and xM , as shown in Fig. 5. For better display,                    SEGMENTATION .     T HE   BASELINE NETWORK IS       UN ET ++.
+we only show the lung area. We can see that our SCOAT-
+Net had better performance in lung opacification recognition                                                           Results (%)
+                                                                              Methods      Params
+than UNet++. For example, in the first case, UNet++ identified                                       DSC      SEN      PPV      VA        RLP    RLR
+the interlobular fissure (the yellow arrow area in the lower-left           UNet++         35.02M   84.82     83.55    86.35   94.23     89.51   85.19
+corner) with a specific shape and structure as an opacity region,           AttentionV1    53.43M   86.22     85.56    87.44   93.12     90.60   87.67
+                                                                            AttentionV2    37.63M   88.01     87.14    89.28   94.88     93.79   90.96
+but SCOAT-Net did not misidentify it. From the attention                    AttentionV3    35.05M   86.91     84.76    89.55   92.77     92.61   89.13
+map of this case, we can see that x1,1   M focuses on all the               Proposed       38.73M   89.48     88.74    90.64   95.26     93.66   91.94
+salient areas of the lungs, basically covering all the structures
+of the lung. Furthermore, x2,2M greatly reduces the significant
+areas, and the attention of the network is more concentrated
+on restricted regions. By x1,3                                           E. Validation on Other Data
+                               M , the interlobular fissure area
+misidentified in the early stage has no longer received the core            We prepared a total of eight lung CT scans of two patients
+attention. Additionally, for the opacity region that UNet++              scanned at different times using the CT device SOMATOM
+did not recognize (the region indicated by the yellow arrow),            go.Top. These scans, which were different from the scans used
+SCOAT-Net adequately identified the target area, and on all              in training, were used to test the robustness and compatibility
+the attention maps, much attention focused on the target area.           of the proposed SCOAT-Net. Fig. 6 presents the lung CT scans
+As the training phase progressed, the attention regions of               of two cases under treatment. COVID-19 is clinically divided
+SCOAT-Net gradually became smaller. The attention module                 into four stages [53]: early stage, progressive stage, peak stage,
+
+ medRxiv preprint doi: https://doi.org/10.1101/2020.09.23.20191726.this version posted October 15, 2020. The copyright holder for this preprint
+     (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+AUTHOR et al.: PREPARATION OF PAPERS FOR All    rights
+                                             IEEE      reserved. NoAND
+                                                   TRANSACTIONS     reuse allowed (OCTOBER
+                                                                       JOURNALS   without permission.
+                                                                                            2020)                                               9
+and absorption stage. The clinical report of the first case shows              making it impossible to converge when training conventional
+that it was in the absorption stage at all four time points.                   DNNs, which is a common problem. In addition to augmenting
+From the result of our model, we can see that on both the                      the data [54], some studies show that attention mechanisms can
+axial unenhanced and coronal reconstruction CT images, the                     be more effective in enhancing the generalization capacity of
+opacity regions were significantly reduced, which was further                  models.
+verified by the lung opacification volumes (LOVs) displayed                       The difference between SCOAT-Net and the traditional
+on the lower-right corners of the coronal images. The clinical                 segmentation network introduces the attention module we
+report of the second case shows that the patient was in the                    designed, which can continuously suppress irrelevant features
+early stage at the first time point, the progressive stage at                  and enhance useful features in the image space and channel
+the second time point, and the absorption stage at the third                   domain during the training process. We applied this network
+and fourth time points. Our calculated LOV was highest at                      to the task of lung opacification segmentation in COVID-19
+the second time point, and there was a significant decrease in                 cases and achieved better image segmentation performance
+the third time point, which matched the diagnosis report of the                than state-of-the-art CNNs, as shown in Table 2. It shows
+patient. In summary, our proposed SCOAT-Net on cross-modal                     that our method has great application potential in complex
+CT scans was verified, proving that it has better robustness                   medical scenarios. Furthermore, we compared the influences
+and compatibility. It can provide an objective assessment of                   of three attention modules in other models and the proposed
+pulmonary involvement and therapy response in COVID-19.                        attention modules in our network on this task. The network
+                                                                               incorporating the attention modules has improved performance
+            A                                                                  to varying degrees compared to the baseline network. It is
+                                                                               worth mentioning that the attention modules we propose gen-
+                                                                               erate a series of attention maps. We can observe the changes
+                                                                               of the focused regions at different stages, which contributes to
+  Case #1
+                  2020.1.30       2020.2.4         2020.2.14      2020.2.22
+                                                                               the interpretability of the neural network.
+            B
+                                                                                  Furthermore, we verified the robustness and compatibility of
+                                                                               our network on different types of CT equipment and confirmed
+                                                                               that it has excellent data migration capability. Our network
+                                                                               can accurately segment lung opacity regions in CT images
+                LOV: 428cm3    LOV: 192cm3       LOV: 34cm3     LOV: 24cm3
+                                                                               at different time-points during the treatment. It provides a
+            C                                                                  quantitative assessment of pulmonary involvement, which is
+                                                                               a difficult task for radiologists but is essential to the clini-
+                                                                               cal follow-up of patient disease development and treatment
+                                                                               response.
+  Case #2
+                    2020.2.1       2020.2.9         2020.2.17      2020.2.21
+                                                                                  However, our network still has shortcomings, as shown in
+            D
+                                                                               case #5 of Fig. 4. This suggests that we can continue to
+                                                                               enhance our network’s recognition of targets of different scales
+                                                                               by using multi-scale feature fusion or cascading convolution
+                LOV: 369cm3    LOV: 503cm3       LOV: 122cm3    LOV: 110cm3    in different receptive field sizes.
+Fig. 6.    Qualitative evaluation of the results of SCOAT-Net on two
+cases from other type of CT scan. A and B show the evolution of one                                       ACKNOWLEDGMENT
+COVID-19 case during the 24-day treatment period. C and D show the
+evolution of another case during the 21-day treatment period. A and C            We thank LetPub for its linguistic assistance during the
+are axial unenhanced chest CT images at four time points (dates are            preparation of this manuscript.
+annotated in the lower-right corner of each panel); B and D are the
+coronal reconstructions at the same time points. The segmentation of
+pulmonary opacities derived from SCOAT-Net is displayed in red, and                                            R EFERENCES
+the volumetric assessment of our results (i.e., lung opacification volume
+(LOV)) is annotated in the lower-right corners of the images of B and C.        [1] J. T. Wu, K. Leung, and G. M. Leung, “Nowcasting and forecasting the
+                                                                                    potential domestic and international spread of the 2019-ncov outbreak
+                                                                                    originating in wuhan, china: a modelling study,” The Lancet, vol. 395,
+                                                                                    no. 10225, pp. 689–697, 2020.
+                 V. D ISCUSSION        AND    C ONCLUSION                       [2] Z. Wu and J. M. McGoogan, “Characteristics of and important lessons
+   CNNs have been widely used in various medical image                              from the coronavirus disease 2019 (covid-19) outbreak in china: Sum-
+                                                                                    mary of a report of 72 314 cases from the chinese center for disease
+segmentation tasks due to their excellent performance [13],                         control and prevention,” JAMA, vol. 323, no. 13, pp. 1239–1242, 04
+[21], [30], [48]. Some networks have been improved from                             2020.
+the perspective of connection structure (e.g., U-Net), and                      [3] H. Shi, X. Han, N. Jiang, Y. Cao, O. Alwalid, J. Gu, Y. Fan, and
+                                                                                    C. Zheng, “Radiological findings from 81 patients with covid-19 pneu-
+others have been improved from the perspective of combining                         monia in wuhan, china: a descriptive study,” Lancet Infectious Diseases,
+multi-scale features (e.g., PSPNet). These improvements have                        2020.
+enhanced the expression ability of the models to a certain                      [4] Z. Xu, L. Shi, Y. Wang, J. Zhang, L. Huang, C. Zhang, S. Liu, P. Zhao,
+                                                                                    H. Liu, L. Zhu et al., “Pathological findings of covid-19 associated with
+extent. However, due to the particularity of medical image-                         acute respiratory distress syndrome,” The Lancet Respiratory Medicine,
+related tasks, only a small amount of data can be obtained,                         2020.
+
+  medRxiv preprint doi: https://doi.org/10.1101/2020.09.23.20191726.this version posted October 15, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+10                                               All rights reserved. No reuse allowed  without permission.
+                                                                                 IEEE TRANSACTIONS        ON MEDICAL IMAGING, VOL. XX, NO. XX, XXXX 2020
+ [5] “Weekly operational update coronavirus disease 2019 (covid-19),”           [26] J. M. Wolfe, M. L.-H. Võ, K. K. Evans, and M. R. Greene, “Visual
+     [EB/OL], 2020, https://www.who.int/docs/default-source/coronaviruse/            search in scenes involves selective and nonselective pathways,” Trends
+     weekly-updates/wou-9-september-2020-cleared-14092020.pdf?sfvrsn=                in cognitive sciences, vol. 15, no. 2, pp. 77–84, 2011.
+     68120013 2.                                                                [27] H. Zhao, J. Shi, X. Qi, X. Wang, and J. Jia, “Pyramid scene parsing
+ [6] Z. Y. Zu, Jiang, P. P. Xu, W. Chen, Q. Q. Ni, G. Lu, and L. J. Zhang,           network,” arXiv: Computer Vision and Pattern Recognition, 2016.
+     “Coronavirus disease 2019 (covid-19): A perspective from china,” Ra-       [28] L. Chen, G. Papandreou, F. Schroff, and H. Adam, “Rethinking atrous
+     diology, pp. 200 490–200 490, 2020.                                             convolution for semantic image segmentation,” arXiv: Computer Vision
+ [7] Y. Fang, H. Zhang, J. Xie, M. Lin, L. Ying, P. Pang, and W. Ji,                 and Pattern Recognition, 2017.
+     “Sensitivity of chest ct for covid-19: Comparison to rt-pcr,” Radiology,   [29] L.-C. Chen, Y. Zhu, G. Papandreou, F. Schroff, and H. Adam, “Encoder-
+     pp. 200 432–200 432, 2020.                                                      decoder with atrous separable convolution for semantic image segmen-
+ [8] J. F. W. Chan, S. Yuan, K. Kok, K. K. W. To, H. Chu, J. Yang, F. Xing,          tation,” in Proceedings of the European conference on computer vision
+     J. Liu, C. C. Yip, R. W. S. Poon et al., “A familial cluster of pneumonia       (ECCV), 2018, pp. 801–818.
+     associated with the 2019 novel coronavirus indicating person-to-person     [30] Z. Zhou, M. M. Rahman Siddiquee, N. Tajbakhsh, and J. Liang,
+     transmission: a study of a family cluster,” The Lancet, vol. 395, no.           “Unet++: A nested u-net architecture for medical image segmentation,”
+     10223, pp. 514–523, 2020.                                                       in Deep Learning in Medical Image Analysis and Multimodal Learning
+ [9] T. Ai, Z. Yang, H. Hou, C. Zhan, C. Chen, W. Lv, Q. Tao, Z. Sun,                for Clinical Decision Support. Cham: Springer International Publishing,
+     and L. Xia, “Correlation of chest ct and rt-pcr testing in coronavirus          2018, pp. 3–11.
+     disease 2019 (covid-19) in china: A report of 1014 cases,” Radiology,      [31] Y. Cao, Z. Xu, J. Feng, C. Jin, X. Han, H. Wu, and H. Shi, “Longitudinal
+     pp. 200 642–200 642, 2020.                                                      assessment of covid-19 using a deep learning–based quantitative ct
+                                                                                     pipeline: Illustration of two cases,” Radiology: Cardiothoracic Imaging,
+[10] M. Chung, A. Bernheim, X. Mei, N. Zhang, M. Huang, X. Zeng, J. Cui,
+                                                                                     vol. 2, no. 2, p. e200082, 2020.
+     W. Xu, Y. Yang, Z. A. Fayad et al., “Ct imaging features of 2019 novel
+                                                                                [32] L. Huang, R. Han, T. Ai, P. Yu, H. Kang, Q. Tao, and L. Xia, “Serial
+     coronavirus (2019-ncov),” Radiology, vol. 295, no. 1, pp. 202–207, 2020.
+                                                                                     quantitative chest ct assessment of covid-19: Deep-learning approach,”
+[11] Z. Ye, Y. Zhang, Y. Wang, Z. Huang, and B. Song, “Chest ct manifes-             Radiology: Cardiothoracic Imaging, vol. 2, no. 2, p. e200075, 2020.
+     tations of new coronavirus disease 2019 (covid-19): a pictorial review,”   [33] M. Wang, C. Xia, L. Huang, S. Xu, C. Qin, J. Liu, Y. Cao, P. Yu,
+     European Radiology, pp. 1–9, 2020.                                              T. Zhu, H. Zhu, C. Wu, R. Zhang, X. Chen, J. Wang, G. Du,
+[12] A. Esteva, B. Kuprel, R. A. Novoa, J. M. Ko, S. M. Swetter, H. M.               C. Zhang, S. Wang, K. Chen, Z. Liu, L. Xia, and W. Wang, “Deep
+     Blau, and S. Thrun, “Dermatologist-level classification of skin cancer          learning-based triage and analysis of lesion burden for covid-19:
+     with deep neural networks,” Nature, vol. 542, no. 7639, pp. 115–118,            a retrospective study with external validation,” The Lancet Digital
+     2017.                                                                           Health, vol. 2, no. 10, pp. e506 – e515, 2020. [Online]. Available:
+[13] O. Ronneberger, P. Fischer, and T. Brox, “U-net: Convolutional networks         http://www.sciencedirect.com/science/article/pii/S2589750020301990
+     for biomedical image segmentation,” CoRR, vol. abs/1505.04597, 2015.       [34] O. Gozes, M. Frid-Adar, H. Greenspan, P. D. Browning, H. Zhang,
+     [Online]. Available: http://arxiv.org/abs/1505.04597                            W. Ji, A. Bernheim, and E. Siegel, “Rapid ai development cycle for the
+[14] P. Kickingereder, F. Isensee, I. Tursunova, J. Petersen, U. Neuberger,          coronavirus (covid-19) pandemic: Initial results for automated detection
+     D. Bonekamp, G. Brugnara, M. Schell, T. Kessler, M. Foltyn et al.,              & patient monitoring using deep learning ct image analysis,” arXiv
+     “Automated quantitative tumour response assessment of mri in neuro-             preprint arXiv:2003.05037, 2020.
+     oncology with artificial neural networks: a multicentre, retrospective     [35] L. Li, L. Qin, Z. Xu, Y. Yin, X. Wang, B. Kong, J. Bai, Y. Lu,
+     study,” Lancet Oncology, vol. 20, no. 5, pp. 728–740, 2019.                     Z. Fang, Q. Song et al., “Artificial intelligence distinguishes covid-19
+[15] Y. Lecun, Y. Bengio, and G. E. Hinton, “Deep learning,” Nature, vol.            from community acquired pneumonia on chest ct,” Radiology, 2020.
+     521, no. 7553, pp. 436–444, 2015.                                          [36] J. Chen, L. Wu, J. Zhang, L. Zhang, D. Gong, Y. Zhao, S. Hu, Y. Wang,
+[16] D. S. Kermany, M. H. Goldbaum, W. Cai, C. C. S. Valentim, H. Liang,             X. Hu, B. Zheng et al., “Deep learning-based model for detecting 2019
+     S. L. Baxter, A. Mckeown, G. Yang, X. Wu, F. Yan et al., “Identifying           novel coronavirus pneumonia on high-resolution computed tomography:
+     medical diagnoses and treatable diseases by image-based deep learning,”         a prospective study,” MedRxiv, 2020.
+     Cell, vol. 172, no. 5, pp. 1122–1131, 2018.                                [37] S. Jin, B. Wang, H. Xu, C. Luo, L. Wei, W. Zhao, X. Hou, W. Ma,
+[17] Y. Xie, Y. Xia, J. Zhang, Y. Song, D. Feng, M. J. Fulham, and W. Cai,           Z. Xu, Z. Zheng et al., “Ai-assisted ct imaging analysis for covid-19
+     “Knowledge-based collaborative deep learning for benign-malignant               screening: Building and deploying a medical ai system in four weeks,”
+     lung nodule classification on chest ct,” IEEE Transactions on Medical           medRxiv, 2020.
+     Imaging, vol. 38, no. 4, pp. 991–1004, 2019.                               [38] L. Li, M. Xu, X. Wang, L. Jiang, and H. Liu, “Attention based glaucoma
+[18] F. Shan, Y. Gao, J. Wang, W. Shi, N. Shi, M. Han, Z. Xue, and                   detection: A large-scale database and cnn model,” in Proceedings of the
+     Y. Shi, “Lung infection quantification of covid-19 in ct images with            IEEE Conference on Computer Vision and Pattern Recognition, 2019,
+     deep learning.” arXiv: Computer Vision and Pattern Recognition, 2020.           pp. 10 571–10 580.
+[19] G. Wang, X. Liu, C. Li, Z. Xu, J. Ruan, H. Zhu, T. Meng, K. Li,            [39] F. Wang, M. Jiang, C. Qian, S. Yang, C. Li, H. Zhang, X. Wang,
+     N. Huang, and S. Zhang, “A noise-robust framework for automatic                 and X. Tang, “Residual attention network for image classification,” in
+     segmentation of covid-19 pneumonia lesions from ct images,” IEEE                Proceedings of the IEEE conference on computer vision and pattern
+     Transactions on Medical Imaging, vol. 39, no. 8, pp. 2653–2663, 2020.           recognition, 2017, pp. 3156–3164.
+                                                                                [40] W. Wang, S. Zhao, J. Shen, S. C. Hoi, and A. Borji, “Salient object
+[20] D. Fan, T. Zhou, G. Ji, Y. Zhou, G. Chen, H. Fu, J. Shen, and
+                                                                                     detection with pyramid attention and salient edges,” in Proceedings
+     L. Shao, “Inf-net: Automatic covid-19 lung infection segmentation from
+                                                                                     of the IEEE Conference on Computer Vision and Pattern Recognition,
+     ct images,” IEEE Transactions on Medical Imaging, vol. 39, no. 8, pp.
+                                                                                     2019, pp. 1448–1457.
+     2626–2637, 2020.
+                                                                                [41] J. Hu, L. Shen, S. Albanie, G. Sun, and E. Wu, “Squeeze-and-excitation
+[21] O. Oktay, J. Schlemper, L. L. Folgoc, M. C. H. Lee, M. P. Heinrich,             networks,” IEEE Transactions on Pattern Analysis and Machine Intelli-
+     K. Misawa, K. Mori, S. Mcdonagh, N. Hammerla, B. Kainz et al.,                  gence, pp. 1–1, 2019.
+     “Attention u-net: Learning where to look for the pancreas,” arXiv:         [42] J. Fu, J. Liu, H. Tian, Y. Li, Y. Bao, Z. Fang, and H. Lu, “Dual attention
+     Computer Vision and Pattern Recognition, 2018.                                  network for scene segmentation,” in Proceedings of the IEEE Conference
+[22] J. Zhang, Y. Xie, Y. Xia, and C. Shen, “Attention residual learning             on Computer Vision and Pattern Recognition, 2019, pp. 3146–3154.
+     for skin lesion classification,” IEEE Transactions on Medical Imaging,     [43] L. Chen, H. Zhang, J. Xiao, L. Nie, J. Shao, W. Liu, and T. Chua, “Sca-
+     vol. 38, no. 9, pp. 2092–2103, 2019.                                            cnn: Spatial and channel-wise attention in convolutional networks for
+[23] X. Ouyang, J. Huo, L. Xia, F. Shan, J. Liu, Z. Mo, F. Yan, Z. Ding,             image captioning,” pp. 6298–6306, 2017.
+     Q. Yang, B. Song, F. Shi, H. Yuan, Y. Wei, X. Cao, Y. Gao, D. Wu,          [44] F. Milletari, N. Navab, and S.-A. Ahmadi, “V-net: Fully convolutional
+     Q. Wang, and D. Shen, “Dual-sampling attention network for diagnosis            neural networks for volumetric medical image segmentation,” in 2016
+     of covid-19 from community acquired pneumonia,” IEEE Transactions               fourth international conference on 3D vision (3DV). IEEE, 2016, pp.
+     on Medical Imaging, vol. 39, no. 8, pp. 2595–2605, 2020.                        565–571.
+[24] L. Itti and C. Koch, “A saliency-based search mechanism for overt and      [45] D. P. Kingma and J. Ba, “Adam: A method for stochastic optimization,”
+     covert shifts of visual attention.” Vision Research, vol. 40, no. 10, pp.       arXiv: Learning, 2014.
+     1489–1506, 2000.                                                           [46] A. Gotmare, N. S. Keskar, C. Xiong, and R. Socher, “A closer look at
+[25] A. Treisman and G. Gelade, “A feature-integration theory of attention,”         deep learning heuristics: Learning rate restarts, warmup and distillation,”
+     Cognitive Psychology, vol. 12, no. 1, pp. 97–136, 1980.                         arXiv: Learning, 2018.
+
+  medRxiv preprint doi: https://doi.org/10.1101/2020.09.23.20191726.this version posted October 15, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+AUTHOR et al.: PREPARATION OF PAPERS FOR All       rights
+                                                IEEE      reserved. NoAND
+                                                      TRANSACTIONS      reuse allowed (OCTOBER
+                                                                           JOURNALS   without permission.
+                                                                                                2020)                                          11
+[47] C. J. Willmott and K. Matsuura, “Advantages of the mean absolute error
+     (mae) over the root mean square error (rmse) in assessing average model
+     performance,” Climate research, vol. 30, no. 1, pp. 79–82, 2005.
+[48] H. Huang, L. Lin, R. Tong, H. Hu, Q. Zhang, Y. Iwamoto, X. Han,
+     Y.-W. Chen, and J. Wu, “Unet 3+: A full-scale connected unet for
+     medical image segmentation,” in ICASSP 2020-2020 IEEE International
+     Conference on Acoustics, Speech and Signal Processing (ICASSP).
+     IEEE, 2020, pp. 1055–1059.
+[49] T.-Y. Lin, P. Goyal, R. Girshick, K. He, and P. Dollár, “Focal loss
+     for dense object detection,” in Proceedings of the IEEE international
+     conference on computer vision, 2017, pp. 2980–2988.
+[50] S. Mehta, M. Rastegari, L. Shapiro, and H. Hajishirzi, “Espnetv2: A
+     light-weight, power efficient, and general purpose convolutional neural
+     network,” in Proceedings of the IEEE conference on computer vision
+     and pattern recognition, 2019, pp. 9190–9200.
+[51] M. Yang, K. Yu, C. Zhang, Z. Li, and K. Yang, “Denseaspp for semantic
+     segmentation in street scenes,” in Proceedings of the IEEE Conference
+     on Computer Vision and Pattern Recognition, 2018, pp. 3684–3692.
+[52] Z. Gu, J. Cheng, H. Fu, K. Zhou, H. Hao, Y. Zhao, T. Zhang, S. Gao,
+     and J. Liu, “Ce-net: Context encoder network for 2d medical image
+     segmentation,” IEEE transactions on medical imaging, vol. 38, no. 10,
+     pp. 2281–2292, 2019.
+[53] H. Li, S. Liu, H. Xu, and J. Cheng, “Guideline for medical imaging in
+     auxiliary diagnosis of coronavirus disease 2019,” Chin J Med Imaging
+     Technol, vol. 36, no. 3, pp. 321–331, 2020.
+[54] A. Zhao, G. Balakrishnan, F. Durand, J. V. Guttag, and A. V. Dalca,
+     “Data augmentation using learned transformations for one-shot medical
+     image segmentation,” arXiv: Computer Vision and Pattern Recognition,
+     2019.

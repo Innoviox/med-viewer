@@ -1,0 +1,922 @@
+   medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211573.this version posted October 14, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                               All rights reserved. No reuse allowed without permission.
+                                             Preventing COVID-19 spread in closed facilities by regular
+                                             testing of employees – an efficient intervention in long-term
+                                             care facilities and prisons
+                                             H. Christian Jr. Tsoungui Obama1Y , Nessma Adil M. Y.1Y , Looli Alawam N.2Y , Pierre
+                                             M. Ngougoue N.1Y , Gideon A. Ngwa1,3 , Miranda Teboh-Ewungkem4 , Kristan A.
+                                             Schneider1Y*
+                                             1 Department of Applied Computer- and Biosciences, University of Applied Sciences
+                                             Mittweida, Mittweida, Germany
+                                             2 African Institute for Mathematical Sciences Cameroon, Limbe, Cameroon
+                                             3 Department of Mathematics, University of Buea, Buea, Cameroon
+                                             4 Department of Mathematics, Lehigh University, Bethlehem, PA, USA
+                                             YThese authors contributed equally to this work.
+                                             * kristan.schneider@hs-mittweida.de
+                                             Abstract
+                                             Background: Draconic control measures were introduced to contain the global
+                                             COVID-19 pandemic, many of which have been controversial, particularly the
+                                             comprehensive use of diagnostic tests. Regular testing of high-risk individuals
+                                             (pre-existing conditions, older than 60 years of age) has been suggested by public health
+                                             authorities. The WHO suggested the use of routine screening of residents, employees,
+                                             and visitors of long-term care facilities (LTCF) to protect the resident risk group.
+                                             Similar suggestions have been made by the WHO for other closed facilities including
+                                             incarceration facilities (e.g., prisons or jails), where in parts of the US, accelerated
+                                             release of approved inmates is taken as a measure to mitigate COVID-19.
+                                             Methods and findings: Here, the simulation model underlying the pandemic
+                                             preparedness tool CovidSim 1.1 (http://covidsim.eu/) is extended to investigate the
+                                             effect of regularly testing of employees in order to protect immobile resident risk groups
+                                             in closed facilities. The reduction in the number of infections and deaths within the risk
+                                             group are investigated as well as the potential economic gain resulting from savings in
+                                             COVID-19 related treatment costs in comparison to costs resulting from the testing
+                                             interventions. Our simulations are adjusted to reflect the situation of LTCFs in the
+                                             Federal Republic of Germany.
+                                                 The probability is nearly one that COVID-19 spreads into closed facilities due to
+                                             contact with infected employees even under strict confinement of visitors in a pandemic
+                                             scenario without targeted protective measures. Regular screening of all employees by
+                                             PCR tests provides a significant reduction of COVID-19 cases and related deaths in
+                                             LTCFs. While the frequency of testing (testing rate) and the quality of tests have
+                                             noticeable effects, the waiting time for obtaining test results (ranging from 12 up to 96
+                                             hours) hardly impacts the outcome. The results suggest that testing every two weeks
+                                             with low-quality tests and a processing time of up to 96 hours yields a strong reduction
+                                             in the number of cases. Rough estimates suggest a significant economic gain.
+                                             Conclusions: The introduction of COVID-19 in closed facilities is unavoidable without
+                                             thorough screening of persons that can introduce the disease into the facility. These
+October 5, 2020                                                                                                                                  1/14
+          NOTE: This preprint reports new research that has not been certified by peer review and should not be used to guide clinical practice.
+
+   medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211573.this version posted October 14, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                                All rights reserved. No reuse allowed without permission.
+                                             measures provide an economically meaningful way to protect vulnerable risk groups
+                                             characterized by an elevated risk of severe infections in closed facilities, in which
+                                             contact-reducing measures are difficult to implement due to imminent unavoidable close
+                                             human-to-human contacts.
+                                             Introduction                                                                                             1
+                                             The global COVID-19 pandemic that emerged in Wuhan, China in December 2019 was                           2
+                                             declared a Public Health Emergency of International Concern by the WHO                                   3
+                                             Director-General in late January 2020 and drastically changed the way of living across                   4
+                                             the globe [1]. SARS-CoV-2 is an extremely contagious virus affecting the respiratory                     5
+                                             system [2]. While most infections are asymptomatic and mild, severe infections are                       6
+                                             life-threatening [3, 4, 5, 6]. If the virus affects the lung it can result in diffuse                    7
+                                             pneumonia, requiring oxygen supply, hospital, or even ICU treatment [7, 8, 9, 10, 11].                   8
+                                             With no effective treatment against the virus, severe episodes can result in death by                    9
+                                             multiple organ failure [12]. Moreover, severe (and even mild) infections can cause                      10
+                                             substantial long-term effects, potentially imposing long-term burdens on healthcare                     11
+                                             systems [13, 14]. From the beginning of the pandemic, older adults and individuals with                 12
+                                             underlying medical conditions, particularly lung or heart disease, diabetes, obesity, etc.              13
+                                             are associated with an increased risk of developing serious complications from                          14
+                                             SARS-CoV-2 infections [15]. The Centers for Disease Control and Prevention (CDC)                        15
+                                             identified people aged 65 years and older and people living in a long-term care facility                16
+                                             (LTCF) as high-risk groups. Indeed, every second COVID-19 related death in the                          17
+                                             Federal Republic of Germany occurred within LTCFs [16]. Likewise the rapidly growing                    18
+                                             elderly population in U.S. prisons [17] is at high risk due to the exceedingly high                     19
+                                             numbers of infections in such facilities [18].                                                          20
+                                                  Draconic control measures were implemented by governments across the globe to                      21
+                                             prevent the spread of the pandemic, including social distancing (cancellation of mass                   22
+                                             crowdings and events, enforced physical distance, etc.), curfews, quarantine, and home                  23
+                                             isolation measures, mandatory use of face masks, accompanied by massive deployment of                   24
+                                             disinfectants, supply of contact tracking mobile-device applications, and diagnostic tests              25
+                                             [19, 20, 21]. Most commonly used are PCR tests that detect the virus in nasopharyngeal                  26
+                                             swabs, diluted gargle samples, or peripheral blood. As PCR tests amplify virus-specific                 27
+                                             RNA, they are characterized by very high specificity. The sensitivity of such tests varies              28
+                                             across different products on the market. Moreover, PCR tests are easy to perform.                       29
+                                             Alternatives to quantitative PCR tests are CRISPR-based [22, 23], which are rapidly                     30
+                                             performed, and have high specificity and sensitivity. Other tests are antibody or antigen               31
+                                             based. Such tests are less specific and do not necessarily detect active infections, since              32
+                                             antibodies and antigens are present in the blood serum after the infection is cured.                    33
+                                                  The WHO established guidelines – including regular testing of employees and                        34
+                                             residents – to protect individuals in LTCFs [24, 25] due to high case fatality rates [26].              35
+                                             Residents of LTCFs constitute a substantial group in high-income countries such as the                  36
+                                             Federal Republic of Germany. With a population of 82.79 million, the number of people                   37
+                                             depending on nursing either in LTCFs or at home in Germany increased from 2.5                           38
+                                             million in 2011 to 3.41 million in 2017 (over 66% of them being over 90 years old) [27].                39
+                                             The capacity of LTCFs in Germany was 952 367 beds (full stationary capacity: 885 488)                   40
+                                             in 2017, with 743 120 beds (723 451 full stationary) filled (623 182 beds in 2011, 612 183              41
+                                             being full stationary) [27]. These are sustained by 764 648 employees, 64% of which are                 42
+                                             care and support personnel [27]. These numbers have an increasing trend: there were                     43
+                                             additional ambulant care services supported by 829 958 people in need of nursing with                   44
+                                             390 322 employees [27].                                                                                 45
+                                                  A similar reasoning applies to incarceration facilities that face challenges in                    46
+October 5, 2020                                                                                                                                 2/14
+
+   medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211573.this version posted October 14, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                               All rights reserved. No reuse allowed without permission.
+                                             controlling the spread of COVID-19 [28], and put elderly at particular risk of severe                   47
+                                             infection [29]. Indeed, jurisdictions in the U.S. have accelerated the release of low-risk              48
+                                             offenders [30] as a measure to mitigate COVID-19. An estimated number of 6.4 million                    49
+                                             individuals were held under the supervision of the U.S. adult correctional system in                    50
+                                             2018 (including probation and parole), with an incarcerated population of                               51
+                                             approximately 2.2 million [31, 32, 33]. There is a notable increase in the age structure                52
+                                             of state prisoners, in which the numbers of inmates older than 55, 60, and 65 years of                  53
+                                             age have quadrupled from 1993 to 2003 [17].                                                             54
+                                                  The use of routine screening of residents, employees, and visitors before entering an              55
+                                             LTCF by diagnostic tests was mentioned in guidelines by public health authorities                       56
+                                             [24, 25, 34] and also suggested for incarceration facilities [35]. The impact of such                   57
+                                             control measures can be studied through the use of mathematical models.                                 58
+                                                  Here, a mathematical model, based on the freely available CovidSIM simulation tool,                59
+                                             is adapted to estimate the benefit and economic gain of routine screening for COVID-19                  60
+                                             infections of employees in LTCFs and retention facilities by PCR tests. In particular, we               61
+                                             study the impact of I. the frequency at which employees are tested, (ii) the processing                 62
+                                             time to obtain test results, and (iii) the quality of the PCR test in terms of sensitivity.             63
+                                             While the model is described verbally in the main text, a concise mathematical                          64
+                                             description can be found in the S1 Appendix. The model is exemplified by parameters                     65
+                                             that reflect the situation in the Federal Republic of Germany.                                          66
+                                             Materials and methods                                                                                   67
+                                             We study the impact of testing employees in LTCFs or incarceration facilities to protect                68
+                                             immobile risk groups from COVID-19 infections using an extended SEIR model, i.e., by                    69
+                                             a deterministic compartmental model of ordinary differential equations. In particular,                  70
+                                             the model is an extension of that underlying the pandemic preparedness tool CovidSIM                    71
+                                             [36]. The flow chart of the model is presented in Fig 1. The model is described verbally                72
+                                             with the concise mathematical description found in S1 Appendix. In the description, we                  73
+                                             focus on LTCFs, although the model equally applies to prisons.                                          74
+                                                  A population of size N is divided into three groups, I. the immobile risk group (Ri),              75
+                                             i.e., residents of LTCFs, (ii) the employees (staff) working in LTCFs (St), who are in                  76
+                                             close contact with the risk group, (iii) and the general population (Ge), i.e., the rest of             77
+                                             the population.                                                                                         78
+                                                  Each group (Ge, St, Ri), is further subdivided into susceptible, infected, recovered,              79
+                                             or dead individuals. Infected individuals pass through I. a latency period (not yet                     80
+                                             infective), (ii) a prodromal period (already partly infective but not yet exhibiting                    81
+                                             characteristic symptoms), (iii) a fully contagious period (symptoms ranging from                        82
+                                             non-existent or mild to severe), and (iv) a late infective period (no longer fully                      83
+                                             contagious). All individuals either recover from COVID-19 and obtain full permanent                     84
+                                             immunity or die. The model follows the change of the number of individuals, per unit                    85
+                                             time, being in the susceptible (S), latent (L), prodromal (P ), fully contagious (I), and               86
+                                             late infective (L) periods, and in the final recovered (R) and dead (D) stages separately               87
+                                             for the three population subgroups (Ge, St, Ri). Deaths unrelated to COVID-19 are                       88
+                                             ignored, as we assume a pandemic in a large population in a relatively short time period.               89
+                                                  In classical SEIR models, individuals in the latent, prodromal, infected, and late                 90
+                                             infected classes simply proceed from one stage to the next at a rate directly related to                91
+                                             the residence time in each stage. This simplistic flow implicitly assumes that the times                92
+                                             individuals spend in the various compartments are exponentially-distributed, and hence                  93
+                                             have a large variance. In particular, a proportion of individuals progresses too fast,                  94
+                                             whereas others progress much too slow.                                                                  95
+                                                  To resolve this, we subdivide the latent, prodromal, fully contagious, and late                    96
+October 5, 2020                                                                                                                                 3/14
+
+   medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211573.this version posted October 14, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                               All rights reserved. No reuse allowed without permission.
+                                             infectious periods into several sub-stages, through which individuals pass successively.                 97
+                                             This ultimately leads to more realistic durations and hence dynamics.                                    98
+                                                 The characteristics of the population subgroups (Ge, St, Ri) are incorporated within                 99
+                                             the contact behavior. Namely, the risk group has mainly contacts with other individuals                 100
+                                             in the risk group and the LTCF employees, whereas their contacts with the general                       101
+                                             population are limited. The employees (St) have contacts among themselves, with the                     102
+                                             risk group and the general population. However, the general population has mainly                       103
+                                             contacts among themselves. Given a contact within or between certain sub-populations,                   104
+                                             the contact occurs at random. The contact behavior is captured by the contact matrix                    105
+                                             (see S1 Appendix section “The basic reproduction number and the next generation                         106
+                                             matrix”).                                                                                               107
+                                                 Susceptible individuals acquire infections through contacts with individuals in the                 108
+                                             prodromal, the fully contagious, or the late infectious periods at rates βP , βI , βL ,                 109
+                                             respectively, which are identical for each subgroup.                                                    110
+                                                 The basic reproduction number R0 is the average number of infections caused by an                   111
+                                             average infected individual in a completely susceptible population during the infectious                112
+                                             period. In a subdivided population (here Ge, St, Ri), the definition of R0 is not                       113
+                                             straightforward and has to be derived from the next-generation matrix [37] (see S1                      114
+                                             Appendix section “The basic reproduction number and the next generation matrix”).                       115
+                                             Importantly, R0 fluctuates seasonally with a yearly average basic reproduction number                   116
+                                             of R̄0 .                                                                                                117
+                                                 First, infected individuals are latent carriers, before they enter the prodromal period,            118
+                                             in which they become partly infective. From there, they enter the fully contagious                      119
+                                             period, at the beginning of which, it is determined whether the infection proceeds as                   120
+                                             symptomatic or asymptomatic. The likelihood to suffer from a symptomatic episode is                     121
+                                             elevated in the risk group (Ri).                                                                        122
+                                                 Covid-19 confirmed individuals are subject to case isolation. Specifically, a fraction              123
+                                             of symptomatic individuals will be detected and isolated in quarantine wards (perfect                   124
+                                             isolation preventing all contacts). If the wards are full, infected individuals are sent into           125
+                                             home isolation (imperfect isolation, preventing only a fraction of contacts). Regarding                 126
+                                             this, there are differences in the subgroups: each symptomatic individual in the risk                   127
+                                             group will be detected and isolated in quarantine inside the LTCF (perfect isolation),                  128
+                                             whereas only a fraction of the general population and the LTCF employees will be                        129
+                                             isolated. Infected individuals further progress to the late infective stage, during which               130
+                                             they will stay quarantined as determined during the fully contagious stage. Importantly,                131
+                                             LTCF employees will be tested for COVID-19 on a regular basis. We assume that the                       132
+                                             test is 100% specific, i.e., there are no false-positive test results, reflecting PCR- or               133
+                                             CRISPR-based tests [22, 23]. If tested positive, they will be isolated either in quarantine             134
+                                             wards or at home, in which case all contacts with the risk group are prevented. Staff can               135
+                                             be tested positive during any of the infected stages (latent, prodromal, fully contagious,              136
+                                             late infective), however with different sensitivity depending on the characteristic of the              137
+                                             COVID-19 test being used, irrespective of symptoms. In particular, there is a possibility               138
+                                             (depending on the sensitivity of the COVID-19 test) that employees are isolated already                 139
+                                             during the latent period before they are infectious. Test results are not obtained                      140
+                                             instantaneously, but with a time delay. Infected staff can still infect others during this              141
+                                             time. The waiting time for the test results depends on the available infrastructure.                    142
+                                                 Finally, late infected individuals, either recover or die. Only symptomatic infections              143
+                                             can cause death. The fraction of lethal infections is higher in the risk group.                         144
+                                                 All case isolation mechanisms are not initially present, but implemented with a time                145
+                                             delay after the initial occurrence of the disease. In addition to case isolation, general               146
+                                             contact reducing interventions, e.g., social distancing, curfews, etc. will be sustained for            147
+                                             a specific time interval during the beginning of the epidemic. During the time interval                 148
+October 5, 2020                                                                                                                                 4/14
+
+   medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211573.this version posted October 14, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                               All rights reserved. No reuse allowed without permission.
+                                             in which case isolation measures are sustained, contacts between the risk group and the                 149
+                                             general population are reduced, reflecting preventative measure. Furthermore, visitors                  150
+                                             have to provide a negative test result before entering the LTCF. To obtain conservative                 151
+                                             estimations the latter intervention is ignored in the simulations.                                      152
+                                             Fig 1. Model flow chart. The total population is divided into three main groups,
+                                             the general population (Ge), the employees of the long term care facilities (St), and the
+                                             residents of those facilities (Ri). Infection flows between members of each group as
+                                             explained in the text.
+                                             Implementation of the model                                                                             153
+                                             The model following the description in S1 Appendix was implemented in Python 3.8                        154
+                                             with a 4th order Runge-Kutta method using the function solve ivp as part of the library                 155
+                                             Scipy. Graphical output was created in R [38].                                                          156
+                                             Results                                                                                                 157
+                                             The effect of protecting an immobile risk group (LTCF residents) by regularly                           158
+                                             PCR-testing LTCF employees, who are the most likely to import the disease into the                      159
+                                             facility, is studied. Model parameters are adjusted to roughly reflect the situation in the             160
+                                             Federal Republic of Germany, one of the countries that has successfully intervened in                   161
+                                             the COVID-19 epidemic. The model itself is applicable to any industrial nation with an                  162
+                                             aging population. The aim is to investigate the effects of protecting the risk group and                163
+                                             to estimate the demand for PCR tests. Some testing scenarios are not feasible in terms                  164
+                                             of logistics and available testing capacities, and just serve as a comparison.                          165
+                                                 The parameters used are listed in Tables 1, and S1 Table-S6 Table. Germany has a                    166
+                                             population of roughly N = 83 million. We assume 700 000 elderly individuals live in                     167
+                                             LTCFs in which control interventions by PCR testing can be implemented. All                             168
+                                             employees of LTCFs amount to approximately 760 000. This number however includes                        169
+                                             employees in the administration and external services, who are not regularly working in                 170
+                                             these facilities. Hence, a number of 500 000 employees was assumed to work regularly in                 171
+                                             the LTCFs. The first COVID-19 cases were introduced in the middle of February 2020,                     172
+                                             corresponding to time t = 0. A basic reproduction number of R0 = 3.5 was assumed.                       173
+                                             When studying the effect of seasonal variation, R0 was assumed to fluctuate 43% over                    174
+                                             the year, with an annual average R̄0 = 3.5 and a peak roughly in late December                          175
+                                             (tR0max = 200). The average duration of the latent, prodromal, fully contagious and late                176
+                                             infective states were assumed to last on average DE = 3.7, DP = 1, DI = 7, DL = 7                       177
+                                             days, respectively. In the prodromal and late invective states, individuals were assumed                178
+                                             to be half as infective as in the fully contagious state. Individuals in the risk group were            179
+                                                                                                                    (Ri)
+                                             more likely to develop severe symptoms (fSick = 58% vs. fSick = 70%) and had an                         180
+                                                                                              (Ri)
+                                             increased morality (fDead = 4.7% vs. fDead = 7%). The effect of restricting LTCF                        181
+                                             access to members of the general population that provide a negative COVID-19 test                       182
+                                             result upon entry is ignored in the simulations.                                                        183
+                                                 In essence, the model without testing interventions is equivalent to the one                        184
+                                             underlying CovidSim 1.0 or 1.1 [cf. 36, http://covidsim.eu]. Hence, we used a                           185
+                                             combination of general contact reduction and case isolation as proposed in [36].                        186
+                                                 Clearly, the available capacities of tests, the infrastructure to perform tests, the                187
+                                             waiting time for results, and the sensitivity of tests can vary substantially. The impact               188
+                                             of these factors is investigated. In any case, the testing intervention has a profound                  189
+                                             effect on the risk group, while the LTCF staff and, particularly, the general                           190
+October 5, 2020                                                                                                                                 5/14
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211573.this version posted October 14, 2020. The copyright holder for this preprint
+         (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                                All rights reserved. No reuse allowed without permission.
+                                              sub-population are hardly affected (see Fig 2, S1 Fig, S2 Fig). This holds with or                      191
+                                              without seasonal fluctuations in R0 . Typically, lower sensitivity of tests can be                      192
+                                              compensated by testing more frequently to achieve a given reduction in the number of                    193
+                                              infections within the risk group (see Fig 2B, F, S1 Fig J, S2 Fig J).                                   194
+                                                  Testing of suspects is central to the interventions as a positive test result triggers a            195
+                                              series of intervention strategies. The effects of various aspects of the testing intervention           196
+                                              are explained below.                                                                                    197
+Fig 2. Impact of testing intervention: The panels show the number of susceptible (S), infected (I), recovered (R) and
+dead (D) individuals at time t, respectively, in the risk group without seasonal variation (A-D) with seasonal variation (E-H)
+in R0 , assuming different tests (colors) and testing frequencies (dashing). The black line in all panels corresponds to the
+baseline model without testing. The parameters used are listed in Tables 1, and S1 Table - S6 Table. The dashed grey line in
+panels (E-H) corresponds to the value of R0 (right y-axis).
+                                              Testing rate                                                                                            198
+                                              Assuming a baseline PCR test with a processing time of 48 hours and no seasonality,                     199
+                                              the intervention has a profound effect on the number of infections and deaths in the risk               200
+                                              group (see Fig 3A-D, S3 Fig E-H). The general sub-population that is hardly affected                    201
+                                              by the testing interventions (see S3 Fig A-D). Hence, the testing has no effect. The                    202
+                                              same holds true for the LTCF staff (see S3 Fig E-H).                                                    203
+                                                  Testing LTCF staff every two weeks (14 days) leads to an almost 10-fold reduction in                204
+                                              the number of infections and deaths compared to no testing interventions. Increasing                    205
+                                              the testing rate to 1 test per week (7 days), results in a further 25% reduction in                     206
+                                              infections and deaths in the risk group compared with testing every 14 days. The                        207
+                                              reduction in the numbers of infections and deaths for more frequent testing (every two                  208
+                                              days, or daily) is relatively insignificant. Particularly, the differences between daily                209
+                                              testing and testing every other day is marginal (see Fig 3A-D, S3 Fig I-L).                             210
+                                                  In the presence of seasonal fluctuations in R0 , qualitatively the same picture emerges             211
+                                              (see Fig 3E-H, S4 Fig). However, the differences between the testing rates are more                     212
+                                              pronounced, particularly between testing every 7 vs. 14 days.                                           213
+Fig 3. Impact of testing frequency: The panels show the number of susceptible (S), infected (I), recovered (R) and
+dead (D) individuals at time t, respectively, in the risk group without seasonal variation (A-D) with seasonal variation (E-H)
+in R0 , assuming different testing rates (colors). The black line in all panels corresponds to the baseline model without testing
+(NT). The parameters used are listed in Tables 1, and S1 Table - S6 Table. The dashed grey line in panels (E-H) corresponds
+to the value of R0 (right y-axis).
+                                              Test-processing time                                                                                    214
+                                              The time needed to process PCR tests, reflecting the testing infrastructure, has only a                 215
+                                              marginal effect, assuming weekly testing in the baseline PCR test and no seasonal                       216
+                                              fluctuations in R0 (see Fig 4A-D, S5 Fig). Comparing test-processing times of 0.5 - 4                   217
+                                              days (12, 24, 48, 72, 96 hours) does not lead to visible changes in the number of                       218
+                                              infections in the risk group (the other groups are also unaffected, see S5 Fig). The same               219
+                                              holds true in the presence of seasonal fluctuations in R0 (see Fig 4E-H, S6 Fig).                       220
+                                              Test sensitivity                                                                                        221
+                                              The sensitivity of the tests, which varies between the course of the infection, impacts                 222
+                                              the number of infections and deaths in the risk group (see Fig 5A-D, S7 Fig). Weekly                    223
+October 5, 2020                                                                                                                                  6/14
+
+     medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211573.this version posted October 14, 2020. The copyright holder for this preprint
+         (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                                 All rights reserved. No reuse allowed without permission.
+Fig 4. Test-processing time: The panels show the number of susceptible (S), infected (I), recovered (R) and dead (D)
+individuals at time t, respectively, in the risk group without seasonal variation (A-D) with seasonal variation (E-H) in R0 ,
+assuming different processing times in hours (colors). The black line in all panels corresponds to the baseline model without
+testing. The parameters used are listed in Tables 1, and S1 Table - S6 Table. The dashed grey line in panels (E-H)
+corresponds to the value of R0 (right y-axis).
+                                               testing with a processing time of 48 hours was assumed in the absence of seasonal                       224
+                                               fluctuations in R0 . For simplicity, we compared only tests which had higher or lower                   225
+                                               sensitivity across all stages of the infection as specified in Table 1. Improving the                   226
+                                               quality of the test from poor (failure to detect the virus during the latent phase, with a              227
+                                               maximum sensitivity of 65%) to intermediate (maximum sensitivity of 75%) yields a                       228
+                                               80% reduction in the number of infections in the risk group. A good-quality test                        229
+                                               (maximum sensitivity 80%), yields another 50% improvement. The effect of increasing                     230
+                                               sensitivity saturates. Particularly, improving the maximum sensitivity beyond 90%                       231
+                                               hardly affects the intervention (see Fig 5A-D, S7 Fig I-L).                                             232
+                                                   In the presence of seasonal fluctuations in R0 the results are more pronounced,                     233
+                                               especially the improvement from poor to intermediate to good tests (see Fig 5E-H, S8                    234
+                                               Fig I-L, cf. Table 1).                                                                                  235
+                                               Table 1. Test sensitivity.
+                                                                             quality             sE      sP     sI       sL
+                                                                             poor              0.00    0.10   0.65     0.35
+                                                                             intermediate      0.03    0.30   0.75     0.50
+                                                                             good              0.15    0.60   0.80     0.60
+                                                                             very good         0.25    0.75   0.90     0.65
+                                                                             excellent         0.30    0.80   0.95     0.85
+                                               Sensitivity of tests with different quality in the respective stages of the infection.
+Fig 5. Test sensitivity: The panels show the number of susceptible (S), infected (I), recovered (R) and dead (D)
+individuals at time t, respectively, in the risk group without seasonal variation (A-D) with seasonal variation (E-H) in R0 ,
+assuming different tests (colors). The black line in all panels corresponds to the baseline model without testing. The
+parameters used are listed in Tables 1, and S1 Table - S6 Table. The dashed grey line in panels (E-H) corresponds to the
+value of R0 (right y-axis).
+                                               Economic considerations                                                                                 236
+                                               Moral obligations set aside, the economic gain of the testing interventions can be                      237
+                                               derived from the results described above. Such considerations must incorporate testing                  238
+                                               capacities and the available infrastructure.                                                            239
+                                                   According to the simulations roughly 258 000 LTCF residents will become                             240
+                                               symptomatically infected with the virus. Assuming treatment costs of an LTCF resident                   241
+                                               for flu-like symptoms amounts to 4 000-7 000 Euro, the total cost for all residents are                 242
+                                               1.03-1.81 billion Euro. Assuming costs of approximately 40 Euro per PCR test, and                       243
+                                               intervention with weekly testing (48 times per year and employee) amounts to 960                        244
+                                               million Euro. This does not take into account that staff in home isolation does not need                245
+                                               to be tested. Testing every two weeks would amount to approximately 480 million Euro.                   246
+                                                   While this suggests, that the intervention is cost-efficient, the actual gain is likely to          247
+                                               be underestimated. Namely, long-term effects of infections and additional costs are not                 248
+October 5, 2020                                                                                                                                   7/14
+
+   medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211573.this version posted October 14, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                               All rights reserved. No reuse allowed without permission.
+                                             accounted. Furthermore, costs for testing can presumably be reduced. In particular, the                 249
+                                             testing intervention results in a 10-fold reduction of the number of infected individuals               250
+                                             even under the most conservative setup. Hence, the follow-up costs of infections reduce                 251
+                                             10-fold.                                                                                                252
+                                             Discussion                                                                                              253
+                                             Elderly citizens and particularly residents of long-term care facilities (LTCF) were                    254
+                                             identified early as a vulnerable risk group that deserves particular protection, as                     255
+                                             reflected by the WHO guidelines in March 2020 [24]. Regular testing of LTCF employees                   256
+                                             and residents for COVID-19 was explicitly mentioned by the John Hopkins University                      257
+                                             in their Guidance on Protecting Individuals Residing in Long-Term Care Facilities [25].                 258
+                                             Furthermore, such recommendations can also be found in the WHO policy brief on                          259
+                                             preventing and managing COVID-19 across long-term care services from July 2020 [34].                    260
+                                                 To evaluate the effectiveness of testing interventions to protect resident risk groups              261
+                                             in LTCFs we extended the model underlying the pandemic preparedness tool CovidSim                       262
+                                             [36, http://covidsim.eu]. In particular, the deterministic model formulated as systems of               263
+                                             differential equations was extended to separate the risk group of LTCF residents and                    264
+                                             the LTCF employees from the remaining population. Control interventions within the                      265
+                                             LTCFs affecting the residents and employees roughly reflect the WHO recommendations                     266
+                                             [cf. 34]. Besides, LTCF employees are regularly tested for COVID-19 and isolated from                   267
+                                             the resident risk groups if the result is positive. In addition to these control interventions          268
+                                             general contact isolation measures (reducing effectively the number of contacts of each                 269
+                                             individual) and case isolation measures, by quarantine and home isolation were                          270
+                                             implemented as in CovidSim. Importantly, general contact reduction affects residents                    271
+                                             and employees in LTCFs differently than the remaining population. Especially, general                   272
+                                             contact reducing measures between residents of LTCFs are difficult to enforce.                          273
+                                                 In our investigations, the model was adjusted to reflect the situation in the Federal               274
+                                             Republic of Germany. However, the model is not restricted to one particular country                     275
+                                             but will be applicable to any other industrialised nation with a similar age structure.                 276
+                                                 The results clearly indicate that regular COVID-19-screening of LTCF employees by                   277
+                                             testing successfully reduces the number of cases and deaths in the resident risk group.                 278
+                                             Even with relative conservative assumptions a 10-fold reduction is achieved. Our results                279
+                                             indicate that the frequency at which employees are tested has a strong effect. Testing                  280
+                                             once every 7 to 14 days is sufficient and seems to be a realistic. Although more frequent               281
+                                             testing further improves the intervention, the gain is insignificant. Importantly, the                  282
+                                             waiting time for the return of test results (ranging from 12 to 96 hours) has no                        283
+                                             noticeable effect. A waiting time of 48-72 hours seems to be realistic when compared                    284
+                                             with the requirements for international air traveling since summer 2020, requiring                      285
+                                             passengers to provide proof of a negative COVID-19 test, taken no longer than 72 hours                  286
+                                             before departure. The quality of the test in terms of sensitivity has a clear impact on                 287
+                                             the outcome. Here, PCR tests were assumed to be relatively conservative, considering                    288
+                                             the fact that these tests are constantly improved. Our simple rough estimates of the                    289
+                                             economic gain of the proposed intervention, comparing the potential costs of COVID-19                   290
+                                             treatments with the costs for the testing intervention, is substantial. These estimates                 291
+                                             are conservative as they do not account for health care costs for long term effects of the              292
+                                             infection and capacity shortages in the LTCFs, e.g., due to isolation measures of                       293
+                                             infected residents. Notably, testing a population of 500 000 LTCF employees every two                   294
+                                             weeks requires a total of 11.5 million tests per year (assuming 23 tests per person per                 295
+                                             year), or 221 000 tests per week, which is a realistic number in Germany, having a                      296
+                                             capacity of approximately 1.4 million tests per week in September 2020 [39].                            297
+                                                 Notably, similar results can be obtained for serological tests. However, these tests                298
+October 5, 2020                                                                                                                                 8/14
+
+   medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211573.this version posted October 14, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                               All rights reserved. No reuse allowed without permission.
+                                             typically have lower specificity, so that false-positive results can no longer be ignored.              299
+                                             Moreover, serological tests will have a lower sensitivity in the early stages of the                    300
+                                             infection, when the antibody or antigen levels in the patient have not yet reached the                  301
+                                             detection threshold. Hence, such tests might yield too many false-negative results                      302
+                                             during the phase when infected individuals are most contagious. Considering the                         303
+                                             logistics of performing serological tests, only blood draws from finger pricks seem                     304
+                                             plausible on a large scale deployment as required here, which implies the use of rapid                  305
+                                             tests. However, COVID-19 rapid tests are cost efficient, with approximate 3-10 Euro                     306
+                                             per test. Hence, the economic gain would be further amplified due to the cost efficiency.               307
+                                                 The proposed intervention considers regular testing only of LTCFs employees (staff)                 308
+                                             not of residents or the general population upon entry. The reason is that we wanted to                  309
+                                             study the impact of minimal-invasive control measure. Namely, the risk group is twice                   310
+                                             as large as the target population being tested. Hence, also testing the risk group would                311
+                                             result in the requirement of unrealistically many tests.                                                312
+                                                 It should be noted that general contact reducing measures are modelled in a rather                  313
+                                             simple way here. Namely, they are sustained only during a certain time interval,                        314
+                                             disregarding smooth changes in control measures and people’s behaviour. The model                       315
+                                             here can be easily extended to reflect more realistic situations. A contact reduction                   316
+                                             between the risk group and general population was sustained exceeding the time                          317
+                                             interval of general contact reduction, and lasted during the whole period in which case                 318
+                                             isolation measures are in place. The latter can be changed by requiring negative COVID                  319
+                                             tests of individuals in the general population upon entry into the LTCF. This was                       320
+                                             ignored in the simulations to obtain conservative predictions.                                          321
+                                                 While the model was parameterized to reflect LTCFs, it also applies to incarceration                322
+                                             facilities – particularly, there is a rapidly growing elderly population living in U.S.                 323
+                                             prisons. The WHO states “Data suggest that without adequate testing, treatment and                      324
+                                             care in closed facilities, efforts to control COVID-19 in the general population may fail”              325
+                                             in May 2020 [40, cf. also [41]]. The structure of prisons makes the execution of                        326
+                                             distancing measures particularly difficult as contacts between inmates not in isolation                 327
+                                             are difficult to avoid and the capacity of isolating units is limited. Moreover, wearing                328
+                                             personal protective equipment is a challenge for prison guards. The model parameters                    329
+                                             can easily be adjusted to reflect the situations in incarceration facilities.                           330
+                                             Supporting information                                                                                  331
+                                             S1 Fig. Impact of testing intervention without seasonal fluctuations. The                               332
+                                             panels show the number of infected (I), susceptible (S), recovered (R) and dead (D)                     333
+                                             individuals at time t, respectively, for the general sub-population (A-D), the LTCF staff               334
+                                             (E-H), and the risk group (I-L) assuming different tests (colors) and testing frequencies               335
+                                             (dashing). The black line in all panels corresponds to the baseline model without testing.              336
+                                             The parameters used are listed in Tables 1, and S1 Table - S6 Table, no seasonal                        337
+                                             fluctuations in R0 are assumed.                                                                         338
+                                             S2 Fig. Impact of testing intervention assuming seasonal fluctuations. The                              339
+                                             panels show the number of infected (I), susceptible (S), recovered (R) and dead (D)                     340
+                                             individuals at time t, respectively, for the general sub-population (A-D), the LTCF staff               341
+                                             (E-H), and the risk group (I-L) assuming different tests (colors) and testing frequencies               342
+                                             (dashing). The black line in all panels corresponds to the baseline model without testing.              343
+                                             The parameters used are listed in Tables 1, and S1 Table - S6 Table. Seasonal                           344
+                                             fluctuations in R0 are shown by the dashed line (right axis).                                           345
+October 5, 2020                                                                                                                                 9/14
+
+   medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211573.this version posted October 14, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                                All rights reserved. No reuse allowed without permission.
+                                             S3 Fig. Testing rate without seasonal fluctuations. The panels show the                                 346
+                                             number of susceptible (S), infected (I), recovered (R) and dead (D) individuals at time                 347
+                                             t, respectively, for the general sub-population (A-D), the LTCF staff (E-H), and the risk               348
+                                             group (I-L) assuming different testing rates (colors). The black line in all panels                     349
+                                             corresponds to the baseline model without testing. The parameters used are listed in                    350
+                                             Tables 1, and S1 Table - S6 Table, no seasonal fluctuations in R0 are assumed.                          351
+                                             S4 Fig. Testing rate assuming seasonal fluctuations. The panels show the                                352
+                                             number of susceptible (S), infected (I), recovered (R) and dead (D) individuals at time                 353
+                                             t, respectively, for the general sub-population (A-D), the LTCF staff (E-H), and the risk               354
+                                             group (I-L) assuming different testing rates (colors). The black line in all panels                     355
+                                             corresponds to the baseline model without testing. The parameters used are listed in                    356
+                                             Tables 1, and S1 Table - S6 Table. Seasonal fluctuations in R0 are shown by the dashed                  357
+                                             line (right axis).                                                                                      358
+                                             S5 Fig. Test-processing time without seasonal fluctuations. The panels show                             359
+                                             the number of infected (I), susceptible (S), recovered (R) and dead (D) individuals at                  360
+                                             time t, respectively, for the general sub-population (A-D), the LTCF staff (E-H), and                   361
+                                             the risk group (I-L) assuming different processing times in hours (colors). The black line              362
+                                             in all panels corresponds to the baseline model without testing. The parameters used are                363
+                                             listed in Tables 1, and S1 Table - S6 Table, no seasonal fluctuations in R0 are assumed.                364
+                                             S6 Fig. Test-processing time assuming seasonal fluctuations. The panels                                 365
+                                             show the number of susceptible (S), infected (I), recovered (R) and dead (D)                            366
+                                             individuals at time t, respectively, for the general sub-population (A-D), the LTCF staff               367
+                                             (E-H), and the risk group (I-L) assuming different testing rates (colors). The black line               368
+                                             in all panels corresponds to the baseline model without testing. Seasonal fluctuations in               369
+                                             R0 are shown by the dashed line (right axis). The parameters used are listed in Tables                  370
+                                             1, and S1 Table - S6 Table. Seasonal fluctuations in R0 are shown by the dashed line                    371
+                                             (right axis).                                                                                           372
+                                             S7 Fig. Test sensitivity without seasonal fluctuations. The panels show the                             373
+                                             number of susceptible (S), infected (I), recovered (R) and dead (D) individuals at time                 374
+                                             t, respectively, for the general sub-population (A-D), the LTCF staff (E-H), and the risk               375
+                                             group (I-L) assuming various hypothetical PCR tests that vary in their sensitivity in the               376
+                                             respective infectious stages testing (colors). The sensitivities of the tests are given in              377
+                                             Table 1. The parameters used are listed in Tables S1 Table - S6 Table, no seasonal                      378
+                                             fluctuations in R0 are assumed.                                                                         379
+                                             S8 Fig. Testing rate assuming seasonal fluctuations. The panels show the                                380
+                                             number of susceptible (S), infected (I), recovered (R) and dead (D) individuals at time                 381
+                                             t, respectively, for the general sub-population (A-D), the LTCF staff (E-H), and the risk               382
+                                             group (I-L) assuming different tests (colors). Seasonal fluctuations in R0 are shown by                 383
+                                             the dashed line (right axis). The black line in all panels corresponds to the baseline                  384
+                                             model without testing. The parameters used are listed in Tables 1, and S1 Table - S6                    385
+                                             Table.                                                                                                  386
+                                             S1 Appendix.             Mathematical Description                                                       387
+                                             S1 Table.          (Sub-) population sizes chosen for the simulations.                                  388
+October 5, 2020                                                                                                                                10/14
+
+   medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211573.this version posted October 14, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                               All rights reserved. No reuse allowed without permission.
+                                             S2 Table. Summary of model parameters and their choices for numerical                                   389
+                                             simulations                                                                                             390
+                                             S3 Table. Summary of variables describing sub-population sizes in                                       391
+                                             non-contagious compartments.                                                                            392
+                                             S4 Table. Summary of variables describing sub-population sizes in                                       393
+                                             contagious compartments.                                                                                394
+                                             S5 Table.         Summary of model parameters describing the contact behavior.                          395
+                                             S6 Table. Summary of variables describing sub-population sizes in                                       396
+                                             contagious compartments.                                                                                397
+                                             Acknowledgments                                                                                         398
+                                             We want to dedicate this work to all the victims of the SARS-CoV-2 virus. Our grief is                  399
+                                             with the friends and families of the dreadful disease. The authors like to express their                400
+                                             sympathy to all working to find a cure for the virus. The fruitful discussions with Prof.               401
+                                             Martin Eichner and his helpful comments and inputs are gratefully acknowledged.                         402
+                                             References
+                                                 1. (WHO) WHO. Coronavirus disease 2019 (COVID-19). Situation Report. 2020;52.
+                                                 2. Lai CC, Shih TP, Ko WC, Tang HJ, Hsueh PR. Severe acute respiratory
+                                                      syndrome coronavirus 2 (SARS-CoV-2) and coronavirus disease-2019
+                                                      (COVID-19): The epidemic and the challenges. Int J Antimicrob Agents.
+                                                      2020;55(3):105924. doi:10.1016/j.ijantimicag.2020.105924.
+                                                 3. Huang C, Wang Y, Li X, Ren L, Zhao J, Hu Y, et al. Clinical features of patients
+                                                      infected with 2019 novel coronavirus in Wuhan, China. Lancet.
+                                                      2020;395(10223):497–506. doi:10.1016/S0140-6736(20)30183-5.
+                                                 4. Abdulamir AS, Hafidh RR. The possible immunological pathways for the variable
+                                                      immunopathogenesis of COVID—19 infections among healthy adults, elderly and
+                                                      children; 2020.
+                                                 5. Gao Z, Xu Y, Sun C, Wang X, Guo Y, Qiu S, et al.. A systematic review of
+                                                      asymptomatic infections with COVID-19; 2020.
+                                                 6. Mizumoto K, Kagaya K, Zarebski A, Chowell G. Estimating the asymptomatic
+                                                      proportion of coronavirus disease 2019 (COVID-19) cases on board the Diamond
+                                                      Princess cruise ship, Yokohama, Japan, 2020; 2020.
+                                                 7. Madzimbamuto FD. Ventilators are not the answer in Africa. African journal of
+                                                      primary health care & family medicine. 2020;doi:10.4102/phcfm.v12i1.2517.
+                                                 8. Nct. Hyperbaric Oxygen Therapy in Non-ventilated COVID-19 Patients.
+                                                      https://clinicaltrialsgov/show/NCT04409886. 2020;.
+October 5, 2020                                                                                                                                11/14
+
+   medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211573.this version posted October 14, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                               All rights reserved. No reuse allowed without permission.
+                                                 9. Toniati P, Piva S, Cattalini M, Garrafa E, Regola F, Castelli F, et al..
+                                                      Tocilizumab for the treatment of severe COVID-19 pneumonia with
+                                                      hyperinflammatory syndrome and acute respiratory failure: A single center study
+                                                      of 100 patients in Brescia, Italy; 2020.
+                                               10. Poor HD, Ventetuolo CE, Tolbert T, Chun G, Serrao G, Zeidman A, et al.
+                                                      COVID-19 critical illness pathophysiology driven by diffuse pulmonary thrombi
+                                                      and pulmonary endothelial dysfunction responsive to thrombolysis. Clinical and
+                                                      Translational Medicine. 2020;doi:10.1002/ctm2.44.
+                                               11. Shi H, Han X, Jiang N, Cao Y, Alwalid O, Gu J, et al. Radiological findings from
+                                                      81 patients with COVID-19 pneumonia in Wuhan, China: a descriptive study.
+                                                      The Lancet Infectious Diseases. 2020;doi:10.1016/S1473-3099(20)30086-4.
+                                               12. Elezkurtaj S, Greuel S, Ihlow J, Michaelis E, Bischoff P, Kunze CA, et al. Causes
+                                                      of Death and Comorbidities in Patients with COVID-19. medRxiv.
+                                                      2020;doi:10.1101/2020.06.15.20131540.
+                                               13. Verity R, Okell LC, Dorigatti I, Winskill P, Whittaker C, Imai N, et al. Estimates
+                                                      of the severity of coronavirus disease 2019: a model-based analysis. The Lancet
+                                                      Infectious Diseases. 2020;20(6):669–677. doi:10.1016/S1473-3099(20)30243-7.
+                                               14. Rimmer A. Covid-19: Impact of long term symptoms will be profound, warns
+                                                      BMA. BMJ. 2020;doi:10.1136/bmj.m3218.
+                                               15. Wolff D, Nee S, Hickey NS, Marschollek M. Risk factors for Covid-19 severity
+                                                      and fatality: a structured literature review. Infection.
+                                                      2020;doi:10.1007/s15010-020-01509-1.
+                                               16. Beneker C. COVID-19 Jedes zweite Corona-Opfer lebte im Heim.
+                                                      \”{A}rzeZeitung. 2020;.
+                                               17. Carson AE, Sabol WJ. Aging of the State Prison Population, 1993–2013. Bureau
+                                                      of Justice Statistics Special Report. 2016;.
+                                               18. Abraham LA, Brown TC, Thomas SA. How COVID-19’s Disruption of the U.S.
+                                                      Correctional System Provides an Opportunity for Decarceration. American
+                                                      Journal of Criminal Justice. 2020;doi:10.1007/s12103-020-09537-1.
+                                               19. Davalgi S, Undi M, Annadani R, Nawaz AS. Comparison of measures adopted to
+                                                      combat covid 19 pandemic by different countries in who regions. Indian Journal
+                                                      of Community Health. 2020;.
+                                               20. Liao H, Zhang L, Marley G, Tang W. Differentiating COVID-19 Response
+                                                      Strategies. The Innovation. 2020;doi:10.1016/j.xinn.2020.04.003.
+                                               21. Imtyaz A, Abid Haleem, Javaid M. Analysing governmental response to the
+                                                      COVID-19 pandemic. Journal of Oral Biology and Craniofacial Research.
+                                                      2020;doi:10.1016/j.jobcr.2020.08.005.
+                                               22. Hou T, Zeng W, Yang M, Chen W, Ren L, Ai J, et al. Development and
+                                                      evaluation of a rapid CRISPR-based diagnostic for COVID-19. PLOS Pathogens.
+                                                      2020;16(8):1–12. doi:10.1371/journal.ppat.1008705.
+                                               23. Patchsung M, Jantarug K, Pattama A, Aphicho K, Suraritdechachai S, Meesawat
+                                                      P, et al. Clinical validation of a Cas13-based assay for the detection of
+                                                      SARS-CoV-2 RNA. Nature Biomedical Engineering.
+                                                      2020;doi:10.1038/s41551-020-00603-x.
+October 5, 2020                                                                                                                                12/14
+
+   medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211573.this version posted October 14, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                               All rights reserved. No reuse allowed without permission.
+                                               24. Organization WH. Infection prevention and control guidance for long-term care
+                                                      facilities in the context of COVID-19: interim guidance, 21 March 2020; 2020.
+                                               25. of Public Health JHBS. Recommendations for a Metropolitan Covid-19 Response
+                                                      Special Emphasis Series -Guidance on Protecting Individuals Residing in
+                                                      Long-Term Care Facilities. Johns Hopkins Bloomberg School of Public Health;
+                                                      2020.
+                                               26. McMichael TM, Currie DW, Clark S, Pogosjans S, Kay M, Schwartz NG, et al.
+                                                      Epidemiology of covid-19 in a long-term care facility in King County, Washington.
+                                                      New England Journal of Medicine. 2020;doi:10.1056/NEJMoa2005412.
+                                               27. Statistisches Bundesamt. Pflegestatistik - Pflege im Rahmen der
+                                                      Pflegeversicherung Deutschlandergebnisse 2017. Statistisches Bundesamt
+                                                      (Destatis); 2018. Available from: https://www.destatis.de/DE/Themen/
+                                                      Gesellschaft-Umwelt/Gesundheit/Pflege/Publikationen/
+                                                      Downloads-Pflege/pflege-deutschlandergebnisse-5224001179004.pdf?
+                                                      {_}{_}blob=publicationFile.
+                                               28. Wallace M, Hagan L, Curran KG, Williams SP, Handanagic S, Bjork A, et al.
+                                                      COVID-19 in Correctional and Detention Facilities — United States,
+                                                      February–April 2020. MMWR Morbidity and Mortality Weekly Report.
+                                                      2020;doi:10.15585/mmwr.mm6919e1.
+                                               29. Hawks L, Woolhandler S, McCormick D. COVID-19 in prisons and jails in the
+                                                      United States; 2020.
+                                               30. Reinhart E, Chen DL. Incarceration And Its Disseminations: COVID-19
+                                                      Pandemic Lessons From Chicago’s Cook County Jail. Health affairs (Project
+                                                      Hope). 2020;doi:10.1377/hlthaff.2020.00652.
+                                               31. Carson AE. Prisoners in 2018. NCJ. 2020;(253516).
+                                               32. Kaeble D, Cowhig M. Correctional Populations in the United States. Bureau of
+                                                      Justice Statistics. 2018;.
+                                               33. Maruschak LM, Minton TD. Correctional Populations in the United States,
+                                                      2017-2018. NCJ. 2020;252157.
+                                               34. World Health Organization. Preventing and managing COVID-19 across
+                                                      long-term care services: policy brief, 24 July 2020; 2020.
+                                               35. EUROPRIS. Overview of European prison services’ responses to the COVID-19
+                                                      crisis. European Organisation of Prison and Correctional Services. 2020;3rd
+                                                      Editio.
+                                               36. Schneider, Kristan and Ngwa, Gideon A and Schwehm, Markus and Eichner,
+                                                      Linda and Eichner M. The COVID-19 Pandemic Preparedness Simulation Tool:
+                                                      CovidSIM. SSRN. 2020;(4/16/2020). doi:http://dx.doi.org/10.2139/ssrn.3578789.
+                                               37. Diekmann O, Heesterbeek JAP, Metz JAJ. On the definition and the
+                                                      computation of the basic reproduction ratio R0 in models for infectious diseases
+                                                      in heterogeneous populations. Journal of Mathematical Biology.
+                                                      1990;doi:10.1007/BF00178324.
+                                               38. R Core Team (2019). R: A language and environment for statistical computing.
+                                                      Accessed 1st April 2019. 2019;.
+October 5, 2020                                                                                                                                13/14
+
+   medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211573.this version posted October 14, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                               All rights reserved. No reuse allowed without permission.
+                                               39. Seifried J, Böttcher S, Albrecht S, Stern D, Willrich N, Zacher B, et al. Aktuelle
+                                                      Daten Und Informationen Zu Infektionskrankheiten Und Public Health.
+                                                      Epidemiologisches Bulletin. 2020;37.
+                                               40. for the Western Pacific WHORO. type [;].
+                                               41. for Europe WHORO. Preparedness, prevention and control of COVID-19 in
+                                                      prisons and other places of detention.; 2020.
+October 5, 2020                                                                                                                                14/14
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211573.this version posted October 14, 2020. The copyright holder for this preprint
+   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+                 S(Ge)                    S(St)                                                             S(Ri)
+                         (Ge)                      (St)                                                           (Ri)
+                                                           sE
+                 E1(Ge)                   E1(St,-)               E1(St,*)             E1(St,+)              E1(Ri)
+                                                           sP
+                 P1(Ge)                   P1(St,-)               P1(St,*)             P1(St,+)              P1(Ri)
+                                                           sI
+                 I1(Ge)                   I1(St,-)               I1(St,*)             I1(St,+)              I1(Ri)
+                                                           sL
+                 L1(Ge)                   L1(St,-)               L1(St,*)             L1(St,+)              L1(Ri)
+                  g        (1-g)           g         (1-g)        g       (1-g)         g       (1-g)     g(Ri)       (1-g(Ri))
+           R(Ge)       D(Ge)         R(St,-) D(St,-) R(St,*) D(St,*) R(St,+) D(St,+)                    R(Ri)      D(Ri)
+         g=fSick fDead              g(Ri)=fSick
+                                              (Ri) (Ri)
+                                                    fDead
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211573.this version posted October 14, 2020. The copyright holder for this preprint
+   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+           A.                                                                                 E.
+                                          100000                                                                             100000
+                Susceptibles per 100000                                                            Susceptibles per 100000
+                                                          14                                                                                  14                                  15
+                                                          07                                                                                  07
+                                           75000          02                                                                  75000           02
+                                                          01                                                                                  01
+                                                                                                                                                                                  10
+                                           50000          NT                                                                  50000           NT
+                                                          Poor                                                                                Poor
+                                                          Intermediate                                                                        Intermediate                        5
+                                           25000          Good                                                                25000           Good
+                                                          Very good                                                                           Very good
+                                                          Excellent                                                                           Excellent
+                                                  0                                                                                  0                                            0
+                                                      0            100          200     300                                              0            100           200     300
+                                                                          time (days)                                                                         time (days)
+           B.                                                                                 F.
+                                          30000                                                                              30000
+                                                          14                                                                                 14                                   15
+                Infections per 100000                                                              Infections per 100000
+                                                          07                                                                                 07
+                                                          02                                                                                 02
+                                          20000           01                                                                 20000           01
+                                                                                                                                                                                  10
+                                                          NT                                                                                 NT
+                                                          Poor                                                                               Poor
+                                          10000           Intermediate                                                       10000           Intermediate                         5
+                                                          Good                                                                               Good
+                                                          Very good                                                                          Very good
+                                                          Excellent                                                                          Excellent
+                                             0                                                                                  0                                                 0
+                                                      0           100          200      300                                              0           100           200      300
+                                                                         time (days)                                                                         time (days)
+           C.                                                                                 G.
+                                                          14                                                                                 14                                   15
+                Recovered per 100000                                                               Recovered per 100000
+                                          40000           07                                                                 40000           07
+                                                          02                                                                                 02
+                                                          01                                                                                 01
+                                          30000                                                                              30000                                                10
+                                                          NT                                                                                 NT
+                                          20000           Poor                                                               20000           Poor
+                                                          Intermediate                                                                       Intermediate                         5
+                                                          Good                                                                               Good
+                                          10000           Very good                                                          10000           Very good
+                                                          Excellent                                                                          Excellent
+                                             0                                                                                  0                                                 0
+                                                      0           100          200      300                                              0           100           200      300
+                                                                         time (days)                                                                         time (days)
+           D.                                                                                 H.
+                                                      14                                                                                     14
+                                                      07                                                                                     07                                   15
+                Dead per 100000                                                                    Dead per 100000
+                                          2000        02                                                                     2000            02
+                                                      01                                                                                     01
+                                                                                                                                                                                  10
+                                                      NT                                                                                     NT
+                                          1000        Poor                                                                   1000            Poor
+                                                      Intermediate                                                                           Intermediate
+                                                      Good                                                                                   Good                                 5
+                                                      Very good                                                                              Very good
+                                                      Excellent                                                                              Excellent
+                                             0                                                                                  0                                                 0
+                                                  0               100          200      300                                          0              100            200      300
+                                                                         time (days)                                                                         time (days)
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211573.this version posted October 14, 2020. The copyright holder for this preprint
+   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+           A.                             100000
+                                                                                           E.                             100000
+                Susceptibles per 100000                                                         Susceptibles per 100000
+                                                                                                                                                                          15
+                                           75000                                                                           75000
+                                                          14                                                                              14                              10
+                                           50000          07                                                               50000          07
+                                                          02                                                                              02
+                                                          01                                                                              01                              5
+                                           25000                                                                           25000
+                                                 0                                                                               0                                        0
+                                                      0         100          200     300                                              0         100         200     300
+                                                                       time (days)                                                                    time (days)
+           B.                             30000                                            F.                             30000
+                                                                                                                                                                          15
+                Infections per 100000                                                           Infections per 100000
+                                          20000                                                                           20000
+                                                          14                                                                              14                              10
+                                                          07                                                                              07
+                                                          02                                                                              02
+                                          10000           01                                                              10000           01                              5
+                                             0                                                                               0                                            0
+                                                     0         100          200      300                                             0         100          200     300
+                                                                      time (days)                                                                     time (days)
+           C.                                                                              G.
+                                                                                                                                                                          15
+                Recovered per 100000                                                            Recovered per 100000
+                                          40000                                                                           40000
+                                          30000                                                                           30000                                           10
+                                                          14                                                                              14
+                                                          07                                                                              07
+                                          20000           02                                                              20000           02
+                                                          01                                                                              01                              5
+                                          10000                                                                           10000
+                                             0                                                                               0                                            0
+                                                     0         100          200      300                                             0         100          200     300
+                                                                      time (days)                                                                     time (days)
+           D.                             2500                                             H.
+                                                                                                                                                                          15
+                                          2000
+                Dead per 100000                                                                 Dead per 100000
+                                                                                                                          2000
+                                          1500           14                                                                              14                               10
+                                                         07                                                                              07
+                                          1000           02                                                               1000           02
+                                                         01                                                                              01
+                                                                                                                                                                          5
+                                           500
+                                             0                                                                               0                                            0
+                                                  0            100          200      300                                          0            100         200      300
+                                                                      time (days)                                                                    time (days)
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211573.this version posted October 14, 2020. The copyright holder for this preprint
+   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+           A.                             100000
+                                                                                           E.                             100000
+                Susceptibles per 100000                                                         Susceptibles per 100000
+                                                                                                                                                                          15
+                                           75000                                                                           75000
+                                                          96                                                                              96                              10
+                                                          72                                                                              72
+                                           50000          48                                                               50000          48
+                                                          24                                                                              24
+                                                          12                                                                              12                              5
+                                           25000                                                                           25000
+                                                 0                                                                               0                                        0
+                                                      0         100          200     300                                              0         100         200     300
+                                                                       time (days)                                                                    time (days)
+           B.                             30000
+                                                                                           F.                             30000
+                                                                                                                                                                          15
+                Infections per 100000                                                           Infections per 100000
+                                          20000          96                                                               20000          96                               10
+                                                         72                                                                              72
+                                                         48                                                                              48
+                                                         24                                                                              24
+                                          10000          12                                                               10000          12                               5
+                                             0                                                                               0                                            0
+                                                     0         100          200      300                                             0         100          200     300
+                                                                      time (days)                                                                     time (days)
+           C.                                                                              G.
+                                                                                                                                                                          15
+                Recovered per 100000                                                            Recovered per 100000
+                                          40000                                                                           40000
+                                          30000          96                                                               30000          96                               10
+                                                         72                                                                              72
+                                          20000          48                                                               20000          48
+                                                         24                                                                              24
+                                                         12                                                                              12                               5
+                                          10000                                                                           10000
+                                             0                                                                               0                                            0
+                                                     0         100          200      300                                             0         100          200     300
+                                                                      time (days)                                                                     time (days)
+           D.                                                                              H.
+                                                                                                                                                                          15
+                Dead per 100000                                                                 Dead per 100000
+                                          2000                                                                            2000
+                                                      96                                                                              96                                  10
+                                                      72                                                                              72
+                                                      48                                                                              48
+                                          1000        24                                                                  1000        24
+                                                      12                                                                              12                                  5
+                                             0                                                                               0                                            0
+                                                  0            100          200      300                                          0            100         200      300
+                                                                      time (days)                                                                    time (days)
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211573.this version posted October 14, 2020. The copyright holder for this preprint
+   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+           A.                             100000
+                                                                                             E.                             100000
+                Susceptibles per 100000                                                           Susceptibles per 100000
+                                                                                                                                                                              15
+                                           75000          NT                                                                 75000          NT
+                                                          Poor                                                                              Poor                              10
+                                                          Intermediate                                                                      Intermediate
+                                           50000          Good                                                               50000          Good
+                                                          Very good                                                                         Very good
+                                                          Excellent                                                                         Excellent                         5
+                                           25000                                                                             25000
+                                                 0                                                                                 0                                          0
+                                                      0          100           200     300                                              0          100          200     300
+                                                                         time (days)                                                                      time (days)
+           B.                             30000
+                                                                                             F.                             30000
+                                                                                                                                                                              15
+                Infections per 100000                                                             Infections per 100000
+                                                         NT                                                                                NT
+                                          20000          Poor                                                               20000          Poor
+                                                         Intermediate                                                                      Intermediate                       10
+                                                         Good                                                                              Good
+                                                         Very good                                                                         Very good
+                                          10000          Excellent                                                          10000          Excellent                          5
+                                             0                                                                                 0                                              0
+                                                     0          100           200      300                                             0          100          200      300
+                                                                        time (days)                                                                      time (days)
+           C.                                                                                G.
+                                                                                                                                                                              15
+                Recovered per 100000                                                              Recovered per 100000
+                                          40000                                                                             40000
+                                                         NT                                                                                NT
+                                          30000          Poor                                                               30000          Poor                               10
+                                                         Intermediate                                                                      Intermediate
+                                                         Good                                                                              Good
+                                          20000          Very good                                                          20000          Very good
+                                                         Excellent                                                                         Excellent                          5
+                                          10000                                                                             10000
+                                             0                                                                                 0                                              0
+                                                     0          100           200      300                                             0          100          200      300
+                                                                        time (days)                                                                      time (days)
+           D.                                                                                H.
+                                                                                                                                                                              15
+                Dead per 100000                                                                   Dead per 100000
+                                          2000        NT                                                                    2000        NT
+                                                      Poor                                                                              Poor
+                                                      Intermediate                                                                      Intermediate                          10
+                                                      Good                                                                              Good
+                                          1000        Very good                                                             1000        Very good
+                                                      Excellent                                                                         Excellent                             5
+                                             0                                                                                 0                                              0
+                                                  0            100           200       300                                          0            100          200       300
+                                                                       time (days)                                                                      time (days)

@@ -1,0 +1,591 @@
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211953.this version posted October 14, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+          Systematic analysis of electronic health records identifies drugs reducing
+          risk of COVID-19 hospitalization and severity
+          Ariel Israel, M.D., Ph.D.1
+          Alejandro A. Schäffer, Ph.D.3
+          Assi Cicurel, M.D., M.B.A.1,2
+          Ilan Feldhamer, M.A.1
+          Ameer Tal, M.Sc.1
+          Kuoyuan Cheng, M.S.3
+          Sanju Sinha, B.Tech.3
+          Eyal Schiff, MD 4
+          Gil Lavie, M.D., M.H.A., M.B.A. 1,5 #
+          Eytan Ruppin, M.D., Ph.D.3 #
+          Authors Affiliations:
+          1
+            Division of Planning and Strategy, Clalit Health Services, Israel
+          2
+            Clalit Health Services, Southern District and Faculty of Health Sciences, Ben-Gurion
+          University of the Negev, Beer-Sheva, Israel
+          3
+            Cancer Data Science Laboratory, National Cancer Institute, National Institutes of Health,
+          Bethesda, MD, USA
+          4
+            Sheba Medical Center, Tel-Aviv University, Israel
+          5
+            Ruth and Bruce Rappaport Faculty of Medicine, Technion – Israel Institute of Technology,
+          Haifa, Israel
+          # Equal contribution last authors
+          Corresponding Author:
+          Ariel Israel, MD, PhD
+          Director, Department of Research and Data
+          Division of Planning and Strategy
+          Clalit Health Services
+          101 Arlozorov Street
+          Tel Aviv 62098, Israel
+                                                                         1
+       NOTE: This preprint reports new research that has not been certified by peer review and should not be used to guide clinical practice.
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211953.this version posted October 14, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+          Telephone: +972-3-3948160
+          Email: dr.ariel.israel@gmail.com
+                                                                       2
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211953.this version posted October 14, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+          Abstract
+          Background
+          SARS-Cov-2 is a new virus causing a pandemic of primarily respiratory illness designated as
+          Coronavirus Disease 2019 (COVID-19). This disease is associated with excess mortality, particularly
+          among the elderly, raising concerns for public health. It is crucial to identify whether existing
+          medications could protect against adverse outcomes of COVID-19 infection.
+          Methods
+          We performed a population-based study among members of Clalit Health Services (CHS), the largest
+          healthcare provider in Israel. CHS centrally manages electronic health records (EHR) including
+          medication purchases for over 4.5 million members. Since the disease outbreak through October 10,
+          2020, 8,681 adult patients aged between 18 and 95 have been hospitalized for COVID-19, among
+          them 3,777 in severe condition. Two case-control matched cohorts were assembled to assess which
+          drugs taken by patients in the month preceding a SARS-CoV-2 positive test, affected risks of
+          COVID-19 hospitalization. Significance of the associations was assessed using Fisher's exact test and
+          Benjamini-Hochberg correction for multiple testing.
+          Results
+          Several drugs and pharmacy sold products were significantly associated with reduced odds ratios of
+          SARS-CoV-2 hospitalization: ubiquinone (OR=0.25, p<0.001), ezetimibe (OR=0.51, P<0.001),
+          rosuvastatin (OR=0.75, p<0.001) and flecainide (OR=0.30, p<0.01). Additionally, acquisition of
+          surgical masks, latex gloves and several ophthalmological products were associated with decreased
+          risk for hospitalization.
+          Conclusion
+          Ubiquinone, ezetimibe and rosuvastatin, all related to the cholesterol synthesis pathway, are
+          associated with reduced hospitalization rate and decreased severity in hospitalized patients. These
+          findings set the basis for specific prospective randomized control trials that should be carried out to
+          carefully assess their protective effects.
+                                                                       3
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211953.this version posted October 14, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+          Background
+          SARS-Cov-2 is a new single-stranded RNA virus, which was first identified in December 2019, and
+          has rapidly spread into a global pandemic of primarily respiratory illness designated as Coronavirus
+          Disease 2019 (COVID-19). This disease is associated with significant mortality, particularly among
+          elderly or overweight individuals, raising considerable concerns for public health. Until a vaccine or
+          specifically designed therapies are available, it is urgent to identify whether existing medications have
+          protective effects against COVID-19 complications from available real-world data. This is the aim of
+          this case-control study which was performed on electronic health records (EHR) from Clalit Health
+          Services (CHS), the largest healthcare provider in Israel.
+          Methods
+          We collected from the Clalit Health Services (CHS) data warehouse selected variables from the EHR
+          of adult patients aged 18 to 95 years, who had been tested positive for SARS-CoV-2 between the
+          beginning of the pandemics and until September 25, and were admitted for hospitalization until
+          October 10, 2020. Each patient was assigned an index date, which is the first date at which a positive
+          PCR test SARS-CoV-2 test was collected for the patient. Patients' demographic characteristics were
+          queried, along with existing comorbidities, clinical characteristics including BMI, and glomerular
+          filtration rate (GFR) as of February 2020. For each patient, the list of drugs or products acquired in
+          CHS pharmacies was collected for the preceding month, defined as 35 to 2 days before the index date.
+          We assigned the hospitalized COVID-19 patients to two distinct case-control cohorts, which differ in
+          the pool from which control individuals were selected. In cohort 1, control patients were chosen
+          among the general population of CHS members. Since we can select controls from among millions of
+          individuals, we took 5 controls for each case (5:1), and comprehensively controlled by matching
+          baseline attributes, including age, gender, BMI category, socio-economic and smoking status, chronic
+          kidney disease (CKD) stage for patients with renal impairment, and main comorbidities diagnoses
+          (hypertension, diabetes, chronic kidney disease (CKD), congestive heart failure (CHF), chronic
+          obstructive pulmonary disease (COPD), malignancy, ischemic heart disease). We assigned to each
+          control the same index date as the matched case, verified that the patient was still alive and a member
+          of CHS at this date, and collected EHR data for controls in a similar manner to that described for
+          cases. This cohort is designed to identify drugs that affect the overall risk for hospitalization for
+          COVID-19, where the effect could combine a decreased risk of detectable infection, and a decreased
+          risk for hospitalization once infected.
+                                                                       4
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211953.this version posted October 14, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+          In cohort 2, control patients were chosen among patients who had a positive test for SARS-CoV-2 but
+          had not been hospitalized as of October 10, 2020. Given the smaller size of the pool from which
+          controls can be drawn, we matched only two controls for each case patient. Attributes which were
+          matched were the age, gender, smoking status, Adjusted Clinical Groups® (ACG) measure of
+          comorbidity1 and presence of obesity diagnosis. The index date taken was the date of first positive
+          SARS-CoV-2 test both for cases and controls. This cohort is more specifically suited to identify drugs
+          that are associated with a decreased risk for COVID-19 hospitalization in patients who had proven
+          infection with the virus. In both cohorts, there were a minority of individuals for which a full match
+          could not be found; these cases were dropped from their respective cohorts and excluded from the
+          analyses.
+          Reliable identification of medications procured for the last 35 days is enabled by the fact that in CHS,
+          distinct prescriptions are issued for each calendar month. When medications are provided in advance
+          for multiple months, the date at which the prescription for each month of treatment begins is recorded.
+          In each cohort, and for each medication anatomical therapeutic chemical (ATC) class, we computed
+          the odds ratio for hospitalization according to the number of patients who acquired a medication of
+          the class between 35 days and 2 days preceding the index date, in the case and the control groups.
+          Medications found to be significantly associated with hospitalization were also tested for association
+          with disease severity, using a nested analysis in sub-cohorts of patients from the main cohort grouped
+          by disease severity, according to the scale defined by the World Health Organization (WHO): mild
+          (3), serious (4), severe (5-7), deceased (8).
+          Based on the results from the two cohorts, which highlighted a significant protective effect for
+          ubiquinone, ezetimibe, and a statin, which are often prescribed in combination, we subsequently
+          investigated the association between various combinations of these drugs and the outcomes using the
+          same approach.
+          This study has been approved by the CHS Institutional Review Board (IRB) with a waiver of
+          informed consent, approval number: COM-0046-20. Patients’ data were extracted and processed from
+          CHS data-warehouse using programs developed inhouse in Python and SQL. Identifying patient data
+          were removed prior to the statistical analyses in accordance to the protocol approved by the CHS IRB.
+          Statistical analysis
+          Odds ratios for acquisition for drugs in the case versus control groups and statistical significance were
+          assessed by Fisher's exact test. P-values below 0.05 were considered significant. Correction for
+          multiple testing was performed using the Benjamini-Hochberg procedure2, which gives an estimation
+                                                                       5
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211953.this version posted October 14, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+          of the false discovery rate (FDR) in the list. Statistical analyses were performed in R statistical
+          software version 3.6 (R Foundation for statistical computing).
+          Results
+          Through October 10, 2020, 8,681 adult patients between aged 18 and 95 had a recorded COVID-19
+          related hospitalization in the CHS database. The matching procedure was able to identify control
+          individuals from the general population in ratio 5:1 for 6,202 patients in the first cohort, and control
+          patients in ratio 2:1 from 6,919 SARS-CoV-2 positive individuals in the second cohort. The
+          characteristics of the matched populations are shown in Table 1.
+          In each of the two cohorts, we counted the number of patients from each group who acquired drugs
+          and other medical products from each Anatomical Therapeutic Chemical (ATC) and computed the
+          odds ratios and p-values using Fisher's test. The distribution of odds ratio for drugs for which the p-
+          value was significant (p<0.05) is shown in Figure 1. The odds ratios for most drugs are neutral or
+          associated with an increased risk of COVID-19 hospitalization. Only a small fraction of the products
+          are associated with decreased risk: 1.15% for cohort 1, and 1.75% in cohort 2.
+          Table 2 presents the list of drugs/products that were found to be negatively associated with COVID-
+          19 hospitalization in a statistically significant manner in cohort 1 (A) and in cohort 2 (B). We display
+          items for which the p-value is below 0.05, and for which the false discovery rate (FDR) is less than
+          0.30, meaning that at least 70% of the items in the displayed list are expected to have a true protective
+          effect. Items are sorted by decreasing order of significance, so that the associations that are the least
+          likely to have happened by chance are displayed first.
+          The most significant medications in both cohorts are ubiquinone, ezetimibe, and rosuvastatin. It is
+          remarkable that these three drugs act on the cholesterol and ubiquinone synthesis pathways, which
+          both stem from the mevalonate pathway3; the intermediate product at the branch point is farnesyl
+          polyphosphate (FPP). Ubiquinone is a food supplement available over the counter (OTC) in Israel,
+          which is often recommended to patients prone to muscular pain and receiving a statin treatment4.
+          Since Ezetimibe, statins and ubiquinone are often used in combination, we performed a nested
+          analysis to more specifically evaluate the impact of possible combinations on the risk of
+          hospitalization. Table 3 presents the odds ratio and p-values associated with acquisition of statins,
+          ubiquinone, and ezetimibe alone and in combination in the whole cohort, and in sub-cohorts of
+          hospitalized patients defined by disease severity. Ubiquinone’s protective effect appears to be more
+          pronounced when given in combination with a statin (OR=0.122, P=0.008, first cohort, for
+          hospitalization in moderate condition). Remarkably, the protective effect of ezetimibe is the strongest
+                                                                       6
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211953.this version posted October 14, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+          when this molecule is taken without a statin (OR=0.275, P=0.037, second cohort for severe
+          hospitalization), while the effect observed when ezetimibe is taken with a statin is similar to the effect
+          of the statin alone. Also identified by both cohorts is flecainide, an antiarrhythmic medication, for
+          which the difference in usage rate among hospitalized patients is significant both in cohorts 1 and
+          cohort 2. Several additional protective drugs observed in cohort 2 include risedronic acid (OR=0.593,
+          p=0.002), a drug usually prescribed for osteoporosis; several drugs acting at synapses of different
+          types (bupropion, donepezil, mirabegron); vitamins (vitamin B12 combination, retinol for the eye),
+          and minerals (calcium-zinc, magnesium).
+          A significant protective effect is interestingly observed for several non-drug items that could act as a
+          barrier in both cohorts: surgical masks, latex gloves, eye care wipes (sterile wipes for eye hygiene),
+          artificial tears, eye drops and ointments.
+          Discussion
+          We identified several drugs and products that are significantly associated with reduced odds for
+          COVID-19 hospitalization, both in the general population, and in patients with laboratory proven
+          SARS-CoV-2 infection. Major strengths of our study include: (i) the large sample of hospitalized
+          COVID-19 patients, (ii) the ability to collect comprehensive data about individual demographic and
+          comorbidity characteristics and to build matched case and control populations, (iii) the ability to track
+          hospitalizations and disease severity, owing to a central database established by the Israeli Ministry of
+          Health and, (iv) the capacity to track which drugs and products have been acquired by patients in the
+          period that have preceded SARS-CoV-2 infection, owing to comprehensive digital systems
+          integration in CHS.
+          The dual cohort design, with control individuals taken from the general population in the first cohort
+          and from individuals positive for SARS-CoV-2 in the second cohort, with each using different
+          matching criteria, mitigates potential bias that could affect each cohort. The two cohorts allow to
+          evaluate the protective effect of drugs that act either by reducing the initial risk of infection, or by
+          reducing the risk of hospitalization in those infected. Analyses are based on items procured between
+          35 and 2 days before the initial positive test. This window was chosen in accordance to the monthly
+          renewal of prescription policy in place in CHS, with a blackout of 2 days which was intended to
+          exclude acquisitions related to initial symptoms of the disease.
+          Limitations are related to this study being observational in nature. Best efforts were made to use
+          matching so that patients in case and controls are similar regarding most of the known factors for
+          disease severity, and notably, age, obesity, smoking, and baseline comorbidity. We aimed to get a
+          good tradeoff between controlling for confounding factors by rigorous matching and keeping enough
+                                                                       7
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211953.this version posted October 14, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+          patients so that cohorts are representative of the general population. Our analysis is based on
+          medication acquisition in pharmacies and does not ascertain that medications purchased were used.
+          Notably, some of the drugs associated with a protective effect may have been stopped during patient's
+          hospitalization so that our analysis may have underestimated the full achievable benefit for some of
+          the drugs. Conversely, since drugs tested here were acquired before patients were positive for SARS-
+          CoV-2, the protective effect of some of the drugs may be fully attained only when treatment is started
+          before or early in the infection.
+          Bearing these potential limitations in mind, our analyses point to several different viral vulnerability
+          points, which can potentially be exploited to effectively fight the virus with drugs that are already
+          available. The drugs identified as protective are ubiquinone, which is a food supplement with a very
+          good safety profile that does not even require a prescription in Israel; rosuvastatin and ezetimibe, two
+          drugs prescribed routinely to reduce cholesterol, and who are considered safe. These findings are in
+          line with previous reports that RNA viruses need cholesterol to enter cells, for virion assembly, and to
+          maintain structural stability5–8, and that prescribing statins may protect against infection with RNA
+          viruses such as members of family Flaviviridae, including Dengue virus, Zika virus, and West Nile
+          virus9–11. The involvement of the cholesterol/ubiquinone pathway is further confirmed by the fact that
+          risedronic acid, a drug acting on the enzyme farnesyl pyroposhpate synthase12 which catalyzes the
+          production of FPP from which the cholesterol and the Ubiquinone synthesis pathways split3, is
+          identified as protective as well, even though it is prescribed for osteoporosis regardless of the
+          presence of hypercholesterolemia.
+          Taken together, our findings lend (albeit indirect) support to the possibility that SARS-CoV2 hijacks
+          the cholesterol synthesis pathway, possibly to boost production of the cellular cholesterol it needs as
+          an RNA virus. The fact that ubiquinone protects against severe disease, suggests that SARS-CoV2
+          may tilt the mevalonate pathway towards cholesterol synthesis and away from ubiquinone synthesis.
+          Such a pathway imbalance would ultimately result in deficiency of ubiquinone that could lead to cell
+          death unless counteracted by ubiquinone supplementation.
+          Another medication that appears protective is flecainide, an antiarrhythmic drug that blocks sodium
+          channels in the heart, and inhibits ryanodine receptor 2 (RyR2), a major regulator of sarcoplasmic
+          release of stored calcium ions. It may prevent apoptosis by release of calcium from the ER, once the
+          cell mitochondria cease to function. An expert review recommended that patients with arrhythmia
+          who get COVID-19 should continue flecainide treatment if already prescribed13. In our study, the
+          protective effect observed in both cohorts is even more marked for severe patients. If this effect is
+          confirmed in clinical trials, this drug, which can be given intravenously14, could be administered in
+          patients in respiratory distress, even if unconscious.
+                                                                       8
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211953.this version posted October 14, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+          Reassuringly, we find items that act as a barrier among the most protective items, including surgical
+          masks, latex gloves, eye wipes, eye drops, and ointments. The protective effect against hospitalization
+          is observed foremost among patients from cohort 2 in which controls are already SARS-CoV-2
+          positive. This suggests that barrier products could protect not only against the initial risk of infection,
+          but also by reducing the severity in patients already infected. In our cohorts, we observe a beneficial
+          effect for many ophthalmologic preparations, which raises the possibility that autoinoculation of the
+          virus to the eyes could play a part in disease virulence, a prospect supported by the fact eyeglass
+          wearers were at decreased risk for COVID-19 hospitalization15. Until the meaning of these findings is
+          fully understood, it may be wise to advise COVID-19 patients to avoid touching their eyes to reduce
+          the risk of complications.
+          In conclusion, considering the observed protective effects of ubiquinone, ezetimibe, rosuvastatine,
+          risedronate and flecainide in this large population analysis, we recommend to further investigate these
+          and other products identified by this study, in prospective trials aimed to reduce disease severity in
+          COVID-19 patients.
+          Contributors
+          All authors provided final approval to publish. AI, IF and AT had access to the raw data. AI designed
+          the study. AI, AS, AC, IF, AT, KC, SS, ES, ER and GL contributed to data analysis and
+          interpretation. AI, AS, ER and GL contributed to the drafting of the article.
+          Declaration of interests
+          The authors declare no conflict of interest
+          Funding
+          This research was supported in part by the Intramural Research Program of the National Institutes of
+          Health, NCI.
+          References
+          1.       Shadmi E, Kinder K, Abrams C, Weiner JP. Assessing socioeconomic health care utilization inequity in
+                   Israel: impact of alternative approaches to morbidity adjustment [Internet]. 2011 [cited 2020 Sep 4].
+                   Available from: http://www.biomedcentral.com/1471-2458/11/609
+          2.       Benjamini Y, Hochberg Y. Controlling the False Discovery Rate: A Practical and Powerful Approach to
+                   Multiple Testing. J R Stat Soc Ser B [Internet] 1995 [cited 2020 Oct 9];57(1):289–300. Available from:
+                   https://rss.onlinelibrary.wiley.com/doi/full/10.1111/j.2517-6161.1995.tb02031.x
+          3.       Buhaescu I, Izzedine H. Mevalonate pathway: a review of clinical and therapeutical implications. Clin
+                   Biochem [Internet] 2007;40(9–10):575–84. Available from:
+                   http://www.ncbi.nlm.nih.gov/pubmed/17467679
+                                                                       9
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211953.this version posted October 14, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+          4.       Qu H, Guo M, Chai H, Wang W-T, Gao Z-Y, Shi D-Z. Effects of Coenzyme Q10 on Statin-Induced
+                   Myopathy: An Updated Meta-Analysis of Randomized Controlled Trials. J Am Heart Assoc [Internet]
+                   2018;7(19):e009835. Available from: http://www.ncbi.nlm.nih.gov/pubmed/30371340
+          5.       Sun X, Whittaker GR. Role for influenza virus envelope cholesterol in virus entry and infection. J Virol
+                   [Internet] 2003;77(23):12543–51. Available from: http://www.ncbi.nlm.nih.gov/pubmed/14610177
+          6.       Aizaki H, Morikawa K, Fukasawa M, et al. Critical role of virion-associated cholesterol and
+                   sphingolipid in hepatitis C virus infection. J Virol [Internet] 2008;82(12):5715–24. Available from:
+                   http://www.ncbi.nlm.nih.gov/pubmed/18367533
+          7.       Rossman JS, Jing X, Leser GP, Balannik V, Pinto LH, Lamb RA. Influenza virus m2 ion channel
+                   protein is necessary for filamentous virion formation. J Virol [Internet] 2010;84(10):5078–88. Available
+                   from: http://www.ncbi.nlm.nih.gov/pubmed/20219914
+          8.       Bajimaya S, Hayashi T, Frankl T, Bryk P, Ward B, Takimoto T. Cholesterol reducing agents inhibit
+                   assembly of type I parainfluenza viruses. Virology [Internet] 2017;501:127–35. Available from:
+                   http://www.ncbi.nlm.nih.gov/pubmed/27915128
+          9.       Gower TL, Graham BS. Antiviral activity of lovastatin against respiratory syncytial virus in vivo and in
+                   vitro. Antimicrob Agents Chemother [Internet] 2001;45(4):1231–7. Available from:
+                   http://www.ncbi.nlm.nih.gov/pubmed/11257039
+          10.      Whitehorn J, Nguyen CVV, Khanh LP, et al. Lovastatin for the Treatment of Adult Patients With
+                   Dengue: A Randomized, Double-Blind, Placebo-Controlled Trial. Clin Infect Dis [Internet]
+                   2016;62(4):468–76. Available from: http://www.ncbi.nlm.nih.gov/pubmed/26565005
+          11.      Osuna-Ramos JF, Reyes-Ruiz JM, Del Ángel RM. The Role of Host Cholesterol During Flavivirus
+                   Infection. Front Cell Infect Microbiol [Internet] 2018;8:388. Available from:
+                   http://www.ncbi.nlm.nih.gov/pubmed/30450339
+          12.      Tsoumpra MK, Muniz JR, Barnett BL, et al. The inhibition of human farnesyl pyrophosphate synthase
+                   by nitrogen-containing bisphosphonates. Elucidating the role of active site threonine 201 and tyrosine
+                   204 residues using enzyme mutants. Bone [Internet] 2015;81:478–86. Available from:
+                   http://www.ncbi.nlm.nih.gov/pubmed/26318908
+          13.      Wu C-I, Postema PG, Arbelo E, et al. SARS-CoV-2, COVID-19, and inherited arrhythmia syndromes.
+                   Hear Rhythm [Internet] 2020;17(9):1456–62. Available from:
+                   http://www.ncbi.nlm.nih.gov/pubmed/32244059
+          14.      Antonelli D, Feldman A, Freedberg NA, Darawsha A, Rosenfeld T. [Intravenous flecainide
+                   administration for conversion of paroxysmal atrial fibrillation in the emergency room]. Harefuah
+                   [Internet] 2006;145(5):342–4, 398. Available from: http://www.ncbi.nlm.nih.gov/pubmed/16805213
+          15.      Zeng W, Wang X, Li J, et al. Association of Daily Wear of Eyeglasses With Susceptibility to
+                   Coronavirus Disease 2019 Infection. JAMA Ophthalmol [Internet] 2020;Available from:
+                   http://www.ncbi.nlm.nih.gov/pubmed/32936214
+                                                                       10
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211953.this version posted October 14, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+          Table 1: Demographics and Clinical characteristics of the two matched cohorts of patients
+          (hospitalized vs. non-hospitalized)
+                                                                  Cohort 1                              Cohort 2
+                                                       COVID-19               not           COVID-19               not
+                                                      hospitalized       hospitalized      hospitalized      hospitalized
+                                                         (cases)          (controls)           (cases)         (controls)
+          n                                                6202             31010               6919             13838
+          Age (mean (SD))                                56.8 (18.9)        57.2 (18.7)       59.0 (19.1)        59.2 (18.9)
+          Gender female (%)                             3156 (50.9)       15780 (50.9)        3491 (50.5)       6982 (50.5)
+          Hospitalization severity (n
+          (%))
+            mild condition                              2747 (44.3)                           2839 (41.0)
+            moderate condition                          1093 (17.6)                           1215 (17.6)
+            severe condition                            1775 (28.6)                           1987 (28.7)
+            deceased                                        587 (9.5)                           878 (12.7)
+          Smoking status (%)
+            never smoker                                4856 (78.3)       23748 (76.6)        5298 (76.6)     10596 (76.6)
+            past smoker                                   853 (13.8)       4492 (14.5)        1083 (15.7)       2166 (15.7)
+            current smoker                                  408 (6.6)       2365 (7.6)           472 (6.8)         944 (6.8)
+          Nb visits at primary doctor last
+          year (mean (SD))                                  6.7 (7.2)         6.6 (6.7)           7.0 (7.6)        6.5 (6.7)
+          Comorbidity (%)
+            Arrhythmia                                      532 (8.6)       2597 (8.4)          867 (12.5)      1505 (10.9)
+            Asthma                                          348 (5.6)       1897 (6.1)           465 (6.7)         914 (6.6)
+            Congestive Heart Failure
+            (CHF)                                           131 (2.1)        655 (2.1)           504 (7.3)         635 (4.6)
+            Chronic Obstructive
+            Pulmonary Disease (COPD)                         92 (1.5)        460 (1.5)           397 (5.7)         516 (3.7)
+            Diabetes                                    1817 (29.3)        9085 (29.3)        1846 (30.1)       9230 (30.1)
+            Hypertension                                2289 (36.9)       11501 (37.1)        3043 (44.0)       5468 (39.5)
+            Ischemic Heart Disease
+            (IHD)                                         864 (13.9)       4320 (13.9)        1252 (18.1)       2110 (15.2)
+            Malignancy                                    803 (11.6)       1702 (12.3)          803 (11.6)      1702 (12.3)
+            Chronic Kidney Disease
+            (CKD)                                            66 (1.1)        330 (1.1)        6200 (89.6)     13032 (94.2)
+            Obesity (documented
+            diagnosis)                                  2365 (38.1)       11022 (35.5)        2818 (40.7)       5636 (40.7)
+          Body Mass Index (BMI)
+          (mean (SD))                                      28.7 (5.7)        28.6 (6.5)          29.1 (6.3)       28.5 (5.7)
+          BMI group (%)
+            <18.5                                            70 (1.1)        350 (1.1)             92 (1.3)        189 (1.4)
+            18.5-25                                     1567 (25.3)        7835 (25.3)        1728 (25.0)       3635 (26.3)
+            25-30                                       2326 (37.5)       11630 (37.5)        2452 (35.4)       5048 (36.5)
+            30-35                                       1468 (23.7)        7340 (23.7)        1603 (23.2)       3374 (24.4)
+            35-40                                           543 (8.8)       2715 (8.8)           676 (9.8)       1137 (8.2)
+            >40                                             228 (3.7)       1140 (3.7)           368 (5.3)         455 (3.3)
+                                                                       11
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211953.this version posted October 14, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+          Glomerular Filtration Rate
+          (GFR) (mean (SD))                              92.8 (22.7)       91.9 (21.7)        86.6 (28.5)       89.1 (23.4)
+          Chronic Kidney Disease
+          (CKD) staging (n (%))
+                  G1                                    3786 (61.0)       18471 (59.6)        3770 (54.5)      7700 (55.6)
+                  G2                                    1923 (31.0)       10196 (32.9)        2076 (30.0)      4664 (33.7)
+                  G3a                                       352 (5.7)       1755 (5.7)           482 (7.0)         887 (6.4)
+                  G3b                                       121 (2.0)        520 (1.7)           276 (4.0)         368 (2.7)
+                  G4                                         17 (0.3)         48 (0.2)           109 (1.6)         127 (0.9)
+                  G5                                                                               42 (0.6)         22 (0.2)
+                  Dialysis                                    3 (0.0)         20 (0.1)           164 (2.4)          70 (0.5)
+                                                                       12
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211953.this version posted October 14, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+          Table 2: Most significant associations for medications acquired in the 30 days preceding the
+          index date in two matched cohorts
+          A. First matched cohort (N = 6,202 hospitalization cases, N=31,010 controls taken from the general
+          population)
+                                             use in     use in     case   control        odds ratio        p-value      FDR
+           ATC code and class                 case     control      %       %           [95% Conf.                       BH
+                                                                                             Int.]
+          C10AX09                                                                           0.513
+          Ezetimibe
+                                               50        484       0.81    1.56                            0.00000       0.00
+                                                                                       [0.375,0.688]
+          C10AA07                                                                           0.746
+                                              235       1556       3.79    5.02                            0.00003       0.00
+          Rosuvastatin                                                                 [0.645,0.858]
+          A16AX30                                                                           0.249
+          Ubiquinone 10
+                                               5         100       0.08    0.32                            0.00033       0.01
+                                                                                       [0.079,0.602]
+          N06AX12                                                                           0.250
+          Bupropion
+                                               3          60       0.05    0.19                            0.00656       0.07
+                                                                                       [0.050,0.766]
+                                                                                            0.000
+          Eye Care Wipes                       0          28       0.00    0.09                            0.00970       0.10
+                                                                                       [0.000,0.704]
+          C01BC04                                                                           0.303
+          Flecainide
+                                               4          66       0.06    0.21                            0.00976       0.10
+                                                                                       [0.080,0.813]
+          N06AB10                                                                           0.809
+          Escitalopram
+                                              154        946       2.48    3.05                            0.01537       0.14
+                                                                                       [0.676,0.963]
+          A12AX05                                                                           0.000
+          Calcium-Zinc
+                                               0          24       0.00    0.08                            0.02430       0.18
+                                                                                       [0.000,0.830]
+                                                                                            0.227
+          Surgical Mask                        2          44       0.03    0.14                            0.02668       0.20
+                                                                                       [0.027,0.871]
+          N06DA02                                                                           0.583
+                                               18        154       0.29    0.50                            0.03061       0.21
+          Donepezil                                                                    [0.336,0.954]
+                                                                                            0.161
+          Latex gloves with talc               1          31       0.02    0.10                            0.03314       0.23
+                                                                                       [0.004,0.967]
+          C03AA03                                                                           0.794
+                                               96        602       1.55    1.94                            0.04011       0.26
+          Hydrochlorothiazide                                                          [0.632,0.988]
+          B. Second matched cohort (N = 6,919 hospitalization cases, N=13,838 controls taken from patients
+          SARS-CoV-2 positive)
+                                             use in     use in     case   control        odds ratio        p-value      FDR
+           ATC code and class                 case     control      %       %           [95% Conf.                       BH
+                                                                                             Int.]
+          A16AX30                                                                           0.185
+                                               5          54       0.07    0.39                            0.00001       0.00
+          Ubiquinone 10                                                                [0.058,0.458]
+          C10AX09                                                                           0.594
+          Ezetimibe
+                                               61        204       0.88    1.47                            0.00029       0.01
+                                                                                       [0.438,0.796]
+          C10AA07                                                                           0.781
+                                              268        679       3.87    4.91                            0.00070       0.01
+          Rosuvastatin                                                                 [0.673,0.904]
+          M05BA07                              45        151       0.65    1.09             0.593          0.00174       0.02
+                                                                       13
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211953.this version posted October 14, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+          Risedronic Acid                                                              [0.415,0.834]
+          D11AX10                                                                           0.000
+          Finasteride
+                                               0          16       0.00    0.12                            0.00231       0.03
+                                                                                       [0.000,0.518]
+          D04AA13                                                                           0.451
+          Dimetindene (topical)
+                                              14          62       0.20    0.45                            0.00487       0.05
+                                                                                       [0.233,0.815]
+          G04BD12                                                                           0.499
+          Mirabegron
+                                              17          68       0.25    0.49                            0.00790       0.08
+                                                                                       [0.275,0.859]
+          B03BA51                                                                           0.506
+                                              17          67       0.25    0.48                            0.01042       0.10
+          VIT.B12 combinations                                                         [0.278,0.873]
+          S01XA02
+                                                                                            0.118
+          Retinol (eye ointment                1          17       0.01    0.12                            0.01065       0.10
+          with vitamin A)                                                              [0.003,0.750]
+                                                                                            0.000
+          Eye Care Wipes                       0          11       0.00    0.08                            0.02035       0.16
+                                                                                       [0.000,0.797]
+          C09AA08                                                                           0.477
+          Cilazapril
+                                              11          46       0.16    0.33                            0.02418       0.18
+                                                                                       [0.223,0.936]
+          S01KA01
+                                                                                            0.344
+          Hyaluronic Acid                      5          29       0.07    0.21                            0.02706       0.19
+          (artificial tears)                                                           [0.104,0.900]
+                                                                                            0.133
+          Latex gloves with talc               1          15       0.01    0.11                            0.02959       0.20
+                                                                                       [0.003,0.866]
+                                                                                            0.133
+          Surgical Mask                        1          15       0.01    0.11                            0.02959       0.20
+                                                                                       [0.003,0.866]
+          G03AC09
+                                                                                            0.222
+          Desogestrel                          2          18       0.03    0.13                            0.03049       0.21
+          (contraceptive pills)                                                        [0.025,0.928]
+          A12CC04                                                                           0.606
+                                              24          79       0.35    0.57                            0.03553       0.23
+          Magnesium Citrate                                                            [0.367,0.969]
+          C01BC04                                                                           0.437
+          Flecainide
+                                               7          32       0.10    0.23                            0.04185       0.25
+                                                                                       [0.163,1.009]
+          S01ED53                                                                           0.499
+          Timolol-Latanoprost
+                                              11          44       0.16    0.32                            0.04381       0.26
+                                                                                       [0.232,0.983]
+          G04BE03                                                                           0.726
+          Sildenafil
+                                              55         151       0.80    1.09                            0.04479       0.26
+                                                                                       [0.523,0.997]
+          Numbers are of patients from the group who have acquired a medication from the class in the last
+          month before the index date
+          P-values are calculated according to Fisher's exact test. Medications are sorted by increasing order of
+          p-values.
+          False Discovery Rate (FDR) calculated according to Benjamini-Hochberg (BH) procedure. Are
+          shown in this table ATC classes for which the p-value is less than 0.05, and for which the FDR q-
+          value is less than 0.3 (at least 70% are expected to be true positive).
+                                                                       14
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211953.this version posted October 14, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+          Table 3: Examination of the association between combinations of medications associated with
+          the ubiquinone and cholesterol synthesis pathways and the risk of hospitalization, and severity
+          of hospitalization
+          A. First matched cohort (controls are SARS-CoV-2 negative)
+           Drugs acquired by patients
+                                                   hospitalized       hospitalized     hospitalized
+          in the 30 days preceding the                                                                        death
+                                                          all           serious            severe
+          index date
+                                                    OR        pval    OR      pval      OR         pval     OR     pval
+                     Ubiquinone                    0.249      0.000  0.254    0.007    0.355      0.079    0.708   1.000
+             Ubiquinone with Statin                0.224      0.003  0.122    0.008    0.179      0.054
+                      Ezetimibe                    0.742      0.000  0.768    0.010    0.743      0.014    0.556   0.054
+            Ezetimibe without Statin               0.478      0.005  0.434    0.017    0.360      0.015
+                   Rosuvastatin                    0.739      0.000  0.696    0.000    0.716      0.001    0.691   0.072
+          B. Second matched cohort (controls are SARS-CoV-2 positive)
+           Drugs acquired by patients
+                                                   hospitalized       hospitalized     hospitalized
+          in the 30 days preceding the                                                                        death
+                                                          all           serious            severe
+          index date
+                                                    OR        pval    OR      pval      OR         pval     OR     pval
+                     Ubiquinone                    0.185      0.000  0.171    0.000    0.239      0.000    0.800   0.000
+             Ubiquinone with Statin                0.205      0.000  0.174    0.000    0.222      0.000    0.500   0.000
+                      Ezetimibe                    0.831      0.031  0.836    0.031    0.831      0.031    0.487   0.031
+            Ezetimibe without Statin               0.538      0.037  0.377    0.037    0.275      0.037    0.153   0.037
+                   Rosuvastatin                    0.780      0.001  0.698    0.001    0.687      0.001    0.530   0.001
+          OR: Odds ratio
+          Displayed are only associations for which p-values are less than 0.10
+                                                                       15
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211953.this version posted October 14, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+          Figure 1: Histogram showing the distribution of the odd ratios of medications that were found
+          to have a significant association (P<0.05, black) with the outcome in cohorts 1 and 2
+          The overwhelming majority of medications are associated with neutral effect (gray) or increased risk
+          for hospitalization (black, OR>1), only a few are associated with decreased risk (black, OR<1)
+                                                                       16
