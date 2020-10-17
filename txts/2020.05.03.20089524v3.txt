@@ -1,0 +1,1033 @@
+medRxiv preprint doi: https://doi.org/10.1101/2020.05.03.20089524.this version posted October 16, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY 4.0 International license .
+
+
+
+   Awareness-driven Behavior Changes Can Shift the Shape of Epidemics Away from
+              Peaks and Towards Plateaus, Shoulders, and Oscillations
+                      Joshua S. Weitz,1, 2, 3, ∗ Sang Woo Park,4 Ceyhun Eksin,5 and Jonathan Dushoff6, 7
+                            1
+                           School of Biological Sciences, Georgia Institute of Technology, Atlanta, GA, USA
+                              2
+                                School of Physics, Georgia Institute of Technology, Atlanta, GA, USA
+               3
+                   Center for Microbial Dynamics and Infection, Georgia Institute of Technology, Atlanta, GA, USA
+                    4
+                      Department of Ecology and Evolutionary Biology, Princeton University, Princeton, NJ, USA
+                   5
+                      Department of Industrial and Systems Engineering, Texas A&M, College Station, Texas, USA
+                              6
+                                Department of Biology, McMaster University, Hamilton, ON, Canada
+               7
+                   DeGroote Institute for Infectious Disease Research, McMaster University, Hamilton, ON, Canada
+                                                      (Dated: October 15, 2020)
+                      The COVID-19 pandemic has caused more than 1,000,000 reported deaths globally, of which
+                   more than 200,000 have been reported in the United States as of October 1, 2020. Public health
+                   interventions have had significant impacts in reducing transmission and in averting even more deaths.
+                   Nonetheless, in many jurisdictions the decline of cases and fatalities after apparent epidemic peaks
+                   has not been rapid. Instead, the asymmetric decline in cases appears, in most cases, to be consistent
+                   with plateau- or shoulder-like phenomena – a qualitative observation reinforced by a symmetry
+                   analysis of US state-level fatality data. Here we explore a model of fatality-driven awareness in which
+                   individual protective measures increase with death rates. In this model, fast increases to the peak are
+                   often followed by plateaus, shoulders, and lag-driven oscillations. The asymmetric shape of model-
+                   predicted incidence and fatality curves are consistent with observations from many jurisdictions. Yet,
+                   in contrast to model predictions, we find that population-level mobility metrics usually increased
+                   from low early-outbreak levels before peak levels of fatalities. We show that incorporating fatigue and
+                   long-term behavior change can reconcile the apparent premature relaxation of mobility reductions
+                   and help understand when post-peak dynamics are likely to lead to a resurgence of cases.
+
+
+                       I.       INTRODUCTION                                 tious agent, i.e., susceptible, exposed, infectious, hospi-
+                                                                             talized, and recovered [3–9]. New transmission can lead
+                                                                             to an exponential increases in cases when the basic repro-
+   The spread of COVID-19 has elevated the importance                        duction number R0 > 1 (the basic reproduction number
+of epidemiological models as a means to forecast both                        denotes the average number of new infections caused by
+near- and long-term spread. In the United States, the                        a single, typical individual in an otherwise susceptible
+Institute for Health Metrics and Evaluation (IHME)                           population [10]). Subsequent spread, if left unchecked,
+model has emerged as a key influencer of state- and                          would yield a single peak – in theory. That peak corre-
+national-level policy [1]. The IHME model includes a                         sponds to when ‘herd immunity’ is reached, such that the
+detailed characterization of the variation in hospital bed                   effective reproduction number, Reff = 1. The effective
+capacity, ICU beds, and ventilators between and with-                        reproduction number denotes the number of new infec-
+in states. Predicting the projected strains on underly-                      tious cases caused by a single infectious individual in a
+ing health resources is critical to supporting planning                      population with pre-existing circulation. But, even when
+efforts. However such projections require an epidemic                        herd immunity is reached, there will still be new cases
+‘forecast’. Early versions of IHME’s epidemic forecast                       which then diminish over time, until the epidemic con-
+differed from conventional epidemic models in a signifi-                     cludes. A single-peak paradigm is robust insofar as the
+cant way – IHME assumed that the cumulative deaths in                        disease has spread sufficiently in a population to reach
+the COVID-19 epidemic followed a symmetric, Gaussian-                        and exceed ‘herd immunity’. The converse is also true –
+like trajectory. For example, the IHME model predicted                       as long as a population remains predominantly immuno-
+that if the peak is 2 weeks away then in 4 weeks cas-                        logically naive, then the risk of further infection has not
+es will return to the level of the present, and continue                     passed.
+to diminish rapidly. But, epidemics need not have one
+symmetric peak – the archaic Farr’s Law of Epidemics                           In contrast to the IHME model, the Imperial College of
+notwithstanding (see [2] for a cautionary tale of using                      London (ICL) model [3] used a conventional state-driven
+Farr’s law as applied to the HIV epidemic).                                  epidemic model to show the benefits of early intervention
+  Conventional epidemic models of COVID-19 represent                         steps in reducing transmission and preserving health sys-
+populations in terms of their ‘status’ vis a vis the infec-                  tem resources vs. a ‘herd immunity’ strategy. The ICL
+                                                                             model assumed that transmission is reduced because of
+                                                                             externalities, like lockdowns, school closings, and so on.
+                                                                             As a result, early predictions of the ICL model suggest-
+∗ Electronicaddress:   jsweitz@gatech.edu;            URL:     http://       ed that lifting of large-scale public health interventions
+ecotheory.biology.gatech.edu                                                 could be followed by a second wave of cases. This has
+
+Typeset by REVTEX
+      NOTE: This preprint reports new research that has not been certified by peer review and should not be used to guide clinical practice.
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.05.03.20089524.this version posted October 16, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY 4.0 International license .
+                                                                                                                                                                                                                                                         2
+
+                                                        A
+
+
+       Daily number of reported deaths
+                                                  30    MN                           30      NC                                                                                      IN                                     MD
+                                                                                                                                                   100
+                                                                                                                                                                                                                      30
+
+                                                  10                                 10
+                                                                                                                                                                                                                      10
+                                                                                                                                                                  10
+
+                                                   3                                     3
+                                                                                                                                                                                                                       3
+
+
+                                                   1                                     1                                                                                      1                                      1
+                                                             Apr     May       Jun                Apr                    May      Jun                                                           Apr   May       Jun              Apr     May       Jun
+
+                                                        B                                                                                                                                C
+                                                                                                                                                                                MN
+                                                                                                                                                                                NC
+       Smoothed daily number of reported deaths
+
+
+
+
+                                                  300
+                                                                                                  NY                                                                            GA
+
+
+
+
+                                                                                                                                        States ranked by symmetry coefficient
+                                                                                                                                                                                CA
+                                                                                                       NJ                                                                       MA
+                                                  100
+                                                                                                        MA
+                                                                                                                                                                                    FL                                                     Symmetry
+                                                                                                                                                                                                                                           coefficient
+                                                                                                       MI                                                                       CO
+                                                                                                        CT               CA
+                                                                                                                                                                                    NJ                                                          0.25
+                                                                                                            FL          PA
+                                                   30                                                        LA                                                                 CT
+                                                                                                                   GA
+                                                                                                                    MN
+                                                                                                                                                                                                                                                0.20
+                                                                                                                    MD
+                                                                                                                                                                                LA
+                                                                                                              CO      IN
+                                                                                                                    NC
+                                                                                                                                                                                VA                                                              0.15
+                                                                                                                    VA
+                                                   10                                                                                                                               MI
+                                                                                                                             WA
+
+                                                                                                                                                                                NY
+                                                                                                                                                                                WA
+                                                   3                                                                                                                            PA
+                                                                                                                                                                                    IN
+                                                                                                                                                                                MD
+
+                                                       -60         -30               0                       30                    60                                                     0.1         0.2             0.3          0.4
+                                                                           Time since tP (days)                                                                                                       Symmetry coefficient
+
+
+FIG. 1: Plateaus and shoulder-like dynamics in COVID-19 fatalities. (A) Examples of daily number of reported deaths for
+COVID-19 (black points and lines) and the corresponding locally estimated scatterplot smoothing (LOESS) curves (red lines)
+in four states, including two estimated to be the most plateau-like (Minnesota and North Carolina) and two estimated to be
+the most peak-like (Indiana and Maryland). Daily number of deaths is smoothed in log space, only including days with one or
+more reported deaths. We restrict our analysis to states in which the peak smoothed death is greater than 10 as of June 7, 2020
+(resulting in 17 states in total). (B) Smoothed daily number of reported deaths centered around the first peak time tP across
+17 states. Smoothed death curves are plotted between tP − ∆t and tP + ∆t, where ∆t is defined such that smoothed death
+at time tP − ∆t corresponds to 10% of the smoothed peak value. (C) Measured symmetry coefficient and confidence intervals.
+Symmetry coefficient is calculated by dividing the death value at time tP − ∆t by the death value at time tP + ∆t. If the death
+curve is symmetric, the symmetry coefficient should equal 1. Confidence intervals are calculated by bootstrapping across the
+date of deaths for each individual 1000 times and recalculating the symmetry coefficient (after smoothing each bootstrap time
+series). LOESS smoothing is performed by using the loess function in R.
+
+
+
+turned out to be the case, in some jurisdictions. Yet,                                                                                                                    In this manuscript we use a nonlinear model of epi-
+for a disease that is already the documented cause of                                                                                                                  demiological dynamics to ask the question: what is the
+more than 200,000 deaths in the United States alone, we                                                                                                                anticipated shape of an epidemic if individuals modify
+posit that individuals are likely to continue to modify                                                                                                                their behavior in direct response to the impact of a dis-
+their behavior even after lockdowns are lifted. Indeed,                                                                                                                ease at the population level? In doing so, we build upon
+the peak death rates in the United States and globally                                                                                                                 earlier work on awareness based models (e.g. [11–14])
+are not as high as potential maximums in the event that                                                                                                                with an initial assumption: individuals reduce interac-
+COVID-19 had spread unhindered in the population [3].                                                                                                                  tions when death rates are high and increase interactions
+Moreover, rather than a peak and symmetric decline,                                                                                                                    when death rates are low. As we show, short-term aware-
+there is evidence of asymmetric plateaus and shoulder-                                                                                                                 ness can lead to dramatic reductions in death rates com-
+like behavior for daily fatality rates in the spring-summer                                                                                                            pared to models without accounting for behavior, lead-
+trajectory of the pandemic in US-states (Figure 1; full                                                                                                                ing to plateaus, shoulders, and lag-driven oscillations in
+state-level data in SI Appendix, Fig. S1). These early                                                                                                                 death rates. We also show that dynamics can be driv-
+plateaus have been followed, in many cases, with resur-                                                                                                                en from persistent dynamics to elimination when aware-
+gence of cases and fatalities.                                                                                                                                         ness shifts from short- to long-term. Notably, we find
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.05.03.20089524.this version posted October 16, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY 4.0 International license .
+                                                                                                                                              3
+
+that despite model predictions, the empirical data reveals                                                       Awareness
+that mobility increased even as fatalities were increasing.
+                                                                                            Transmission                         Deaths
+This reveals the potential role for fatigue and long-term
+changes in behavior beyond those linked to mobility (e.g.,
+mask-wearing) in shaping Covid-19 dynamics.                                   Susceptible                  Infectious
+
+
+                                                                                                                                 Recovered
+           II.   RESULTS AND DISCUSSION
+
+
+                                                                          FIG. 2: Schematic of an SEIR model with awareness-driven
+    Notation     Description              Values/Ranges
+                                                                          social distancing. Transmission is reduced based on short-
+    β            Transmission rate        1/2 days−1                      and/or long-term awareness of population-level disease sever-
+    1/µ          Mean latent period       2 days                          ity (i.e., fatalities).
+    1/γ          Mean infectious peri-    6 days
+                 od
+    1/γH         Mean time in a hos-      7–28 days
+                 pital stay before a
+                                                                          fD is the infection fatality probability. The awareness-
+                 fatality                                                 based distancing is controlled by the death rate δ ≡ Ḋ,
+    fD           infection     fatality   0.01
+                                                                          the half-saturation constant (δc > 0), and the sharpness
+                 probability                                              of change in the force of infection (k ≥ 1) (see Figure 2
+                                                                          for a schematic and Table I for a list of all parameters
+    N            Population size          107
+                                                                          used in models). Since δ is proportional to I, this model
+    N δc         Half-saturation con-     5–500 deaths/day
+                                                                          is closely related to a recently proposed awareness-based
+                 stant for short-term
+                 awareness
+                                                                          distancing model [14] and to an independently derived
+                                                                          feedback SIR model [15]. Note that the present model
+    N Dc         Half-saturation con-     2,500–10,000 deaths
+                 stant for long-term
+                                                                          converges to the conventional SEIR model as δc → ∞.
+                 awareness                                                   Uncontrolled epidemics in SEIR models have a single
+                                                                          case peak, corresponding to the point where γI = βSI
+    k            sharpness of change      1–4
+                 in the force of infec-                                   such that the population obtains herd immunity when
+                 tion                                                     only a proportion S = 1/R0 have yet to be infected.
+                Time scale of behav-     1/7 days−1
+                                                                          However, in the model above individuals decrease trans-
+                 ior change                                               mission in response to awareness of the impacts of the
+                                                                          disease, δ(t). In this case, infected cases can peak even
+TABLE I: Parameter descriptions and values/ranges used for                when the population is far from herd immunity, specifi-
+simulations. Transmission rate is chosen to match R0 = 3.                 cally when
+                                                                                                                βSI
+                                                                                                 γI = h                     i.               (6)
+                                                                                                                        k
+                                                                                                           1 + (δ/δc )
+  A.     SEIR Model with Short-Term Awareness of
+                        Risk                                              When δc is small compared to the per-capita death rate
+                                                                          of infectious individuals (γfD ) we anticipate that indi-
+                                                                          vidual behavior will respond quickly to the disease out-
+  Consider an SEIR like model
+                                                                          break. Hence, we hypothesize that the emergence of an
+                              βSI                                         awareness-based peak can occur early, i.e., S(t) ≈ 1,
+                   Ṡ = − h             i                        (1)      consistent with a quasi-stationary equilibrium when the
+                                      k
+                           1 + (δ/δc )                                    death rate is
+                            βSI                                                                                          1/k
+                   Ė = h
+                                     k
+                                       i − µE                    (2)                            δ (q) ≈ δc (R0 − 1)                          (7)
+                         1 + (δ/δc )
+                                                                          and the infection rate is
+                   I˙ = µE − γI                                  (3)
+                                                                                                       δc
+                                                                                               I˙(q) ≈
+                                                                                                                  1/k
+                   Ṙ = (1 − fD )γI                              (4)                                      (R0 − 1) .                         (8)
+                                                                                                       fD
+                   Ḋ = fD γI                                    (5)
+                                                                          These quasi-equilibrium is maintained not because of
+where S, E, I, R, and D denote the proportions of                         herd immunity, but because of changes in behavior.
+susceptible, exposed, infectious, recovered, and deaths,                    We evaluate this hypothesis in Figure 3 for k = 1,
+respectively, given transmission rate β /day, transition                  k = 2, and k = 4 given disease dynamics with β =
+to infectious rate µ /day, recovery rate γ /day, where                    0.5/day, µ = 1/2/day, γ = 1/6/day, fD = 0.01, N = 107 ,
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.05.03.20089524.this version posted October 16, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY 4.0 International license .
+                                                                                                                                             4
+
+                                                                                     103
+           125
+
+
+
+           100
+                                                                                     102
+
+            75
+
+
+
+            50
+                                                                                       1
+                                                                                     10
+
+            25
+
+
+
+             0
+                 0       50         100         150         200                      100
+                                                                                           0       50         100         150         200
+           14000
+                                                                                      1
+
+           12000
+                                                                                     0.9
+
+           10000
+                                                                                     0.8
+
+            8000
+                                                                                     0.7
+
+            6000
+                                                                                     0.6
+            4000
+                                                                                     0.5
+            2000
+                                                                                     0.4
+                 0
+                     0    50         100        150         200
+                                                                                     0.3
+                                                                                           0       50         100         150         200
+
+FIG. 3: Infections and deaths per day in a death-awareness
+based social distancing model. Simulations have the epidemi-              FIG. 4: Dynamics given variation in the critical fatali-
+ological parameters β = 0.5 /day, µ = 1/2 /day, γ = 1/6/day,              ty awareness level, δc for awareness k = 2. Panels show
+and fD = 0.01, with variation in k = 1, 2 and 4. We assume                deaths/day (top) and the susceptible fraction as a function of
+N δc = 50 /day in all cases.                                              time (bottom), the latter compared to a herd immunity level
+                                                                          when only a fraction 1/R0 remain susceptible. These sim-
+                                                                          ulations share the epidemiological parameters β = 0.5 /day,
+                                                                          µ = 1/2 /day, γ = 1/6 /day, and fD = 0.01.
+
+
+
+and N δc = 50/day. As is evident, the rise and decline
+from peaks are not symmetric. Instead, incorporating                       B.   Short-term awareness, long-term plateaus, and
+awareness leads to dynamics where incidence decreases                                         oscillations
+very slowly after a peak. The peaks occur at levels of
+infection far from that associated with herd immunity.                      Initial analysis of an SEIR model with short-term
+Post-peak, shoulders and plateaus emerge because of the                   awareness of population-level severity suggests a generic
+balance between relaxation of awareness-based distanc-                    outcome: fatalities will first increase exponentially before
+ing (which leads to increases in cases and deaths) and                    before slowing to plateau at a level near δc . Figure 4
+an increase in awareness in response to increases in cas-                 shows dynamics for values of δc ranging from to 5 to 500
+es and deaths. As the steepness of response k increases,                  deaths/day in a population of 107 (here k = 2; results for
+individuals become less sensitive to fatality rates where                 k = 1 or k = 4 are similar, see SI Appendix, SI Fig. S2).
+δ < δc and more sensitive to fatality rates where δ > δc .                When δc is small (compared to (γfD ), fatalities can be
+This leads to sharper dynamics. In addition, infections                   sustained at near-constant levels for a long time. When
+can over-shoot the expected plateau given that awareness                  δc is higher then the decline of cases and fatalities due
+is driven by fatalities which are offset with respect to new              to susceptible depletion is relatively fast. However, over
+infections.                                                               a wide range of assumptions about critical daily fatality
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.05.03.20089524.this version posted October 16, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY 4.0 International license .
+                                                                                                                                             5
+
+                                                                                              4
+rates δc , the population remains largely susceptible even                        6
+                                                                                          10
+as sustained fatalities continue for a period far greater
+than the time it took to reach the plateau. To explore the
+                                                                                  5
+impacts of lags on dynamics, we incorporated an addi-
+tional class H, assuming that fatalities follow potential-
+                                                                                  4
+ly prolonged hospital stays. We do not include detailed
+information on symptomatic transmission, asymptomat-
+ic transmission, hospitalization outcome, age structure,                          3
+and age-dependent risk (as in [3]). Instead, we consider
+the extended SEIR model:                                                          2
+
+                                                                                  1
+                                  βSI
+                  Ṡ = − h             i                         (9)
+                          1 + (δ/δc )
+                                     k                                            0
+                                                                                      0             50           100           150        200
+                                βSI
+                  Ė = h              i − µE                    (10)
+                                    k
+                        1 + (δ/δc )
+                                                                                  150
+                   I˙ = µE − γI                                 (11)
+                  Ṙ = (1 − fD )γI                              (12)
+                  Ḣ = fD γI − γH H                             (13)              100
+
+                  Ḋ = γH H                                     (14)
+
+                                                                                   50
+where TH = 1/γH defines the average time in a hospital
+stay before a fatality. Note, we recognize that many indi-
+viduals recover from COVID-19 after hospitalization; this                             0
+model’s hospital compartment functions as a prefilter.                                    0          50              100           150    200
+
+   The earlier analysis of the quasi-stationary equilibri-
+um in fatalities holds in the case of a SEIR model with                   FIG. 5: Emergence of oscillatory dynamics in a death-driven
+additional classes before fatalities. Hence, we anticipate                awareness model of social distancing given lags between infec-
+that dynamics should converge to δ = δ (q) at early times.                tion and fatality. Awareness is k = 2 and all other parameters
+However, increased delays between cases and fatalities                    as in Figure 3. The dashed lines for fatalities expected quasi-
+                                                                          stationary value δ (q) .
+could lead to oscillations. Indeed, this is what we find
+via examination of models in which TH ranges from 7 to
+28 days, with increasing magnitude of oscillations as TH
+increases (see Figure 5 for k = 2 with qualitatively simi-                ness:
+lar results for k = 1 and k = 4 shown in SI Appendix, SI
+Fig. S3).                                                                                                        βSI
+                                                                                          Ṡ = − h                                 i      (15)
+                                                                                                                 k             k
+                                                                                                     1 + (δ/δc ) + (D/Dc )
+                                                                                                            βSI
+                                                                                          Ė = h                               i − µE     (16)
+                                                                                                             k             k
+                                                                                                   1 + (δ/δc ) + (D/Dc )
+
+   C.    Dynamical consequences of short-term and                                         I˙ = µE − γI                                    (17)
+                long-term awareness                                                       Ṙ = (1 − fD )γI                                (18)
+                                                                                          Ḣ = fD γI − γH H                               (19)
+   Awareness can vary in duration, e.g., awareness of                                     Ḋ = γH H                                       (20)
+SARS-CoV-2 may prepare individuals to more readily
+adopt and retain social distancing measures [16, 17]. In                  where Dc denotes a critical cumulative fatality level (and
+previous work, long-term awareness of cumulative inci-                    formally a half-saturation constant for the impact of long-
+dence was shown to lead to substantial decreases in final                 term awareness on distancing). Note that the relative
+size of epidemics compared to baseline expectations from                  importance of short- and long-term awareness can be
+inferred strength [14]. Hence, we consider an extension of                modulated by δc and Dc respectively. Figure 6 shows
+the SEIR model with lags between infection and fatalities                 daily fatalities (top) and cumulative fatalities (bottom)
+that incorporates both short-term and long-term aware-                    for an SEIR model with R0 = 2.5, TH = 14 days, and
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.05.03.20089524.this version posted October 16, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY 4.0 International license .
+                                                                                                                                             6
+
+                                                                          peaks even in the absence of susceptible deple-
+       125                                                                tion.    To test this hypothesis mechanistically, we
+                                                                          jointly analyzed the dynamics of fatality rates
+       100                                                                and behavior, using mobility data obtained from
+                                                                          Google COVID-19 Community Mobility Reports
+        75                                                                (https://www.google.com/covid19/mobility/)          as   a
+                                                                          proxy for behavior (see Methods for the aggregation of
+        50                                                                multiple mobility metrics via a Principal Component
+                                                                          Analysis (PCA)). Notably, we find that in the bulk of
+        25                                                                states examined aggregated rates of mobility typically
+                                                                          began to increase before the local peak in fatality was
+                                                                          reached (Figure 7A). This rebound in mobility rates
+            0
+                0   50   100   150   200    250   300    350    400       implies that real populations are opening up faster
+                                                                          than our simple model could predict. Awareness-driven
+       105                                                                models, shown in Figure 7B, show either ‘reversible’ or
+                                                                          ‘counter-clockwise’ dynamics. In these models, risky
+                                                                          behavior decreases until fatalities reach their peak.
+       104
+                                                                          Models with short-term awareness but no long-term
+                                                                          awareness exhibit a tight link between fatality and
+         3
+       10                                                                 behavior (reversible behavior, like the top curve in
+                                                                          Figure 7B). Models with long-term awareness exhibit
+       102
+                                                                          counter-clockwise dynamics as risky behavior remains
+                                                                          at low levels even as fatalities decrease; the asymmetry
+                                                                          here is driven by the extent of long-term awareness.
+       101                                                                   In contrast, the real data (Figure 7A) exhibit predomi-
+                                                                          nantly clockwise dynamics; exceptions include New York
+       100                                                                which has a nearly reversible (but still clockwise) pat-
+             0      50   100   150   200   250    300    350    400       tern and Washington which has a counter-clockwise pat-
+                                                                          tern anticipated by the awareness model. We hypothe-
+                                                                          sized that a combination of awareness-driven distancing
+FIG. 6: SEIR dynamics with short- and long-term awareness.                and fatigue could lead to clockwise dynamics: if peo-
+Model parameters are β = 0.5 /day, µ = 1/2 /day, γ = 1/6
+                                                                          ple become fatigued with distancing behavior, then risk
+/day, TH = 14 days, fD = 0.01, N = 107 , k = 2, N δc = 50
+/day (short-term awareness), with varying N Dc (long-term                 could rise even as deaths were rising. We developed the
+awareness) as shown in the legend. The dashed line (top)                  following model as a proof of concept in which fatigue
+denotes δ (q) due to short-term distancing alone.                         is driven directly by deaths (though alternatives could
+                                                                          also be explored linked to cases, hospitalizations, deaths
+                                                                          and/or a combination):
+                                                                                     Ṡ = −g(D)βSI                                        (21)
+N δc = 50 fatalities per day and critical cumulative fatal-
+ities of N Dc = 2, 500, 5,000, 10,000 as well as a compar-                          Ė = g(D)βSI − µE                                     (22)
+ison case with vanishing long-term awareness. As is evi-                             I˙ = µE − γI                                         (23)
+dent, long-term awareness drives dynamics towards rapid
+declines after reaching a peak. This decline arises because                          Ṙ = (1 − fD )γI                                     (24)
+D monotonically increases; increasing fatalities beyond                             Ḣ = fD γI − γH H                                     (25)
+Dc leads to rapid suppression of transmission. However,                             Ḋ = γH H                                             (26)
+when short-term, rather than long-term, awareness drives                                                              
+                                                                                                   β̂
+dynamics, then shoulders and plateaus can re-emerge. In                                     1+(δ/δc )k − β          
+reality, we expect that individual behavior is shaped by                             β̇ =                  k
+                                                                                                               + β̂ − β                  (27)
+                                                                                          2    1 + (D/Dc )
+short- and long-term awareness of risks, including the
+potential for fatigue and ‘decay’ of long-term behavior                      In this model with fatigue, the force of infection is
+change [11, 12].                                                          related to the mobility denoted by β(t) (which dictates
+                                                                          the number of interactions per unit time) modulated by
+                                                                          a reduction in risk per infection g(D). In this model,
+D.    Empirical assessment of mechanistic drivers of                      β̂ denotes the baseline behavior, and  denotes a time-
+      asymmetric peaks in Covid-19 death rates                            scale for behavior change. The level of fatigue is con-
+                                                                          trolled by Dc , such that mobility returns to a baseline
+  The models developed here suggest that awareness-                       β̂ once D  Dc . We consider two models, correspond-
+driven distancing can lead to asymmetric epidemic                         ing to g(D) = 1 such that the force of infection depends
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.05.03.20089524.this version posted October 16, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY 4.0 International license .
+                                                                                                                                                                                                                               7
+
+
+                                                                                          (A)
+
+
+
+
+                                                                                    300                 NY
+
+
+
+
+                                         Smoothed daily number of reported deaths
+                                                                                                              NJ
+
+
+                                                                                    100                                 MA
+                                                                                                                                                                                        Symmetry
+                                                                                                                                                                                        coefficient
+                                                                                                                              MI
+                                                                                                                                   CT CA                                                    0.25
+
+
+                                                                                                                                                   PA
+                                                                                    30                                             FL               LA                                      0.20
+
+                                                                                                                                                   GA
+                                                                                                                                             MD         MN
+                                                                                                                                                                                            0.15
+                                                                                                                                             CO                              IN
+                                                                                                                                                   VA        NC
+
+                                                                                    10
+                                                                                                                                        WA
+
+
+
+
+                                                                                     3
+
+
+
+
+                                                                                          -4                       -2                          0                      2
+                                                                                                        Smoothed mobility principal component 1
+     150
+               (B)                                                                                      (C)                                                                               (D)
+                                                                                                103                                                                               103
+
+     100
+                                                                                                  2                                                                                 2
+                                                                                                10                                                                                10
+
+
+      50
+                                                                                                101                                                                               101
+
+
+
+       0                                                                                        100                                                                               100
+           0         0.2   0.4   0.6   0.8                                                1       0.5          0.6           0.7         0.8        0.9           1                 0.5            0.6   0.7   0.8   0.9   1
+
+
+
+FIG. 7: Phase-plane visualizations of deaths vs. mobility for state-level data (top) and SEIR models (bottom panels). (Top)
+Deaths and mobility indexes through time for the 17 analyzed states. Both data series are smoothed. Time windows as in
+1. (B) Dynamics of effective behavior and death rates in a SEIR model with short- and long-term awareness. Curves denote
+different assumptions regarding long-term awareness, in each case β = 0.5/day, µ = 0.5/day, γ = 1/6/day, such that R0 = 3,
+with k = 2, γH = 1/21/day, and fD = 0.01. The short-term awareness corresponds go N δc = 50 deaths/day. Thin lines denote
+full dynamics over 400 days; thick lines denote the dynamics near the case fatality peak. (C) Dynamics of effective behavior
+and death rates in a SEIR model with awareness and fatigue. The three different curves denote different assumptions regarding
+long-term awareness, in each case β = 0.5/day, µ = 0.5/day, γ = 1/6/day, such that R0 = 3, with k = 2, γH = 1/21/day,
+fD = 0.01, and  = 1/7/day. The short-term awareness corresponds go N δc = 50 deaths/day. The force of infection does
+not include long term changes in behavior beyond mobility, i.e., g(D) = 1. (D) As in (C), but the force of infection includes
+long-term changes in behavior, i.e., g(D) = 1/ 1 + (D/Dc )k .
+
+
+
+on mobility alone, and g(D) = 1/ 1 + (D/Dc )k corre-
+                                                  
+                                                                                                                                        than by awareness (see Figure 7C). In contrast, if there is
+sponding to sustained changes in the risk of infection per                                                                              sustained behavior change such that g(D) decreases with
+contact (e.g., due to mask wearing, contact-less interac-                                                                               increasing cumulative deaths then there is a single peak
+tions, use of PPE, etc.). As shown in Figure 7C/D, the                                                                                  that forms a clockwise loop; with the peak close to, but
+dynamics switch from counter-clockwise to clockwise in                                                                                  after the minimum in behavior (Figure 7D); as observed
+the δ −β plane given the incorporation of fatigue. Deaths                                                                               in nearly all state-level data sets.
+drive down mobility, but eventually, decreases in β due
+to short-term awareness are over-come by fatigue, leading
+to increases in β. If g(D) = 1, then the dynamics include                                                                                                             III.         CONCLUSIONS
+increases in both mobility and fatalities akin to levels
+expected in the absence of behavior, and eventually lev-
+                                                                                                                                           We have developed and analyzed a series of mod-
+els of infection that are stopped by herd immunity, rather
+                                                                                                                                        els that assume awareness of disease-induced death can
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.05.03.20089524.this version posted October 16, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY 4.0 International license .
+                                                                                                                                             8
+
+reduce transmission, and shown that such awareness-                       with measurements of behavior, awareness, and disease
+driven feedback can lead to highly asymmetric epidemic                    dynamics.
+curves. Resulting fatality time series can exhibit extend-                   Although the models here are intentionally simple,
+ed periods of near-constant levels even as the majori-                    it seems likely that observed asymmetric dynamics of
+ty of the population remains susceptible. Hence: pass-                    COVID-19, including slow declines and plateau-like
+ing a ‘peak’ need not imply the rapid decline of risk.                    behavior, is an emergent property of awareness-driven
+In these conditions, if individuals are unable to sus-                    epidemiological dynamics. Moving forward, it is essen-
+tain social distancing policies, or begin to tolerate higher              tial to fill in significant gaps in understanding how aware-
+death rates, then cases and fatalities could increase (sim-               ness of disease risk and severity shape behavior [27].
+ilar results have also been proposed in a recent, indepen-                Mobility data is an imperfect proxy for distancing and
+dently derived feedback SIR model [15]). Indeed, detailed                 other preventative behaviours, and thus for transmis-
+analysis of mobility and fatalities suggest that mobili-                  sion risk. Thus far, measurements of community mobil-
+ty increased before fatalities peaked with the exceptions                 ity have been used as a leading indicator for epidemic
+of Washington and New York. This increase of mobil-                       outcomes. Prior work has shown significant impacts of
+ity amidst rising fatalities is not consistent with simple                changes in mobility and behavior on the COVID-19 out-
+models of awareness-driven distancing, but is consistent                  break [7]. Here we have shown the importance of looking
+with more detailed models that include fatigue. Notably,                  at a complementary feedback mechanism, i.e., from out-
+we find that if mobility increases but the risk of infec-                 break to behavior. In doing so, we have also shown that
+tion per interaction decreases due to systemic changes                    decomposing the force of infection in terms of the number
+in behavior, then models suggest ‘clockwise’ dynamics                     of potential transmissions and the probability of infection
+between behavior and fatality as found in nearly all state-               per contact can lead to outcomes aligned with observed
+level data sets analyzed here. Awareness-driven endoge-                   state-level dynamics. Understanding the drivers behind
+nous changes in Reff are typically absent in models that                  emergent plateaus observed at national and sub-national
+form the basis for public policy and strategic planning.                  levels could help decision-makers structure intervention
+Our findings highlight the potential impacts of short-                    efforts appropriately to effectively communicate aware-
+term and long-term awareness in efforts to shape informa-                 ness campaigns that may aid in collective efforts to con-
+tion campaigns to reduce transmission after early onset                   trol the ongoing COVID-19 pandemic.
+‘peaks’, particularly when populations remain predomi-
+nantly immunologically naive.
+                                                                                                 IV.    METHODS
+   In moving from concept to intervention, it will be crit-
+ical to address problems related to noise, biases, and
+                                                                                           A.     Epidemiological data
+the quantitative inference of mechanism from model-data
+fits. First, epidemic outbreaks include stochasticity of
+multiple kinds. Fluctuations could arise endogenous-                         Daily number of reported deaths as of June 7, 2020,
+ly via process noise (especially at low levels of disease)                is obtained from The COVID Tracking Project (covid-
+or exogenously via time-varying parameters, Moreover,                     tracking.com).
+given the evidence for clustered transmission and super-
+spreading events [18–21], extensions of the present model
+framework should explicitly account for awareness-driven                                        B.     Mobility data
+behavior associated with risky gatherings [22, 23]. Next,
+the link between severity and behavior change depends                        Mobility data as of June 12, 2020, are obtained
+on reporting of disease outcomes. Biases may arise due to                 from Google COVID-19 Community Mobility Reports
+under-reporting of fatalities, particularly amidst intense                (www.google.com/covid19/mobility/).        The data set
+outbreaks [24]. Awareness may also vary with communi-                     describes percent changes in mobility across six cate-
+ty age structure and with other factors that influence the                gories (grocery and pharmacy; parks; residential; retail
+infection fatality rate and hence the link between total                  and recreation; transit; and workplaces) compared to the
+cases and fatalities [25]. Such biases could lead to sys-                 median value from the 5–week period Jan 3–Feb 6, 2020.
+tematic changes in awareness-driven responses. Finally,                   Raw mobility data are plotted in SI Appendix, SI Fig. S4.
+we recognize that estimating the influence of awareness-
+driven behavior change is non-trivial, given fundamen-
+tal problems of identifiability. Nonetheless, it is impor-                            C.    Principal component analysis
+tant to consider the effects of behavior changes. Other-
+wise, reductions in cases (and fatalities) will necessari-                  We use principal component analysis (PCA) on the
+ly be attributed to exogeneous factors (e.g., influential                 mobility data to obtain a univariate index of mobility.
+analyses of the impact of non-pharmaceutical interven-                    We exclude park visits from the analysis due to their
+tions on Covid-19 in Europe do not account for changes                    anomalous, noisy patterns (SI Appendix, SI Fig. S4).
+in behavior [26]). Disentangling the impact of entangled                  Before performing PCA, we first calculate the 7-day
+interventions will require efforts to link model predictions              rolling average for each mobility measure in order to
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.05.03.20089524.this version posted October 16, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY 4.0 International license .
+                                                                                                                                             9
+
+remove the effects of weekly patterns. We combined
+mobility data from all 17 analyzed states, and standard-                  Data availability: All simulation codes, figures,
+ized each measure (to zero mean and unit variance). The                   and data used in the development of this manuscript
+first principal component explains 93% of the total vari-                 are available at https://github.com/jsweitz/
+ance in this analysis, and the loading of the residential                 covid19-git-plateaus.
+metric had a different sign from the other four mobility
+metrics. We thus used this component as our index of                      Acknowledgements: Research effort by JSW was
+mobility (setting the direction so that only the residen-                 enabled by support from grants from the Simons Foun-
+tial metric contributed negatively to the index). To draw                 dation (SCOPE Award ID 329108), the Army Research
+phase planes, we further smoothed our mobility index                      Office (W911NF1910384), National Institutes of Health
+and daily reported deaths using locally estimated scat-                   (1R01AI46592-01), and National Science Foundation
+terplot (LOESS) smoothing. Daily number of deaths is                      (1806606 and 1829636). JD was supported in part by
+smoothed in log space, only including days with one or                    grants from the Canadian Institutes of Health Research
+more reported deaths. LOESS smoothing is performed                        and the Natural Sciences and Engineering Research
+by using the loess function in R.                                         Council of Canada.
+
+
+
+
+ 1 IHME COVID-19 health services utilization forecast-                         eases: a review. Journal of the Royal Society Interface
+   ing team, Murray CJ (2020) Forecasting COVID-19                             7:1247–1256.
+   impact on hospital bed-days, ICU-days, ventilator-days                 13   Eksin C, Shamma JS, Weitz JS (2017) Disease dynamics
+   and deaths by US state in the next 4 months. medRx-                         in a stochastic network game: a little empathy goes a long
+   iv https://www.medrxiv.org/content/10.1101/2020.                            way in averting outbreaks. Scientific reports 7:44122.
+   03.27.20043752v1.                                                      14   Eksin C, Paarporn K, Weitz JS (2019) Systematic biases
+ 2 Bregman DJ, Langmuir AD (1990) Farr’s law applied to                        in disease forecasting–The role of behavior change. Epi-
+   AIDS projections. JAMA 263:1522–1525.                                       demics 27:96–105.
+ 3 Ferguson NM, et al. (2020) Impact of non-pharmaceutical                15   Franco E (2020) A feedback SIR (fSIR) model highlights
+   interventions (NPIs) to reduce COVID19 mortality and                        advantages and limitations of infection-based social dis-
+   healthcare demand.        https://www.imperial.ac.uk/                       tancing. arXiv preprint arXiv:2004.13216.
+   mrc-global-infectious-disease-analysis/covid-19/                       16   Chen H, Xu W, Paris C, Reeson A, Li X (2020) Social dis-
+   report-9-impact-of-npis-on-covid-19/.                                       tance and SARS memory: impact on the public awareness
+ 4 Kucharski AJ, et al. (2020) Early dynamics of transmis-                     of 2019 novel coronavirus (COVID-19) outbreak. medRx-
+   sion and control of covid-19: a mathematical modelling                      iv https://www.medrxiv.org/content/10.1101/2020.
+   study. The Lancet Infectious Diseases 20:553 – 558.                         03.11.20033688v1.
+ 5 Kissler SM, Tedijanto C, Goldstein E, Grad YH, Lip-                    17   Leung K, Wu JT, Liu D, Leung GM (2020) First-wave
+   sitch M (2020) Projecting the transmission dynamics of                      COVID-19 transmissibility and severity in China outside
+   SARS-CoV-2 through the post-pandemic period. Science                        Hubei after control measures, and second-wave scenario
+   p eabb5793.                                                                 planning: a modelling impact assessment. The Lancet
+ 6 Park SW, et al.       (2020) Reconciling early-outbreak                     395:1382 – 1393.
+   estimates of the basic reproductive number and its                     18   Adam D, et al. (2020) Clustering and superspreading
+   uncertainty: framework and applications to the nov-                         potential of severe acute respiratory syndrome coronavirus
+   el coronavirus (SARS-CoV-2) outbreak.            medRx-                     2 (sars-cov-2) infections in hong kong. Research Square.
+   iv https://www.medrxiv.org/content/10.1101/2020.                       19   Althouse BM, et al. (2020) Stochasticity and heterogene-
+   01.30.20019877v4.full.pdf.                                                  ity in the transmission dynamics of sars-cov-2. arXiv
+ 7 Kraemer MUG, et al. (2020) The effect of human mobility                     preprint arXiv:2005.13689.
+   and control measures on the COVID-19 epidemic in china.                20   Lau MSY, et al. (2020) Characterizing superspreading
+   Science 368:493–497.                                                        events and age-specific infectiousness of sars-cov-2 trans-
+ 8 Li R, et al. (2020) Substantial undocumented infection                      mission in georgia, usa. Proceedings of the National Acade-
+   facilitates the rapid dissemination of novel coronavirus                    my of Sciences 117:22430–22435 https://www.pnas.org/
+   (COVID-19). Science 368:489–493.                                            content/117/36/22430.full.pdf.
+ 9 Wu J, Leung K, Bushman M, et al. (2020) Estimating clin-               21   Liu Y, Eggo RM, Kucharski AJ (2020) Secondary attack
+   ical severity of COVID-19 from the transmission dynamics                    rate and superspreading events for sars-cov-2. The Lancet
+   in Wuhan, China. Nature Medicine 26:506–510.                                395:e47.
+10 Anderson RM, May RM (1991) Infectious diseases of                      22   Frieden TR, Lee CT (2020) Identifying and interrupting
+   humans: dynamics and control (Oxford university press).                     superspreading events-implications for control of severe
+11 Funk S, Gilad E, Watkins C, Jansen VA (2009) The spread                     acute respiratory syndrome coronavirus 2. Emerg Infect
+   of awareness and its impact on epidemic outbreaks. Pro-                     Dis 26:1059–1066.
+   ceedings of the National Academy of Sciences 106:6872–                 23   Kain MP, Childs ML, Becker AD, Mordecai EA
+   6877.                                                                       (2020) Chopping the tail: how preventing superspread-
+12 Funk S, Salathé M, Jansen VA (2010) Modelling the influ-                   ing can help to maintain covid-19 control. medRx-
+   ence of human behaviour on the spread of infectious dis-                    iv https://www.medrxiv.org/content/early/2020/07/
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.05.03.20089524.this version posted October 16, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY 4.0 International license .
+                                                                                                                                            10
+
+   03/2020.06.30.20143115.full.pdf.
+24 Weinberger DM, et al. (2020) Estimation of excess deaths
+   associated with the covid-19 pandemic in the united
+   states, march to may 2020. JAMA Internal Medicine.
+25 Meyerowitz-Katz G, Merone L (2020) A systematic review
+   and meta-analysis of published research data on covid-19
+   infection-fatality rates. medRxiv.
+26 Flaxman S, et al. (2020) Estimating the number of infec-
+   tions and the impact of nonpharmaceutical interventions
+   on COVID-19 in 11 European countries. Nature 584:257–
+   261.
+27 West R, Michie S, Rubin GJ, Amlôt R (2020) Apply-
+   ing principles of behaviour change to reduce SARS-CoV-2
+   transmission. Nature Human Behaviour https://doi.
+   org/10.1038/s41562-020-0887-9.
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.05.03.20089524.this version posted October 16, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY 4.0 International license .
+                                                                                                                                            11
+
+       Appendix A: Appendix - Supplementary
+                   Information
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.05.03.20089524.this version posted October 16, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY 4.0 International license .
+                                                                                                                                                                                           12
+
+                                      2.00                                                        10                                                          100
+                                             AK                           AL                           AR                              AZ                           CA
+                                      1.75                                                                                        30
+                                                                     10
+                                      1.50                                                                                        10
+                                                                                                  3                                                           10
+                                      1.25                           3                                                             3
+                                      1.00                           1                            1                                1                            1
+                                       100                                                                                       100                          100
+                                             CO                     100
+                                                                          CT                      10   DE                              FL                           GA
+
+                                       10                                                                                         10                          10
+                                                                     10                           3
+
+                                         1                           1                            1                                1                            1
+                                      2.00
+                                             HI                           IA                      5    ID                        100   IL                     100   IN
+                                      1.75                           10
+                                      1.50                                                        3
+                                                                                                                                  10                          10
+                                      1.25                           3
+
+                                      1.00                            1                            1                               1                           1
+                                             KS                      30   KY                     100   LA                              MA                           MD
+                                       10                                                                                        100                          30
+                                                                     10
+                                                                                                                                                              10
+                                                                                                  10                              10
+                                        3
+                                                                     3                                                                                         3
+    Daily number of reported deaths
+
+
+
+
+                                        1                            1                             1                               1                           1
+                                        5                                                         30                                                          30
+                                             ME                           MI                           MN                         30   MO                           MS
+                                                                    100
+                                        3                                                         10                                                          10
+                                                                                                                                  10
+                                                                     10
+                                                                                                  3                                3                           3
+
+                                        1                             1                           1                                1                           1
+                                        3                            30
+                                             MT                           NC                           ND                         10   NE                           NH
+                                                                                                  5                                                           10
+                                        2                            10
+                                                                                                  3
+                                                                                                                                   3                           3
+                                                                     3
+
+                                        1                             1                           1                                1                            1
+                                             NJ                      10   NM                           NV                              NY                     100   OH
+                                      100                                                         10
+                                                                                                                                 100
+                                                                     3                                                                                        10
+                                       10                                                         3                               10
+
+                                        1                             1                           1                                1                           1
+                                             OK                      10   OR                           PA                         30   RI                     30    SC
+                                       10                                                        100                              10                          10
+                                                                     3
+                                        3                                                         10                               3                           3
+
+                                        1                            1                            1                                1                           1
+                                        5
+                                             SD                           TN                      30
+                                                                                                       TX                              UT                     30
+                                                                                                                                                                    VA
+                                                                     10                                                            5
+                                        3
+                                                                                                  10                               3                          10
+                                                                     3
+                                                                                                  3                                                            3
+                                        1                            1                            1                                1                           1
+                                        5
+                                             VT                           WA                           WI                          5   WV                           WY
+                                                                     30                           10                                                           3
+                                        3
+                                                                                                                                   3
+                                                                     10                                                                                        2
+                                                                                                  3
+                                                                     3
+                                        1                            1                            1                                1                           1
+                                                  Apr   May   Jun              Apr   May   Jun              Apr      May   Jun              Apr   May   Jun              Apr   May   Jun
+                                                                                                                  Date
+
+
+
+FIG. S1: Daily number of reported deaths for COVID-19 (black points and lines) and the corresponding locally estimated
+scatterplot smoothing (LOESS) curves (red lines) in 50 states.
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.05.03.20089524.this version posted October 16, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY 4.0 International license .
+                                                                                                                                            13
+
+
+               103                                                                1
+
+
+                                                                                 0.9
+
+
+                                                                                 0.8
+               102
+                                                                                 0.7
+
+
+                                                                                 0.6
+                 1
+               10
+                                                                                 0.5
+
+
+                                                                                 0.4
+
+
+               100                                                               0.3
+                     0       50         100         150         200                    0       50         100         150         200
+
+
+               103                                                                1
+
+
+                                                                                 0.9
+
+
+                                                                                 0.8
+               102
+                                                                                 0.7
+
+
+                                                                                 0.6
+
+               101
+                                                                                 0.5
+
+
+                                                                                 0.4
+
+
+               100                                                               0.3
+                     0       50         100         150         200                    0       50         100         150         200
+
+
+
+FIG. S2: Dynamics given variation in the critical fatality awareness level, δc for awareness k = 1 (top) and k = 4 (bottom).
+Panels show deaths/day (top) and the susceptible fraction as a function of time (bottom), the latter compared to a herd
+immunity level when only a fraction 1/R0 remain susecptible. These simulations share the epidemiological parameters β = 0.5
+/day, µ = 1/2 /day, γ = 1/6 /day, and fD = 0.01.
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.05.03.20089524.this version posted October 16, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY 4.0 International license .
+                                                                                                                                            14
+
+                         4
+                       10
+               6
+
+               5
+                                                                                 150
+
+               4
+
+                                                                                 100
+               3
+
+               2
+                                                                                  50
+               1
+
+               0                                                                   0
+                   0         50        100         150         200                     0       50          100        150         200
+
+                       104
+               6
+
+               5
+                                                                                 150
+
+               4
+
+                                                                                 100
+               3
+
+               2
+                                                                                  50
+               1
+
+               0                                                                   0
+                   0         50        100         150         200                     0       50          100        150         200
+
+
+
+FIG. S3: Emergence of oscillatory dynamics in a death-driven awareness model of social distancing given lags between infection
+and fatality. Awareness is k = 1 (top) and k = 4 (bottom), all other parameters as in Figure 3. The dashed lines for fatalities
+expected quasi-stationary value δ (q) .
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.05.03.20089524.this version posted October 16, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY 4.0 International license .
+                                                                                                                                                                      15
+
+
+                                                                       grocery and pharmacy     residential                transit stations
+                                                                       parks                    retail and recreation      workplaces
+
+
+                                               CA                       CO                       CT                            FL                         GA
+                                                                                     200                         25                            80
+                                   25                       100
+                                                                                                                   0                           40
+                                    0                                                100
+                                                             50
+                                                                                                                 -25                            0
+                                   -25                        0
+                                                                                       0
+                                   -50                                                                           -50                          -40
+                                                            -50
+                                   -75
+                                         Mar Apr May Jun          Mar Apr May Jun          Mar Apr May Jun              Mar Apr May Jun             Mar Apr May Jun
+
+                                               IN                       LA                       MA                           MD                          MI
+                                                                                                                200                           300
+                                                                                     100
+                                   200                       40
+                                                                                                                                              200
+                                                                                      50                        100
+    Percent change from baseline
+
+
+
+
+                                   100                        0                                                                               100
+                                                                                       0
+                                                                                                                   0
+                                    0                       -40                                                                                 0
+                                                                                     -50
+
+                                         Mar Apr May Jun          Mar Apr May Jun          Mar Apr May Jun              Mar Apr May Jun             Mar Apr May Jun
+
+                                              MN                        NC                       NJ                           NY                          PA
+                                   200                      100                      200                        100
+                                                             50                                                                               100
+                                   100                                               100                         50
+
+                                                              0                                                    0
+                                    0                                                  0                                                        0
+                                                            -50                                                  -50
+
+                                         Mar Apr May Jun          Mar Apr May Jun          Mar Apr May Jun              Mar Apr May Jun             Mar Apr May Jun
+
+                                               VA                       WA
+
+                                   100                      100
+
+                                   50                        50
+
+                                    0                         0
+
+                                   -50                      -50
+
+                                         Mar Apr May Jun          Mar Apr May Jun
+                                                                                               Month
+
+                                                    FIG. S4: Percent mobility change from baseline across six categories in 17 states.
+

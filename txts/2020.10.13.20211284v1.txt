@@ -1,0 +1,1253 @@
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211284.this version posted October 15, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+
+
+
+
+        1                                                                Title page
+
+        2         Title: "Stay-at-home policy: is it a case of exception fallacy? An internet-based ecological
+        3                                                    study".
+
+        4              Authors: Ricardo F. Savaris1*†, Guilherme Pumi2, Jovani Dalzochio3, Rafael Kunst3
+
+        5     Affiliations:
+              1
+        6         Universidade Federal do Rio Grande do Sul, School of Medicine, Dep. of Obstetrics and
+
+        7     Gynecology, Rua Ramiro Barcelos 2350, CEP 90035-003 Porto Alegre, RS, Brazil.
+              2
+        8         Universidade Federal do Rio Grande do Sul, Mathematics and Statistics Institute, 9500, Bento
+
+        9     Gonçalves Avenue, 91509-900, Porto Alegre, RS, Brazil.
+              3
+      10          University of Vale do Rio dos Sinos (UNISINOS), Av. Unisinos, 950 São Leopoldo, RS,
+
+      11      Brazil.
+
+      12
+
+      13      *Correspondence to: Serv. Ginecologia e Obstetrícia, Hospital de Porto Alegre, Rua Ramiro
+
+      14      Barcelos 2350, Porto Alegre, RS, Brazil, CEP 90035-903 email: rsavaris@hcpa.edu.br
+
+      15      † Postgraduate of BigData, Data Science and Machine Learning course, Unisinos, Porto Alegre,
+
+      16      RS, Brasil.
+
+      17
+
+
+
+
+        NOTE: This preprint reports new research that has not been certified by peer review and should not be used to guide clinical practice.
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211284.this version posted October 15, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+
+
+
+
+      18      Abstract:
+
+      19      Background: Countries with strict lockdown had a spike on the number of deaths. A recent
+      20      mathematical model has suggested that staying at home did not play a dominant role in reducing
+      21      COVID-19 transmission. Comparison between number of deaths and social mobility is difficult
+      22      due to the non-stationary nature of the COVID-19 data.
+
+      23      Objective: To propose a novel approach to assess the association between staying at home
+      24      values and the reduction/increase in the number of deaths due to COVID-19 in several regions
+      25      around the world.
+
+      26      Methods: In this ecological study, data from www.google.com/covid19/mobility/,
+      27      ourworldindata.org and covid.saude.gov.br were combined. Countries with >100 deaths and with
+      28      a Healthcare Access and Quality Index of ≥67 were included. Data were preprocessed and
+      29      analyzed using the difference between number of deaths/million between 2 regions and the
+      30      difference between the percentage of staying at home. Analysis was performed using linear
+      31      regression and residual analysis
+
+      32      Results: After preprocessing the data, 87 regions around the world were included, yielding 3,741
+      33      pairwise comparisons for linear regression analysis. Only 63 (1.6%) comparisons were
+      34      significant.
+
+      35      Discussion: With our results, we were not able to explain if COVID-19 mortality is reduced by
+      36      staying as home in ~98% of the comparisons after epidemiological weeks 9 to 34.
+
+      37
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211284.this version posted October 15, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+
+
+
+
+      38      Introduction
+      39      By late September, 2020, approximately one million people worldwide had died from the new
+      40      coronavirus (COVID-19) (Coronavirus Update (Live): 13,578,330 Cases and 583,696 Deaths
+      41      from COVID-19 Virus Pandemic - Worldometer). Wearing masks, taking personal precautions,
+      42      testing for COVID-19 and social distancing have been advocated for controlling the pandemic
+      43      (Huang and Chen 2020; Lin et al. 2020; Wu and Qi 2020). To achieve source control and stop
+      44      transmission, social distancing has been interpreted by many as staying at home. Such policies
+      45      across multiple jurisdictions were suggested by some experts (Guest et al. 2020). These measures
+      46      were supported by the World Health Organization (WHO Director-General’s opening remarks at
+      47      the media briefing on COVID-19 - 13 April 2020), local authorities (Ministry of Housing,
+      48      Communities and Local Government 2020; Mucientes and Carrasco 2020; Governor Cuomo
+      49      Signs the “New York State on PAUSE” Executive Order 2020), and encouraged on social media
+      50      platforms (Criativo; A Movement to Stop the COVID-19 Pandemic | #StayTheFuckHome,
+      51      #[stayathome] (Brazilian twitter)).
+      52      Some mathematical models and meta-analyses have shown a marked reduction in COVID-19
+      53      cases (Ambikapathy and Krishnamurthy 2020; Espinoza et al. 2020; Ibarra-Vega 2020; Liu et al.
+      54      2020; Nussbaumer-Streit et al. 2020; Sjödin et al. 2020) and deaths (Ferguson et al. 2020;
+      55      Semenova et al. 2020) associated with lockdown policies. Brazilian researchers have published
+      56      mathematical models of spreading patterns (Peixoto et al. 2020) and suggested implementing
+      57      social distancing measures and protection policies to control virus transmission (Aquino et al.
+      58      2020). By May 5th, 2020, an early report, using number of curfew days in 49 countries, found
+      59      evidence that lockdown could be used to suppress the spread of COVID-19 (Atalan 2020).
+      60      Measures to address the COVID-19 pandemic with Non-Pharmacological Interventions (NPIs)
+      61      were adopted after Brazil enacted Law No. 13979 (Imprensa Nacional), and this was followed by
+      62      many states such as Rio de Janeiro (Decreto 46970 27/03/2020), the Federal District of Brasília
+      63      (Decree No. 40520, dated March 14th, 2020) (Decreto 40520 de 14/03/2020), the city of São
+      64      Paulo (Decree No. 59.283, dated March 16th, 2020) (Decreto 59283 2020 de São Paulo SP), and
+      65      the State of Rio Grande do Sul (Decree No. 55240/2020, dated May 10th, 2020) (Decreto 55240
+      66      de 10/05/2020). It was expected that, with these actions, the number of deaths by COVID-19
+      67      would be reduced. Of note, the country’s most populous state, São Paulo, adopted rigorous
+      68      quarantine measures and put them into effect on March 24th, 2020 (Decreto 59283 2020 de São
+      69      Paulo SP). Internationally, Peru adopted the world's strictest lockdown (Tegel 2020).
+      70      Recently, Google LLC published datasets indicating changes in mobility (compared to an
+      71      average baseline before the COVID-19 pandemic). These reports were created with aggregated,
+      72      anonymized sets of daily and dynamic data at country and sub-regional levels drawn from users
+      73      who had enabled the Location History setting on their cell phones. These data reflect real-world
+      74      changes in social behavior and provide information on mobility trends for places like grocery
+      75      stores, pharmacies, parks, public transit stations, retail and recreation locations, residences, and
+      76      workplaces, when compared to the baseline period prior to the pandemic (Google LLC).
+      77      Mobility in places of residence provides information about the "time spent in residences", which
+      78      we will hereafter call “staying at home” and use as a surrogate for measuring adherence to stay-
+      79      at-home policies.
+      80      Studies using Google COVID-19 Community Mobility Reports and the daily number of new
+      81      COVID-19 cases have shown that over 7 weeks a strong correlation between staying at home
+      82      and the reduction of COVID-19 cases in 20 counties in the United States (Badr et al. 2020);
+      83      COVID-19 cases decreased by 49% after 2 weeks of staying at home (Banerjee and Nayak
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211284.this version posted October 15, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+
+
+
+
+      84      2020); the incidence of new cases/100,000 people was also reduced (Wang et al. 2020); social
+      85      distancing policies were associated with reduction in COVID-19 spread in the US (Gao et al.
+      86      2020); as well as in 49 countries around the world (Atalan 2020). A recent report using Brazilian
+      87      and European data has shown a correlation between NPI stringency and the spread of COVID-19
+      88      (Candido et al. 2020; Islam et al. 2020); these analyses are debatable, however, due to their short
+      89      time span and the type of time series behavior (Bernal et al. 2017), or for their use of Pearson’s
+      90      correlation in the context of non-stationary time series (Gao et al. 2020). For instance, applying
+      91      the same statistical analysis to stationary and non-stationary time series is not sufficient for
+      92      statistical analysis (Nason 2006), and the latter is the case with this COVID-19 data. A 2020
+      93      Cochrane systematic review of this topic reported that they were not completely certain about
+      94      this evidence for several reasons. The COVID-19 studies based their models on limited data and
+      95      made different assumptions about the virus (Nussbaumer-Streit et al. 2020); the stay-at-home
+      96      variable was analyzed as a binary indicator (Sen et al. 2020); and the number of new cases could
+      97      have been substantially undocumented (Li et al. 2020); all which may have biased the results. A
+      98      sophisticated mathematical model based on a high-dimensional system of partial differential
+      99      equations to represent disease spread has been proposed (Zamir et al. 2020). According to this
+     100      model, staying at home did not play a dominant role in disease transmission, but the combination
+     101      of these, together with the use of face masks, hand washing, early-case detection (PCR test), and
+     102      the use of hand sanitizers for at least 50 days could have reduced the number of new cases.
+     103      Finally, after 2 months, the simulations that drove the world to lockdown have been questioned
+     104      (Boretti 2020).
+     105      After more than 25 epidemiological weeks of this pandemic, verifying if staying at home had an
+     106      impact on mortality rates is of particular interest. A PUBMED search with the terms “COVID-
+     107      19” AND (Mobility) (search made on September 8th, 2020) yielded 246 articles; of these, 35
+     108      were relevant to mobility measures and COVID-19, but none compared mobility reduction to
+     109      mortality rates.
+     110      We are looking for the association between two variables: deaths/million and the percentage of
+     111      people who remained in their residences. Comparison, however, is difficult due to the non-
+     112      stationary nature of the data. To overcome this problem, we proposed a novel approach to assess
+     113      the association between staying at home values and the reduction/increase in the number of
+     114      deaths due to COVID-19 in several regions around the world. If the variation in the difference
+     115      between the number of deaths/million in two countries, say A and B, and the variation in the
+     116      difference of the staying at home values between A and B present similar patterns, this is due to
+     117      an association between the two variables. In contrast, if these patterns are very different, this is
+     118      evidence that staying at home values and the number of deaths/million are not related (unless, of
+     119      course, other unaccounted for factors are at play).
+
+     120      Material and methods
+     121
+     122      Study design
+     123      This is an ecological study using data available on the Internet.
+     124
+     125      Setting - Data collection on mobility
+     126      Google COVID-19 Community Mobility Reports provided data on mobility from 138 countries
+     127      and regions (Coronavirus Source Data 2020, Coronavírus Brasil) between February 15th and
+     128      August 21st, 2020.(Google LLC) Data regarding the average times spent at home was generated
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211284.this version posted October 15, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+
+
+
+
+     129      in comparison to the baseline. Baseline was considered to be the median value from between
+     130      January 3rd and February 6th, 2020. Data obtained between February 15th and August 21th 2020
+     131      was divided into epidemiological weeks (epi-weeks) and the mean percentage of time spent
+     132      staying at home per week was obtained.
+     133      Data collection on mortality
+     134      Numbers of daily deaths from selected regions were obtained from open databases (Coronavirus
+     135      Source Data 2020, Coronavírus Brasil) on August 27st, 2020.
+     136      Inclusion criteria for analysis
+     137      Only regions with mobility data and with more than 100 deaths, by August 26th, 2020, were
+     138      included in this study. For data quality, only countries with Healthcare Access and Quality
+     139      Index (HAQI) of ≥ 67 were included.(Barber et al. 2017) By choosing a HAQI of ≥ 67, we
+     140      assumed that data from these countries were reliable and healthcare was of high quality. For
+     141      Brazilian regions, a HAQI was substituted for the Human Development Index (HDI), and those
+     142      with <0.549 (low) were excluded.
+     143      Three major cities with >100 deaths and well-established results (Tokyo, Japan; Berlin,
+     144      Germany, and New York, USA) were selected as controlled areas.
+     145      Dataset of COVID-19 cases and associated data
+     146      After inclusion of the countries/regions, further data were obtained to reduce comparison bias,
+     147      including population density (population/km²), percentage of the urban population, HDI, and the
+     148      total area of the region in square kilometers. All data were obtained from open databases.(2019
+     149      Human Development Index Ranking, [Cities and States Statistics], Population by Country (2020)
+     150      - Worldometer)
+     151      Classification of areas with COVID-19
+     152      Regions were classified as controlled for cases of COVID-19 if they present at least two out of
+     153      the three following conditions: a) type of transmission classified as “clusters of cases”, b) a
+     154      downward curve of newly reported deaths in the last seven days, and c) a flat curve in the
+     155      cumulative total number of deaths in the last seven days (variation of 5%) according to the
+     156      World Health Organization.(WHO Coronavirus Disease (COVID-19) Dashboard) An example is
+     157      shown in Figure S3 (supplement).
+     158      Data from the cities (Tokyo, Berlin, New York, Fortaleza, Belo Horizonte, Manaus, Rio de
+     159      Janeiro, São Paulo, and Porto Alegre) were obtained from official government sites.(Population
+     160      of Tokyo - Tokyo Metropolitan Government, Berlin, COVID-19:Data, Planning-Population-
+     161      Census 2010-DCP) Tokyo, Berlin and New York were chosen for having controlled the COVID-
+     162      19 dissemination, for representing three different continents, and for similarity to major Brazilian
+     163      cities (Fortaleza, Belo Horizonte, Manaus, Rio de Janeiro, São Paulo, and Porto Alegre).
+     164      Merged database
+     165      Different databases from the sites mentioned above were merged using Microsoft Excel Power
+     166      Query (Microsoft Office 2010 for Windows Version 14.0.7232.5000) and manually inspected for
+     167      consistency.
+     168      Processing the data - cleaning
+     169      Data collected from multiple regions were processed using Python 3.7.3 in the Jupyter Notebook
+     170      environment through the use of the Python Data Analysis Library in Google Colab Research.
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211284.this version posted October 15, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+
+
+
+
+     171      Details of preprocessing are described in Python script (Supplemental material). Briefly, after
+     172      taking the sum of deaths/million per epi-week, and the average of the variable “staying at home”
+     173      per epi-week, non-stationary patterns were mitigated by subtracting weekt by weekt-1.
+     174      Time series data setup and variables
+     175      Details regarding the pre-processing and methodological details were presented on the approach
+     176      for analyzing the time series data. Our variables were the difference in the variation of deaths
+     177      between locations A and B (dependent variable - outcome), and the difference in the variation of
+     178      staying at home values between the same location (independent variable).
+     179      Comparison between areas
+     180      Direct comparison, between regions with and without controlled COVID-19 cases, was
+     181      considered in two scenarios: 1) Restrictive if, at least three out of four of the following
+     182      conditions were similar: a) population density, b) percentage of the urban population, c) HDI and
+     183      d) total area of the region. Similarity was considered adequate when a variation in conditions a),
+     184      b), and c) was within 30%, while, for condition d), a variation of 50% was considered adequate.
+     185      2) Global: all regions and countries were compared to each other.
+     186      Statistical analysis
+     187      Rationale
+     188      Time series on COVID-19 mortality (deaths/millions) display a non-stationary pattern. The daily
+     189      data present a very distinct seasonal behavior on the weekends, with valleys on Saturdays and
+     190      Sundays followed by peaks on Mondays (Figure S1)
+     191      To make it stationary, one may introduce dummy variables for Saturdays, Sundays, and
+     192      Mondays, regress the number of deaths in these dummy variables, and then analyze the residuals.
+     193      However, in most cases, the residuals are still non-stationary time series, and special treatment
+     194      would be required in each case. Although this approach may be feasible for a few series, we are
+     195      interested in analyzing hundreds of time series from different countries and regions. Hence, we
+     196      need a more efficient way to deal with this amount of data. The covariates present another issue
+     197      in regressing the daily time series of deaths/staying at home. The covariates are typically
+     198      correlated with error terms due to public policies adopted by regions/countries. Mechanisms
+     199      controlling social isolation are intrinsically related to the number of deaths/cases in each
+     200      location. An increase in the death rate may cause more stringent policies to be adopted, which
+     201      increases the percentage of people staying at home. This change causes an imbalance between
+     202      the observed number of deaths and staying at home levels. In a regression model, this
+     203      discrepancy is accounted for in the error term. Hence, the error term will change in accordance
+     204      with staying at home levels.
+     205      Approach for analyzing the time series data
+     206      Data aggregation by epidemiological week is a plausible alternative (Figure S2). In this way,
+     207      artificial seasonality, imposed by work scheduled during weekends and the effect of
+     208      governmental control over social interaction, in a regression framework, are mitigated. The
+     209      drawback is that the sample size is significantly reduced from 187 days (Figure S1) to 26
+     210      epidemiological weeks (Figure S2).
+     211      Aggregation by epidemiological week, however, still yields non-stationary time series in most
+     212      cases. To overcome this problem, we differentiated each time series. Recall that if ௧ denotes the
+     213      number of deaths in the -th epidemiological week, we define the first difference of ௧ as
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211284.this version posted October 15, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+
+
+
+
+     214                                                            ௧      ௧       ௧ିଵ   .
+     215      Intuitively,  ௧ denotes the variation of deaths between weeks  and t-1 , also known as the flux
+     216      of deaths. The same is valid for the staying at home time series. This simple operation yielded, in
+     217      most cases, stationary time series, and verified with the so-called Phillips-Perron stationarity test
+     218      (Perron 1988). In the few cases where the resulting time series did not reject the null hypothesis
+     219      of non-stationarity (technically, the existence of a unitary root, in the time series characteristic),
+     220      this was due to the presence of one or two outliers combined with the small sample size. These
+     221      outliers were usually related to the very low incidence of COVID-19 deaths by the 9th
+     222      epidemiological week when paired with countries with a significant number of deaths in that
+     223      same week, thus resulting in an outlier which cannot be accounted for by linear
+     224      regression.(Perron 1988)
+     225      To investigate pairwise behavior, we propose a method to assess the relationship between deaths
+     226      and staying at home data between various countries and regions. For two countries/regions, say
+     227      A and B, let ௧ ஺ and ௧ ஻ denote the number of deaths per million at epidemiological week  for
+     228      country A and B respectively, while ௧ ஺ and ௧ ஻ denote the staying at home at epidemiological
+     229      week  for A and B, respectively. The idea is to regress the difference ௧஺  ௧஻   ௧஺ 
+     230      ௧஻ on ௧஺  ௧஻   ௧஺  ௧஻ . Formally, we perform the regression
+                                                  ௧஺  ௧஻            ଴       ଵ    ௧஺  ௧஻      ௧   ,
+     231      where ଴ and ଵ are unknown coefficients and ௧ denotes an error term. Estimation of ଴ and ଵ is
+     232      carried out through ordinary least squares. The interpretation of the model is important. We are
+     233      regressing the difference in the variation of deaths between locations A and B into the difference
+     234      in the variation of staying at home values between the same location.
+     235      If the number of deaths in locations A and B have a similar functional behavior over time, then
+     236      ௧஺  ௧஻ tends to be near-constant, and  ௧஺  ௧஻ tends to oscillate around zero. If the same
+     237      applies to  ௧஺  ௧஻ , then we expect ଵ  0; consequently, we conclude that the behavior,
+     238      between A and B, is similar and the number of deaths and the percentage of staying at home are
+     239      associated in these regions. The other non-spurious situation implying ଵ  0occurs when the
+     240      variation in the number of deaths in locations A and B increases/decreases over time following a
+     241      certain pattern, while the variation in the percentage of “staying at home” values also
+     242      increases/decreases following the same pattern (apart from the direction). In this situation, we
+     243      found different epidemiological patterns as in the variation in the number of deaths, and in the
+     244      staying at home values, in locations A and B were on opposite trends. However, if these patterns
+     245      were similar (proportional), this would be captured in the difference and, as a consequence, in
+     246      the regression. This means that the different trends were near proportional and, hence, the
+     247      variation in staying at home is associated with the variation in deaths.
+     248      The proposed approach presents a way to evaluate staying at home and the number of deaths
+     249      between two countries/regions. In the section below “Definition of areas with and without
+     250      controlled cases of COVID-19”, each country/region was classified into a binary class: either
+     251      controlled or not controlled areas for COVID-19. The proposed method allows for insights
+     252      regarding the association of the number of deaths and staying at home levels between
+     253      countries/regions with similar/different degrees of COVID-19 control.
+     254      Estimation of ଴ and ଵ is carried out through ordinary least squares. Assumptions related to
+     255      consistency, efficiency, and asymptotic normality of the ordinary least squares, in the context of
+     256      time series regression, can be found in Greene, 2012 (Greene 2012). Since we are comparing
+     257      many time series, to avoid any problem with spurious regression, we performed a cointegration
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211284.this version posted October 15, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+
+
+
+
+     258      test between the response and covariates. In this context, this is equivalent to testing the
+     259      stationarity of ௧ , which was done by performing the Phillips-Perron test. Residual analysis is of
+     260      utmost importance in linear regression, especially in the context of small samples. The steps and
+     261      tests performed in the residual analysis are described in the statistical analysis section.
+     262      After data preprocessing, the association between the number of deaths and staying at home was
+     263      verified using a linear regression approach. Data were analyzed using the Python model
+     264      statsmodels.api v0.12.0 (statsmodels.regression.linear_model.OLS; statsmodels.org), and
+     265      double-checked using R version 3.6.1. False Discovery Rate proposed by Benjamini-Hochberg
+     266      (FDR-BH) was used for multiple testing.
+     267      We checked the residuals for heteroskedasticity using White’s test; for the presence of
+     268      autocorrelation using the Lagrange Multiplier test; for normality using the Shapiro-Wilk’s
+     269      normality test; and for functional specification using the Ramsey’s RESET test. All tests were
+     270      performed with a 0.05 significance level and the analysis was performed with R version 3.6.1.
+     271      Data from 30 restrictive comparisons were manually inspected and checked a third time using
+     272      Microsoft Excel (Microsoft). A heat map was designed using GraphPad Prism version 8.4.3 for
+     273      Mac (GraphPad Software, San Diego, California, USA). Graphs plotting the number of
+     274      deaths/million and staying at home over epidemiological weeks were obtained from Google
+     275      Sheets.
+
+     276      Results
+     277      A flowchart of the data manipulation is depicted in Figure 1. Briefly, Google COVID-19
+     278      Community Mobility Report data between February 16th and August 21st, 2020, yielded 138
+     279      separate countries and their regions. The website Our World in Data provided data on 212
+     280      countries (between December 31st, 2019, and August 26th, 2020), and the Brazilian Health
+     281      Ministry website provided data on all states (n=27) and cities (n=5,570) in Brazil (February 25th
+     282      to August 26th, 2020).
+     283      After data compilation, a total of 87 regions and countries were selected: 51 countries, 27 States
+     284      in Brazil, six major Brazilian State capitals [Manaus, Amazonas (AM), Fortaleza, Ceará (CE),
+     285      Belo Horizonte, Minas Gerais (MG), Rio de Janeiro, Rio de Janeiro (RJ), São Paulo, São Paulo
+     286      (SP) and Porto Alegre, Rio Grande do Sul (RS)], and three major cities throughout the world
+     287      (Tokyo, Berlin and New York) (Figure 1).
+     288      Characteristics of these 87 regions are presented in Table 1 (further details are in Supplemental
+     289      Material - Characteristics of Regions).
+     290
+     291      Comparisons
+     292      The restrictive analysis between controlled and not controlled areas yielded 33 appropriate
+     293      comparisons, as shown in Table 2. Only one comparison out of 33 (3%) - state of Roraima
+     294      (Brazil) versus state of Rondonia (Brazil) - was significant (p-value = 0.04). After correction for
+     295      residual analysis, it did not pass the autocorrelation test (Lagrange Multiplier test=0.04). (Further
+     296      details are in Supplemental Material - Restrictive Analysis).
+     297      The global comparison yielded 3,741 combinations; from these, 184 (4.9%) had a p-value <
+     298      0.05, after correcting for False Discovery Rate (Table S3). After performing the residual
+     299      analysis, by testing for cointegration between response and covariate, normality of the residuals,
+     300      presence of residual autocorrelation, homoscedasticity, and functional specification, only 63
+     301      (1.6%) of models passed all tests (Table S4). Closer inspection of several cases where the model
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211284.this version posted October 15, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+
+
+
+
+     302      did not pass all the tests revealed a common factor: the presence of outliers, mostly due to
+     303      differences in the epidemiological week in which deaths started to be reported. A heat map
+     304      showing the comparison between the 87 regions is presented in Figure 2.
+
+     305      Discussion
+     306      We were not able to explain the variation of deaths/million in different regions in the world by
+     307      social isolation, herein analyzed as differences in staying at home, compared to baseline. In the
+     308      restrictive and global comparisons, only 3% and 1.6% of the comparisons were significantly
+     309      different, respectively. These findings are in accordance with those found by Klein et al. (Klein
+     310      et al.). These authors explain why lockdown was the least probable cause for Sweden's high
+     311      death rate from COVID-19 (Klein et al.). Likewise, Chaudry et al. made a country-level
+     312      exploratory analysis, using a variety of socioeconomic and health-related characteristics, similar
+     313      to what we have done here, and reported that full lockdowns and wide-spread testing were not
+     314      associated with COVID-19 mortality per million people (Chaudhry et al. 2020). Different from
+     315      Chaudry et al., in our dataset, after 25 epidemiological weeks, (counting from the 9th
+     316      epidemiological week onwards in 2020) we included regions and countries with a "plateau" and
+     317      a downslope phase in their epidemiological curves. Our findings are in accordance with the
+     318      dataset of daily confirmed COVID-19 deaths/million in the UK. Pubs, restaurants, and
+     319      barbershops were open in Ireland on June 29th and masks were not mandatory (Therese 2020);
+     320      after more than 2 months, no spike was observed; indeed, death rates kept falling (Daily
+     321      confirmed COVID-19 deaths per million, rolling 7-day average). Peru has been considered to be
+     322      the most strict lockdown country in the world (Tegel 2020), nevertheless, by September 20th, it
+     323      had the highest number of deaths/million (Coronavirus Update (Live): 31,036,957 Cases and
+     324      962,339 Deaths from COVID-19 Virus Pandemic - Worldometer). Of note, differences were
+     325      also observed between regions that were considered to be COVID-19 controlled, e.g., Sweden
+     326      versus Macedonia. Possible explanations for these significant differences may be related to the
+     327      magnitude of deaths in these countries.
+     328      Our results are different from those published by Flaxman et al. These authors calculated that
+     329      NPIs would prevent 3.1 million deaths across 11 European countries (Flaxman et al. 2020). The
+     330      discrepant results can be explained by different approaches to the data. While Flaxman et al.
+     331      assumed a constant reproduction number (Rt) to calculate the total number of deaths, which
+     332      eventually did not occur, we calculated the difference between the actual number of deaths
+     333      between 2 countries/regions. The same explanation for the discrepancy can be applied to other
+     334      publications where mathematical models were created to predict outcomes (Ambikapathy and
+     335      Krishnamurthy 2020; Ibarra-Vega 2020; Liu et al. 2020; Nussbaumer-Streit et al. 2020; Sjödin et
+     336      al. 2020). Most of these studies dealt with COVID-19 cases (Banerjee and Nayak 2020; Wang et
+     337      al. 2020) and not observed deaths. Despite its limitations, reported deaths are likely to be more
+     338      reliable than new case data. Further explanations for different results in the literature, besides
+     339      methodological aspects, could be explained by the complexity of the virus dynamic and its
+     340      interaction with the environment. It is unwise to try to explain a complex and multifactorial
+     341      condition, with the inherent constant changes, using a single variable. An initial approach would
+     342      employ a linear regression to verify the influence of one factor over an outcome. Herein we were
+     343      not able to identify this association.
+     344      This study has limitations. Different from the established paradigm of randomized clinical trial,
+     345      this is an ecological study. An ecological study observes findings at the population level and
+     346      generates hypotheses (Pearce 2000). Population-level studies play an essential part in defining
+     347      the most important public health problems to be tackled (Pearce 2000), which is the case here.
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211284.this version posted October 15, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+
+
+
+
+     348      Another limitation was the use of Google Community Mobility Reports as a surrogate marker for
+     349      staying at home. This may underestimate the real value: for instance, if a user´s cell phone is
+     350      switched off while at home, the observation will be absent from the database. Furthermore, the
+     351      sample does not represent 100% of the population. This tool, nevertheless, has been used by
+     352      other authors to demonstrate the efficacy in reducing the number of new cases after NPI (Delen
+     353      et al. 2020; Vokó and Pitter 2020). Using different methodologies for measuring mobility may
+     354      introduce bias and would prevent comparisons between different countries. The number of
+     355      deaths may be another issue. Death figures may be underestimated, however, reported deaths
+     356      may be more relevant than new case data. The arbitrary criteria used for including countries and
+     357      regions, the restrictive comparisons, and our definition of an area as COVID-19 controlled are
+     358      open for criticism. Nonetheless, these arbitrary criteria were created a priori to the selection of
+     359      the countries. With these criteria, we expected to obtain representative regions of the world,
+     360      compare similar regions, and obtain accurate data. By using a HAQI of ≥ 67, we assumed that
+     361      data from these countries would be accurate, reliable, and health conditions were generally good.
+     362      Nevertheless, the global analysis of the regions (  3741 comparisons) overcame any issue of
+     363      the restrictive comparison. Indeed, the global comparison confirmed the results found in the
+     364      restrictive one; only 1.6% of the death rates could be explained by staying at home. Also, our
+     365      effective sample size in all studies is only 25 epidemiological weeks, which is a very small
+     366      sample size for a time series regression. The small sample size and the non-stationary nature of
+     367      COVID-19 data are challenges for statistical models, but our analysis, with 25 epidemiological
+     368      weeks, is relatively larger than previous publications which used only 7 weeks (Ghosal et al.
+     369      2020). The effects of small samples in this case are related to possible large type II errors and
+     370      also affect the consistency of the ordinary least square estimates. Nevertheless, given the
+     371      importance of social isolation promoted by world authorities (COVID-19 advice - Physical
+     372      distancing), we expected a higher incidence of significant comparisons, even though it could be
+     373      an ecological fallacy. The low number of significant associations between regions for mortality
+     374      rate and the percentage of staying at home may be a case of exception fallacy, which is a
+     375      generalization of individual characteristics applied at the group-level characteristics (Miller and
+     376      Brewer 2003).
+     377      There are strengths to highlight. Inclusion criteria and the Healthcare Access and Quality Index
+     378      were incorporated. We obtained representative regions throughout the world, including major
+     379      cities from 4 different continents. Special attention was given to compiling and analyzing the
+     380      dataset. We also devised a tailored approach to deal with challenges presented by the data. To
+     381      our knowledge, our modeling approach is unique in pooling information from multiple countries
+     382      all at once using up-to-date data. Some criteria, such as population density, percentage of urban
+     383      population, HDI, and HAQI, were established to compare similar regions. Finally, we gave
+     384      special attention to the residual analysis in the linear regression, an absolutely essential aspect of
+     385      studies using small samples.
+     386      In conclusion, using this methodology and current data, in ~98% of the comparisons using 87
+     387      different regions of the world we found no evidence that the number of deaths/million is reduced
+     388      by staying at home. Regional differences in treatment methods and the natural course of the virus
+     389      may also be major factors in this pandemic, and further studies are necessary to better understand
+     390      it.
+
+     391      Supplemental Material:
+
+     392      The Python and R scripts are available at
+     393      https://gist.github.com/rsavaris66/eccfc6caf4c9578d676c134fac74d3fe
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211284.this version posted October 15, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+
+
+
+
+     394
+     395      More supplemental material , including raw data, is available at this
+     396      https://drive.google.com/drive/folders/1239llmxz9YenWweWXA1wgdf07WFYDrYG
+     397
+
+     398      References
+     399      2019 Human Development Index Ranking. Available: http://hdr.undp.org/en/content/2019-
+     400          human-development-index-ranking [accessed 19 August 2020].
+
+     401      Ambikapathy B, Krishnamurthy K. 2020. Mathematical Modelling to Assess the Impact of
+     402         Lockdown on COVID-19 Transmission in India: Model Development and Validation. JMIR
+     403         Public Health Surveill 6: e19368.
+
+     404      A Movement to Stop the COVID-19 Pandemic | #StayTheFuckHome. #StayTheFuckHome.
+     405         Available: https://staythefuckhome.com/ [accessed 15 July 2020].
+
+     406      Aquino EML, Silveira IH, Pescarini JM, Aquino R, Souza-Filho JA de, Rocha A dos S, et al.
+     407         2020. Social distancing measures to control the COVID-19 pandemic: potential impacts and
+     408         challenges in Brazil. Cien Saude Colet 25: 2423–2446.
+
+     409      Atalan A. 2020. Is the lockdown important to prevent the COVID-9 pandemic? Effects on
+     410          psychology, environment and economy-perspective. Ann Med Surg (Lond) 56: 38–42.
+
+     411      Badr HS, Du H, Marshall M, Dong E, Squire MM, Gardner LM. 2020. Association between
+     412          mobility patterns and COVID-19 transmission in the USA: a mathematical modelling study.
+     413          Lancet Infect Dis; doi:10.1016/S1473-3099(20)30553-3.
+
+     414      Banerjee T, Nayak A. 2020. U.S. county level analysis to determine If social distancing slowed
+     415         the spread of COVID-19. Rev Panam Salud Publica 44: e90.
+
+     416      Barber RM, Fullman N, Sorensen RJD, Bollyky T, McKee M, Nolte E, et al. 2017. Healthcare
+     417          Access and Quality Index based on mortality from causes amenable to personal health care
+     418          in 195 countries and territories, 1990–2015: a novel analysis from the Global Burden of
+     419          Disease Study 2015. Lancet 390: 231–266.
+
+     420      Berlin. Available: https://www.citypopulation.de/en/germany/berlin/berlin/11000000__berlin/
+     421          [accessed 26 August 2020].
+
+     422      Bernal JL, Cummins S, Gasparrini A. 2017. Interrupted time series regression for the evaluation
+     423          of public health interventions: a tutorial. Int J Epidemiol 46: 348–355.
+
+     424      Boretti A. 2020. After Less Than 2 Months, the Simulations That Drove the World to Strict
+     425          Lockdown Appear to be Wrong, the Same of the Policies They Generated. Health Serv Res
+     426          Manag Epidemiol 7: 2333392820932324.
+
+     427      Candido DS, Claro IM, de Jesus JG, Souza WM, Moreira FRR, Dellicour S, et al. 2020.
+     428         Evolution and epidemic spread of SARS-CoV-2 in Brazil. Science;
+     429         doi:10.1126/science.abd2161.
+
+     430      Chaudhry R, Dranitsaris G, Mubashir T, Bartoszko J, Riazi S. 2020. A country level analysis
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211284.this version posted October 15, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+
+
+
+
+     431            measuring the impact of government actions, country preparedness and socioeconomic
+     432            factors on COVID-19 mortality and related health outcomes. EClinicalMedicine 25: 100464.
+
+     433      [Cities and States Statistics]. Instituto Brasileiro de Geografia e Estatística. Available:
+     434           https://www.ibge.gov.br/cidades-e-estados [accessed 24 August 2020].
+
+     435      Coronavírus Brasil. Available: https://covid.saude.gov.br/ [accessed 15 July 2020].
+
+     436      Coronavirus Source Data. 2020. Our World in Data. Available:
+     437          https://ourworldindata.org/coronavirus-source-data [accessed 17 September 2020].
+
+     438      Coronavirus Update (Live): 13,578,330 Cases and 583,696 Deaths from COVID-19 Virus
+     439          Pandemic - Worldometer. Worldometers. Available:
+     440          https://www.worldometers.info/coronavirus/#countries [accessed 15 July 2020].
+
+     441      Coronavirus Update (Live): 31,036,957 Cases and 962,339 Deaths from COVID-19 Virus
+     442          Pandemic - Worldometer. Available: https://www.worldometers.info/coronavirus/#countries
+     443          [accessed 20 September 2020].
+
+     444      COVID-19 advice - Physical distancing. Available:
+     445         https://www.who.int/westernpacific/emergencies/covid-19/information/physical-distancing
+     446         [accessed 20 September 2020].
+
+     447      COVID-19:Data. nychealth/coronavirus-data. Available:
+     448         https://github.com/nychealth/coronavirus-data [accessed 26 August 2020].
+
+     449      Criativo A. #stayathome. #stayathome. Available: https://www.stayathome.world/ [accessed 15
+     450          July 2020].
+
+     451      Daily confirmed COVID-19 deaths per million, rolling 7-day average. Available:
+     452          https://ourworldindata.org/grapher/daily-covid-deaths-per-million-7-day-average [accessed
+     453          10 September 2020].
+
+     454      Decreto 40520 de 14/03/2020. Available:
+     455          http://www.sinj.df.gov.br/sinj/Norma/ed3d931f353d4503bd35b9b34fe747f2/Decreto_40520
+     456          _14_03_2020.html [accessed 8 September 2020].
+
+     457      Decreto 46970 27/03/2020. www.fazenda.rj.gov.br. Available:
+     458          http://www.fazenda.rj.gov.br/sefaz/content/conn/UCMServer/path/Contribution%20Folders/
+     459          site_fazenda/Subportais/PortalGestaoPessoas/Legisla%C3%A7%C3%B5es%20SILEP/Legi
+     460          sla%C3%A7%C3%B5es/2020/Decretos/DECRETO%20N%C2%BA%2046.970%20DE%2
+     461          013%20DE%20MAR%C3%87O%20DE%202020_MEDIDAS%20TEMPOR%C3%81RIA
+     462          S%20PREVEN%C3%87%C3%83O%20CORONAV%C3%8DRUS.pdf?lve [accessed 26
+     463          March 2020].
+
+     464      Decreto 55240 de 10/05/2020. Available:
+     465          https://www.pge.rs.gov.br/upload/arquivos/202009/02110103-decreto-55240.pdf [accessed
+     466          8 September 2020].
+
+     467      Decreto 59283 2020 de São Paulo SP. Available: https://leismunicipais.com.br/a/sp/s/sao-
+     468          paulo/decreto/2020/5929/59283/decreto-n-59283-2020-declara-situacao-de-emergencia-no-
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211284.this version posted October 15, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+
+
+
+
+     469            municipio-de-sao-paulo-e-defineoutras-medidas-para-o-enfrentamento-da-pandemia-
+     470            decorrente-do-coronavirus [accessed 8 September 2020].
+
+     471      Delen D, Eryarsoy E, Davazdahemami B. 2020. No Place Like Home: Cross-National Data
+     472          Analysis of the Efficacy of Social Distancing During the COVID-19 Pandemic. JMIR
+     473          Public Health Surveill 6: e19862.
+
+     474      Espinoza B, Castillo-Chavez C, Perrings C. 2020. Mobility restrictions for the control of
+     475          epidemics: When do they work? PLoS One 15: e0235731.
+
+     476      Ferguson N, Nedjati Gilani G, Laydon D. 2020. COVID-19 CovidSim microsimulation model.
+     477          www.imperial.ac.uk. Available: https://spiral.imperial.ac.uk/handle/10044/1/79647
+     478          [accessed 20 September 2020].
+
+     479      Flaxman S, Mishra S, Gandy A, Unwin HJT, Mellan TA, Coupland H, et al. 2020. Estimating
+     480          the effects of non-pharmaceutical interventions on COVID-19 in Europe. Nature 584: 257–
+     481          261.
+
+     482      Gao S, Rao J, Kang Y, Liang Y, Kruse J, Dopfer D, et al. 2020. Association of Mobile Phone
+     483          Location Data Indications of Travel and Stay-at-Home Mandates With COVID-19 Infection
+     484          Rates in the US. JAMA Netw Open 3: e2020485.
+
+     485      Ghosal S, Bhattacharyya R, Majumder M. 2020. Impact of complete lockdown on total infection
+     486         and death rates: A hierarchical cluster analysis. Diabetes Metab Syndr 14: 707–711.
+
+     487      Google LLC. Google COVID-19 Community Mobility Reports.
+
+     488      Governor Cuomo Signs the “New York State on PAUSE” Executive Order. 2020. Governor
+     489         Andrew M Cuomo. Available: https://www.governor.ny.gov/news/governor-cuomo-signs-
+     490         new-york-state-pause-executive-order [accessed 15 July 2020].
+
+     491      Greene WH. 2012. Econometric Analysis.
+
+     492      Guest JL, Del Rio C, Sanchez T. 2020. The Three Steps Needed to End the COVID-19
+     493         Pandemic: Bold Public Health Leadership, Rapid Innovations, and Courageous Political
+     494         Will. JMIR Public Health Surveill 6: e19043.
+
+     495      Huang W-T, Chen Y-Y. 2020. [The War Against the Coronavirus Disease (COVID-2019): Keys
+     496         to Successfully Defending Taiwan]. Hu Li Za Zhi 67: 75–83.
+
+     497      Ibarra-Vega D. 2020. Lockdown, one, two, none, or smart. Modeling containing covid-19
+     498           infection. A conceptual model. Sci Total Environ 730: 138917.
+
+     499      Imprensa Nacional. LEI No 13.979, DE 6 DE FEVEREIRO DE 2020 - LEI No 13.979, DE 6 DE
+     500          FEVEREIRO DE 2020 - DOU - Imprensa Nacional. Available:
+     501          https://www.in.gov.br/en/web/dou/-/lei-n-13.979-de-6-de-fevereiro-de-2020-242078735
+     502          [accessed 8 September 2020].
+
+     503      Islam N, Sharp SJ, Chowell G, Shabnam S, Kawachi I, Lacey B, et al. 2020. Physical distancing
+     504          interventions and incidence of coronavirus disease 2019: natural experiment in 149
+     505          countries. BMJ 370; doi:10.1136/bmj.m2743.
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211284.this version posted October 15, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+
+
+
+
+     506      Klein DB, Book J, Bjørnskov C. 16 Possible Factors for Sweden’s High COVID Death Rate
+     507          among the Nordics. SSRN Electronic Journal; doi:10.2139/ssrn.3674138.
+
+     508      Lin C, Braund WE, Auerbach J, Chou J-H, Teng J-H, Tu P, et al. 2020. Policy Decisions and
+     509          Use of Information Technology to Fight COVID-19, Taiwan. Emerg Infect Dis 26: 1506–
+     510          1512.
+
+     511      Li R, Pei S, Chen B, Song Y, Zhang T, Yang W, et al. 2020. Substantial undocumented infection
+     512          facilitates the rapid dissemination of novel coronavirus (COVID-19). medRxiv;
+     513          doi:10.1101/2020.02.14.20023127.
+
+     514      Liu Z, Huang S, Lu W, Su Z, Yin X, Liang H, et al. 2020. Modeling the trend of coronavirus
+     515          disease 2019 and restoration of operational capability of metropolitan medical service in
+     516          China: a machine learning and mathematical model-based analysis. Glob Health Res Policy
+     517          5: 20.
+
+     518      Miller RL, Brewer JD. 2003. The A-Z of Social Research: A Dictionary of Key Social Science
+     519          Research Concepts. SAGE.
+
+     520      Ministry of Housing, Communities, Local Government. 2020. Government advice on home
+     521          moving during the coronavirus (COVID-19) outbreak.
+
+     522      Mucientes E, Carrasco A. 2020. Covid-19 | Un juez de Lleida avala ahora las medidas de
+     523         confinamiento en Segrià. ELMUNDO. Available: https://www.elmundo.es/ciencia-y-
+     524         salud/salud/2020/07/14/5f0d542cfdddff7d0a8b460c.html [accessed 15 July 2020].
+
+     525      Nason GP. 2006. Stationary and non-stationary time series. In: Statistics in Volcanology (H.M.
+     526          Mader, S.G. Coles, C.B. Connor, and L.J. Connor, eds). The Geological Society of London
+     527          on behalf of The International Association of Volcanology and Chemistry of the Earth’s
+     528          Interior. 129–142.
+
+     529      Nussbaumer-Streit B, Mayr V, Dobrescu AI, Chapman A, Persad E, Klerings I, et al. 2020.
+     530          Quarantine alone or in combination with other public health measures to control COVID-19:
+     531          a rapid review. Cochrane Database Syst Rev 4: CD013574.
+
+     532      Pearce N. 2000. The ecological fallacy strikes back. J Epidemiol Community Health 54: 326–
+     533          327.
+
+     534      Peixoto PS, Marcondes D, Peixoto C, Oliva SM. 2020. Modeling future spread of infections via
+     535          mobile geolocation data and population dynamics. An application to COVID-19 in Brazil.
+     536          PLoS One 15: e0235732.
+
+     537      Perron P. 1988. Trends and random walks in macroeconomic time series. Journal of Economic
+     538          Dynamics and Control 12:297–332; doi:10.1016/0165-1889(88)90043-7.
+
+     539      Planning-Population-Census 2010-DCP. Available:
+     540          https://www1.nyc.gov/site/planning/planning-level/nyc-population/census-2010.page
+     541          [accessed 26 August 2020].
+
+     542      Population by Country (2020) - Worldometer. Available: https://www.worldometers.info/world-
+     543          population/population-by-country/ [accessed 24 August 2020].
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211284.this version posted October 15, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+
+
+
+
+     544      Population of Tokyo - Tokyo Metropolitan Government. Available:
+     545          https://www.metro.tokyo.lg.jp/ENGLISH/ABOUT/HISTORY/history03.htm#:~:text=With
+     546          %20a%20population%20density%20of,average%201.94%20persons%20per%20household.
+     547          [accessed 26 August 2020].
+
+     548      Semenova Y, Glushkova N, Pivina L, Khismetova Z, Zhunussov Y, Sandybaev M, et al. 2020.
+     549         Epidemiological Characteristics and Forecast of COVID-19 Outbreak in the Republic of
+     550         Kazakhstan. J Korean Med Sci 35: e227.
+
+     551      Sen BP, Padalabalanarayanan S, Hanumanthu VS. 2020. Stay-at-Home Orders, African
+     552          American Population, Poverty and State-level Covid-19 Infections: Are there associations?;
+     553          doi:10.1101/2020.06.17.20133355. Available: https://doi.org/10.1101/2020.06.17.20133355
+     554          [accessed 31 August 2020].
+
+     555      Sjödin H, Wilder-Smith A, Osman S, Farooq Z, Rocklöv J. 2020. Only strict quarantine
+     556          measures can curb the coronavirus disease (COVID-19) outbreak in Italy, 2020. Euro
+     557          Surveill 25; doi:10.2807/1560-7917.ES.2020.25.13.2000280.
+
+     558      #[stayathome] (Brazilian twitter). Twitter. Available: https://twitter.com/hashtag/ficaemcasa
+     559           [accessed 15 July 2020].
+
+     560      Tegel S. 2020. The country with the world’s strictest lockdown is now the worst for excess
+     561          deaths. The Telegraph. Available: https://www.telegraph.co.uk/travel/destinations/south-
+     562          america/peru/articles/peru-strict-lockdown-excess-deaths/ [accessed 20 September 2020].
+
+     563      Therese MM. 2020. Government confirms that it is safe to proceed to Phase 3 of the Roadmap
+     564          for Reopening Business and Society.
+
+     565      Vokó Z, Pitter JG. 2020. The effect of social distance measures on COVID-19 epidemics in
+     566         Europe: an interrupted time series analysis. Geroscience 42: 1075–1082.
+
+     567      Wang Y, Liu Y, Struthers J, Lian M. 2020. Spatiotemporal Characteristics of COVID-19
+     568         Epidemic in the United States. Clin Infect Dis; doi:10.1093/cid/ciaa934.
+
+     569      WHO Coronavirus Disease (COVID-19) Dashboard. World Health Organization. Available:
+     570        https://covid19.who.int/table [accessed 19 August 2020].
+
+     571      WHO Director-General’s opening remarks at the media briefing on COVID-19 - 13 April 2020.
+     572        Available: https://www.who.int/dg/speeches/detail/who-director-general-s-opening-remarks-
+     573        at-the-media-briefing-on-covid-19--13-april-2020 [accessed 15 July 2020].
+
+     574      Wu E, Qi D. 2020. Masks and thermometers: Paramount measures to stop the rapid spread of
+     575         SARS-CoV-2 in the United States. Genes Dis; doi:10.1016/j.gendis.2020.04.011.
+
+     576      Zamir M, Shah Z, Nadeem F, Memood A, Alrabaiah H, Kumam P. 2020. Non Pharmaceutical
+     577         Interventions for Optimal Control of COVID-19. Comput Methods Programs Biomed 196:
+     578         105642.
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211284.this version posted October 15, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+
+
+
+
+     579      Table 1. Characteristics of the 87 regions and countries used for comparison in the study. HDI = Human
+     580      Development Index (the higher, the better).
+                                                   Density    Urban Pop (%)      HDI         Population       Land area
+                  Region/Country                 people/km²                                                     ( km2)
+
+
+
+              Controlled areas
+
+              Austria                               109            57           0.914         9,014,380               82,409
+
+              Bahrain                              2,239           89           0.838         1,709,919                   760
+
+              Belgium                               383            98           0.919        11,597,489               30,280
+
+              Berlin                               4,118           100          0.950         3,669,491                   891
+
+              Canada                                 4             81           0.922        37,793,085            9,093,510
+
+              Czech Republic                        139            74           0.891        10,712,102               78,866
+
+              Denmark                               137            88           0.930         5,795,391               42,430
+
+              Finland                                18            86           0.925         5,542,073              303,890
+
+              city of Fortaleza, Ceará, Brazil     7,786           100          0.754         2,686,612                   312
+
+              France                                119            82           0.891        65,296,176              547,557
+
+              Germany                               240            76           0.939        83,825,861              348,560
+
+              Greece                                 81            85           0.870        10,414,904              128,900
+
+              Hungary                               107            72           0.845         9,656,450               90,530
+
+              Ireland                                72            63           0.942         4,946,213               68,890
+
+              Italy                                 206            69           0.883        60,447,728              294,140
+
+              Japan                                 347            92           0.915        126,414,795             364,555
+
+              Kuwait                                240            100          0.808         4,280,111               17,820
+
+              Macedonia                              83            59           0.759         2,083,360               25,220
+              city of Manaus, Amazonas,
+              Brazil                                158            100          0.737         2,219,580               11,401
+
+              Netherlands                           508            92           0.934        17,140,821               33,720
+
+              New York City                        10,194          100          0.941         8,336,817                   784
+
+              Norway                                 15            83           0.954         5,427,784              365,268
+
+              Portugal                              111            66           0.850        10,191,976               91,590
+              city of Rio de Janeiro, RJ,
+              Brazil                               5,266           100          0.799         6,747,815                1,200
+
+              Russia                                 9             74           0.824        145,944,331          16,376,870
+
+              Slovenia                              103            55           0.902         2,078,983               20,140
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211284.this version posted October 15, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+
+
+
+
+              South Korea                         527             82            0.906           51,276,136            97,230
+
+              Spain                                94             80            0.893           46,757,635           498,800
+
+              State of Acre                        4              73            0.663            894,470             164,124
+
+              State of Amazonas                    2              79            0.674           4,207,714          1,559,169
+
+              State of Pará                        6              68            0.646           8,602,865          1,245,871
+
+              State of Roraima                     2              76            0.707            631,181             223,645
+
+              Sweden                               25             88            0.937           10,109,031           410,340
+              Switzerland                         219             74            0.946           8,664,406             39,516
+
+              Tokyo, Japan                        6,158           100           0.941           13,491,000             2,191
+
+              United Kingdom                      279             83            0.920           67,886,011           241,930
+
+
+              Not Controlled areas
+
+              Argentina                            17             93                     0.83     45,259,525       2,736,690
+
+              Australia                            3              86                    0.938     25,545,026       7,682,300
+
+              Belarus                              47             79                    0.817      9,448,832         202,910
+              city of Belo Horizonte, MG,
+              Brazil                              7167            100                    0.81      2,521,564             331
+
+              Bosnia and Herzegovina               64             52                    0.769      3,277,541          51,000
+
+              Bulgaria                             64             76                    0.861      6,940,012         108,560
+
+
+              Chile                                26             85                    0.847     19,141,470         743,532
+
+              Colombia                             46             80                    0.761     50,965,881       1,109,500
+
+              Costa Rica                          100             80                    0.794      5,101,269          51,060
+
+              Croatia                              73             58                    0.837      4,101,200          55,960
+
+              Brasília, FD Brazil                444.66          96.62                  0.824      3,055,149           5,761
+
+              Israel                              400             93                    0.906      9,197,590          21,640
+
+              Lebanon                             667             78                     0.73      6,820,558          10,230
+
+              Libya                                4              78                    0.708      6,885,460       1,759,540
+
+              Luxembourg                          242             88                    0.909        627,509           2,590
+
+              Moldova                             105             43                    0.711      4,032,473          32,850
+
+              Oman                                 16             87                    0.834      5,125,566         309,500
+
+              Peru                                 26             79                    0.759     33,041,424       1,280,000
+
+              Poland                              124             60                    0.872     37,840,045         306,230
+
+              city of Porto Alegre, RS, Brazil   2837.53          100                   0.805      1,488,252             495
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211284.this version posted October 15, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+
+
+
+
+              Qatar                              248              96                 0.848      2,807,805             11,610
+
+              Romania                             84              55                 0.816     19,217,049            230,170
+
+              city of São Paulo, SP, Brazil    7398.26            100                0.805     12,325,232              1,521
+
+              Saudi Arabia                        16              84                 0.857     34,895,566          2,149,690
+
+              Serbia                             100              56                 0.799      8,731,751             87,460
+
+              state of Alagoas                  112.23           73.64               0.631      3,351,543             27,843
+
+              state of Amapá                     4.69            89.81               0.708        861,773            142,471
+
+              state of Bahia                     24.82           72.07                0.66     14,930,634            564,760
+
+              state of Ceará                     56.76           75.09               0.682      9,187,103            148,894
+
+              state of Espírito Santo            76.25           85.29                0.74      4,064,052             46,074
+
+              state of Goiás                     17.65           90.29               0.735      7,113,540            340,203
+
+              state of Maranhão                  19.81           63.07               0.639      7,114,598            329,642
+
+              state of Mato Grosso               3.36            81.9                0.725      3,526,220            903,207
+
+              state of Mato Grosso do Sul        6.86            85.64               0.729      2,809,394            357,146
+
+              state of Minas Gerais              33.41           83.38               0.731     21,292,666            586,521
+
+              state of Paraíba                   66.7            75.37               0.658      4,039,277             56,467
+
+              state of Paraná                    52.4            85.31               0.749     11,516,840            199,299
+
+              state of Pernambuco                89.63           80.15               0.673      9,616,621             98,068
+
+              state of Piauí                     12.4            65.77               0.646      3,281,480            251,757
+
+              state of Rio de Janeiro           365.23           96.71               0.761     17,264,943             43,750
+
+              state of Rio Grande do Norte       59.99           77.82               0.684      3,534,165             52,810
+
+              state of Rio Grande do Sul         37.96           85.1                0.746     11,422,973            281,707
+
+              state of Rondônia                  6.58            73.22                0.69      1,796,460            237,765
+
+              state of Santa Catarina            65.27           83.99               0.774      7,252,502             95,731
+
+              state of São Paulo                166.23           95.88               0.783     46,289,333            248,219
+
+              state of Sergipe                   94.35           73.51               0.665      2,318,822             21,925
+
+              state of Tocantins                 4.98            78.81               0.699      1,590,248            277,467
+
+              Turkey                             110              76                 0.807     84,477,895            769,630
+
+              Ukraine                             75              69                  0.75     43,691,576            579,320
+
+              United Arab Emirates               118              86                 0.866      9,908,607             83,600
+
+              United States of America            36              82                  0.92    331,303,997          9,834,000
+
+     581
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211284.this version posted October 15, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+
+
+
+
+     582      Table 2. Comparisons using the 4-point criteria. Comparability was considered if at least 3 out
+     583      of 4 of the following conditions were similar: a) population density, b) percentage of the urban
+     584      population, c) Human Development Index and d) total area of the region. Similarity was
+     585      considered adequate when a variation in conditions a), b) and c) was within 30%, while, for
+     586      condition d), a variation of 50% was considered adequate (Further details are in Data sharing - 4
+     587      point criteria) .
+              Region/Country (controlled)     Region/Country (not controlled)       Comparabilitya             p-valueb
+
+              Austria                         Serbia                                       4                              0.055
+
+              Bahrain                         city of Porto Alegre, RS, Brazil             4                              0.911
+
+              Belgium                         Israel                                       4                              0.114
+
+              Canada                          Australia                                    4                              0.965
+
+              Czech Republic                  State of Alagoas                             3                          0.3501
+
+              Denmark                         Turkey                                       3                              0.911
+
+              Finland                         State of Goiás                               4                              0.268
+
+              city of Fortaleza, CE, Brazil   city of Belo Horizonte, MG, Brazil           4                              0.301
+
+              France                          Ukraine                                      3                              0.623
+
+              Germany                         Qatar                                        3                              0.892
+
+              Greece                          Bulgaria                                     4                              0.275
+
+              Ireland                         Croatia                                      4                              0.711
+
+              Italy                           State of São Paulo                           3                              0.928
+
+              Japan                           Israel                                       3                              0.102
+
+              Kuwait                          Luxembourg                                   3                              0.060
+
+              city of Manaus, AM, Brazil      Qatar                                        3                              0.524
+
+              Macedonia                       Romania                                      3                          0.6169
+
+              Netherlands                     city of Brasília, Brazil                     3                              0.459
+
+              New York City                   city of São Paulo, SP, Brazil                3                              0.645
+
+              Norway                          Saudi Arabia                                 3                              0.379
+
+              Portugal                        United Arab Emirates                         3                              0.248
+
+              Russia                          United States of America                     3                              0.557
+
+              Slovenia                        Poland                                       4                              0.875
+
+              South Korea                     Lebanon                                      3                              0.645
+
+              Spain                           State of Minas Gerais                        3                              0.853
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211284.this version posted October 15, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+
+
+
+
+              State of Acre                 State of Amapá                                 4                          0.803
+
+              State of Amazonas             Colombia                                       3                          0.638
+
+              State of Pará                 Libya                                          3                          0.681
+
+              State of Roraima              State of Rondônia                              3                          0.042
+
+              Sweden                        State of Bahia                                 4                          0.131
+
+              Switzerland                   State of Espírito Santo                        3                          0.745
+
+              Tokyo, Japan                  city of São Paulo, SP, Brazil                  4                          0.731
+
+              United Kingdom                State of Rio Grande do Sul                     3                          0.084
+              a
+     588          From four-point criteria, how many criteria were present
+              b
+     589          Linear regression
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211284.this version posted October 15, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+
+
+
+
+     590      Figure caption
+     591
+     592      Figure 1. Flow chart of the data setup (Further details are in Supplemental Material - Flow
+     593      chart).
+     594
+     595      Figure 2. Heat map comparing different regions with COVID-19. The bar below represents p-
+     596      values for the linear regression.
+     597
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211284.this version posted October 15, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+
+
+
+
+     598      Figure 1.
+
+
+
+
+     599
+     600
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211284.this version posted October 15, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+
+
+
+
+     601      Figure 2
+
+
+
+
+     602
+     603
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211284.this version posted October 15, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+
+
+
+
+     604      SUPPLEMENTAL MATERIAL
+     605
+     606      Approach for analyzing the time series data
+     607      Time series on COVID-19 mortality (deaths/millions) display a non-stationary pattern. The daily
+                                                                                                        da
+     608      data present a very distinct seasonal behavior on the weekends, with valleys on Saturdayss and
+                                                                                                         a
+     609      Sundays followed by peaks on Mondays (Figure S1).
+
+
+
+
+     610
+     611
+     612      Figure S1. Characteristics of the time series data on new daily deaths/million in the city off S
+                                                                                                             São
+     613      Paulo over 187 days. Note the non-stationary time series pattern.
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211284.this version posted October 15, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+
+
+
+
+     614
+     615
+     616
+     617
+     618
+     619
+     620
+     621
+     622
+     623
+     624
+     625
+     626
+     627
+     628
+     629
+     630
+     631
+     632
+     633
+     634
+     635
+     636
+     637
+     638
+     639
+     640
+     641
+     642
+     643
+     644
+     645      Figure S2. Data aggregation of the number of deaths/million in the city of São Paulo and in
+     646      Argentina over several epidemiological weeks, compared to the percentage of staying at home.  e.
+     647      Data aggregation by epidemiological week is a plausible alternative. In this way, artificial
+     648      seasonality, imposed by work scheduled during weekends and the effect of governmental contr  ntrol
+     649      over social interaction, in a regression framework, are mitigated. The drawback is that the
+     650      sample size is significantly reduced from 187 days (Figure S1) to 26 epidemiological weeks.
+     651
+     652      Definition of areas with and without controlled cases of COVID-19
+     653      Regions were classified as controlled for cases of COVID-19 if they present at least 2 out off tthe
+     654      3 following conditions: a) type of transmission classified as “clusters of cases”, b) a downwa
+                                                                                                          ward
+     655      curve of newly reported deaths in the last 7 days, and c) a flat curve in the cumulative to  total
+     656      number of deaths in the last 7 days (variation of 5%) according to the World Hea            ealth
+     657      Organization (WHO Coronavirus Disease (COVID-19) Dashboard). An example is shown             n in
+     658      Figure S3.
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211284.this version posted October 15, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+
+
+
+
+     659
+     660      Figure S3. Example of areas with and without control of COVID-19
+     661
+     662      Table S3). Comparison between 184 countries and regions displaying a significant associati     iation
+     663      between the variation of number of deaths/million and the variation of the percentage of stayi aying
+     664      at home, after False Discovery Rate (FDR B-H) analysis. Intercept and coef_isolation are β0 and  a
+     665      β1 from the linear regression formula; Shapiro is the test for normality; White is the test    st for
+                                                                                                                f
+     666      heteroskedasticity; LM is the Lagrange Multiplier test for autocorrelation, Reset is the Ramse  sey's
+     667      RESET test for functional specification (all should have a p-value ≥0.05 for a valid compariso ison),
+     668      Coint= the p-value of the Phillips-Perron test applied to the residual of the regression (for a valid
+                                                                                                              va
+     669      comparison, p-value<0.05)
+     670      Table S4) Comparison between 63 countries and regions displaying a significant associati   iation
+     671      between the variation of number of deaths/million and the variation of the percentage of stayi
+                                                                                                         aying
+     672      at home, after False Discovery Rate analysis and after residual analysis. Intercept and      a
+
+     673      coef_isolation are        β0   and   β1 from      the   linear   regression     formula;     Shapiro    is   the   test   for
+     674      normality; White is the test for heteroskedasticity; LM is the Lagrange Multiplier test                                   for
+     675      autocorrelation, Reset is the Ramsey's RESET test for functional specification (all should hav e                           a
+     676                                                                                                  d
+              p-value ≥0.05 for a valid comparison), Coint= the p-value of the Phillips-Perron test applied                             to
+     677      the residual of the regression (for a valid comparison, p-value<0.05).
+
