@@ -20,8 +20,10 @@ v = TfidfVectorizer(input='content',
         ngram_range=(1, 2), max_features = max_features,
         norm='l2', use_idf=True, smooth_idf=True, sublinear_tf=True,
         max_df=1.0, min_df=1)
+
 X = v.fit_transform(abstracts)
 print(v.get_feature_names())
 
 print(X.shape)
 print(X.todense())
+
