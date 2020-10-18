@@ -1,7 +1,7 @@
 from flask import Flask, render_template, redirect, url_for, request, make_response, session
 import airtable
 import json
-
+from .. import svm
 app = Flask(__name__)
 app.secret_key = open("secret_key").read()
 
@@ -12,9 +12,10 @@ PDFS = json.loads(open("pdfs.json").read())
 
 @app.context_processor
 def utils():
-    def get_pdfs(number=80, width=3):
+    def get_pdfs(pdfs=PDFS['articles'], number=200, width=3):
         ## todo: customize
-        pdfs = PDFS['articles'][:number]
+        pdfs = pdfs[:number] # truncate amount
+
         for i in pdfs:
             i['abstract'] = ' '.join(i['abstract'].split(' ')[:50]) + ' ...'
         return [pdfs[i:i+width] for i in range(0, number, width)]
@@ -35,10 +36,31 @@ def set_user(f, msg=True):
 
 @app.route('/favorite/<doi>')
 def favorite(doi):
-    session['favorites'] += ',' + 'https://doi.org/10.1101/' + doi
+    session['favorites'] += ',' + '10.1101/' + doi
     session['favorites'] = ','.join(filter(bool, set(session['favorites'].split(',')))) # get rid of emptys/repeats
     db.update_by_field('username', session['user'], {'favorites': session['favorites']})
     return redirect(url_for('index'))
+
+# Train the SVM and run the evaluations
+@app.route('/recommended')
+def recommendations(msg=None, error=None):
+    if not session.get('likes'):
+        set_user({'username': session['user']}, msg=False)
+
+    if msg := session.get('message'):
+        session['message'] = None
+
+    if error := session.get('error'):
+        session['error'] = None
+
+    # Run the recommendation algorithm
+    favs = session['favorites'].split(',')
+    svm.train_svm(session['user'], favs)
+    results = svm.eval_svm(session['user'])
+    items = svm.doi2Item(results)
+    print(items)
+    return render_template('recommendations.html', recs = items, user=session.get('user'), error=error, message=msg)
+
 
 @app.route('/logout', methods=['POST'])
 def logout():
@@ -89,20 +111,5 @@ def index(msg=None, error=None):
 
     if error := session.get('error'):
         session['error'] = None
-
-    return render_template('index.html', user=session.get('user'), error=error, message=msg)
-
-@app.route('/recommended')
-def index(msg=None, error=None):
-    if not session.get('likes'):
-        set_user({'username': session['user']}, msg=False)
-
-    if msg := session.get('message'):
-        session['message'] = None
-
-    if error := session.get('error'):
-        session['error'] = None
-
-
 
     return render_template('index.html', user=session.get('user'), error=error, message=msg)
