@@ -1,0 +1,746 @@
+       medRxiv preprint doi: https://doi.org/10.1101/2020.05.30.20117283.this version posted October 12, 2020. The copyright holder for this
+       preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                        perpetuity.
+                                         It is made available under a CC-BY-NC-ND 4.0 International license .
+ A generalized SEIRD model with implicit social distancing mechanism: a Bayesian
+     approach for the identification of the spread of COVID-19 with applications in
+                                                  Brazil and Rio de Janeiro state
+ Diego T. Volpattoa,c,∗, Anna Claudia M. Resendea , Lucas dos Anjosa , João V. O. Silvaa , Claudia M. Diasb , Regina C.
+                                                          Almeidaa , Sandra M. C. Maltaa
+                                 a LNCC,    Laboratório Nacional de Computação Científica, Petrópolis, RJ, Brazil
+                               b UFRRJ,      Universidade Federal Rural do Rio de Janeiro, Nova Iguaçu, RJ, Brazil
+                               c ESSS, Engineering Simulation and Scientific Software, Florianópolis, SC, Brazil
+Abstract
+We develop a generalized SEIRD model considering social distancing measures to describe the spread of COVID-19 with
+applications in Brazil. We assume uncertain scenarios with limited testing capacity, lack of reliable data, under-reporting
+of cases, and restricted testing policy. We developed a Bayesian framework for the identification of model parameters
+and uncertainty quantification of the model outcomes. A sensitivity analysis is performed to identify the most significant
+parameters on either the cumulative numbers of confirmed and death, or the effective reproduction number. We show
+the model parameter related to social distancing measures is one of the most influential. Different relaxation strategies
+of social distancing measures are then investigated to determine which strategies are viable and less hazardous to the
+population. The considered scenario of abrupt social distancing relaxation implemented after the occurrence of the peak
+of positively diagnosed cases can prolong the epidemic, with a significant increase of the projected numbers of confirmed
+and death cases. A worse scenario occur if the social distancing relaxation policy is implemented before evidence of
+the epidemiological control, indicating the importance of the proper choice of when to start relaxing social distancing
+measures. The employed approach and subsequent analysis applied over the Brazilian scenarios may be used to other
+locations.
+Keywords: SEAIRPD-Q Model, Bayesian Framework, Uncertainty Quantification, Sensitivity Analysis
+   ‡ DTV, ACMR, and JVOS performed computer simulations. All
+authors contributed to the conceptualization of this study, method-
+ology, writing, and approval of the final version of the manuscript.
+  ‡‡ The authors declare no competing interest.
+          NOTE: This
+   ∗ Corresponding   preprint E-mail:
+                    Author.   reports new    research that has not been certified by peer review and should not be used to guide clinical practice.
+                                        volpatto@lncc.br
+Preprint submitted to XXX                                                                                                                  October 12, 2020
+
+          medRxiv preprint doi: https://doi.org/10.1101/2020.05.30.20117283.this version posted October 12, 2020. The copyright holder for this
+          preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                         perpetuity.
+                                            It is made available under a CC-BY-NC-ND 4.0 International license .
+ 1 1. Introduction
+ 2 At the end of 2019, the world was taken by the news about the outbreak in China of a new coronavirus called SARS-
+ 3 CoV-2, which stands for Severe Acute Respiratory Syndrome Coronavirus 2. The associated disease, called COVID-19
+ 4 by the World Health Organization (WHO), rapidly spread around the world and is currently considered a pandemic.
+ 5 As of September 30, 2020 there have been 235 countries and territories affected, with around 33.8 million confirmed
+ 6 cases and 1 million confirmed deaths [1]. Coronavirus belongs to a group of viruses that are common in humans and
+ 7 are responsible for 15% to 30% of cases of common cold [2]. The SARS-CoV-2 has spread rapidly and has already
+ 8 affected a significant part of the world’s population [3]. The within-host dynamics seem to be very heterogeneous and
+ 9 the severity of the disease varies widely. Based on currently available information, elderly people and people of any age
+10 with comorbidities, such as hypertension, cardiovascular disease, and diabetes, are among those at most risk of severe
+11 illness from COVID-19. In most locations, the burden of COVID-19 cases requiring medical intensive care exceeds the
+12 available medical resources, worsening the situation. A great effort has been made worldwide to better understand the
+13 disease and possible mechanisms to control it. Measures such as widespread testing, and reducing social contacts for some
+14 age segments, or for the wider population, are known to decrease the speed of the disease spread and the case fatality [4].
+15 However, countries often have to deal with limitation of testing capacity for COVID-19 which increases the uncertainty
+16 associated with how the disease behaves and is likely to complicate the management of the policies to mitigate and
+17 control it. One form to deal with this lack of information is through mathematical modeling, using diversified modeling
+18 techniques (see [5] for a review). This type of modeling also has some limitations, because it intrinsically relies on a
+19 simplification of reality. One example of such simplification is the usual assumption of constant parameters values (see
+20 [6] for an overview of applications and limitations of mathematical modeling for COVID-19). Population-based models
+21 that split individuals into classes are widely used, and is the approach followed in this work.
+22    WHO has already recognized that testing for COVID-19 is a key way to know how the virus spread and to provide
+23 insights on how to respond to it, although widespread testing is low in most countries in the world. In Brazil (BR),
+24 for example, the initial testing policy included only severely ill and healthcare practitioners people. The sub-notifi-
+25 cation of infected cases was, and still is, a major problem, coupled with incomplete and inconsistent overall data as
+26 well as the lack of complete knowledge on the prevalence and progression of the disease [7]. Likewise, the number
+27 of deaths may be underestimated for the same reason. Overall, one of the main difficulties in developing predictive
+28 compartmental models of the COVID-19 is the lack of reliable data to support parameter choices. In the face of the
+29 current scenario, we developed a seven-compartment model that implicitly considers the social distancing policy that
+30 isolates individuals from the infection for a period of time. This modeling strategy to consider social distancing is also
+31 employed in [8] using a generalization of the standard SIR model. Here we focus on understanding the model response to
+32 perturbations/uncertainties. We perform sensitivity analysis and quantify the uncertainties in model outcomes, mainly
+33 the cumulative numbers of confirmed and death cases, and the effective reproduction number. We also investigate
+34 hypothetical scenarios on how to obtain a desired effect/control via a modification to the system subject to uncertainties.
+35 Our studied cases include the whole Brazilian scenario (BR) and the state of Rio de Janeiro (RJ), which was one of the
+36 first states in BR to recommend and implement social distancing measures, beginning on March 17, 2020 [9]. However,
+37 they have not last much longer and RJ has started a progressive social distancing flexibilization, as the whole country
+38 [10].
+39 2. Mathematical Modeling and Methods
+40 2.1. The SEAIRPD-Q Model
+41 We develop a generalized Susceptible–Exposed–Infected–Removed–Dead (SEIRD) model that includes protective social
+42 distancing measures based on the following assumptions: (i) the analysis time is small enough such that natural birth
+43 and death are disregarded; (ii) all positively diagnosed individuals, who are severely ill, are hospitalized; (iii) only
+44 symptomatic infected and positively tested (diagnosed/hospitalized) individuals may die due to complications from the
+45 disease; (iv) the hospitalized individuals are under treatment and remain isolated, so that they are considered not
+46 infectious; (v) social distancing measures are restrictive so that isolated individuals are not likely to be infected, and (vi)
+47 the recovered/removed individuals acquire immunity. Our SEAIRPD-Q model has seven compartments, including the
+48 population of positively diagnosed (P ) individuals who are under medical treatment, and the infected class that is modeled
+49 as two separate compartments encompassing individuals with and without symptoms, denoted by I and A, respectively.
+50 The removed compartment (R) includes the recovered individuals as well as those under social distancing measures. The
+51 mathematical description (differential equations) of the SEAIRPD-Q model and its schematic representation are shown
+52 in Fig. 1 while model parameters and related meanings are exhibited in Tables 1 and SM-A.1 (see the Supplementary
+53 Material (SM) for more details).
+                                                                             2
+
+     medRxiv preprint doi: https://doi.org/10.1101/2020.05.30.20117283.this version posted October 12, 2020. The copyright holder for this
+      preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                       It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                           ω
+                                                                                                                    Removed
+                         βI + µA                            σ(1 − ρ)                                     γA
+                S                                E                              A                                                 R
+          Susceptible                         Exposed                  Asymptomatic                   ω
+                                                                            Infected
+                                                             σρ
+                                                                                                                 γI
+                                                                                                                             γP
+                                                                                              I
+       Ṡ = − βSI − µSA − ωS                                                    I                             P
+       Ė = βSI − σE + µSA − ωE                                    Symptomatic                                  Positively
+                                                                         Infected                               Diagnosed
+       Ȧ = σ(1 − ρ)E − γA A − ωA
+                                                                                           dI            dP
+        I˙ = ρσE − γI I − dI I − ωI − I I
+       Ṙ = γA A + γI I + γP P + ω(S + E + I + A)
+       Ṗ = I I − dP P − γP P                                                                                D
+      Ḋ = dI I + dP P                                                                                      Dead
+                           Figure 1: Mathematical formulation and schematic description of SEAIRPD-Q model.
+   Susceptible individuals become exposed to COVID-19 when in contact with infected people. The rate at which this
+happens may vary depending on whether the infected individual has symptoms or not, denoted by β or µ, respectively.
+After an incubation period (1/σ), exposed individuals become infected. The fraction ρ of infected people who present
+symptoms can vary widely. Due to the assumption of reduced testing capacity, asymptomatic individuals, as well
+as symptomatic infected individuals with mild symptoms, are not likely to be hospitalized and therefore will not be
+diagnosed. Those who present symptoms are either isolated or hospitalized. We assume that only symptomatic infected
+individuals with stronger symptoms are diagnosed quickly, at a rate of I , and require hospitalization. This assumption
+better reflects the policy on only testing severely ill individuals. Following the WHO guideline on social distancing,
+most countries around the world are adopting social distancing policies at some extent. An interesting feature of our
+model is the assumption that susceptible, exposed, and infected individuals can be kept isolated at a removal rate of ω,
+an assumption also taken by [8]. Thus, the removed individuals’ compartment includes individuals who have recovered
+from the disease as well as those subjected to social isolation. Asymptomatic and symptomatic individuals can recover
+without medical treatment at rates of γA and γI , respectively, and hospitalized individuals recover at a rate of γP . The
+cumulative numbers of confirmed and death cases are obtained, respectively, from simulation day zero (t0 ) to a desired
+time t as:
+                                               Z t                              Z t
+                                    C(t) =         εI I(t)dt and D(t) =             [dI I(t) + dP P (t)] dt .                              (1)
+                                                t0                               t0
+2.2. Evaluation of the Reproduction Number                                                                                                     54
+Following the ideas introduced in [11], we apply the Next Generation Matrix method to obtain R0 for the SEAIRPD-Q
+model. Firstly, we use a reduction process to arrive at a linearized infection model, under the disease-free steady state.
+The identification of the infected variables (E, A, and I) allows defining the vector xT = [E, I, A], where the superscript
+T stands for the transposition of a matrix. Thus, we consider that S, R, P , and D individuals are not able to transmit
+the disease. Denoting by T and Σ the transmission and transition matrices, respectively, the three-dimensional linearized
+                                                                        3
+
+         medRxiv preprint doi: https://doi.org/10.1101/2020.05.30.20117283.this version posted October 12, 2020. The copyright holder for this
+          preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                         perpetuity.
+                                           It is made available under a CC-BY-NC-ND 4.0 International license .
+   infection sub-system is given by:
+                                                                     dx
+                                                                          = (T + Σ)x,                                                          (2)
+                                                                     dt
+55 where
+                                                                                                                
+                     0 βS      µS                                 σ+ω                   0                    0
+            T = 0 0            0        and       −Σ =          −σρ        γI + dI + ω + I               0     .                          (3)
+                     0 0        0                              −σ(1 − ρ)                0                γA + ω
+   The reproduction number R0 is the dominant eigenvalue of the next generation matrix K = −T Σ−1 [11], which yields:
+                                                                                                              
+                                                       σ(1 − ρ)µ                         βσρ
+                                        R0 =                            +                                        S(0).                         (4)
+                                                   (σ + ω)(γA + ω) (σ + ω)(γI + dI + ω + I )
+   The corresponding effective reproduction number is:
+                                                                                                               
+                                                        σ(1 − ρ)µ                         βσρ
+                                       R(t) =                            +                                         S(t).                       (5)
+                                                    (σ + ω)(γA + ω) (σ + ω)(γI + dI + ω + I )
+56 2.3. Bayesian Calibration
+   Model calibration is performed using a Bayesian approach to make results consistent with available observations on
+   cumulative confirmed and death cases. With Bayesian calibration, we are capable of determining the most likely uncer-
+   tainties for input parameters as well as their maximum a posteriori (MAP) estimates of marginal distributions described
+   by the a posteriori probability distribution πpost . Considering that our aim is to adjust a set of parameters θ given y
+   observations, Bayes’ theorem states:
+                                                                           πlike (y|θ)πprior (θ)
+                                                           πpost (θ|y) =                             ,                                         (6)
+                                                                                  πevid (y)
+   where πprior is the a priori probability distribution that represents the initial (a priori) knowledge over θ, πlike is
+   the likelihood function, and πevid is the evidence (information) encompassed in the data (see [12] for a more detailed
+   description). We assume a Gaussian likelihood function in the form:
+                                                                                                                       !2 
+                                                                                     n      (j)            (j)
+                                                      Y          1               1 X      y     (t i ) − y model (t i )
+                                  πlike (y|θ) =                  √ exp −                                                  ,                  (7)
+                                                             σ j   2π            2 i=1                  σj
+                                                   j∈{C,D}
+57 where y (C) (t) and y (D) (t) are the observable quantities of cumulative numbers of confirmed and death cases, respectively,
+                                                                    (C)                          (D)
+58 and their corresponding simulated outcomes are ymodel (t) = C(t) and ymodel (t) = D(t). Gaussian noise is associated
+                                                              2         2
+59 with each observable quantity with variances σC and σD , which are considered hyperparameters to be determined in the
+60 Bayesian calibration procedure.
+61    Due to paucity data and possible model identifiability issues, we calibrate the following model parameters: β = µ, ω,
+62 dI , and dP . All other parameters are gathered from the available literature and listed in Table SM-A.1 (see SM for more
+63 details).
+64    The code implementation is written in Python language (version 3.7), using PyMC3 as a Probabilistic Programming
+65 framework [13]. Due to the intensive computational burden, we choose as calibration method the Cascading Adaptive
+66 Transitional Metropolis in Parallel [14], a Transitional Markov chain Monte Carlo available in PyMC3. For the sake
+67 of reproducibility, code and scripts are publicly provided at [15]. Of note, the SEAIRPD-Q system of seven ordinary
+68 differential equations is solved using the LSODA method [16] from SciPy [17]. This package provides an interface for
+69 such routine from ODEPACK [18].
+70 2.4. Data
+71 We investigate the model behavior for BR and RJ. We gathered data for C and D from [19]. Since Brazilian policy for
+72 testing in COVID-19 is still mostly restricted to severe cases, model calibration aims at matching C and D, without
+73 accounting the recovered outflow from P . We assessed the epidemiological data of 198 days for BR, ranging from March
+74 5, 2020, to September 18, 2020, and 193 days for RJ, ranging from March 10, 2020, to September 18, 2020. The initial
+75 dates were chosen considering a minimal requirement of at least five diagnosed individuals at the pandemic initial date.
+76 For completeness, all used data are listed in [15].
+                                                                              4
+
+      medRxiv preprint doi: https://doi.org/10.1101/2020.05.30.20117283.this version posted October 12, 2020. The copyright holder for this
+      preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                          perpetuity.
+                                           It is made available under a CC-BY-NC-ND 4.0 International license .
+2.5. Sensitivity Analysis                                                                                                                        77
+In order to quantify how changes in the model parameters and some initial conditions (ICs) affect the quantities of
+interest (QoI), we apply the Elementary Effects method [20] present in the SALib library [21]. In contrast to local
+sensitivity methods, which evaluate how small changes around a singular point affect a QoI [22], the Elementary Effects
+method is a globalpsensitivity method. Here we analyze QoI1 (t) = R(t) and the normalized sum of the squares of C
+and D, QoI2 (t) = C(t)2 + D(t)2 . Considering θ ∈ Rk as the set of analyzed parameters, we construct a sample of m
+initial points θ (1) , . . . , θ (m) from a k-dimensional p-level grid. Afterwards, a metric defined as an elementary effect EEi ,
+i = 1, . . . , k, is computed for every parameter:
+                                                       QoI(θ1 , . . . , θi−1 , θi + ∆, θi+1 , . . . , θk ) − QoI(θ)
+                                          EEi (θ) =                                                                 .                        (8)
+                                                                                     ∆
+                    1                1
+where ∆ ∈ { p−1       , . . . , 1 − p−1 } is the magnitude of change in the ith parameter in the k-dimensional p-level grid. Values
+                                                     p
+of p as an even number and ∆ = 2(p−1)                    are usual suggested choices to ensure an equal sampling probability in the
+parametric space, and are the default option in the SALib library [21]. After computing the elementary effects, the
+process ends by calculating the global sensitivity indexes for each parameter. Our work dedicates the analysis only to
+the first order sensitivity index:
+                                                                             m
+                                                                         1 X
+                                                                 si =            EEi (θ (j) ).                                               (9)
+                                                                         m j=1
+Parameters with high scores are the most influential to the QoI. In turn, the first order sensitivity index values allow                         78
+ranking the parameters with respect to their order of importance.                                                                                79
+2.6. Time Dependent Social Distancing Policy Modeling                                                                                            80
+To represent and understand social distancing policy effects on COVID-19 epidemic, we propose a time-dependent
+removal rate, which we denote by ωr . Considering that td is the time at which the relaxation policy is implemented, ωr
+is defined as the following continuous function:
+                                                                   (
+                                                                      ω                if t < td
+                                                            ωr =          −λ(t−td )
+                                                                                                    ,                                       (10)
+                                                                      ωe               if t ≥ td
+in which λ = ln 2(t1/2 )−1 is the decay constant, with t1/2 being the half-life time for the social distancing release policy.                   81
+In this way, ωr is a smooth decreasing function after t = td for which λ regulates the decay speed.                                              82
+3. Results                                                                                                                                       83
+To properly perform projections and further study different social distancing scenarios of interest, we calibrated the                           84
+SEAIRPD-Q model to the data of BR and RJ (separately). We employed a Bayesian calibration of some model parameter                                85
+values, with remaining parameter values gathered from the literature. Model parameters are shown in Table 1, while                               86
+the frequency histograms for the calibrated parameter posterior marginals and other model factors are presented in the                           87
+SM.                                                                                                                                              88
+Table 1: Model parameters: fixed and MAP estimates for BR and RJ (in appropriate units). A more detailed description of all variables,
+parameters, and ICs are shown in the SM.
+                      Parameter         Value/MAP (BR)            Value/MAP (RJ)             Priori Distribution      Data Source
+                                                          −9                          −8                       −5
+                      β=µ                3.925773 × 10             4.276614 × 10                U(0, 1 × 10 )           MCMC
+                      σ                           1/5                       1/5                            –              [23]
+                      ρ                           0.85                      0.85                           –              [24]
+                      εI                          1/3                       1/3                            –                –
+                      γA , γI , γP               1/14                      1/14                            –              [25]
+                      dI                 9.972041 × 10−3           2.588098 × 10−2                    U(0, 0.1)         MCMC
+                      dP                 2.793901 × 10−4           1.371215 × 10−5                    U(0, 0.1)         MCMC
+                      ω                  8.017946 × 10−3           9.121030 × 10−3                     U(0, 1)          MCMC
+                      σC                        114763                     12855                 U(1, 5 × 106 )         MCMC
+                      σD                         9968                       668                  U(1, 5 × 106 )         MCMC
+                                                                                5
+
+           medRxiv preprint doi: https://doi.org/10.1101/2020.05.30.20117283.this version posted October 12, 2020. The copyright holder for this
+           preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                             perpetuity.
+                                              It is made available under a CC-BY-NC-ND 4.0 International license .
+ 89    Taking into account the maintenance of the social distancing policies during the time of the analysis, Fig. 2 exhibits the
+ 90 fitting and predictions for the COVID-19 pandemic in BR. Fig. 2a shows that the peak of P individuals occurred on the
+ 91 simulation day 145 (95% CI: 143–146) with around 638.8 thousand (95% CI: 630.6–647.1) people simultaneously infected
+ 92 (denoted “active cases”, hereinafter). By the end of the simulation time, the model predicts around 149.3 thousand (95%
+ 93 CI: 145.1–153.6) of deaths and 4.392 million (95% CI: 4.306–4.482) of cumulative cases. The R0 calculated by means of
+ 94 MAP for BR is 3.09, and the time evolution of R(t) is displayed in Fig. 2b (black line). Notice that R(t) < 1 occurred
+ 95 around the simulation day 135 (95% CI: 133–136), which indicates that the disease is controlled [26].
+ 96    We also fitted the model with the available data for RJ. Considering again the maintenance of the social distancing
+ 97 policy, the projections for COVID-19 infection in RJ are shown in Fig. 3. Of note, model fitting for RJ is much worse
+ 98 than in the BR scenario, probably driven by highly noisy data. Nevertheless, the model could capture correctly the
+ 99 peak of active cases, that occurred on the simulation day 115 (95% CI: 114–116) with around 32.2 thousand (95% CI:
+100 31.7–32.7) active cases. Also, around 16.6 thousand (95% CI: 16.3–17.0) of deaths and 212.5 thousand (95% CI: 207.6–
+101 217.7) of cumulative cases are expected on day 225, when these numbers stabilized. The R0 is 2.68 for RJ, and the time
+102 evolution of R(t) is displayed in Fig. 3b (black line). Similarly as for the broader scale of the Brazilian scenario, if the
+103 social distancing measures are maintained in RJ, the disease was under control around the simulation day 105 (95% CI:
+104 103–107), when the effective reproduction number becomes less than one.
+105    We address the sensitivity for both C and D (QoI2 (t)), as well for R(t) (QoI1 (t)). Sensitivity analysis is performed
+106 for both scenarios (BR and RJ) considering all parameters and the initial conditions E(0), A(0), and I(0). The settings
+107 p = 4 and m = 40 are used for all experiments. A 50% variation around the fixed and MAP values in Table 1 is
+108 considered to construct parameter ranges.
+109    The sensitivity analysis results for BR are depicted in Fig. 4. The sensitivity indexes for the cumulative C and D
+110 (QoI2 (t)) are heavily influenced by the initial conditions in the early stages of the disease propagation, although their
+111 influence decreases as time evolves. In contrast, they are not influential for R(t) (QoI1 (t)) along all the simulation
+112 time. The influence of the parameter related to social distancing (ω) on both QoIs is remarkable. More importantly, its
+113 influence increases with the evolution of time, which emphasizes the need for care when establishing social distancing
+114 relaxation measures. On the other hand, the proportion of infected individuals who have symptoms is also one of the
+115 most influential parameters on both QoIs, although it is more relevant considering C and D. This points out the need of
+116 having a more widespread testing policy. Regarding the RJ scenario, Fig. 5 reveals very similar scores. One noteworthy
+117 distinction is the rank of influence of E(0) and I(0) associated with QoI2 (t). The former is more influential in the
+118 BR scenario (Fig. 4b), while the latter has a higher score for RJ (Fig. 5b). Overall, the most influential parameter is
+119 the removal rate (ω), and its impact increases as the dynamics evolves. The second most influential parameter is the
+    (a) Prediction of P , I, A, D, and C (right y-axis) in BR. The vertical line    (b) Time evolution of R(t) in BR. Dashed lines indicate 95% CI around
+    indicates the curve peak, and the dashed lines display the corresponding        R(t) = 1. The black curve refers to the simulation shown in Fig. 2a, and
+    95% CI.                                                                         others to simulations with different distancing measures.
+    Figure 2: Dynamics of the COVID-19 in BR modeled with the available data. The lines indicate the simulation with the MAP estimates,
+    with the shaded colors indicating the 95% credible interval (CI). Simulation days 0 and 145 (peak day of active cases) corresponds to March
+    5, 2020 and July 28, 2020, respectively.
+                                                                                 6
+
+       medRxiv preprint doi: https://doi.org/10.1101/2020.05.30.20117283.this version posted October 12, 2020. The copyright holder for this
+       preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                         perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+proportion of I with symptoms (ρ). We remark that the latter parameter is fixed due to the limited testing capacity in                                   120
+BR.                                                                                                                                                      121
+3.1. A study case: How would different social distancing measures affect the disease spread?                                                             122
+We have shown that the rate at which S, E, A, and I are removed due to social distancing measures significantly affect                                   123
+R(t), C(t), and D(t). Such average values under the actual social distancing policy are an idealization of reality since                                 124
+actual values are dynamic and spatially heterogeneous. However, such idealization is useful to qualitatively analyze                                     125
+the effect of different disease control mechanisms. Thus, in order to study the qualitative effects of changes in social                                 126
+distancing policies, we propose to model ω as defined in (10), which can represent different social distancing relaxation                                127
+scenarios. We consider three cases: (i) a sudden release from social distancing, which is modeled as a decay with half-life                              128
+as t1/2 = 0.1 days; (ii) a gradual release, with half-life as t1/2 = 15 days, and (iii) the current social distancing policy, with                       129
+constant removal rate. The latter represents the original study case, which can also be obtained by setting td > 400 days.                               130
+For cases (i) and (ii), we selected td = 165 days, time for which the peak of active cases has already passed. Fig. 6                                    131
+shows the consequences of relaxing social distance measures in terms of the model distributions of C and D for BR at                                     132
+t = 397 days. Additional results are displayed in the SM for both BR and RJ scenarios. Remarkably, a sudden release                                      133
+can induce an increase in C and D, and their uncertainties, extending the crisis duration due to a slower decrease in the                                134
+active cases (see the SM for more details). This effect can also be noted in Figs. 2b and 3b, where we show the time                                     135
+evolution of R(t) for cases (i) and (ii) in comparison with the original scenario. Social distancing release policies make                               136
+the decrease of R(t) far slower, implying in a slow control of the disease. Thus, determining an appropriate moment                                      137
+to begin a social distancing release policy demands special care, since applying such policies in inappropriate times can                                138
+maintain a crisis status for a longer-term. Moreover, due to the small changes in R(t) for a longer time, more cases of                                  139
+C and D will occur, worsening the health damage in the total population.                                                                                 140
+   We also remark the importance of the release date of social distancing measures in the following less favorable scenario.                             141
+Considering that social distancing is released 20 days before the peak of the active cases for BR (td = 125 days), disease                               142
+spreading can yield a critical scenario even when a smooth and gradual release strategy (half-life as t1/2 = 20 days) is                                 143
+adopted, causing an increase in C and D, and a drastically longer pandemic period, as shown in Fig. 7. In this case,                                     144
+the peak of active cases would occur on the simulation day 154 (95% CI: 152–158) with around 664.6 thousand (95%                                         145
+CI: 651.5–680.8) active cases, and D is expected to be around 270.7 thousand (95% CI: 255.1–288.9) at the end of the                                     146
+simulation, with C around 7.976 million (95% CI: 7.542–8.473). Note, however, that the dynamics of C and D did not                                       147
+reach the stabilization level, reflecting the more critical scenario mentioned earlier.                                                                  148
+(a) Prediction of P , I, A, D, and C (right y-axis) in RJ. The vertical line    (b) Time evolution of R(t) in RJ. Dashed lines indicate 95% CI around
+indicates the curve peak, and the dashed lines display the corresponding        R(t) = 1. The black curve refers to the simulation shown in Fig. 3a, and
+95% CI.                                                                         others to simulations with different distancing measures.
+Figure 3: Dynamics of the COVID-19 in RJ modeled with the available data. The lines indicate the simulation with the MAP estimates,
+with the shaded colors indicating the 95% CI. Simulation days 0 and 115 (peak day of active cases) corresponds to March 10, 2020 and July
+3, 2020, respectively.
+                                                                             7
+
+                                    medRxiv preprint doi: https://doi.org/10.1101/2020.05.30.20117283.this version posted October 12, 2020. The copyright holder for this
+                                    preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                                                   perpetuity.
+                                                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+         β                                     µ       ω       σ   ρ   I   γA   γI   γP   dI   dP    E0   A0    I0         β                                     µ       ω       σ   ρ   I   γA   γI   γP   dI   dP    E0   A0    I0
+                                                   1                                                                                                                  1
+         First Order Sensitivity Coefficient                                                                                First Order Sensitivity Coefficient
+                                               0.8                                                                                                                0.8
+                                               0.6                                                                                                                0.6
+                                               0.4                                                                                                                0.4
+                                               0.2                                                                                                                0.2
+                                                   0                                                                                                                  0
+                                                           0           50        100    150          200        250                                                           0           50        100    150          200        250
+                                                                                 Time (Days)                                                                                                        Time (Days)
+                                                           (a) Sensitivity analysis for R(t), QoI1 (t).                                                                   (b) Sensitivity analysis for C and D, QoI2 (t).
+                                                                   Figure 4: Temporal changes of the first order sensitivity index of model factors for the BR scenario.
+         β                                     µ       ω       σ   ρ   I   γA   γI   γP   dI   dP    E0   A0    I0         β                                     µ       ω       σ   ρ   I   γA   γI   γP   dI   dP    E0   A0    I0
+                                                   1                                                                                                                  1
+         First Order Sensitivity Coefficient                                                                                First Order Sensitivity Coefficient
+                                               0.8                                                                                                                0.8
+                                               0.6                                                                                                                0.6
+                                               0.4                                                                                                                0.4
+                                               0.2                                                                                                                0.2
+                                                   0                                                                                                                  0
+                                                           0           50        100    150          200        250                                                           0           50        100    150          200        250
+                                                                                 Time (Days)                                                                                                        Time (Days)
+                                                           (a) Sensitivity analysis for R(t), QoI1 (t).                                                                   (b) Sensitivity analysis for C and D, QoI2 (t).
+                                                                   Figure 5: Temporal changes of the first order sensitivity index of model factors for the RJ scenario.
+149   4. Discussion and Conclusions
+150   The present paper contributes to the development of a model framework to investigate the expansion of COVID-19 and
+151   the impacts of different measures of social distancing in the presence of uncertainties. We apply the developed approach
+152   to model the COVID-19 dynamics in BR and RJ. This high populated Brazilian state was one of the first states to
+153   adopt mitigation actions, such as the suspension of classes, cancellation of events, and home isolation [27, 10] (but has
+154   not implemented a population quarantine [10]). According to the current data released by the Brazilian Ministry of
+155   Health, RJ is one of the most affected states, both in the number of registered cases of COVID-19 and in the number
+156   of deaths. For this reason, the present study analyzes the spread in this state, as well as in the country as a whole, in
+157   order to assess the particular characteristics of the pandemic at those different spatial scales. Extensive research for the
+158   spread of COVID-19 in BR with multiple perspectives has been reported, e.g.,[28, 27, 29, 30, 31, 32]. The present work
+159   takes into account factors that are predominant in many underdeveloped countries, such as the current limited testing
+                                                                                                                      8
+
+      medRxiv preprint doi: https://doi.org/10.1101/2020.05.30.20117283.this version posted October 12, 2020. The copyright holder for this
+       preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                     perpetuity.
+                                        It is made available under a CC-BY-NC-ND 4.0 International license .
+(a) Posterior distributions of the maximum number of confirmed cases.            (b) Posterior distributions of the maximum number of dead cases.
+Figure 6: Comparison of the posterior distributions of the maximum numbers of confirmed (a) and dead (b) cases for different social distancing
+scenarios in BR. The original scenario corresponds to keeping ω fixed at its MAP estimate. Analysis is done on the last simulation day (397).
+Figure 7: Prediction of P , I, A, D, and C (right y-axis) in BR, considering t1/2 = 20 days. Social distancing is released 20 days before the
+peak of active cases (td = 125 days).
+capacity and the policy to test only severely ill hospitalized individuals. We hope that the present modeling framework                           160
+brings some insights or guidelines for public health and policy-makers.                                                                           161
+   Due to data paucity, parameter identifiability is a major difficulty. To overcome this issue, only four model parameters                       162
+(and two hyperparameters) were calibrated using a Bayesian approach. Other parameters, as well as model initial                                   163
+conditions, were set based on available information on COVID-19 (see the SM for more details). Our simulation forecasts                           164
+that the peak of active cases occurred on July 28, 2020 (95% CI: 26–29) and July 3, 2020 (95% CI: 2–4) for BR and                                 165
+RJ, respectively. This difference can be explained due to the discrepancy of the spatial scale, and the way the disease                           166
+has spread along with the different Brazilian locations, considering, for instance, different political measures taken and                        167
+the social and demographic structure of each Brazilian locality [33]. The social measures implemented in RJ at the                                168
+beginning of the pandemic seemed to be able to flatten the epidemic curve and postpone the peak of active cases [27, 30].                         169
+However, as happened to the whole country [10], these initial social distancing measures were not kept on through the                             170
+progression of the disease, and that could explain the high number of cases (around 270 thousand confirmed cases and                              171
+18 thousand death cases in RJ [34]).                                                                                                              172
+                                                                         9
+
+           medRxiv preprint doi: https://doi.org/10.1101/2020.05.30.20117283.this version posted October 12, 2020. The copyright holder for this
+           preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                          perpetuity.
+                                             It is made available under a CC-BY-NC-ND 4.0 International license .
+173    Aiming to evaluate the influence of uncertainties in hard-to-track populations such as undiagnosed infected individuals
+174 (I and A), as well those who carry the disease and are unable to transmit (E), we performed a sensitivity analysis to
+175 understand which model factors (parameters and initial conditions) play important roles at the various stages of the
+176 epidemic for both BR and RJ. The analysis confirms that a proper understanding of how the disease spreads can provide
+177 insights and aids to elaborate containment decisions in order to reduce R(t). In this sense, considering both BR and RJ,
+178 sensitivity analysis suggests that the most influential parameter for a long term perspective is the removal rate parameter
+179 (ω).
+180    We have shown that the rate at which S, E, I and A individuals are removed due to social distancing measures
+181 significantly affects R(t), C(t) and D(t). Such average values under the actual social distancing policy are an idealization
+182 since actual values are dynamic and spatially heterogeneous, as mentioned in the last paragraph. In order to study the
+183 qualitative effects of changes in social distancing policies, we propose to model ω as an exponential decay function,
+184 which can represent different social distancing relaxation scenarios. When more abrupt social distancing relaxation is
+185 implemented after the occurrence of the peak of active cases, it accompanies a longer extension of the duration of the
+186 disease, with approximately 29% increase and much higher uncertainty in the projected numbers of C and D at the end
+187 of the simulation. If implemented before the peak, the consequences can be devastating, as indicated by our results.
+188 The hypothetical scenario built by considering a slow and gradual release implemented 20 days before the original peak
+189 indicates a delay of 9 days in the occurrence of the peak of the active cases, with more than 7.9 million C and about 271
+190 thousand D accumulated over less than thirteen months of the presence of the disease in BR. Our simulations highlight
+191 the importance of relaxing social distancing measures only under a very careful follow-up.
+192    We note that the analysis performed in this paper should be viewed from a qualitative perspective. The conclusions
+193 for the considered hypothetical scenarios (with and without social distancing relaxation) are based on model predictions
+194 and current employed policies. Model simplifications and the calibration procedure of model parameters can explain
+195 potential quantitative discrepancies between our predictions and data. Such simplifications include: (i) homogenization
+196 of age, social, and spatial structure, (ii) some model parameters are fixed, with values obtained from the literature, and
+197 (iii) model parameters are constant along time (except ω, when investigating the impacts of relaxing social distancing
+198 measures). Moreover, data have limited information due to sub-notification, since mostly hospitalized cases are tested in
+199 BR. These simplifications are inherent of the modeling procedure, and should be viewed as part of the scientific process
+200 of the understanding of the natural phenomena.
+201    The present paper can be extended in forthcoming studies, for example, by considering models with spatial hetero-
+202 geneity, parameter dependence in time and space, and also analyzing data considering sub-notification. Data considering
+203 other BR states could also be analyzed employing the same procedure adopted in the present paper. Another possible
+204 extension could be related to the determination of limit thresholds in the number of P cases under different relaxation
+205 social distancing measures.
+206    It is important to highlight the impacts of social distancing relaxation in order to control the COVID-19 pandemic.
+207 The adoption of this type of measure directly affects the evolution of R(t), as shown in our results. For both BR and
+208 RJ, it implies a much slower stagnation or decrease in R(t) from the time the measures are implemented. Since R(t) is
+209 in a controlled situation for both scenarios, i.e. R(t) < 1, a direct consequence is that the disease would need more time
+210 to be eradicated. Our analyses suggest that policies based on short-term social distancing are not enough to control
+211 the evolution of the pandemic. If social distancing policy measures are released before the “optimal time”, a second
+212 peak should be experienced [28]. Some authors argue that longer or even intermittent social distancing will be necessary
+213 to avoid recurrent outbreaks. Specifically, [35] examined a range of likely virus transmission scenarios until 2025 and
+214 assessed non-pharmaceutical interventions to mitigate the outbreak. They concluded that if the new coronavirus behaves
+215 in the same matter to similar viruses we can expect the disease to return in the coming years, depending on the level
+216 and duration of immunity, an aspect that remains to be clarified in the future. The discovery of a vaccine, or new
+217 treatments, coupled with the testing of the population could alleviate the need for severe social distancing measures
+218 to control the disease. Until then, the need to maintain social distancing measures, even if intermittently, must be
+219 carefully addressed. Concerning the actual stage of development of vaccines for COVID-19, there are already strategies
+220 for the future administration of such vaccines. As an extension of the present paper using our proposed model, one could
+221 employ the protocol developed in [36] for the search of the best strategies of vaccine administration. Another potential
+222 extension of the present paper is to consider the economic impact of the pandemic in terms of different social distancing
+223 strategies adopted by different countries. Our proposed model could be extended in a way to couple the epidemiological
+224 and economic aspects, and in this way to be able to have a more complete perspective of the effects of the COVID-19
+225 pandemic [6].
+                                                                              10
+
+       medRxiv preprint doi: https://doi.org/10.1101/2020.05.30.20117283.this version posted October 12, 2020. The copyright holder for this
+       preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                      perpetuity.
+                                         It is made available under a CC-BY-NC-ND 4.0 International license .
+Acknowledgments                                                                                                                                    226
+ACMR, LA, and JVOS would like to thank the support through CNPq projects 132591/2014-6, 301327/2020-3, and                                         227
+166171/2018-2. This study was financed in part by the Coordenação de Aperfeiçoamento de Pessoal de Nível Supe-                                     228
+rior (CAPES), Finance Code 001.                                                                                                                    229
+References                                                                                                                                         230
+ [1] World       Health     Organization,         Coronavirus     disease    2019   (COVID-19):            Weekly    epidemiological       update, 231
+     www.who.int/emergencies/diseases/novel-coronavirus-2019 (Accessed September 30, 2020).                                                        232
+ [2] M. Mesel-Lemoine, J. Millet, P. O. Vidalain, H. Law, A. Vabret, V. Lorin, N. Escriou, M. L. Albert, B. Nal, F. Tangy, A human                 233
+     coronavirus responsible for the common cold massively kills dendritic cells but not monocytes, Journal of Virology 86 (14) (2012)             234
+     7577–7587. doi:10.1128/JVI.00269-12.                                                                                                          235
+ [3] Worldometer, Coronavirus, https://www.worldometers.info/coronavirus/ (Accessed April 20, 2020).                                               236
+ [4] J. R. Koo, A. R. Cook, M. Park, Y. Sun, H. Sun, J. T. Lim, C. Tam, B. L. Dickens, Interventions to mitigate early spread of SARS-CoV-2        237
+     in Singapore: a modelling study, The Lancet Infectious Diseases.doi:10.1016/S1473-3099(20)30162-6.                                            238
+ [5] C. T. Bauch, J. O. Lloyd-Smith, M. P. Coffee, A. P. Galvani, Dynamically modeling SARS and other newly emerging respiratory illnesses:        239
+     past, present, and future, Epidemiology 16 (6) (2005) 791–801. doi:10.1097/01.ede.0000181633.80269.4c.                                        240
+ [6] J. Wang, Mathematical models for covid-19: Applications, limitations, and potentials, Journal of Public Health and Emergency 4.               241
+     doi:10.21037/jphe-2020-05.                                                                                                                    242
+ [7] F. A. L. Marson, COVID-19–6 million cases worldwide and an overview of the diagnosis in Brazil: A tragedy to be announced, Diagnostic         243
+     Microbiology and Infectious Disease 98 (2) (2020) 115113. doi:10.1016/j.diagmicrobio.2020.115113.                                             244
+ [8] B. F. Maier, D. Brockmann, Effective containment explains subexponential growth in recent confirmed COVID-19 cases in China, Science          245
+     368 (6492) (2020) 742–746. doi:10.1126/science.abb4557.                                                                                       246
+ [9] Decreto 46980 de 19/03/2020, Medidas de enfrentamento, Governo RJ (in Portuguese) (Accessed April 20, 2020).                                  247
+[10] L. L. S. Silva, A. F. R. Lima, D. A. Polli, P. F. S. Razia, L. F. A. Pavão, M. A. F. H. Cavalcanti, C. M. Toscano, Social distancing          248
+     measures in the fight against COVID-19 in Brazil: description and epidemiological analysis by state, Cadernos de Saúde Pública 36             249
+     (2020) e00185020. doi:10.1590/0102-311X00185020.                                                                                              250
+[11] O. Diekmann, J. A. P. Heesterbeek, M. G. Roberts, The construction of next-generation matrices for compartmental epidemic models,             251
+     Journal of The Royal Society Interface 7 (2010) 873–885. doi:10.1098/rsif.2009.0386.                                                          252
+[12] A. Tarantola, Inverse problem theory and methods for model parameter estimation, SIAM, Philadelphia, 2005. doi:10.1137/1.                     253
+     9780898717921.                                                                                                                                254
+[13] J. Salvatier, T. V. Wiecki, C. Fonnesbeck, Probabilistic programming in Python using PyMC3, PeerJ Computer Science 2 (2016) e55.              255
+     doi:10.7717/peerj-cs.55.                                                                                                                      256
+[14] S. E. Minson, M. Simons, J. L. Beck, Bayesian inversion for finite fault earthquake source models I – theory and algorithm, Geophysical       257
+     Journal International 194 (3) (2013) 1701–1726. doi:10.1093/gji/ggt180.                                                                       258
+[15] D. Volpatto, A. C. M. Resende, L. Anjos, J. V. O. Silva, C. M. Dias, R. C. Almeida, S. M. C. Malta, pydemic: Scripts for BR/RJ social         259
+     distancing study (May 2020). doi:10.5281/zenodo.3865730.                                                                                      260
+[16] L. Petzold, Automatic selection of methods for solving stiff and nonstiff systems of ordinary differential equations, SIAM Journal on         261
+     Scientific and Statistical Computing 4 (1) (1983) 136–148. doi:10.1137/0904010.                                                               262
+[17] P. Virtanen, R. Gommers, T. E. Oliphant, M. Haberland, T. Reddy, D. Cournapeau, E. Burovski, P. Peterson, W. Weckesser, et al., SciPy         263
+     1.0: Fundamental Algorithms for Scientific Computing in Python, Nature Methods 17 (2020) 261–272. doi:10.1038/s41592-019-0686-2.              264
+[18] A. C. Hindmarsh, ODEPACK, a systematized collection of ODE solvers, Scientific Computing 1 (1983) 55–64.                                      265
+[19] Brazilian Health Ministry, Coronavirus panel (in Portuguese), https://covid.saude.gov.br/ (Accessed Sep 18, 2020).                            266
+[20] F. Campolongo, J. Cariboni, A. Saltelli, An effective screening design for sensitivity analysis of large models, Environmental Modelling      267
+     & Software 22 (10) (2007) 1509–1518. doi:10.1016/j.envsoft.2006.10.004.                                                                       268
+[21] J. Herman, W. Usher, SALib: an open-source Python library for sensitivity analysis, Journal of Open Source Software 2 (9) (2017) 97.          269
+     doi:10.21105/joss.00097.                                                                                                                      270
+[22] G. A. K. Van Voorn, B. W. Kooi, Combining bifurcation and sensitivity analysis for ecological models, The European Physical Journal           271
+     Special Topics 226 (9) (2017) 2101–2118. doi:10.1140/epjst/e2017-70030-2.                                                                     272
+[23] S. A. Lauer, K. H. Grantz, Q. Bi, F. K. Jones, Q. Zheng, H. R. Meredith, A. S. Azman, N. G. Reich, J. Lessler, The incubation period of       273
+     coronavirus disease 2019 (COVID-19) from publicly reported confirmed cases: estimation and application, Annals of Internal Medicine           274
+     172 (9) (2020) 577–582. doi:10.7326/M20-0504.                                                                                                 275
+[24] K. Mizumoto, K. Kagaya, A. Zarebski, G. Chowell, Estimating the asymptomatic proportion of coronavirus disease 2019 (COVID-19)                276
+     cases on board the Diamond Princess cruise ship, Yokohama, Japan, 2020, Eurosurveillance 25 (10) (2020) 2000180. doi:10.2807/                 277
+     1560-7917.                                                                                                                                    278
+[25] F. Pan, T. Ye, P. Sun, S. Gui, B. Liang, L. Li, D. Zheng, J. Wang, R. L. Hesketh, L. Yang, et al., Time course of lung changes on chest       279
+     ct during recovery from 2019 novel coronavirus (COVID-19) pneumonia, Radiology (2020) 200370doi:10.1148/radiol.2020200370.                    280
+[26] P. Van den Driessche, J. Watmough, Reproduction numbers and sub-threshold endemic equilibria for compartmental models of disease              281
+     transmission, Mathematical Biosciences 180 (1-2) (2002) 29–48. doi:10.1016/S0025-5564(02)00108-6.                                             282
+[27] N. Crokidakis, COVID-19 spreading in Rio de Janeiro, Brazil: do the policies of social isolation really work?, medRxiv (2020)                 283
+     medRxiv:2020.04.27.20081737doi:10.1101/2020.04.27.20081737.                                                                                   284
+[28] S. B. Bastos, D. O. Cajueiro, Modeling and forecasting the early evolution of the COVID-19 pandemic in Brazil, arXiv e-prints (2020)          285
+     arXiv:2003.14288.                                                                                                                             286
+[29] N. Crokidakis, Modeling the early evolution of the COVID-19 in Brazil: results from a Susceptible-Infectious-Quarantined-Recovered            287
+     (SIQR) model, International Journal of Modern Physics Cdoi:10.1142/S0129183120501351.                                                         288
+[30] N. Crokidakis, COVID-19 spreading in Rio de Janeiro, Brazil: do the policies of social isolation really work?, Chaos, Solitons & Fractals     289
+     (2020) 109930doi:10.1016/j.chaos.2020.109930.                                                                                                 290
+[31] R. A. Schulz, C. H. Coimbra-Araújo, S. W. S. Costiche, COVID-19: A model for studying the evolution of contamination in Brazil,               291
+     arXiv e-prints (2020) arXiv:2003.13932.                                                                                                       292
+                                                                          11
+
+          medRxiv preprint doi: https://doi.org/10.1101/2020.05.30.20117283.this version posted October 12, 2020. The copyright holder for this
+          preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                         perpetuity.
+                                            It is made available under a CC-BY-NC-ND 4.0 International license .
+293 [32] R. F. Reis, B. M. Quintela, J. O. Campos, J. M. Gomes, B. M. Rocha, M. Lobosco, R. W. dos Santos, Characterization of the COVID-19
+294      pandemic and the impact of uncertainties, mitigation strategies, and underreporting of cases in South Korea, Italy, and Brazil, Chaos,
+295      Solitons & Fractals (2020) 109888doi:10.1016/j.chaos.2020.109888.
+296 [33] F. A. L. Marson, M. M. Ortega, COVID-19 in Brazil, Pulmonology 26 (4) (2020) 241–244. doi:10.1016/j.pulmoe.2020.04.008.
+297 [34] Governo do Rio de Janeiro,                   Boletim epidemiológico diário estado          do Rio       de Janeiro (in        Portuguese),
+298      https://coronavirus.rj.gov.br/boletins/ (Accessed October 2, 2020).
+299 [35] S. M. Kissler, C. Tedijanto, E. Goldstein, Y. H. Grad, M. Lipsitch, Projecting the transmission dynamics of SARS-CoV-2 through the
+300      postpandemic period, Science 368 (6493) (2020) 860–868. doi:10.1126/science.abb5793.
+301 [36] G. B. Libotte, F. S. Lobato, A. J. S. Neto, G. M. Platt, Determination of an optimal control strategy for vaccine administration in
+302      COVID-19 pandemic treatment, Computer Methods and Programs in Biomedicine 196 (2020) 105664. doi:10.1016/j.cmpb.2020.105664.
+                                                                             12
+
+   medRxiv preprint doi: https://doi.org/10.1101/2020.05.30.20117283.this version posted October 12, 2020. The copyright holder for this
+   preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                  perpetuity.
+                                     It is made available under a CC-BY-NC-ND 4.0 International license .
+ 1  Supplementary Material
+ 2  A generalized SEIRD model with implicit social distancing mechanism: a Bayesian approach
+ 3  for the identification of the spread of COVID-19 with applications in Brazil and Rio de Janeiro
+ 4  state
+ 5  Authors: DT Volpatto1 , ACM Resende, L dos Anjos, JVO Silva, CM Dias, RC Almeida, and SMC Malta
+ 6  SM A. Supplementary Material Information
+ 7  This Supplementary Material (SM) is organized as follows. Sections SM A.1 and SM A.2 expand the Results
+ 8  section of the main document with additional figures for the BR and RJ scenarios, respectively. The last
+ 9  part of the document shows additional model setting information and the calibration data used in this work.
+10  SM A.1. BR: Additional Results
+11  Fig. A.2a shows the prediction of P , I, A, D, and C in BR. A total of 638.8 thousand (95% CI: 630.6–647.1)
+12  active cases are expected on the simulation day 145 (95% CI: 143–146), with D and C expected to be around
+13  149.3 thousand (95% CI: 145.1–153.6) and 4.392 million (95% CI: 4.306–4.482), respectively. The posterior
+14  distribution of the peak position is displayed in Fig. A.2b, with the vertical dashed lines corresponding to
+15  those displayed in Fig. A.2a. Fig. A.2c depicts the time evolution of R(t) and displays two vertical lines
+16  identifying the credible interval (95% CI: 133–136) of the time above which R(t) ≤ 1. The same lines are
+17  depicted in Fig. A.2d that shows the uncertainty associated with that time value.
+18  Fig. A.3 provides the model forecasts for the considered hypothetical scenarios of social distancing relaxation.
+19  Fig. A.3a shows what to expect in case of a sudden release from social distancing after the simulation day
+20  165 (t1/2 = 0.1 days as half-life decay). In this case, C reaches 5.656 million (95% CI: 5.426–5.930) and
+21  D 192.2 thousand (95% CI: 183.4–202.4) at the end of the simulation (day 397), which corresponds to an
+22  increase of approximately 29% in both values when compared to the original scenario with ω fixed at its
+23  MAP estimate. For a gradual release after the simulation day 165 (t1/2 = 15 days as half-life decay), the
+24  numbers of C and D at the end of simulation are 4.790 million (95% CI: 4.660–4.941) and 162.8 thousand
+25  (95% CI: 157.3–169.0), respectively, as shown in Fig. A.3b. Figs. A.3c and A.3d compare the variability of
+26  C and D at the end of simulation in the form of box plots for all scenarios considered. Outliers appear as
+27  individual points and the samples medians are depicted in red.
+28  SM A.2. RJ: Additional Results
+29  Fig. A.5a shows the prediction of P , I, A, D, and C in RJ. A total of 32.2 thousand (95% CI: 31.7–32.7)
+30  active cases are expected on the simulation day 115 (95% CI: 114–116), with D and C expected to be around
+31  16.6 thousand (95% CI: 16.3–17.0) and 212.5 thousand (95% CI: 207.6–217.7), respectively. The posterior
+32  distribution of the peak position is displayed in Fig. A.5b, with the vertical dashed lines corresponding to
+33  those displayed in Fig. A.5a. Fig. A.5c depicts the time evolution of R(t) and displays two vertical lines
+34  identifying the credible interval (95% CI: 103–107) of the time above which R(t) ≤ 1. The same lines are
+35  depicted in Fig. A.5d that shows the uncertainty associated with that time value.
+36  Fig. A.6 provides the model forecasts for the considered hypothetical scenarios of social distancing relaxation.
+37  Fig. A.6a shows what to expect in case of a sudden release from social distancing after the simulation day
+38  165 (t1/2 = 0.1 days as half-life decay). In this case, C reaches 220.5 thousand (95% CI: 214.4–227.7)
+39  and D 17.3 thousand (95% CI: 16.9–17.8) at the end of the simulation (day 392), which corresponds to an
+40  increase of approximately 4% in both values when compared to the original scenario with ω fixed at its MAP
+41  estimate. For a gradual release after the simulation day 165 (t1/2 = 15 days as half-life decay), the numbers
+42  of C and D at the end of simulation are 215.2 thousand (95% CI: 210.0–221.1) and 16.8 thousand (95% CI:
+43  16.5–17.2), respectively, as shown in Fig. A.6b. Figs. A.6c and A.6d compare the variability of C and D
+44  at the end of simulation in the form of box plots for all scenarios considered. Outliers appear as individual
+45  points and the samples medians are depicted in red.
+       1 Corresponding  Author (volpatto@lncc.br)
+                                                                      1
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.05.30.20117283.this version posted October 12, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                               perpetuity.
+                                  It is made available under a CC-BY-NC-ND 4.0 International license .
+                  (a) Calibrated parameter: β.                                        (b) Calibrated parameter: ω.
+                 (c) Calibrated parameter: dI .                                      (d) Calibrated parameter: dP .
+                               Figure A.1: Frequency histograms for the calibrated parameters (BR).
+                                                                   2
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.05.30.20117283.this version posted October 12, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                 perpetuity.
+                                   It is made available under a CC-BY-NC-ND 4.0 International license .
+ (a) Prediction of P , I, A, D, and C (right y-axis) in BR. The                  (b) Frequency histogram for the peak day of P .
+ vertical line indicates the curve peak, and the dashed lines display
+ the corresponding 95% CI.
+                   (c) R(t) of the COVID-19 in BR.                           (d) Frequency histogram for the day at which R(t) ≤ 1.
+    Figure A.2: Dynamics of the COVID-19 in BR modeled with the available data (Mathematical Modeling and Methods).
+                                                                      3
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.05.30.20117283.this version posted October 12, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                perpetuity.
+                                  It is made available under a CC-BY-NC-ND 4.0 International license .
+ (a) Prediction of P , I, A, D, and C (right y-axis) in BR consid-      (b) Prediction of P , I, A, D, and C (right y-axis) in BR consid-
+ ering a sudden release from social distancing (td = 165 days and       ering a gradual release from social distancing (td = 165 days and
+ t1/2 = 0.1 days). The vertical line indicates the curve peak, and      t1/2 = 15 days). The vertical line indicates the curve peak, and
+ the dashed lines display the corresponding 95% CI.                     the dashed lines display the corresponding 95% CI.
+      (c) Box plot for C in BR at the end of the simulation.                 (d) Box plot for D in BR at the end of the simulation.
+ Figure A.3: Model forecasts in BR considering sudden and gradual releases from social distancing (td = 165 days and t1/2 = 0.1
+ and 15 days). The original (baseline) scenario of the main text is also presented to ease comparison.
+                                                                    4
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.05.30.20117283.this version posted October 12, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                               perpetuity.
+                                  It is made available under a CC-BY-NC-ND 4.0 International license .
+                  (a) Calibrated parameter: β.                                        (b) Calibrated parameter: ω.
+                 (c) Calibrated parameter: dI .                                      (d) Calibrated parameter: dP .
+                               Figure A.4: Frequency histograms for the calibrated parameters (RJ).
+                                                                   5
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.05.30.20117283.this version posted October 12, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                 perpetuity.
+                                   It is made available under a CC-BY-NC-ND 4.0 International license .
+ (a) Prediction of P , I, A, D, and C (right y-axis) in RJ. The                  (b) Frequency histogram for the peak day of P .
+ vertical line indicates the curve peak, and the dashed lines display
+ the corresponding 95% CI.
+                   (c) R(t) of the COVID-19 in RJ.                           (d) Frequency histogram for the day at which R(t) ≤ 1.
+    Figure A.5: Dynamics of the COVID-19 in RJ modeled with the available data (Mathematical Modeling and Methods).
+                                                                      6
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.05.30.20117283.this version posted October 12, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                perpetuity.
+                                  It is made available under a CC-BY-NC-ND 4.0 International license .
+ (a) Prediction of P , I, A, D, and C (right y-axis) in RJ consid-      (b) Prediction of P , I, A, D, and C (right y-axis) in RJ consid-
+ ering a sudden release from social distancing (td = 165 days and       ering a gradual release from social distancing (td = 165 days and
+ t1/2 = 0.1 days). The vertical line indicates the curve peak, and      t1/2 = 15 days). The vertical line indicates the curve peak, and
+ the dashed lines display the corresponding 95% CI.                     the dashed lines display the corresponding 95% CI.
+        (c) Box plot for C in RJ at the end of simulation.                     (d) Box plot for D in RJ at the end of simulation.
+ Figure A.6: Model forecasts in RJ considering sudden and gradual releases from social distancing (td = 165 days and t1/2 = 0.1
+ and 15 days). The original (baseline) scenario of the main text is also presented to ease comparison.
+                                                                    7
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.05.30.20117283.this version posted October 12, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                               perpetuity.
+                                  It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                      Table A.1: Model parameters.
+         Parameter        Meaning
+              β           Rate of transmission per contact with symptomatic infected individual
+              µ           Rate of transmission per contact with asymptomatic infected individual
+              σ           Transition rate from exposed to infected individuals
+              ρ           Proportion of infected individuals who have symptoms
+              εI          Diagnosis rate of hospitalized individuals
+             γA           Recovery rate of asymptomatic infected individuals
+              γI          Recovery rate of symptomatic infected individuals
+             γP           Recovery rate of hospitalized individuals
+              dI          Death rate of hospitalized individuals
+             dP           Death rate of symptomatic infected individuals
+              ω           The rate at which susceptible, exposed, and infected individuals are removed due
+                          to social distancing measures
+                                                                   8
+
+                                                                                                                                              medRxiv preprint doi: https://doi.org/10.1101/2020.05.30.20117283.this version posted October 12, 2020. The copyright holder for this
+                                               Table A.2: Fixed values for estimated parameters and ICs.
+                                                                                                                                              preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+    Parameter           Average Value             Hypothesis
+    ρ                       0.85                  The estimated asymptomatic proportion was 15% [1]
+    σ                    1/5 day−1                Estimated incubation (or latent) period based on [2]
+    εI                   1/3 day−1                We adopt that only severely ill individuals are diagnosed in BR, which takes about 3 days
+    γA                   1/14 day−1               It takes around 14 days for recovering from COVID-19 [3]
+    γI                   1/14 day−1
+    γP                   1/14 day−1
+9   Class          Initial Population (Ind.)      Hypothesis/Source
+                                                                                                                                                                                                             perpetuity.
+    N(0)        210147125 (BR), 17264943 (RJ)     IBGE 2019
+    P(0)               7 (BR), 8 (RJ)             Data at day 2020-03-05 (BR), 2020-03-10 (RJ)
+    E(0)                   10 · P(0)              The number of exposed individuals is about 10 times the positively confirmed ones
+    I(0)                    5 · P(0)              The number of symptomatic infected individuals is about 5 times the positively confirmed
+                                                  ones
+    A(0)                     P(0)                 The number of asymptomatic infected individuals is about the same of the positively con-
+                                                  firmed ones
+    D(0)                     0                    Data at day 2020-03-05 (BR), 2020-03-10 (RJ)
+    R(0)                     0                    Data at day 2020-03-05 (BR), 2020-03-10 (RJ)
+    S(0)        210147006 (BR), 17264837 (RJ)     S(0) = N(0) - {E(0) + A(0) + I(0) + P(0) + R(0) + D(0)}
+                                                                                                                                                                                It is made available under a CC-BY-NC-ND 4.0 International license .
+
+   medRxiv preprint doi: https://doi.org/10.1101/2020.05.30.20117283.this version posted October 12, 2020. The copyright holder for this
+   preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                  perpetuity.
+                                     It is made available under a CC-BY-NC-ND 4.0 International license .
+46  References
+47  [1] K. Mizumoto, K. Kagaya, A. Zarebski, G. Chowell, Estimating the asymptomatic proportion of coronavirus disease 2019
+48      (COVID-19) cases on board the Diamond Princess cruise ship, Yokohama, Japan, 2020, Eurosurveillance 25 (10) (2020)
+49      2000180. doi:10.2807/1560-7917.
+50  [2] S. A. Lauer, K. H. Grantz, Q. Bi, F. K. Jones, Q. Zheng, H. R. Meredith, A. S. Azman, N. G. Reich, J. Lessler, The incu-
+51      bation period of coronavirus disease 2019 (COVID-19) from publicly reported confirmed cases: estimation and application,
+52      Annals of Internal Medicine 172 (9) (2020) 577–582. doi:10.7326/M20-0504.
+53  [3] F. Pan, T. Ye, P. Sun, S. Gui, B. Liang, L. Li, D. Zheng, J. Wang, R. L. Hesketh, L. Yang, et al., Time course of lung
+54      changes on chest ct during recovery from 2019 novel coronavirus (COVID-19) pneumonia, Radiology (2020) 200370doi:
+55      10.1148/radiol.2020200370.
+                                                                      10

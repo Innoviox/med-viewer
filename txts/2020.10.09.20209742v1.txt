@@ -1,0 +1,295 @@
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20209742.this version posted October 13, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                        It is made available under a CC-BY-ND 4.0 International license .
+                         Large-scale Testing for SARS-CoV-2 using Tapestry Pooling
+              Anirudh Chakravarthy†,1,2, Srikar Krishna†,1,2, Sumana Ghosh1, Ajay Tomar1,3, Sriram Varahan1,
+                Ajit Rajwade5, Sabyasachi Ghosh5, Nimay Gupta5, Rishi Agarwal5, Himanshu Payal5, Prantik
+                 Chakraborty5, Krishna Vishal Vemula5, Akanksha Vyas5, Ritesh Goru5, Sandeep Krishna*,4,
+                                               Dasaradhi Palakodeti*,1, Manoj Gopalkrishnan*,5
+            1
+               Institute for Stem Cell Science and Regenerative Medicine (inStem), Bangalore, India; 2 SASTRA
+            University, Thanjavur, India; 3 The University of Trans-Disciplinary Health Sciences and Technology; 4
+            Simons Centre for the Study of Living Machines, National Center for Biological Sciences TIFR, Bangalore,
+            India; 5 Indian Institute of Technology Bombay, Mumbai, India.
+            †Co-first authors; *Corresponding authors
+            Email: manoj.gopalkrishnan@gmail.com, dasaradhip@instem.res.in, sandeep@ncbs.res.in
+            Abstract
+            We have previously described Tapestry Pooling, a scheme to enhance the capacity of RT-
+            qPCR testing, and provided experimental evidence with spiked synthetic RNA to show
+            that it can help to scale testing and restart the economy. Here we report on validation
+            studies with Covid19 patient samples for the Tapestry Pooling scheme with prevalence in
+            the range of 1% to 2%. We pooled RNA extracted from patient samples that were
+            previously tested for Covid19, sending each sample to three pools. Following three
+            different pooling schemes, we pipetted 320 samples into 48 pools with pool size of 20 at
+            prevalence rate of 1.6%, 500 samples into 60 pools with pool size of 25 at prevalence rate
+            of 2%, and 961 samples into 93 pools with pool size of 31 at prevalence rate of 1%. Of the
+            191 RT-qPCR experiments that we performed, only one pool was incorrect (false
+            negative). Our recovery algorithm correctly called results for the individual samples, with
+            a 100% sensitivity and a 99.9% specificity, with only one false positive across all the
+            1,781 blinded results required to be called. We show up to 10X savings in number of tests
+            required at a range of prevalence rates and pool sizes. These experiments establish that
+            Tapestry Pooling is robust enough to handle the diversity of sample constitutions and viral
+            loads seen in real-world samples.
+       NOTE: This preprint reports new research that has not been certified by peer review and should not be used to guide clinical practice.
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20209742.this version posted October 13, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                        It is made available under a CC-BY-ND 4.0 International license .
+            Introduction
+            The SARS-CoV-2 virus is now active in all populated parts of the world, with the cumulative
+            number of infections globally being estimated over 33 million as of September 2020. While the
+            virus was initially met with large-scale lockdowns, these have largely been lifted and replaced by
+            smaller-scale lockdowns around known clusters of infection. Several establishments such as
+            schools, offices, airports, hospitals, shopping malls remain restricted or working at less than full
+            capacity. Communities are forced to trade off economic distress against morbidity and mortality.
+            Such decisions would be eased with the availability of an accurate and affordable method for
+            large-scale and relatively rapid testing of individuals for SARS-CoV-2.
+            Pooling samples enhances the capacity of qRT-PCR assays to meet the growing demand for
+            testing. If a pool tests negative, all samples in that pool are declared negative. When the prevalence
+            of infection is low, many pools turn out to be negative. Each test gives results for multiple
+            samples, allowing available resources to be deployed to perform more tests. One such two-round
+            pooling strategy that has been used in India as well as in Israel, Germany, China, and the USA has
+            been to take pools of 5 samples each. If a pool tests negative by qRT-PCR, all samples
+            participating in that pool are declared negative. For each positive pool, every sample within that
+            pool is individually re-tested to determine if it is positive or negative for the virus. We term this
+            “simple pooling”.
+            We have previously proposed an algorithmic method of pooling, known as Tapestry Pooling, to
+            achieve substantial reductions of the number of tests required per sample, compared to simple
+            pooling (1, 2). Tapestry Pooling identifies positives in a single round of testing. It can give savings
+            at prevalence as high as 20%. At very low prevalence, it can deliver more than 10 results per test.
+            These advantages make Tapestry Pooling an attractive alternative to simple pooling. In Tapestry
+            Pooling, each sample goes to three pools while ensuring that any two samples share at most one
+            pool. Our novel reconstruction algorithm recovers the presence or absence as well as amount of
+            the virus in each individual sample from a single round of qRT-PCR results of the pools. We have
+            combined ideas from the fields of Combinatorial Group Testing, Compressed Sensing and Sparse
+            Regression to devise the algorithm (1).
+            We previously validated Tapestry Pooling in experiments where fake positive samples were
+            created by spiking with synthetic template RNA (2). We have also argued in Ghosh et al that
+            Tapestry Pooling has various advantages over other algorithmic pooling schemes (3). In this paper,
+            we describe experiments on Covid19 patient samples and show that Tapestry Pooling works well
+            for population sizes ranging from 300 to 1000 when prevalence rates are in the range of 1-2% and
+            pool sizes range from 20 to 31. Elsewhere we will report the validation of Tapestry Pooling for
+            scenarios where the prevalence rate is as high as 15-20% (manuscript under preparation).
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20209742.this version posted October 13, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                        It is made available under a CC-BY-ND 4.0 International license .
+            Methods
+            Study Design
+            We performed three case studies. Each case study was implemented as follows:
+                  1. We chose the number of individuals and the prevalence rate to be tested.
+                  2. Given these numbers and without knowing precisely which samples will be positive or
+                        negative, we chose a pooling scheme that determines which samples participate in which
+                        pools. The pooling schemes can be found in Supplementary Table S1.
+                  3. The experimental team chose which samples were negative and which were positive, in
+                        accordance with the prevalence rate chosen above. Positive samples were chosen
+                        randomly from among previously-tested positive patient samples (Supplementary Table
+                        S1), so that the variation in their viral loads was indicative of natural variation in viral
+                        loads for patient samples arriving at a testing lab.
+                  4. The experimental team then pooled pre-extracted RNA from the samples according to the
+                        pooling matrix provided, and conducted qRT-PCR tests on the pools. In each pooling
+                        scheme, every sample participated in exactly 3 pools, while the pool sizes ranged from 20
+                        to 31.
+                  5. The Ct values obtained from the qRT-PCR runs were reported back to an analysis team.
+                        The Ct values for the three pooling schemes tested are shown in supplementary table S2a,
+                        S2b and S2c. Which individual samples were positive or negative was blinded from the
+                        analysis team.
+                  6. The analysis team applied the reconstruction algorithm to the qRT-PCR results. The
+                        algorithm classified each individual sample into one of three categories: positive, negative
+                        and undetermined.
+                  7. This prediction was tallied with the ground truth, namely which samples were actually
+                        positive or negative, to compute the sensitivity and specificity of the method.
+            The following cases were examined:
+                  1. 320 samples, 48 pools, 5 positives (1.6% prevalence), pool size 20.
+                  2. 500 samples, 60 pools, 10 positives (2% prevalence), pool size 25.
+                  3. 961 samples, 93 pools, 10 positives (1% prevalence), pool size 31.
+            The pooling schemes were chosen in order to explore population sizes ranging from several
+            hundred to around a thousand keeping prevalence rates in the 1-2% range while allowing all pools
+            and controls to fit within a 96-well plate for a single round of qRT-PCR.
+            Sample handling and RNA isolation:
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20209742.this version posted October 13, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                        It is made available under a CC-BY-ND 4.0 International license .
+            All pooling experiments done for this study were performed using RNA isolated from patient
+            nasopharyngeal swab samples. The handling of these samples was done as prescribed by the
+            Indian Council of Medical Research. RNA isolation was done using the Qiagen QIAamp Viral
+            RNA Mini kit. The isolated RNA was tested independently by qRT-PCR in addition to being used
+            for this experimental pooling study.
+            Pooling strategy:
+            RNA samples that had been isolated previously from clinical swab samples and stored at -80°C
+            were used for the pooling experiments.
+            48 pools for 320 samples: 315 negative samples and 5 positive samples were chosen for pooling.
+            Each pool contained 20 = 320* 3/48 RNA samples. Since this was the first study we were doing
+            with a large pool size, we were concerned about possible over-dilution of positive RNA samples.
+            So we made provision to reduce dilution by pooling 1µL of each negative sample and 2.5µL of
+            each positive sample. Each pool contained between 20 to 23 µL of pooled RNA that was used for
+            subsequent qRT-PCR testing.
+            60 pools for 500 samples: 490 negative samples and 10 positive samples were selected. Each pool
+            contained 25 = 500*3/60 individual samples. From our previous experiment, we discovered that
+            the dilution of RNA samples due to pooling did not drastically increase the Ct values of positive
+            pools in our qRT-PCR runs. Therefore, we added 1µL of each RNA sample (positive and negative
+            samples) into each of its designated pools. Each pool contained 25µL of pooled RNA that was
+            used for subsequent qRT-PCR testing.
+            93 pools for 961 samples: Each pool contained a total of 31 = 961*3/93 samples. We chose 10
+            positive samples and 547 negatives. We identified the pools into which the 10 positive samples
+            were added. These amounted to a total of 23 pools. We prepared these pools by pooling the
+            participating positive samples along with several other negative samples per pool. Pooling was
+            done by adding 1uL of each RNA sample (positive and negative samples) resulting in a total of
+            31µL of RNA per pool that was used for subsequent qRT-PCR testing. The remaining 70 reactions
+            which contained only negative samples and no positives were simulated using 70 unique negative
+            samples as the template.
+            Testing using qRT-PCR:
+            Once the pooling of RNA samples was completed, aliquots from the pools were subjected to qRT-
+            PCR testing for Covid-19. The pools were tested using the MyLab qRT-PCR kit (PathoDetect
+            Covid-19). This kit is a multiplex kit capable of detecting the SARS-Cov2 RdRp and E genes. In
+            order to reduce the dilution factor of the positive RNA samples, we used double the volume of
+            template RNA and half the volume of nuclease free water prescribed by the MyLab kit protocol.
+            All other components of the reaction mixture (primers, probes and RT-PCR master mix) were
+            added exactly as prescribed by the MyLab kit instructions with appropriate control reactions. The
+            reaction compositions for each pooling scheme are shown in the tables below.
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20209742.this version posted October 13, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                        It is made available under a CC-BY-ND 4.0 International license .
+            The thermocycler was set up as recommended in the kit instructions. Results from the qRT-PCR
+            machine were recorded and submitted to the Tapestry recovery algorithm for identification of
+            Covid19 positive samples.
+                                                                          Reagent volumes in µL
+                     Reagents
+                                                  48 pools for 320            60 pools for 500             93 pools for 961
+                                                        samples                     samples                    samples
+                        Water                              162                         198                        303
+            Detection mix (RDRP                            54                           66                        101
+                        gene)
+                Detection mix (E                           54                           66                        101
+                        gene)
+                PCR master mix                             270                         330                        505
+                  Total volume                             540                         660                        1010
+                 Template from                  10 µL per reaction           10 µL per reaction           10 µL per reaction
+                  pooled RNA
+            Table 1: Reaction composition for the pooling schemes used. Total volume per reaction: 20 µL
+            Performance Statistics
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20209742.this version posted October 13, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                        It is made available under a CC-BY-ND 4.0 International license .
+            The Tapestry Pooling reconstruction algorithm classifies samples into three categories: positive,
+            negative, and undetermined. The provision for undetermined samples ensures that even when the
+            number of positives in a batch exceeds the capacity of the pooling scheme, we do not compromise
+            on sensitivity or specificity. Therefore the algorithm’s performance must be judged using
+            sensitivity and specificity, as well as the number of undetermined samples it returns. We
+            calculated sensitivity = TP/(TP+FN) and specificity=TN/(TN+FP), where TP=number of
+            predicted positives that were true positives, FP=number of predicted positives that were actually
+            negative, TN=number of predicted negatives that were true negatives, and FN=number of
+            predicted negatives that were actually positive.
+            Results
+            Tapestry Pooling was found to work in all three studies with sensitivity of 100% and specificity of
+            99.9% and only 13 undetermined from 1781 samples tested as shown in Table 2. All pools with
+            positive samples were positive except for one pool in the third study. Note that the results of the
+            algorithm were robust to this false negative. The raw data for the pooling schemes used, the
+            measured Ct values (Supplementary table S2a, S2b and S2c), and the ground truth and predicted
+            positive samples is included in the supplementary information (Supplementary table S3a , S3b and
+            S3c).
+           #Samples               #Positives            Sensitivity       Specificity          #Tests for       #Tests in
+                                                                                               Tapestry         Simple
+                                                                                               Pooling          Pooling
+           320                    5                     100%              100%                 48 + 0           64 + 25
+           500                    10                    100%              99.8% (1             60 + 10          100 + 50
+                                                                          false positive)
+           961                    10                    100%              100%                 93 + 3            192 + 50
+            Table 2: High Specificity and Sensitivity of Tapestry Pooling. Tapestry pooling requires
+            substantially fewer tests than simple pooling while preserving high sensitivity and specificity.
+            #Tests represents the number of first round tests plus the number of second round tests. For
+            Tapestry Pooling, this is the number of undetermined samples.
+            Discussion
+            The Tapestry Pooling method is made available as a web app at www.tapestry-pooling.com,
+            making it easy to deploy. The user is assisted to pick a particular matrix size based on their
+            requirements of number of samples to be tested, testing capacity available, prevalence rate
+            expected, and any constraints of pool size for their assay. After pooling and completing the assay,
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20209742.this version posted October 13, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                        It is made available under a CC-BY-ND 4.0 International license .
+            the user enters the Ct value of each pool obtained from the qRT-PCR into the web app. The
+            recovery algorithm solves and returns a result for each sample.
+            We have demonstrated that Tapestry Pooling works with high sensitivity and specificity as a
+            method for testing large numbers of individuals at low prevalence for SARS-CoV-2. It allows a
+            wide range of pooling schemes to be deployed so that it can be customized over a large range of
+            prevalence rates, number of samples, pool sizes, and number of tests. We have shown that pools of
+            size upto 31 can be managed without false negatives by adjusting the reaction composition,
+            specifically by adding a larger volume of template and less water. This means for example that a
+            positive sample in a pool of size 31 is diluted only 15.5-fold so that the Ct shift is kept within
+            detectable limits. In summary, Tapestry Pooling is a flexible pooling scheme that returns large
+            savings while still maintaining high accuracy.
+            Acknowledgements
+            Sandeep Krishna thanks the Simons Foundation for funding as well as the Department of Atomic
+            Energy, Government of India under project no. 12-R\&D-TFR-5.04-0800. AR, MG thank SERB
+            MATRICS grants MTR/2019/0006, EMR/2017/004089, MTR/2018/000817, IITB WRCB grant
+            10013976, and DST-Rakshak grant 10013980. DP acknowledges support by CSR funding from
+            Azim Premji philanthropy, Standard Chartered Bank, and Punjab National Bank,
+            References
+            1. Ghosh,S., Agarwal,R., Rehan,M.A., Pathak,S., Agrawal,P., Gupta,Y., Consul,S., Gupta,N.,
+                    Goyal,R., Rajwade,A., et al. (2020) A Compressed Sensing Approach to Group-testing for
+                    COVID-19 Detection.
+            2. Ghosh,S., Rajwade,A., Krishna,S., Gopalkrishnan,N., Schaus,T.E., Chakravarthy,A.,
+                    Varahan,S., Appu,V., Ramakrishnan,R., Ch,S., et al. (2020) Tapestry: A Single-Round Smart
+                    Pooling Technique for COVID-19 Testing. medRxiv, 10.1101/2020.04.23.20077727.
+            3. Shental,N., Levy,S., Wuvshet,V., Skorniakov,S., Shalem,B., Ottolenghi,A., Greenshpan,Y.,
+                    Steinberg,R., Edri,A., Gillis,R., et al. (2020) Efficient high-throughput SARS-CoV-2 testing
+                    to detect asymptomatic carriers. Sci. Adv., 10.1126/sciadv.abc5961.
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20209742.this version posted October 13, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                        It is made available under a CC-BY-ND 4.0 International license .
+            Supplementary Data
+            Supplementary Table S1: Pooling schemes used
+            The 3 pooling schemes tested are provided as Supplementary Excel sheets. In each sheet, the
+            columns represent the pools to be created and list the sample IDs that are grouped together. The
+            positive samples selected for each pooling scheme are marked in red in their respective pools.
+            Supplementary Table S2: qRT-PCR results
+            The results of the qRT-PCR runs are shown in Table S2 for each pooled test for each of the 3
+            pooling schemes we studied. The tests for which a cycle threshold (Ct) value was detectable are as
+            shown in the table. The tests not included in the table were undetected in the qRT-PCR reaction.                          n.
+            The table shows results for both the RdRp and E genes. The former Ct values were what were fed                           ed
+            into the reconstruction algorithm to obtain the results shown in the main text.
+            Table S2a: Cycle threshold values obtained for detectable tests amongst the 48 pooled tests                              sts
+            performed with 320 samples.
+            Table S2b: Cycle threshold values obtained for detectable tests amongst the 60 pooled tests                              sts
+            performed with 500 samples.
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20209742.this version posted October 13, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                        It is made available under a CC-BY-ND 4.0 International license .
+            Table S2c: Cycle threshold values obtained for detectable tests amongst the 93 tests performed                           ed
+            with 961 samples.
+            Supplementary Table S3: Prediction results for the pooling scheme
+           Ground truth (sample IDs that were positive - 5 46,116,167,238,314
+           total)
+           Positives predicted from Tapestry algorithm                    46,116,167,238,314
+           Number of undetermined from Tapestry 0
+           algorithm
+           Number of false positives                                      0
+           Number of false negatives                                       0
+            Table S3a: Prediction results for the pooling scheme consisting of 48 pools for 320 samples.
+           Ground truth (sample IDs that were 29, 79, 141, 142, 214, 238, 333, 384, 404, 498
+           positive - 10 total)
+           Positives        predicted         from      Tapestry 29, 79, 141, 142, 214, 232, 238, 333, 384, 404,
+           algorithm                                                 498,
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20209742.this version posted October 13, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                        It is made available under a CC-BY-ND 4.0 International license .
+           Number of undetermined from Tapestry 10
+           algorithm
+           Number of false positives                                 1 (sample ID 232)
+           Number of false negatives                                 0
+            Table S3b: Prediction results for the pooling scheme consisting of 60 pools for 500 samples.
+           Ground truth (sample IDs that were positive - 58, 103, 274, 397, 411, 544, 632, 700, 788, 933
+           10 total)
+           Positives predicted from Tapestry algorithm                     58, 103, 274, 397, 411, 544, 632, 700, 788, 933
+           Number of             undetermined         from     Tapestry 3
+           algorithm
+           Number of false positives                                       0
+           Number of false negatives                                       0
+            Table S3c: Prediction results for the pooling scheme consisting of 93 pools for 961 samples

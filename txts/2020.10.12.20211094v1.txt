@@ -1,0 +1,931 @@
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211094.this version posted October 14, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                perpetuity.
+                                    It is made available under a CC-BY-NC 4.0 International license .
+   Prioritisation of population groups with the most interactions for
+   COVID-19 vaccination can substantially reduce total fatalities
+   Jorge Rodríguez1,2*, Mauricio Patón1 and Juan M Acuña2
+   1
+     Department of Chemical Engineering. College of Engineering. Khalifa University.
+   SAN Campus PO Box 2533 Abu Dhabi, United Arab Emirates
+   2
+     Department of Epidemiology and Public Health. College of Medicine. Khalifa University.
+   PO Box 127788 Abu Dhabi, United Arab Emirates
+   *
+     Corresponding author: jorge.rodriguez@ku.ac.ae
+   Abstract
+   The rapid development of vaccines against the SARS-CoV-2 virus is an unprecedented
+   achievement. Once vaccines become mass produced, they will have to be distributed to almost
+   the entire population to prevent deaths and permit prompt economic recovery. The necessity to
+   vaccinate a large number of people in a short period of time, and possibly with insufficient
+   vaccine doses to cover most, creates in itself a new challenge for governments and health
+   authorities: which population groups (by age or other criteria) should be targeted first and what
+   sequence must be followed, if any at all, to achieve the minimum number of fatalities? In this
+   work, we demonstrate the importance and impact of optimally planning the priorities for vaccine
+   deployment by population groups using a modified SEIR-type model for the COVID-19 outbreak
+   considering age-related groups. Finding the absolute guaranteed best solution of the
+   mathematical optimisation problem may be hard, if even possible, and would likely require
+   intense computational resources for every possible case study scenario. In this work, several
+   strategies are evaluated and compared, in an attempt to approach the most effective possible
+   vaccination priority sequence in an example case study using demographic and epidemiological
+   data from Spain. The minimum total fatalities at the end of the vaccination campaign is the
+   objective pursued. The population groups classifications are established based on relevant
+   differences in mortality (due to their age) and risk-related behaviour such as their number of
+   daily person-to-person interactions. Assuming a capacity limited constant vaccination rate,
+   vaccination distribution strategies were evaluated for different vaccine effectiveness levels and
+   different percentages of final vaccine population coverage. Our results unambiguously show how
+   planning vaccination by priority groups can achieve dramatic reductions in total fatalities (more
+   than 70% in some cases) compared to no prioritisation. The results also indicate in all cases, for
+   all vaccine effectiveness and coverage values evaluated, that the criteria for groups vaccination
+   priority should not be those with the highest mortality but rather those the highest number of
+   daily person-to-person interactions. Strikingly, our results show in all cases, that prioritisation of
+   groups with the highest mortality but less social interactions, may lead to significantly larger
+   numbers of final total fatalities, even higher as if no group priorities were established at all. The
+   explanation, clearly displayed by the mechanistic model, is that vaccination avoids infections that
+   reduce mortality not only from the vaccinated group itself but also from the projected secondary
+   and subsequent infections inflicted on the rest of the population by those vaccinated in that
+   group. Precisely this amplification effect (exponential nature of the curve) appears to cause the
+   larger reduction in total fatalities if the groups with the most interactions are vaccinated first.
+   The possible contradiction of these results with some published recommendations highlight the
+   importance of conducting an open comprehensive and rigorous analysis of this problem leaving
+   behind any subjective preconceptions.
+     NOTE: This preprint reports new research that has not been certified by peer review and should not be used to guide clinical practice.
+
+ medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211094.this version posted October 14, 2020. The copyright holder for this
+ preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                perpetuity.
+                                     It is made available under a CC-BY-NC 4.0 International license .
+Introduction
+COVID-19 has inflicted great stress worldwide with more than 37 million cases and 920 thousand
+deaths globally as of October 12, 2020. (JHCRC 2020). Despite a tendency to a decrease in the
+number of cases per day in many countries, and even regions in the world, the pandemic is not near
+its end and the disease will probably not go away, becoming endemic in many regions throughout
+the world. In this scenario, the development of adequate vaccines is an alternative for primary
+prevention of the disease, so far implemented through hygiene, social isolation, social distancing,
+and quarantine. Vaccines then are the next best hope for the world in the COVID-19 pandemic.
+    Vaccines, of different types, are products of biotechnological processes and their development
+and approval is long, taking on average several years. This was the rule until now: in an
+unprecedented global effort from pharma and academia, supported by government and private
+organizations, streamlined regulation and financial investment have made possible that one or
+more COVID-19 vaccines may become available during early 2021. Although the tremendous speed
+with which COVID-19 vaccines are being approved and trials implemented, and the scientific world
+concerns about the science, the politics, and the economics of such speedy processes, it is probably
+unavoidable that one or more vaccines will become available soon.
+    With more than 320 candidates and 76 trials now underway (15 in phase I; 25 in phase I/II; 4 in
+phase II; 2 in phase II/III; and 13 in phase III), registered at ClinicalTrials.gov, the next problems to
+sort out will probably be mass production of the vaccine and how to determine the vaccine
+availability for potential users. (Krammer 2020; Parker et al., 2020).
+    The WHO issued a draft statement on September 9, 2020, addressing issues related to the fair
+allocation of vaccines for countries around the world. Available doses of COVID-19 vaccines
+worldwide are proposed to be managed centrally and equitably by the COVAX Access Mechanism,
+a coalition of member countries together with the ACT-Accelerator Collaboration (WHO; the Bill &
+Melinda Gates Foundation; Gavi, the Vaccine Alliance; the Global Fund; the Coalition for Epidemic
+Preparedness Innovations -CEPI; and Welcome Trust) (WHO, 2020a) to allow fair allocation of
+available vaccines. However, in the same statement, the country allocation of vaccines provided to
+each one of the countries will be driven by each country itself.
+    Despite the estimated and unprecedented fast production of vaccines, and mostly due to the
+immense need for potential users (the vast majority of the population worldwide is still susceptible
+to the infection), vaccines provided will be insufficient. The COVAX initiative (WHO 2020a) proposes
+vaccine doses for each country to cover 3% to 20% of the population proportionally to each country,
+in two phases. However, it specifically does not address intra-country distributions for each
+country’s population. And despite adequate world-wide equitable distribution, the final impact of
+the vaccine administration to populations will be dependent then, only on the internal country
+distribution specifically. With the limited availability forecasted (having the capacity of progressively
+covering 3 to 20% of the population for most countries) the internal distribution within each country
+becomes paramount in the final effect of the vaccination campaign for COVID-19 and the impact it
+will have in each country population. There is no doubt that vaccine uptake will be an important
+driver (Mello et al., 2020) however, intra-country capacity for adequate vaccine distribution will be
+essential and will most likely impact the final amount of deaths related to COVID-19 (Schwartz 2020).
+    Some of the important drivers for vaccine allocation seem to rise from ethical principles. (Field
+et al., 2012; Liu et al., 2020). For instance, as stated by Emmanuel et al.(2020), these ethical
+principles point towards first, reducing premature deaths; then, reducing economic and social
+serious deprivations and last, focus on return to functional populations and societies. However, as
+disputed the order and scope of these principles may be, we do agree that the immediate need of
+decreasing COVID-19 deaths (direct and indirect) that may be avoidable, is the first priority.
+
+ medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211094.this version posted October 14, 2020. The copyright holder for this
+  preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                perpetuity.
+                                     It is made available under a CC-BY-NC 4.0 International license .
+     The empiric decisions in a pandemic are a luxury not always possible. In these cases,
+mathematical modelling might guide immediate decisions, such as the impact of non-
+pharmaceutical interventions (Rodríguez et al. 2020) or in this case vaccine prioritization,
+fundamentally based on trying to avoid premature, preventable deaths. Under stable conditions of
+capacity and resources, and the capacity of public health systems to adapt to COVID-19 (WHO
+2020b), these deaths (in number) are linked to the number of cases and the severity of disease: the
+more cases and the more severe they are, the higher the number of deaths. The number of cases,
+in turn, is related to the serial interval (usually stable throughout the infection) (Nishiura et al., 2020)
+and the Reproductive Number (R0) of the disease, or better, the effective Reproductive Number (Rt)
+if we consider this indicator an active one as opposed to a passive one) (Cori et al., 2020). Most
+countries have managed statistics for COVID-19, the number of factors involved in the calculation
+of Rt and of the number of deaths is complex due to multifactorial associations of factors causing
+deaths. Also vaccination will change in real-time the characteristics of the population, changing the
+Rt and the probability of death as time elapses in the vaccination campaigns. It is easy to conclude
+then that in view of this, a fixed approach during a prolonged amount of time during for vaccine
+distribution within countries, will not produce the best possible results in averting the highest
+potential number of preventable deaths by vaccination.
+     The COVID-19 outbreak has brought unprecedented attention to mathematical modelling, with
+the development of several epidemic models trying to forecast the extent of the pandemic (Gatto
+et al., 2020; Giordano et al., 2020; Hellewell et al., 2020; Kissler et al., 2020; Kucharski et al., 2020;
+Roosa et al., 2020; Wilder et al., 2020). Some previous SEIR models already evaluated vaccination
+strategies for infectious diseases (Wang et al., 2019; Yu et al., 2016). Due to the attention drawn
+from the COVID-19 outbreak, additional models have been developed to evaluate vaccination
+strategies against SASRS-CoV-2. The goal of these models is to elucidate which strategy might be
+best for vaccinating the population with the objective of reducing the number of fatalities and/or
+hospitalized people (Bubar et al., 2020; Matrajt et al., 2020). Mathematical models of the COVID-
+19 vaccination that allow for the input of real-time information can be important to minimise the
+number of fatalities. By using such models, the vaccination campaigns may change directionality in
+allocation as needed and as indicated by the changing characteristics of the population due to the
+vaccination itself.
+     In this work, a new COVID-19 SEIR-type model, based on that by Rodríguez et al. (2020)
+segregated by population groups, is applied to solve the problem of determining the best sequence
+of priority population groups that should be followed for vaccination. Although slightly different
+optimisation goals are possible, in this work the minimum total fatalities at the end of the
+vaccination campaign is the pursued goal. Model-based optimisation is applied to an example with
+demographic and epidemiological data from Spain.
+Dynamic model of the COVID-19 outbreak including vaccination
+In our previous work (Rodríguez et al., 2020) a model was developed to describe the impact of
+interventions with population groups segregated by age. The model, originally designed to evaluate
+the impact of a number of interventions on the outbreak dynamics and outcome, captures the
+differences in severity, mortality and infection risk-related behaviour of different population groups
+by age. Based on that work a new model is presented suitable for its application to the problem of
+optimum vaccine allocation optimisation at hand. In the new model, the individuals are segregated
+by population groups, still related to their age, however other arbitrary classifications based on their
+activity and epidemiological differences are also possible. This could include groups such as front
+line workers, individuals with a very high risk of mortality etc. Individuals in the population belong
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211094.this version posted October 14, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                               perpetuity.
+                                    It is made available under a CC-BY-NC 4.0 International license .
+to only one single group that they never abandon and transition through infection severity stages
+eventually joining the immune recovered pool.
+   Figure 1 provides a graphical representation of the different stages and transitions among them
+for the individuals in the different (age-related) population groups. The incorporation of vaccination
+causes individuals to transition to vaccinated immune or to ineffectively vaccinated not-immune
+stages. A complete comprehensive description of the model is presented in the Appendix including
+complete detailed reproducible descriptions of all equations, variables and parameters.
+   The model classifies individuals in the population in compartments by infection stage and (age-
+related) population group. In order to ensure maximum utilisation of information, either available
+or measurable and to minimise uncertainty, the population grouping should be defined, and it is in
+this case, based on meaningful epidemiological differences between individuals in severity and
+mortality as well as in behaviour or activity traits affecting risk of infection. These later could include
+traits such as the number and types (with which other groups) of daily contacts, their differences in
+awareness and protection attitudes, etc. The rates of infection and vaccination, together with the
+available recent clinical and epidemiological information, govern the transitions of individuals
+between disease stages and allow for the evaluation of the objective function of total fatalities at
+the end of the vaccination campaign. The model implementation can be fully customised with the
+specific population characteristics and parameters of any community, region or country for its
+application to determine their optimum vaccination plan.
+                                                                                                                                                                          Vaccinated
+                                                                    EFFECTIVE                                                                                              Immune
+                                                                   VACCINATION                                                                                               (IV)
+                                                          fr_ni
+                                                                                                                                                                                                 (R)
+                                                                                                                                                                              Recovered & Immune (IR)
+                                    Pre-Symptomatic
+                                                                                        fr_ps
+                     INFECTION                                      Pre-Symptomatic
+                                                                                                Symptomatic (S)
+                                    non infectious (PS)
+                                                    NI
+                                                          fps_ni                                                  fr_s
+                                                                      infectious (PS)
+                                                                                        fs_ps
+    INEFFECTIVE                                                                                                                          fr_sh
+                                                                                                                          Hospitalised
+    VACCINATION                                                                                                   fsh_s      (SH)                                 fr_sc
+                                                                                                                                         fsc_sh   Critical (SC)
+                                                                                                                                                                  fd_sc   Deceased (D)
+   Figure 1. Representation of the model transitions of individuals through the infection stages. Only
+   contacts of healthy susceptible individuals with infectious either pre-symptomatic or symptomatic
+   individuals can lead to infection. Vaccination, if effective, avoids infection and places individuals at
+   immune vaccinated stage. Ineffective vaccination maintains individuals in their current stage (they are
+   however accounted separately as already vaccinated).
+   In the example to be presented for Spain, population groups were defined by (age-related)
+activity as namely: preschool children (ages 0-4); school children (ages 5-14); higher school and
+university young (ages 15-24), young workers (ages 25-49); mature workers (ages 50-59); senior
+workers (ages 60-64); early retired (ages 65-69); retired (ages 70-79); elderly (ages 80+). This groups’
+definition is arbitrary but it takes into account the above mentioned criteria for group definitions
+
+ medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211094.this version posted October 14, 2020. The copyright holder for this
+  preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                       It is made available under a CC-BY-NC 4.0 International license .
+for impact on the final objective. The group definitions can be changed to best suit any country or
+region specifics, as long and good quality data are available for their characterisation.
+      Individuals never leave the (age-related) population group to which they belong and, at a given
+time, they sit on one of the possible infection stages. These stages are defined in terms of
+infectiousness and severity of symptoms analogously as in Rodríguez et al. (2020), namely: healthy
+susceptible (H); infected non-symptomatic non-infectious (NI); pre-symptomatic infectious (PS);
+symptomatic infectious (S); in need of hospitalisation (SH); in need of critical care (SC); recovered
+immune (IR) and deceased (D), in addition those effectively vaccinated become vaccinated immune
+(V). Individuals ineffectively vaccinated (i.e. the vaccine does not immunise them) maintain their
+current stage and they are simply accounted as is that stage but already vaccinated (see Figure 1).
+      The transitions between stages are determined by rates of infection, disease progression and
+vaccination. Figure 2 provides an overview representation of the stage transitions as modelled.
+Complete details are included in the Appendix model description
+              Healthy       Non infectious             Infectious          Infectious       Symptomatic         Symptomatic
+                                                                                                                                 Deceased
+           Susceptible     pre-symptomatic pre-symptomatic Symptomatic                      Hospitalised           Critical
+                                                                                                                                    (D)
+                (H)                (NI)                   (PS)                 (S)             (SH)                 (SC)
+                       INFECTION            TRANSITION          TRANSITION         TRANSITION           TRANSITION          DEATH
+  INEFFECTIVE
+ VACCINATION
+                                                                           Immune
+                                                                       Recovered (IR)
+                              EFFECTIVE                             & Vaccinated (IV)
+                             VACCINATION
+      Figure 2. Schematic representation of the transition rates between stages. Individuals spend in each stage
+      an average amount of time depending on their transition path towards recovery or increased severity.
+Model limitations and assumptions
+The model presented above and fully described in the Appendix was specifically developed for the
+optimum vaccination problem at hand. The model shares many of the fundamental characteristics
+of compartment SEIR-type models and its limitations remain similar as for earlier models (Rodríguez
+et al., 2020). It is based on dynamic balances of individuals in compartments classified by their stage
+of infection and segregated by age-related groups. In this type of models all individuals are
+considered located in a common single domain or closed community (e.g. a well-mixed city or town).
+      The model is completely deterministic, has a moderate complexity and is computationally
+inexpensive to solve and requires only parameters that are mechanistic and carry meaning and
+interpretation. Most of these parameters can be directly estimated from epidemiological and
+clinical data and their calibration is not recommended. Analogous to similar compartmental SEIR-
+type models, variables and parameters refer to representative averages for each compartment
+stage and population group. These characteristics may limit the model representation of non-linear
+relevant phenomena that may occur in the real-world reality. Examples of these include phenomena
+like the so-called super spread events or other location specific phenomena and cannot be captured
+by these types of models. Any quantitative application of the model for prediction purposes in public
+health should be accompanied by a critical discussion against these limitations (Wearing et al., 2005).
+
+ medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211094.this version posted October 14, 2020. The copyright holder for this
+ preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                perpetuity.
+                                     It is made available under a CC-BY-NC 4.0 International license .
+    No geographical clustering or separation, neither any form of migration in or out of the
+community are captured by this type of models. Large cities with ample use of public transportation
+remain the best described by this and other SEIR-type disease propagation models. The model, as
+described above and in full in the Appendix, is applied under specific assumptions, relevant to the
+vaccination problem at hand, including:
+✓All ever-infected individuals that recover become fully immune, irrespective of their severity path,
+and cannot be infected or infectious again.
+✓ No differences in immunity or any other epidemiological aspect are considered between
+individuals never vaccinated and those ineffectively vaccinated.
+✓ Recovered individuals (aware or not) are equally eligible for vaccination as healthy susceptible.
+✓ The rates of vaccination of the groups activated (i.e. called for vaccination) are proportional to
+their relative sizes in terms of eligible individuals pending vaccination. The total vaccination rate
+must match the given rate limited by the capacity of the health system.
+Optimisation of the vaccine deployment by population groups
+In order to find the optimum sequence of vaccination in terms of which population groups should be
+targeted at each specific moment, it is necessary to solve an optimisation problem. All optimisation
+problems consist of a target objective to make minimum (e.g. number of total fatalities at the end of
+the campaign) and a set of decision variables that can be manipulated to achieve that, in this case the
+populations groups called for vaccination at any given time. Once the problem is defined, the optimum
+set of decision variables is computationally sought following a suitable existing optimisation method
+from literature or developed ad hoc. The nature of the optimisation problem at hand falls within an
+type of problems called dynamic programming problems. In this type of problems as it is the case
+here, the decision variables (in our case the active groups called for vaccination as defined in the fv
+vector of ones and zeros) are not constant but change over time. This adds additional potential
+complexity as not only an optimum group or set of groups needs to be found but this needs to be
+done at each moment and changes in time. For a specific period one group(s) may the optimum target
+but, after some time, another group(s) may become the most useful to target for vaccination.
+Objective function – Optimisation goal
+Several different objective functions can be defined for minimisation depending on the priorities
+followed. In the example case study presented, the objective will be to minimise the total number
+of fatalities at one month after the vaccination campaign is completed (tf). The definition of the
+optimisation problem will therefore consist of
+                               Minimise i Ndi(tf) as a function of the dynamic values of fvi(t)
+                               such that t [0,tf] , fvi  {0,1}
+    Alternative formulations of the objective function are possible, for example, the total number of
+years of healthy life lost at (tf) could be the target to minimise or even factoring economic losses or
+other terms of relevance to public health could be included. There is ample flexibility to define the
+problem as convenient using this framework and model.
+    The model itself allows for the simultaneous dynamic optimisation of vaccination together with
+the application of interventions over time (such as e.g. isolation of specific groups) and therefore
+can applied to evaluate specific scenarios combining interventions and vaccination strategies.
+    A plethora of optimisation approaches can be proposed and attempted to achieve the best
+possible results given this and any optimisation problem. These methods can be completely
+
+ medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211094.this version posted October 14, 2020. The copyright holder for this
+ preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                perpetuity.
+                                     It is made available under a CC-BY-NC 4.0 International license .
+algorithmic, both deterministic or with randomness and also incorporate heuristic elements. All
+these possible methods differ in their computational requirements and their performance can
+always be compared in terms of the final value for the objective function they manage to reach.
+Computationally intensive methods, however, rapidly bring in limitations to conduct e.g. sensitivity
+analysis or Monte Carlo simulations of the model parameters for increased confidence as they
+require long computing times per single parameter set evaluation. Taking this into consideration, a
+computationally inexpensive heuristic optimisation method, based on the R number and groups
+mortalities, was devised in view of the simulation results obtained by other more computational
+intense methods.
+Heuristic R-based optimum path (HRBOP) strategy for vaccination
+A heuristic R-based optimum path (HRBOP) strategy was developed that establishes the vaccination
+priority at any given time on the group with the highest projected mortality per infection avoided
+via vaccination. That mortality is however accounted from two sources and not only from the
+group’s itself, the projected secondary and subsequent infections inflicted on the entire population
+by the avoided infection in the group, are also estimated and accounted for.
+    Under the HRBOP strategy, priority is directed at any given moment to the vaccination of the
+group i with the highest number of projected avoidable deaths per vaccination (see Eq. 1). This is
+calculated as a function of three elements, namely (i) the risk of infection in that group (as the ratio
+of the rate of infections and the number of individuals in the group); (ii) the mortality per infection
+in the group (fd_nii) and (iii) the projected secondary and subsequent infections an infected group
+member would inflict on the entire population.
+    If the R number is accepted as a good estimator of infection propagation at a given moment, the
+last term (the projected secondary infections) can be estimated if group-specific detailed
+information about the ongoing R number is available such that a matrix of R numbers between
+groups (RM) can be built. This matrix can then be projected to any number of infection cycles (n) by
+powering the matrix to n.
+    All these three terms could therefore in principle be measured or estimated from actual data
+directly collected by the health systems in a community, making no model required to apply the
+HRBOP strategy.
+    The calculation of the projected avoidable deaths for all population groups (PADv), in terms of
+the model variables, is presented in Eq. 1 (see also Appendix). Eq. 1 was used to evaluate the HRBOP
+method against the alternatives for the case study example for Spain. A value of three infection
+cycles (n=3) was used.
+                                           PADv = (ri_h ./ Nsv) .* [RM(9x9)n+I(9x9)]* fd_ni                          (Eq. 1)
+where I(9x9) is the identity matrix of the indicated size.
+    Although the HRBOP strategy is demonstrated here on the dynamic model, its practical
+implementation does not require or rely on any model, partly decoupling the outcome sequence of
+priority groups from possible model shortcomings and uncertainties.
+    Used in conjunction with a dynamic model, the HRBOP method is computationally inexpensive
+as it runs in one single model simulation through its so-called optimum path. There is no
+requirement for repeated model simulations to evaluate the objective function for changes in
+vaccination sequence. The computational low cost allows for its use in conjunction with sensitivity
+and Monte Carlo simulations of the vaccination sequence outcome against uncertain model
+parameters.
+
+ medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211094.this version posted October 14, 2020. The copyright holder for this
+  preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                 perpetuity.
+                                     It is made available under a CC-BY-NC 4.0 International license .
+     A final advantage of the low computational requirement of the HRBOP method is that it allows
+for its deployment together with the model on low cost web-based platforms, making a vaccination
+optimisation method available globally at no cost.
+Comparison of vaccine distribution strategies (case study for Spain)
+Five different strategies for vaccination of the population are evaluated for comparison for a case
+example using the population demographics and epidemiological data from Spain, namely:
+i) No group prioritisation: all population in all groups is called for vaccination in equal terms.
+ii) Priority to the groups with the highest mortality per infection (from highest to lowest). Groups
+are called one by one and only once until coverage for each group is reached (single call)
+iii) Priority to the groups with the highest number of interactions (daily contacts) (from highest to
+lowest). Groups are called one by one and only once until coverage is reached (single call).
+iv) HRBOP strategy (heuristic R-based optimum vaccination path). Groups can be called for a period
+and be recalled at later stages more than one time with flexibility partial group vaccination.
+v) The best of all the possible sequences of groups priority. Groups are called one by one and only
+once until coverage is reached. This apporach requires intensive computation as all the possible
+combinations between all groups need to be evaluated (9! = 362,880 simulations)
+     The parameters as shown in Table S1 and Tables S3.a-b were used with the following initial
+conditions and assumptions:
+      ▪ No pre-existing immunity, (i.e. Nirini = 0).
+      ▪ No initial vaccinated individuals and fatalities.
+      ▪ Initial case incidence of 0.1% for NI and S and 0.3% for PS respect to the entire population.
+      ▪ All remaining population initially considered as healthy susceptible (H).
+      ▪ A total population of 47,026,208 as for Spain in 2019 is considered.
+      ▪ Constant rate of vaccination of 1% of the population per day until campaign ends.
+      ▪ Different vaccine effectiveness and maximum population coverage are evaluated.
+     Figure 3 shows the results for the five strategies, in terms of proposed sequence of priority
+groups for vaccination as well as the progression in total fatalities and R number with time, for a
+vaccine effectiveness of 75% and a maximum population coverage of 80%. A summary of all results
+obtained for nine combinations of these two parameters is presented in Table 1.
+   Table 1. Performance results of different strategies for vaccine distribution at different vaccine
+                                       effectiveness and coverage of the population.
+                   Maximum                   No           Highest-to-        Most-to-    Heuristic        Best of         Lowest
+    Vaccine
+                   Population          Prioritisation       Lowest             Least      R-based       All Possible     fatalities
+ Effectiveness
+                    Coverage             by Groups         Mortality      Interactions      Path        Sequences        achieved
+                                     (Final fatalities)               (Percentage change in fatalities)              (Final fatalities)
+      100%             95%                 42,494            15.8%            -61.9%       -65.2%          -72.0%         11,915
+      100%             80%                 42,692            16.5%            -63.1%       -64.6%          -71.6%         12,142
+      100%             50%                 45,254            36.2%            -55.3%       -55.9%          -59.7%         18,244
+      75%              95%                 70,998            12.1%            -65.4%       -65.6%          -73.8%         18,582
+      75%              80%                 71,265            11.6%            -63.5%       -64.0%          -71.7%         20,150
+      75%              50%                 74,942            19.2%            -45.2%       -45.7%          -50.3%         37,215
+      50%              95%                 109,867            6.0%            -40.6%       -41.0%          -52.7%         51,954
+      50%              80%                 110,138            5.4%            -36.6%       -37.2%          -46.8%         58,607
+      50%              50%                 113,998            8.5%            -21.6%       -21.9%          -26.0%         84,342
+
+ medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211094.this version posted October 14, 2020. The copyright holder for this
+ preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                perpetuity.
+                                     It is made available under a CC-BY-NC 4.0 International license .
+Figure 3. Compared vaccination strategies showing active groups called for vaccination, fatalities and R value
+over time for the case study with data and demographics from Spain. Constant vaccination rate is set at 1%
+of the total population per day, vaccine effectiveness is 75% and population coverage is 80%. The best result
+was obtained after (computationally intensive) evaluation of all possible group sequences (assuming only
+one single call per group). The computationally inexpensive heuristic R-based optimum path is evaluated for
+weekly cycles and allows for multiple partial calls to any specific group.
+    The different strategies proposed lead to very different and significant impacts respect to the
+baseline number of predicted fatalities if no group prioritisation is implemented. If a strategy based
+on priority to the groups with the highest mortality is followed, the predicted total number of
+fatalities actually increases significantly (~12% higher). On the contrary, if priority is established to
+those groups with the most interactions (from highest to lowest), dramatic reductions in fatalities
+(~63% lower) are predicted (Table 1). If the optimum strategy is further refined using the HRBOP
+
+ medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211094.this version posted October 14, 2020. The copyright holder for this
+ preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                perpetuity.
+                                     It is made available under a CC-BY-NC 4.0 International license .
+method, additional smaller improvements can be achieved. Finally if intensive computational
+resources are available the best of all possible (single group call) sequences among all possible ones
+can be sought using a model. In this case, the best result was obtained in this manner (~72% lower
+number of fatalities). The HRBOP and the best of all sequences found differ very little from the one
+of groups from highest to lowest number of interactions. This trend of reductions and differences
+between the strategies remains consistent for different vaccine effectiveness and population
+coverage values (Table 1). The detailed simulation results analogous to those in Figure 3 for all
+combinations are presented in Figures S1-9 in the Supplementary Information.
+    It is important to note that the above results strongly indicate that in principle, and
+independently from the availability of a calibrated model and computational resources, following a
+strategy of priority to population groups with the most interactions or a similar more refined
+sequence obtained by the HRBOP method, can achieve enormous reductions in total fatalities at
+the end of the vaccination campaign.
+Conclusions
+The dynamic deterministic model developed, describing individuals in (age-segregated) population
+groups and disease stages, can be applied to the evaluation of vaccination strategies. The model
+results appear to describe expected trends and allow for deep mechanistic analyses to draw
+hypotheses and conclusions that can inform public health policy.
+    Our results strongly suggest that a planned vaccine distribution following prioritised sequences
+of population groups can achieve enormous reductions is the final number of fatalities at the end
+of the vaccination campaign. Based on the results we strongly advice against a group prioritisation
+criterion based on mortality only that ignores the group’s level of interaction with others. The
+criteria of priority to those groups with the highest number of interactions (daily person to person
+contacts) appears as the one with the highest immediate payoff in terms of reduction of the final
+number of fatalities. The computationally-inexpensive model-independent heuristic R-based
+optimum path method proposed achieved moderate improvements on the final number of fatalities
+respect to the prioritisation strategy of highest to lowest interactions. Both these strategies do not
+differ by much from the model-based computationally-intensive evaluation of the best group
+priority sequence among all possible ones.
+
+ medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211094.this version posted October 14, 2020. The copyright holder for this
+ preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                perpetuity.
+                                     It is made available under a CC-BY-NC 4.0 International license .
+Appendix - Dynamic COVID-19 model description
+The definition of the model dynamic (state) variables is shown in Table A1. Each variable
+corresponds to the number of individuals in that stage in a vector per (age-related) population group
+(9 activity groups as defined above). Under this structure, each dynamic variable is a vector of
+dimension 1x9, and the total number of states is a matrix of dimensions 15x9 (15 stages and 9
+population groups). Vector variables and parameters are represented in bold font and scalar ones
+in regular font across all the manuscript.
+   Table A1. Model dynamic variables accounting for the number of individuals in each infection
+                                                           stage and group.
+            Definition “Number of individuals…”                          Vector per group Total from all groups
+                                                                            (1x15 vector)
+            Healthy susceptible to infection                                     Nh                       NhT
+            Non-infectious pre-symptomatic                                       Nni                      NniT
+            Infectious pre-symptomatic                                           Nps                     NpsT
+            Infectious symptomatic                                               Ns                       NsT
+            Requiring hospitalisation                                            Nsh                     NshT
+            Requiring critical care                                              Nsc                      NscT
+            Recovered & immune                                                   Nir                      NirT
+            Vaccinated still susceptible to infection                            Nhv                     NhvT
+            Vaccinated Non-infectious pre-symptomatic                           Nniv                     NnivT
+            Vaccinated Infectious pre-symptomatic                               Npsv                     NpsvT
+            Vaccinated Infectious symptomatic                                    Nsv                      NsvT
+            Vaccinated Requiring hospitalisation                                Nshv                     NshvT
+            Vaccinated Requiring critical care                                  Nscv                     NscvT
+            Vaccinated immune                                                    Niv                      NivT
+            Deceased                                                             Nd                       NdT
+Rates of transition between infection stages
+The progression of individuals across stages, as illustrated in Figure 1, includes the impact of
+vaccination bringing individuals directly into an immune stage or, if ineffectively vaccinated,
+remaining in their current stage. The transitions between stages are governed by the rates of infection,
+disease transition and vaccination shown in Table A2. All the rates are in vectors with each element
+corresponding to the rate for each age-related population group.
+    The average rates of transition between stages are defined as per the latest epidemiological and
+clinical data and they can be updated as knowledge of the disease increases and treatments
+improve. These parameters include the proportion of individuals that transition to a more severe
+stage or recover (Table A3) and the average times reported at each stage before transition or
+recovery (Table A4).
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211094.this version posted October 14, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                               perpetuity.
+                                    It is made available under a CC-BY-NC 4.0 International license .
+    Table A2. Rates of infection and transition between states in vectors per population group.
+         Definition “Rate of …”                                                           Variable Units
+         Infection by interaction with infectious pre-symptomatic                              ri_ps    # H infected/day
+         Infection by interaction with infectious symptomatic                                   ri_s    # H infected/day
+         Transition from non-infectious to infectious pre-symptomatic                         rps_ni    # NI to PS / day
+         Transition from pre-symptomatic to symptomatic                                        rs_ps    # PS to S / day
+         Transition from symptomatic to hospitalised                                           rsh_s    # S to SH / day
+         Transition from hospitalised to critical                                             rsc_sh    # SH to SC / day
+         Transition from critical to deceased                                                 rd_sc     # SC to D / day
+         Recovery from pre-symptomatic non-infectious                                          rr_ni    # NI to R / day
+         Recovery from pre-symptomatic infectious                                              rr_ps    # PS to R / day
+         Recovery from symptomatic                                                              rr_s    # S to R / day
+         Recovery from hospitalised                                                            rr_sh    # SH to R / day
+         Recovery from critical                                                                rr_sc    # SC to R / day
+         Vaccination of healthy susceptible                                                    rv_h     # H to HV / day
+         Vaccination of infected non-infectious                                                rv_ni    # NI to NIV / day
+         Vaccination of infected pre-symptomatic                                              rv_ps     # PS to PSV / day
+         Vaccination of recovered & already immune                                             rv_ir    # IR to IV / day
+ Table A3. Fractions of individuals progressing through each severity stage per population group.
+              Definition                                                                 Parameter Units
+              Fraction of NI that will become PS                                                 fps_ni    #PS/#NI
+              Fraction of PS that will become S                                                  fs_ps     #S/#PS
+              Fraction of S that will become SH                                                  fsh_s     #SH/#S
+              Fraction of SH that will become SC                                                 fsc_sh    #SC/#SH
+              Fraction of cared SC that will die into D                                          fd_sc     #D/#SCIC
+              Fraction of NI that will recover into R1                     (1- fps_ni)            fr_ni    #IR/#NI
+              Fraction of PS that will recover into R1                     (1- fs_ps)            fr_ps     #IR/#PS
+              Fraction of S that will recover into R1                      (1- fsh_s)             fr_s     #IR/#S
+              Fraction of SH that will recover into R1                     (1- fsc_sh)           fr_sh     #IR/#SH
+              Fraction of cared SC that will recover into R1               (1- fd_sc)             fr_sc    #IR/#SCIC
+                                          1
+                                           Calculated by difference with the complementary, not an input parameter
+
+ medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211094.this version posted October 14, 2020. The copyright holder for this
+ preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                perpetuity.
+                                     It is made available under a CC-BY-NC 4.0 International license .
+        Table A4. Clinical average times in each infection stage in vectors per population group.
+                Definition                                                                     Parameter Units
+                Time to become infectious after infection                                          tps_ni    days
+                Time to develop symptoms from becoming infectious                                   ts_ps    days
+                Time to require hospitalisation from symptoms onset                                 tsh_s    days
+                Time to require critical care from hospitalisation                                 tsc_sh    days
+                Time to death from critical condition                                               td_sc    days
+                Time to death from critical if no care is available                                td_nc     days
+                Time to fully recover from presymptomatic non-infectious                            tr_ni    days
+                Time to fully recover from presymptomatic infectious                                tr_ps    days
+                Time to fully recover from (non-severe) symptoms                                     tr_s    days
+                Time to fully recover from hospitalisation                                          tr_sh    days
+                Time to fully recover from critical condition                                       tr_sc    days
+    The rates of transition between stages (in number of individuals per day) are described in Eqs.
+A1.a-e. All rates are vectors per age group of dimensions (1x9). Note that the point operators
+between vectors indicate an element-by-element vector operation.
+                                  rni_h = ri_ps .+ ri_s                                                                 (Eq. A1.a)
+                                  rps_ni = (fps_ni./ tps_ni).* Nni                                                      (Eq. A1.b)
+                                  rs_ps = (fs_ps ./ ts_ps) .* Nps                                                       (Eq. A1.c)
+                                  rsh_s = (fsh_s ./ tsh_s) .* Ns                                                        (Eq. A1.d)
+                                  rsc_sh = (fsc_sh./ tsc_sh).* Nsh                                                      (Eq. A1.e)
+    The rates of individuals fully recovering and becoming immune from the different infected
+stages (in number of individuals per day) are described in Eqs A2.a-e. (all rates in vectors per age
+group).
+                                  rr_ni = (fr_ni./ tr_ni) .* Nni                                                        (Eq. A2.a)
+                                  rr_ps = (fr_ps./ tr_ps).* Nps                                                         (Eq. A2.b)
+                                  rr_s = (fr_s ./ tr_s) .* Ns                                                           (Eq. A2.c)
+                                  rr_sh = (fr_sh./ tr_sh).* Nsh                                                         (Eq. A2.d)
+                                  rr_sc = (fr_sc./ tr_sc) .* Nsc_ic                                                     (Eq. A2.e)
+    The rate of transition from critical to deceased is the sum of that of those in critical condition
+receiving intensive care (rd_scic) plus that of those without available care (rd_scnc) as per Eqs. A3.a-c.
+All critical individuals not receiving intensive care (Nsc_ncc) are assumed to become fatalities after a
+time (td_nc). A description of the critical care model allocation (in case the ICU capacity limits is
+reached) is provided below.
+                                  rd_sc = rd_scic + rd_scnc                                                             (Eq. A3.a)
+  where                           rd_scic = (fd_sc./ td_sc) .* Nsc_ic                                                   (Eq. A3.b)
+                                  rd_scnc = ( 1 ./ td_nc) .* Nsc_ncc                                                    (Eq. A3.c)
+
+ medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211094.this version posted October 14, 2020. The copyright holder for this
+  preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                perpetuity.
+                                     It is made available under a CC-BY-NC 4.0 International license .
+Allocation of critical care capacity if exceeded
+The impact of available critical care capacity is modelled by a specific function to allocate critically
+ill individuals as per the available ICU. The function allocates critically ill individuals in two possible
+groups, namely those admitted to ICU (Nsc_ic) and those not admitted to ICU due to lack of capacity
+or for medical or humanitarian reasons (Nsc_ncc). At each simulation time point the allocation
+function is computed for the total Nsc per age group.
+     The function allocates ICU resources with priority to populations groups with higher ICU survival
+rate (fr_sc) until the maximum number of intensive care units is reached leaving any remaining
+individuals without care, in this way Nsc_ic and Nsc_ncc are computed.
+     As the COVID-19 outbreak has progressed, data indicate that not all patients in critical condition
+have been admitted into intensive care units (ICU). Data show that many individuals with very poor
+prognosis, particularly those of oldest age may have never been referred to ICU due to capacity
+limitations or other medical humanitarian reasons. Data from Spain (Ministerio Sanidad España: Act.
+107 COVID-19) show that for individuals over 70, only a fraction of the reported fatalities previously
+hospitalised was ever admitted to ICU and this may not be only due to ICU lack of capacity. In order
+to maintain consistency with the reported data (Ministerio Sanidad España: Act. 107 COVID-19) the
+parameters of fd_sc and fsc_sh have been estimated such that the product of fd_sc * fsc_sh (fatality ratios
+over hospitalised individuals) is consistent with reported numbers for all ages irrespective of
+reported ICU admissions.
+Rates of infection
+The infection of healthy susceptible individuals (H and HV) is modelled as occurring only via their
+interaction with infectious either pre-symptomatic (PS) or symptomatic (S) individuals. Hospitalised
+(SH) and critical (SC) individuals are assumed not available for contacts neither are those deceased
+(D). Immune individuals after recovery (IR) or effective vaccination (IV) are also not infectious but
+contribute to the interactive pool of individuals towards herd immunity.
+     Two rates of infection of healthy susceptible individuals (in number of infections per day) are
+defined, one from each one of the two possible infecting groups (PS and S). However, in order to
+serve the goal of determining the optimal sequence of vaccination through population groups, the
+rates of infection have been expanded into terms for each population group.
+     The rate of infection of each (age-related) population group i results from the product of the
+number of healthy susceptible (H) individuals in the group (Nhi) times the sum of the rates of
+infection from contacts with each one of all the groups. This, for each group, is the product of the
+average number of daily contacts with individuals of that group (nihi,j) times the fraction of those in
+that group which are infectious (PS or S) times the likelihood of contagion to occur (modelled as
+function of the use of protection measures e.g. PPE by individuals in i and j groups) (see Eqs A4.a-b
+and Figure A1).
+                                  ri_psi = Nhi * j(nihi,j.* fipsj.*pipsi,j)                                             (Eq. A4.a)
+                                  ri_si = Nhi * j(nihi,j.* fisj.*pisi,j)                                                (Eq. A4.b)
+
+ medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211094.this version posted October 14, 2020. The copyright holder for this
+  preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                perpetuity.
+                                     It is made available under a CC-BY-NC 4.0 International license .
+              Figure A1. Visualisation of the rate of infection of individuals from a group i as per Eq. A4
+      For each (age-related) group, the average number of daily contacts an individual in a group i has
+with individuals from each one of the groups j (nii,j) are the most important parameters required as
+an input as they describe the level of social interactivity. These inputs allow for the description of
+specific key activities in a given group as well as for a complete customisation to the specifics of any
+community or country. Recent data from contact tracing applications and modelling makes the use
+of these information possible and reliable for these parameters (Prem et al., 2020). Examples on
+how these parameters reflect interventions is the opening of schools, which would involve high
+numbers of daily contacts between children in schools age groups, similarly for secondary school or
+universities but not necessarily with the other groups. This mapping of contacts is provided via a
+contacts matrix, in which only the part above the diagonal can be provided as direct input while the
+part below the diagonal is automatically calculated for consistency between groups based on their
+relative population sizes. Table S3b shows an example of values arbitrarily assigned and using the
+demographics of Spain 2019 (INE Spain, 2020). Interventions such as the degree of social isolation
+as described by Rodríguez et al.(2020) remain possible to simulate by modification of these matrix
+of average daily contacts even at a more detailed level since specific values for group-to-group
+number of daily contacts can be defined.
+      The second term impacting the rate of infection of a group i is, for each j group with which
+contacts exist, the proportion of individuals that are infectious (i.e. PS and S) and still interacting (fipsj
+and fisj). This can be directly computed at every time step from the dynamic variables (Eq. A5). This
+computation incorporates the impact of the awareness of infection after positive testing (Rodríguez
+et al., 2020) via a reduction factor of social interaction for those infected-aware (due to positive
+testing) or of infected-suspicious individuals. For untested individuals in a group j showing
+symptoms (S), a precautionary self or imposed partial quarantine is captured by the parameter (rfisj).
+For tested individuals, the awareness of infection after a positive result is assumed to lead to a full
+quarantine and removes those individuals from regular interaction with others. The fractions of
+infectious PS and S individuals that remain in interaction with others (fips and fis) are calculated as
+per Eqs A5.a-b. Hospitalised, critical and deceased are considered excluded from the pool of
+interacting individuals.
+fipsj = (1–ptpsj *tsns_ps) *N’psj / [N’hj + N’nij + (1–ptpsj* tsns_ps)*N’psj + (1–ptsj*tsns_s)*rfisj * N’sj) + N’irj+ N’ivj] (Eq. A5.a)
+fisj = (1–ptsj*tsns_s)*rfisj*N’sj) / [N’hj + N’nij + (1–ptpsj* tsns_ps)*N’psj + (1–ptsj*tsns_s)*rfisj * N’sj) + N’irj+ N’ivj] (Eq. A5.b)
+where, N’xj means the sum in stage x of both those not vaccinated and those ineffectively vaccinated
+(N’Xj = Nxj + Nxvj) in population group j; ptpsj is the proportion of randomly tested non-symptomatic
+individuals and ptsj is the proportion of symptomatic individuals tested. The parameters tsns_ps and
+tsns_s refer to the sensitivity of the tests for individuals in PS and S stages respectively. The differences
+are justified since e.g. for non-symptomatic individuals, only RT-qPCR tests are typically assumed
+adequate while, for symptomatic S individuals, both RT-qPCR and serological tests are used.
+      The third term impacting the rate of infection within group i, is the likelihood of infection per
+contact with an infectious (PS or S) individual of the group j. This is an element that could be directly
+
+ medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211094.this version posted October 14, 2020. The copyright holder for this
+ preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                perpetuity.
+                                     It is made available under a CC-BY-NC 4.0 International license .
+provided in the form of matrix of likelihood of infection between groups (pi_ps and pi_s) without
+further modelling. If the effect of specific interventions if of interest, the likelihood of infection can
+be further modelled in more detail as per below.
+    In this example likelihood of infection between groups is presented modelled as per Eq. A6a-b
+based on the level of PPE use and awareness displayed by the two interacting parties (Rodríguez et
+al., 2020) (see Eqs. A6) together with a newly proposed degree of infectiousness for PS and S. The
+parameters infps and infs reflect the degree of infectiousness between 0 and 1. This degree of
+infectiousness is considered potentially relevant in view not only on possible differences in viral load
+between PS and S individuals but also of ongoing research regarding specific population groups (e.g.
+children) which could display different levels of infectiousness to others. The level of protection and
+awareness of healthy susceptible individuals in the group i is described by the parameter lpahi as
+they interact with infectious PS and S individuals of group j with lpapsj and lpasj respectively. The
+values of the parameters can vary between 0 and 1, with 1 corresponding to the use of
+comprehensive protective measures and zero to the most careless opposite situation. Different
+values are assigned for the different activity and age-related population groups. (e.g. for primary
+school children and elderly). In this way, for individuals in group i, the likelihood of infection per
+interaction with individuals of the group j (PS and S respectively) is calculated as per Eqs A6.a-b.
+                                  pi_psij = (1 – lpahi) * (1 – lpapsj)* infpsj;                                         (Eq. A6.a)
+                                  pi_sij = (1 – lpahi) * (1 – lpasj) * infsj ;                                          (Eq. A6.b)
+    Table A5 shows the definitions and units of key variables and parameter used in the calculation
+of the rate of infection.
+          Table A5. Behaviour-related variables and parameters affecting the rate of infection.
+  Definition                                                              Parameter                        Units
+                                                                                  ij
+  Average daily contacts per H group i individual with j                      nih        #contacts j/ H individual i∙day
+  Personal protection and awareness by H in group i1                         lpahi                           ∅
+  Personal protection and awareness by PS in group j 1                      lpapsj                           ∅
+  Personal protection and awareness by S in group j 1                        lpasj                           ∅
+  Infectiousness level by PS in group j 1                                    infpsj                          ∅
+  Infectiousness level by S in group j 1                                      infsj                          ∅
+  Likelihood of infection by H individual i with PS in j 2                   pi_psij         infections / i contacting PS in j
+  Likelihood of infection by H individual i with S in j 2                     pi_sij         infections / i contacting PS in j
+  Percentage of tested individuals from PS in group j1                       ptpsj       #random (non S) tested/#(H+NI+PS)
+  Percentage of tested individuals from S in group j 1                        ptsj                 #random S tested/#S
+  Sensitivity of tests used on PS individuals                               tsns_ps             #PS detected / #PS tested
+  Sensitivity of tests used on S individuals                                 tsns_s               #S detected / #S tested
+  Reduction factor in contacts by S in group j1                               rfisj                          ∅
+     1                                            2
+      Values only within the interval [0,1]; Calculated if modelled or they can be directly provided as input parameters.
+
+ medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211094.this version posted October 14, 2020. The copyright holder for this
+ preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                perpetuity.
+                                     It is made available under a CC-BY-NC 4.0 International license .
+Rate of vaccination
+Once an effective vaccination against the SARS-CoV-2 virus becomes available, its mass deployment
+will take place, at any given moment, at a specific vaccination rate. This rate will be limited either
+by the availability of vaccine doses or by the system’s capacity to deliver them.
+    The recipients of the vaccine within the population groups will be all those individuals, either non
+tested or having tested (truly or falsely) negative or having recovered, that display no symptoms.
+This will include the vaccinations to the target healthy individuals (H) but also to untargeted individuals
+such as the non infectious (NI), those unaware (untested or with false negative test) that are pre-
+symptomatic infectious (PS) and those that have recovered from the infection (aware or not) (R).
+    A total capacity vaccination rate is defined (rvT), in number of individuals that can be vaccinated
+per day. The vaccination rates of individuals in each of the four possible stages suitable for
+vaccination, are defined as per Eqs A7.a-d in vectors for each (age-related) population group. The
+rate is proportional to the individuals in each stage and in each group among those suitable and
+called for vaccination.
+                                  rv_h = rvT * fv .* Nsv / i (fv .*Nsv)] .* Nh ./ Nsv                                  (Eq. A7.a)
+                                  rv_ni = rvT * fv .* Nsv / i (fv .*Nsv)] .* Nni ./ Nsv                                (Eq. A7.b)
+                                  rv_ps = rvT * fv .* Nsv / i (fv .*Nsv)] .* N#ps ./ Nsv                               (Eq. A7.c)
+                                  rv_ir = rvT * fv .* Nsv / i (fv .*Nsv)] .* Nir ./ Nsv                                (Eq. A7.d)
+where fv is a vector of zeros with one only on the groups currently called for vaccination in a specific
+moment. N#ps refers to untested PS individuals therefore unaware of their infection and susceptible
+of receiving vaccination N#ps = (1-ptps.* tsns_ps).*Nps.
+    In a given population group that no distinction is assumed possible between individuals in the
+vaccination suitable stages without symptoms. Therefore, in a population group i, the total number
+of undistinguishable individuals suitable for vaccination (NSVi) is given by Eq. A7.d.
+                                  NSVi = Nhi + Nnii + (1–ptpsj *tsns_ps)*Npsj + Nri                                     (Eq. A7.d)
+    With the above definition, the problem of determining the optimum plan for vaccine application
+is reduced to the determination, at any given moment in time, of the optimum values of fvi for each
+population group, until the vaccination campaign is completed.
+Dynamic transition equations
+The dynamic variation on the number of unvaccinated individuals in each stage over time in vectors
+of (age-related) population groups is governed by the population balance equations Eqs A8.a-g.
+                               dNh/dt = – rni_h .*(1-pVh)                                            – rv_h          (Eq. A8.a)
+                               dNni/dt = rni_h .*(1-pVh) – (rps_ni + rr_ni) .*(1-pVni)               – rv_ni         (Eq. A8.b)
+                               dNps/dt = rps_ni .*(1-pVni) – (rs_ps + rr_ps) .*(1-pVps) – rv_ps                      (Eq. A8.c)
+                               dNs/dt = rs_ps .*(1-pVps) – (rsh_s + rr_s) .*(1-pVs)                                  (Eq. A8.d)
+                               dNsh/dt = rsh_s .*(1-pVs) – (rsc_sh + rr_sh) .*(1-pVsh)                               (Eq. A8.e)
+                               dNsc/dt = rsc_sh .*(1-pVsh) – (rd_sc + rr_sc) .*(1-pVsc)                              (Eq. A8.f)
+                               dNir/dt = rr_ni .*(1-pVni) + rr_ps.*(1-pVps) + rr_s .*(1-pVs) +…
+                                              rr_sh .*(1-pVsh)+ rr_sc .*(1-pVsc)                     + rv_r          (Eq. A8.g)
+
+ medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211094.this version posted October 14, 2020. The copyright holder for this
+ preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                perpetuity.
+                                     It is made available under a CC-BY-NC 4.0 International license .
+    The vaccines once commercialised will likely display a given effectiveness (eV) per population
+group, which will lead to a proportion of ineffective vaccinations. Those ineffectively vaccinated
+individuals will not acquire immunity and therefore remain susceptible to infection and to all stages
+of severity. These must however be accounted for separately as they should not be vaccinated
+again. The population balances for all vaccinated individuals in their possible stages are presented
+in Eqs A8.h-n.
+                               dNhv/dt = – rni_h .* pVh                                              – rv_h.*(1-eV) (Eq. A8.h)
+                               dNniv/dt = rni_h .* pVh – (rps_ni + rr_ni) .* pVni                    – rv_ni         (Eq. A8.i)
+                               dNpsv/dt = rps_ni .* pVni – (rs_ps + rr_ps) .* pVps                   – rv_ps         (Eq. A8.j)
+                               dNsv/dt = rs_ps .* pVps – (rsh_s + rr_s) .* pVs                                       (Eq. A8.k)
+                               dNshv/dt = rsh_s .* pVs – (rsc_sh + rr_sh) .* pVsh                                    (Eq. A8.l)
+                               dNscv/dt = rsc_sh .* pVsh – (rd_sc + rr_sc) .* pVsc                                   (Eq. A8.m)
+                               dNiv/dt = rr_ni .*pVni + rr_ps.*pVps + rr_s .*pVs +…
+                                              rr_sh .*pVsh+ rr_sc .*pVsc                          + rv_r – rv_h.* eV (Eq. A8.n)
+    Finally the balance of fatalities is shown in Eq. A8.o.
+                               dNd/dt = rd_sc                                                                        (Eq. A8.o)
+where pV# is the proportion of individuals in stage # (vector for each population group) that have
+received a vaccine dose (effective or not).
+Computation of the dynamic reproduction number (R)
+The reproduction number describes the potential infections of susceptible individuals from infected
+individuals (Delamater et al. 2019). Since the model generates a deterministic set of values for its
+outputs at any given time, an instantaneous deterministic computation of the reproduction number
+(R) is possible. Multiple parameters and variables influence the R such as the duration of the
+infectious stages; the likelihoods of infection per contact as well as the percentages of individuals
+transitioning between stages.
+    The dynamic reproduction number (R) is computed over time according to Eq. A9 from the
+current values of the model state variables. The computation of R assumes that infectious
+individuals can only infect others while they are in pre-symptomatic (PS) and symptomatic (S)
+stages. Although it has been speculated that post-symptomatic recovered individuals may be
+infectious for some period of time, this has not been considered at this time given the insufficient
+data. Hospitalised and critical individuals are assumed not able to infect others in the general
+population as they are in controlled settings. The provided dynamic output of the reproduction
+number R provides additional information that can be used for decision making.
+    The computation of the R number is conducted considering that infected individuals can take
+only three possible infectious paths, namely: (i) Recovery after a period as pre-symtomatic (PS →
+R); (ii) Recovery after periods as presymtomatic and symptomatic (PS → S → R) and (iii)
+Hospitalisation after periods as presymtomatic and symptomatic (PS → S → SH). These paths are
+made of combinations of four possible infectious stage intervals in which infected individuals spend
+time and can infect others at their corresponding infection rate (see Table A6).
+
+ medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211094.this version posted October 14, 2020. The copyright holder for this
+ preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                perpetuity.
+                                     It is made available under a CC-BY-NC 4.0 International license .
+               Table A6. Possible infectious stages intervals for the R number computation.
+                           Fraction of infected               Interval          Total infections per stage interval per
+    Infectious
+                           passing the interval              duration                       individual infected
+     interval
+                               (indinterv/indinf)                 (d)                            (infinterv/indinf)
+      PS → R           fr_ps                                     tr_ps      (ri_psT/ NpsT)* tr_ps .* fr_ps
+      PS → S           (1 – fr_ps)                               ts_ps      (ri_psT/ NpsT)* ts_ps .* (1 – fr_ps)
+       S→R             (1 – fr_ps)* fr_s                          tr_s      (ri_sT / NsT) * tr_s .* (1 – fr_ps) .* fr_s
+      S → SH           (1 – fr_ps)* (1 – fr_s)                   tsh_s      (ri_sT / NsT) * tsh_s .* (1 – fr_ps) .* (1 – fr_s)
+    The dynamic computation of R results from adding the total infection contributions of the four
+stage intervals as shown in Eq. A9.
+          Rt =  [(ri_psT / NpsT)* (tr_ps .* fr_ps                     + ts_ps .* (1 – fr_ps))        +
+                   (ri_sT / NsT) * (tr_s .* (1 – fr_ps).* fr_s + tsh_s .* (1 – fr_ps).*(1 – fr_s)) ]                 (Eq. A9)
+in which, the population group weighted average rates of infection by PS and S are given as per Eqs.
+A10a-b.
+                   ri_psT =  (ri_ps .*N’ps)/N’psT)                    [infPS/indPS∙d]                               (Eq. A10.a)
+                   ri_sT =  (ri_s .* N’s) /N’sT)                      [infS/indS∙d]                                 (Eq. A10.b)
+where,    N’xj means the sum in stage x of both those unvaccinated and those ineffectively
+vaccinated (N’X = Nx + Nxv) for all population groups.
+Source code
+The Matlab® source code and the Excel files containing all inputs and parameters used are fully
+available on demand.
+Acknowledgements
+Khalifa University (Grant 8474000317 CRPA-2020-SEHA) and the Government of Abu Dhabi for the
+funding and infrastructure provided.
+References
+Bendix A. (2020) A day-by-day breakdown of coronavirus symptoms shows how the disease, COVID-19,
+    goes from bad to worse. Business Insider (last accessed 30-3-2020)
+    https://www.businessinsider.com/coronavirus-covid19-day-by-day-symptoms-patients-2020-2
+Bubar, K.M., Kissler, S.M., Lipsitch, M., Cobey, S., Grad, Y., Larremore, D.B., 2020. Model-informed COVID-
+  19 vaccine prioritization strategies by age and serostatus. medRxiv 2020.09.08.20190629.
+  https://doi.org/10.1101/2020.09.08.20190629
+Cori A, Ferguson NM, Fraser C & Cauchemez S. A new framework and software to estimate time-varying
+  reproduction numbers during epidemics. American Journal of Epidemiology, 2013; 178(9):1505–1512 (
+  https://doi.org/10.1093/aje/kwt133).
+Delamater, P. L., Street, E. J., Leslie, T. F., Yang, Y., & Jacobsen, K. H. (2019). Complexity of the Basic
+    Reproduction Number (R0). Emerging Infectious Diseases, 25(1), 1-4.
+    https://dx.doi.org/10.3201/eid2501.171901.
+Emanuel EJ, Persad G, Kern A, Buchanan A, Fabre C, Halliday D, Heath J,Herzog L, Leland RJ, Lemango ET,
+  Luna F, McCoy MS, Norheim OF,Ottersen T, Schaefer GO, Tan KC, Wellman CH, Wolff J, Richardson HS. An
+  ethical framework for global vaccine allocation. Science, 369(6509):1309-1312
+
+ medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211094.this version posted October 14, 2020. The copyright holder for this
+ preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                perpetuity.
+                                     It is made available under a CC-BY-NC 4.0 International license .
+Field RI, Caplan AL.(2012) Evidence-based decision making for vaccines: the need for an ethical foundation.
+  Vaccine. 30(6):1009-1013. DOI: 10.1016/j.vaccine.2011.12.053
+Gatto, M., Bertuzzo, E., Mari, L., Miccoli, S., Carraro, L., Casagrandi, R., Rinaldo, A., 2020. Spread and
+  dynamics of the COVID-19 epidemic in Italy: Effects of emergency containment measures. PNAS 117,
+  10484–10491. https://doi.org/10.1073/pnas.2004978117
+Giordano, G., Blanchini, F., Bruno, R., Colaneri, P., Filippo, A.D., Matteo, A.D., Colaneri, M., 2020. Modelling
+  the COVID-19 epidemic and implementation of population-wide interventions in Italy. Nat Med 1–6.
+  https://doi.org/10.1038/s41591-020-0883-7
+Hellewell, J., Abbott, S., Gimma, A., Bosse, N.I., Jarvis, C.I., Russell, T.W., Munday, J.D., Kucharski, A.J.,
+  Edmunds, W.J., Sun, F., Flasche, S., Quilty, B.J., Davies, N., Liu, Y., Clifford, S., Klepac, P., Jit, M., Diamond,
+  C., Gibbs, H., Zandvoort, K. van, Funk, S., Eggo, R.M., 2020. Feasibility of controlling COVID-19 outbreaks
+  by isolation of cases and contacts. The Lancet Global Health 8, e488–e496.
+  https://doi.org/10.1016/S2214-109X(20)30074-7
+INE Spain (2020) https://www.ine.es/ (last accessed31/3/2020)
+Pollán M. et al. (2020) Prevalence of SARS-CoV-2 in Spain (ENE-COVID): a nationwide, population-based
+  seroepidemiological study. Lancet https://doi.org/10.1016/S0140-6736(20)31483-5
+JHCRC (2020) John Hopkins – Coronavirus Resource Center (https://coronavirus.jhu.edu/map.html)
+Krammer, F.(2020) SARS-CoV-2 vaccines in development. Nature. https://doi.org/10.1038/s41586-020-2798-3
+Kissler, S.M., Tedijanto, C., Goldstein, E., Grad, Y.H., Lipsitch, M., 2020. Projecting the transmission
+  dynamics of SARS-CoV-2 through the postpandemic period. Science.
+  https://doi.org/10.1126/science.abb5793
+Kucharski, A.J., Russell, T.W., Diamond, C., Liu, Y., Edmunds, J., Funk, S., Eggo, R.M., Sun, F., Jit, M., Munday,
+  J.D., Davies, N., Gimma, A., Zandvoort, K. van, Gibbs, H., Hellewell, J., Jarvis, C.I., Clifford, S., Quilty, B.J.,
+  Bosse, N.I., Abbott, S., Klepac, P., Flasche, S., 2020. Early dynamics of transmission and control of COVID-
+  19: a mathematical modelling study. The Lancet Infectious Diseases. https://doi.org/10.1016/S1473-
+  3099(20)30144-4
+Lauer, S.A., Grantz, K.H., Bi, Q., Jones, F.K., Zheng, Q., Meredith, H.R., Azman, A.S., Reich, N.G. and Lessler, J.
+    (2020). The incubation period of coronavirus disease 2019 (COVID-19) from publicly reported confirmed
+    cases: estimation and application. Annals of internal medicine.
+Liu, Yangzi; Salwi, Sanjana; Drolet, Brian C. Multivalue ethical framework for fair global allocation of a
+  COVID-19 vaccine. J Med Ethics ; 46(8): 499-501, 2020 08.
+Matrajt, L., Eaton, J., Leung, T., Brown, E.R., 2020. Vaccine optimization for COVID-19, who to vaccinate
+  first? medRxiv 2020.08.14.20175257. https://doi.org/10.1101/2020.08.14.20175257
+Mello MM, Silverman RD, Omer SB. Ensuring Uptake of Vaccines against SARS-CoV-2. N Engl J Med 2020;
+  383:1296-1299 DOI: 10.1056/NEJMp2020926
+Ministerio de Sanidad de España. Actualización nº67: enfermedad por SARS-CoV-2 (COVID-19) 03.04.2020
+    https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/alertasActual/nCov-
+    China/documentos/Actualizacion_74_COVID-19.pdf
+Nishiura H, Kobayashi T, Suzuki A, Jung S-Mok, Hayashi K, Kinoshita R, Yang Y, Yuan B, Akhmetzhanov AR,
+    Linton NM, Miyama T (2020) Estimation of the asymptomatic ratio of novel coronavirus infections
+    (COVID-19), International Journal of Infectious Diseases, doi:https://doi.org/10.1016/j.ijid.2020.03.020
+Nishiura H, Linton NM, Akhmetzhanov AR. Serial interval of novel coronaviru)s (COVID-19) infections.
+  International Journal of Infectious Diseases 2020; 93:284-286 (https://doi.org/10.1016/j.ijid.2020.02.060).
+Parker, E.P.K., Shrotri, M. & Kampmann, B. Keeping track of the SARS-CoV-2 vaccine pipeline. Nat Rev
+  Immunol (2020). https://doi.org/10.1038/s41577-020-00455-1
+Prem K, van Zandvoort K, Klepac P, Eggo RM, Davies NG, Centre for the Mathematical Modelling of
+  Infectious Diseases COVID-19 Working Group, Cook AR, Jit M. (2020) Projecting contact matrices in 177
+  geographical regions: an update and comparison with empirical data for the COVID-19 era medRxiv
+  2020.07.22.20159772
+
+ medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211094.this version posted October 14, 2020. The copyright holder for this
+ preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                perpetuity.
+                                     It is made available under a CC-BY-NC 4.0 International license .
+Rodríguez J., Uratani JM Patón M. and Acuña JM (2020) Modelling the impact of interventions on the
+  progress of the COVID-19 outbreak including age segregation. MedRxiv
+  https://www.medrxiv.org/content/10.1101/2020.04.04.20053017v3
+Roosa, K., Lee, Y., Luo, R., Kirpich, A., Rothenberg, R., Hyman, J.M., Yan, P., Chowell, G., 2020. Real-time
+  forecasts of the COVID-19 epidemic in China from February 5th to February 24th, 2020. Infectious Disease
+  Modelling 5, 256–263. https://doi.org/10.1016/j.idm.2020.02.002
+Schwartz J.L. (2020). Evaluating and Deploying Covid-19 Vaccines — The Importance of Transparency,
+  Scientific Integrity, and Public Trust. NEJM DOI: 10.1056/NEJMp2026393
+Wang, X., Peng, H., Shi, B., Jiang, D., Zhang, S., Chen, B., 2019. Optimal vaccination strategy of a constrained
+  time-varying SEIR epidemic model. Communications in Nonlinear Science and Numerical Simulation 67,
+  37–48. https://doi.org/10.1016/j.cnsns.2018.07.003
+Wearing HJ, Rohani P, Keeling MJ (2005) Appropriate Models for the Management of Infectious Diseases.
+    PLoS Med 2(7): e174. https://doi.org/10.1371/journal.pmed.0020174
+WHO (2020a). Access to COVID-19 tools (act) accelerator: A Global Collaboration to Accelerate the
+  Development, Production and Equitable Access to New COVID-19 diagnostics, therapeutics and vaccines.
+  (https://www.who.int/publications/m/item/access-to-covid-19-tools-(act)-accelerator)
+WHO 2020b. Public health criteria to adjust public health and social measures in the context of COVID-19
+  Annex to Considerations in adjusting public health and social measures in the context of COVID-19.
+  Geneva: World Health Organization; 2020 (https://www.who.int/publications/i/item/public-health-
+  criteria-to-adjust-public-health-and-social-measures-in-the-context-of-covid-19).
+Wilder, B., Charpignon, M., Killian, J.A., Ou, H.-C., Mate, A., Jabbari, S., Perrault, A., Desai, A.N., Tambe, M.,
+  Majumder, M.S., 2020. Modeling between-population variation in COVID-19 dynamics in Hubei,
+  Lombardy, and New York City. PNAS. https://doi.org/10.1073/pnas.2010651117
+Yu, Z., Liu, J., Wang, X., Zhu, X., Wang, D., Han, G., 2016. Efficient Vaccine Distribution Based on a Hybrid
+  Compartmental Model. PLOS ONE 11, e0155416. https://doi.org/10.1371/journal.pone.0155416
+Zhou F, Yu T, Du R, et al. (2020) Clinical course and risk factors for mortality of adult inpatients with COVID-
+    19 in Wuhan, China: a retrospective cohort study. Lancet published online March 9.
+    http://dx.doi.org/10.1016/S0140-6736(20)30566-3.

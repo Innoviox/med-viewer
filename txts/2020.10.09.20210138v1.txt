@@ -1,0 +1,591 @@
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20210138.this version posted October 13, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                               perpetuity.
+                                      It is made available under a CC-BY 4.0 International license .
+         Synthesising artificial patient-level data for Open Science - an
+                                              evaluation of five methods
+                                                                *1
+                                            Michael Allen            and Andrew Salmon1
+            1
+              University of Exeter Medical School & NIHR South West Peninsula Applied Research Collaboration (ARC).
+                                                            October 9, 2020
+   NOTE: This preprint reports new research that has not been certified by peer review and should not be used to guide clinical practice.
+      * Corresponding authors: m.allen@exeter
+                                                                       1
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20210138.this version posted October 13, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                               perpetuity.
+                                      It is made available under a CC-BY 4.0 International license .
+  ABSTRACT
+  Background
+  Open science is a movement seeking to make scientific research accessible to all, including publication of code
+  and data. Publishing patient-level data may, however, compromise the confidentiality of that data if there
+  is any significant risk that data may later be associated with individuals. Use of synthetic data offers the
+  potential to be able to release data that may be used to evaluate methods or perform preliminary research
+  without risk to patient confidentiality.
+  Methods
+  We have tested five synthetic data methods:
+      1. A technique based on Principal Component Analysis (PCA) which samples data from distributions
+          derived from the transformed data.
+      2. Synthetic Minority Oversampling Technique, SMOTE which is based on interpolation between near
+          neighbours.
+      3. Generative Adversarial Network, GAN, an artificial neural network approach with competing networks
+         - a discriminator network trained to distinguish between synthetic and real data. , and a generator
+          network trained to produce data that can fool the discriminator network.
+      4. CT-GAN, a refinement of GANs specifically for the production of structured tabular synthetic data.
+      5. Variational Auto Encoders, VAE, a method of encoding data in a reduced number of dimensions, and
+          sampling from distributions based on the encoded dimensions.
+  Two data sets are used to evaluate the methods:
+      1. The Wisconsin Breast Cancer data set, a histology data set where all features are continuous variables.
+      2. A stroke thrombolysis pathway data set, a data set describing characteristics for patients where a decision
+          is made whether to treat with clot-busting medication. Features are mostly categorical, binary, or
+          integers.
+  Methods are evaluated in three ways:
+      1. The ability of synthetic data to train a logistic regression classification model.
+      2. A comparison of means and standard deviations between original and synthetic data.
+      3. A comparison of covariance between features in the original and synthetic data.
+  Results
+  Using the Wisconsin Breast Cancer data set, the original data gave 98% accuracy in a logistic regression
+  classification model. Synthetic data sets gave between 93% and 99% accuracy. Performance (best to worst)
+  was SMOTE > PCA > GAN > CT-GAN = VAE. All methods produced a high accuracy in reproducing
+  original data means and stabdard deviations (all R-square > 0.96 for all methods and data classes). CT-GAN
+  and VAE suffered a significant loss of covariance between features in the synthetic data sets.
+  Using the Stroke Pathway data set, the original data gave 82% accuracy in a logistic regression classification
+  model. Synthetic data sets gave between 66% and 82% accuracy. Performance (best to worst) was SMOTE
+  > PCA > CT-GAN > GAN > VAE. CT-GAN and VAE suffered loss of covariance between features in the
+  synthetic data sets, though less pronounced than with the Wisconsin Breast Cancer data set.
+  Conclusions
+  The pilot work described here shows, as proof of concept, that synthetic data may be produced, which
+  is of sufficient quality to publish with open methodology, to allow people to better understand and test
+  methodology. The quality of the synthetic data also gives promise of data sets that may be used for screening
+  of ideas, or for research project (perhaps especially in an education setting).
+  More work is required to further refine and test methods across a broader range of patient-level data sets.
+                                                                     2
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20210138.this version posted October 13, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                               perpetuity.
+                                      It is made available under a CC-BY 4.0 International license .
+  1       Introduction                                                         data is significantly reduced compared to the
+                                                                               original data set.
+  Open science is a movement seeking to make scientific
+  research accessible to all 1 . This includes not only                     5. Variational Auto Encoders, VAE 7 . An autoen-
+  open publication of scientific papers, but provision                         coder is a type of artificial neural network that
+  of code (using open source software), and underlying                         encodes data in a reduced dimension space 8 .
+  data. Publishing patient-level data may, however,                            The network is trained so that data is forced
+  compromise the confidentiality of that data if there is                      down through a layer (the latent space layer
+  any significant risk that data may later be associated                       with fewer dimensions than the original data.
+  with individuals.                                                            Decoding layers then expand back to the origi-
+                                                                               nal number of dimensions, and the network is
+  If we are to publish analysis or models, such as ma-                         trained to minimise the loss between the de-
+  chine learning models, with data we therefore need                           coded data and the original data. Variational
+  a means of producing data that contains all the fea-                         Auto Encoders are an adaptation to allow this
+  tures of the original data but does not present any                          framework to be used for synthetic data pro-
+  significant risk to patient confidentiality. We may                          duction, using a specialised way of regulating
+  take two approaches to solving this problem. Firstly                         the network to avoid over-fitting to the original
+  we may add noise to the data to sufficiently protect                         data. The latent layer is framed as a distribu-
+  anonymity; this approach is used in the differential                         tion for each dimension, with the loss function
+  privacy method 2 . A second approach is to try to pro-                       for training the model incorporating a penalty
+  duce synthetic data that is a reasonable facsimile of                        for low variance distributions. Synthetic data is
+  the original data, but that does not directly recreate                       produced by sampling values for the latent lay-
+  original data points.                                                        ers using the distribution parameters obtained
+                                                                               in training of the network.
+  In this paper we present experiments with five differ-
+  ent methods of producing synthetic data:                               Clinical data can take various forms. Here we inves-
+      1. A method based on Principal Component Anal-                     tigate techniques using two different data sets.
+          ysis, PCA, a classical statistical method for                     1. The Wisconsin Breast Cancer data set 9 . This
+          dimensionality reduction 3 . Data is transformed                     is a set of histology data. There are two classes:
+          into k orthogonal dimensions. We use this ap-                        samples that come from malignant tumours and
+          proach to create synthetic data by sampling                          samples that come from benign tumours. All
+          from distributions for each Principal Compo-                         features are continuous variables. The data
+          nent dimension, and transforming these sam-                          set contains 569 tissue samples each with 30
+          pled data points back into the original data                         features.
+          dimension space.
+                                                                            2. A stroke thrombolysis pathway data set 10 . This
+      2. Synthetic Minority Oversampling Technique,
+                                                                               is a data set of clinical characteristics for pa-
+          SMOTE 4 . This is a method normally used
+                                                                               tients in an acute Stroke Pathway. There are
+          to enhance data with extra points created by
+                                                                               two classes: patients that receive thromboly-
+          interpolation between near neighbours. Here we
+                                                                               sis (treatment to dissolve a clot in the brain),
+          follow the same methodology used for data aug-
+                                                                               and patients that do not receive thrombolysis.
+          mentation, but remove the original data points,
+                                                                               The majority of features are categorical, binary,
+          leaving only the synthetic data points.
+                                                                               or integer values. The data set contains 1862
+      3. Generative Adversarial Network, GAN 5 . This                          patients each with 50 features.
+          method relies on two adversarial artificial neural
+                                                                         This work describes initial pilot work to test the five
+          networks. A discriminator network is trained
+                                                                         synthetic data methods applied to the two data sets.
+          to distinguish between synthetic and real data.
+                                                                         Methods are not fully optimised, and the two data
+          A generator network is trained to produce data
+                                                                         sets while intending to represent two different types
+          that can fool the discriminator network. The
+                                                                         of data, do not represent all types of clinical data.
+          performance of each improves as the two net-
+          works are trained in contest with each other.
+      4. Conditional Tabular GAN, CT-GAN 6 . CT-                         2     Methods
+          GAN is a development of a general GAN with
+          the aim of providing synthetic tabular data. A                 All data and code for the experiments de-
+          conditional GAN framework is used to help pre-                 scribed here may be found at https://github.
+          vent modal collapse, a problem where a GAN                     com/MichaelAllen1966/synthetic_data_pilot/
+          may generate realistic synthetic data, but that                releases/tag/1.0.0 (DOI:10.5281/zenodo.4075288).
+          the the population variance of the synthetic                   All methods are coded in Python 11 .
+                                                                     3
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20210138.this version posted October 13, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                               perpetuity.
+                                      It is made available under a CC-BY 4.0 International license .
+  2.1       Synthetic methods                                                   against 25% of the original data (the remaining
+                                                                                75% of the original data is used to train another
+  Methods coded are:
+                                                                                logistic regression model for comparison).
+      1. Principal Component Analysis, PCA 3 , imple-                       2. Means and standard deviations are compared
+          mented using the decomposition package in                             between original and synthetic data. Coefficient
+          SciKit Learn 12 .                                                     of correlation of the comparison is described in
+      2. Synthetic Minority Oversampling Technique,                             the results section. Detailed plots are provided
+          SMOTE 4 , implemented using the IMBLearn                              in the appendix.
+          package 13 .                                                      3. Covariance between features is evaluated in the
+      3. Generative Adversarial Network, GAN 5 , imple-                         original and synthetic data. The pair-wise co-
+          mented in PyTorch 14                                                  efficient of correlation for each feature pair is
+                                                                                compared between original and synthetic data
+      4. Conditional Tabular GAN, CT-GAN 6 , imple-                             and an overall coefficient of correlation (of the
+          mented using the CT-GAN package (https:                               pair-wise coefficients of correlation between orig-
+          //github.com/sdv-dev/CTGAN).                                          inal and synthetic data) provided in the results.
+      5. Variational Auto Encoders, VAE 7 implemented                           Detailed plots are provided in the appendix.
+          in TensforFlow 15 and Keras (https://github.
+          com/fchollet/keras.)
+                                                                         3     Results
+  Additional numerical calculations are performed us-
+  ing NumPy 16 and Pandas 17 . Results are plotted                       3.1      Training a logistic regression clas-
+  using MatPlotLib 18 .                                                           sification model
+  All synthetic methods have been constructed to to                      Table 1 shows the performance of a logistic regression
+  initially produce continuous variable outputs. Non                     classification model trained on original or synthetic
+  continuous outputs are generated as follows:                           data (when original data is used to train the model,
+      1. Binary: values of 0.5 or greater are set to 1,                  the model is tested on 25% of the data not used to
+          otherwise 0.                                                   train the model). Results are shown for accuracy
+                                                                        (proportion of all cases identified correctly), sensitiv-
+      2. Integer : values are set as the rounded integer of              ity (proportion of positive cases identified correctly)
+          the continuous variable. No clipping is applied.               and specificity (proportion of negative cases identified
+                                                                         correctly). The experiment was repeated five times.
+      3. Categorical : values are converted to one-hot
+          encoding in the raw data. In the synthetic data
+          the one-hot feature with the greatest value is                 3.2      Comparison of means and stan-
+          set to 1, and all others are set to 0.                                  dard deviations
+                                                                         Table 2 shows a summary of correlations between
+  2.2       evaluation                                                   original and synthetic means and standard deviations
+                                                                        (see appendix for detailed charts). Further detailed
+  For each method the synthetic method is run sepa-
+                                                                         results are available in the Jupyter Notebooks in the
+  rately for the negative and positive class examples.
+                                                                         on-line GitHub repository.
+  Methods are evaluated in three ways:
+                                                                         Table 3 shows a summary of correlation coefficients
+      1. A logistic regression model (SciKit Learn 12 ) is               between original and synthetic pair-wise feature corre-
+          trained using synthetic data. This is then tested              lation coefficients (see appendix for detailed charts).
+                                                                     4
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20210138.this version posted October 13, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                               perpetuity.
+                                      It is made available under a CC-BY 4.0 International license .
+  Table 1: Performance of original and synthetic data sets when used to train a logistic regression model, which
+  is tested against original data. Results show mean ± sem (n=5).
+                           Data set          Synthesis     Accuracy          Sensitivity          Specificity
+                           Wisconsin         Original      0.975  (0.007)    0.944   (0.011)      0.995 (0.004)
+                                             PCA           0.976  (0.003)    0.971   (0.098)      0.980 (0.005)
+                                             SMOTE         0.990  (0.003)    0.985   (0.013)      0.993 (0.002)
+                                             GAN           0.957  (0.008)    0.934   (0.016)      0.968 (0.007)
+                                             CT-GAN        0.933  (0.015)    0.825   (0.030)      0.998 (0.002)
+                                             VAE           0.933  (0.009)    0.965   (0.019)      0.998 (0.002)
+                           Stroke            Original      0.815  (0.005)    0.806   (0.008)      0.821 (0.005)
+                                             PCA           0.801  (0.010)    0.875   (0.005)      0.752 (0.015)
+                                             SMOTE         0.824  (0.004)    0.853   (0.012)      0.804 (0.010)
+                                             GAN           0.678  (0.012)    0.725   (0.056)      0.644 (0.048)
+                                             CT-GAN        0.684  (0.034)    0.877   (0.029)      0.556 (0.075)
+                                             VAE           0.664  (0.004)    0.692   (0.031)      0.648 (0.002)
+  Table 2: R-squared for correlations between original and synthetic means and standard deviations (SD).
+  Results show mean ± sem (n=5).
+                                             Means                                 Standard Deviations
+           Data set        Synthesis         Negative          Positive            Negative                   Positive
+           Wisconsin       PCA               1.000 (0.000)     1.000  (0.000)      1.000  (0.000)             1.000 (0.000)
+                           SMOTE             1.000 (0.000)     1.000  (0.000)      1.000  (0.000)             1.000 (0.000)
+                           GAN               0.999 (0.000)     0.999  (0.000)      1.000  (0.000)             0.999 (0.000)
+                           CT-GAN            0.985 (0.006)     0.967  (0.010)      0.996  (0.001)             0.975 (0.003)
+                           VAE               0.998 (0.001)     0.983  (0.007))     0.980  (0.011)             f0.974 (0.008)
+           Stroke          PCA               1.000 (0.000)     1.000  (0.000)      0.999  (0.000)             1.000 (0.000)
+                           SMOTE             1.000 (0.000)     1.000  (0.000)      0.999  (0.000)             0.998 (0.000)
+                           GAN               0.999 (0.000)     1.000  (0.000)      0.967  (0.004)             0.987 (0.003)
+                           CT-GAN            0.998 (0.001)     0.996  (0.001)      0.996  (0.001)             0.988 (0.003)
+                           VAE               0.998 (0.001)     0.999  (0.000)      0.987  (0.005)             0.989 (0.004)
+  Table 3: R-squared for correlation between original and synthetic pair-wise feature correlation coefficients.
+  Results show mean ± sem (n=5).
+                                      Data set        Synthesis     Negative           Positive
+                                      Wisconsin       PCA           0.996  (0.000)     0.995    (0.000)
+                                                      SMOTE         0.984  (0.002)     0.981    (0.002)
+                                                      GAN           0.918  (0.009)     0.832    (0.039)
+                                                      CT-GAN        0.134  (0.002)     0.146    (0.006)
+                                                      VAE           0.535  (0.044)     0.166    (0.038)
+                                      Stroke          PCA           0.939  (0.002)     0.934    (0.001)
+                                                      SMOTE         0.923  (0.001)     0.910    (0.002)
+                                                      GAN           0.833  (0.006)     0.828    (0.008)
+                                                      CT-GAN        0.388  (0.003)     0.448    (0.003)
+                                                      VAE           0.844  (0.008)     0.827    (0.006)
+                                                                     5
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20210138.this version posted October 13, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                               perpetuity.
+                                      It is made available under a CC-BY 4.0 International license .
+  4       Discussion                                                     Whether performance of a synthetic method is suffi-
+                                                                         ciently good, and which method is best, depends on
+  In the data sets we have examined here synthetic                       the purpose of the synthetic data. Is the synthetic
+  approaches based on PCA and SMOTE have the best                        data to be used as an illustrative data set, or will
+  performance overall: classification model performance                  detailed analysis be performed on it? For Open Sci-
+  is maintained, means and standard deviations of the                    ence, the former will probably most common - the
+  synthetic data closely match the original data set,                    synthetic data must resemble the original data with
+  and covariance between features is well maintained.                    close enough approximation that the methods and
+  A standard GAN performed reasonably well in all cat-                   results being presented may be understood using the
+  egories. CT-GAN, however performed more poorly in                      synthetic data. A next step up the synthetic data
+  the classification model training for the stroke model                 quality ladder is to use of synthetic data that may
+  and, while means and standard deviations closely                       be made publicly available and that can be used to
+  matched the original data set, there was a significant                 test ideas before an application is made for robust
+  loss in covariance between the features. The VAE                       analysis of the original data. The final rung of the
+  performance was similar to the standard GAN, but                       synthetic data quality ladder is when synthetic data
+  also suffered from some loss in covariance between                     may totally replace original data for research, with no
+  features, especially in the Wisconsin Breast Cancer                    need even to confirm results using the original data.
+  data set.                                                              The quality of patient-level synthetic data, from our
+                                                                         pilot experiments, appears to be within this spectrum
+  PCA and SMOTE currently appear the best choices
+                                                                        - easily good enough to be used to help people un-
+  for synthesising tabular patient data, but testing on
+                                                                         derstand and test published methodology, and likely
+  more data sets is required. PCA may struggle as
+                                                                         good enough to be used to screen ideas (e.g. in an
+  feature sets become larger and computation of the
+                                                                         educational research setting).
+  principal components becomes more computationally
+  challenging.
+  GANs are a rapidly developing type of network.
+                                                                         4.1      Limitations
+  They are able to synthesise complex data includ-                       Two key limitations of the work described here are:
+  ing non-structured data such as images (see https:
+  //thispersondoesnotexist.com as an example of                             1. We have so far used only two patient-level data
+  a GAN creating realistic images of people. Here we                            sets. Those these data sets were chosen to rep-
+  have used just a simple GAN and CT-GAN. There                                 resent different types of data, further evaluation
+  is potential in testing developments of the GAN ap-                           is needed using alternative patient-level data
+  proach, such as the Wasserstein GAN 19 which im-                              sets.
+  proves stability of GANs and helps prevent modal                          2. We have used methods in their basic configu-
+  collapse where the synthetic data is realistic but from                       ration. Further optimisation, or use of refined
+  the population of the synthetic data is more limited                          approaches, may improve on performance ob-
+  in variance than that of the original data.                                   served here.
+  Instability in GANs is a well known phenomenon,                           3. In all our methods we trained the synthetic data
+  hence the development of techniques such as Wasser-                           engines on data from each data class separately.
+  stein GAN to improve stability. One practical ap-                            We have yet to evaluate the performance of ma-
+  proach may also be to train an ensemble of GANs,                              chine learning classification trained on synthetic
+  and choose the one that produces the highest quality                          data where the class is treated as just one of
+  synthetic data.                                                               the features in the data set (a single synthetic
+  The relatively poor performance of the CT-GAN, es-                            data engine would be trained and used, rather
+  pecially the profound loss of the expected covariance                         than class-based engines).
+  between features in the synthetic data, was a surprise,
+  as this method is targeted at replicating tabular data.                4.2      Further work
+  From our results, this method should be used with
+  caution where preservation of feature covariance is                    Further work will focus on the following areas:
+  important.                                                                1. Optimising methods and using refinements to
+  The overall performance of the VAEs was similar                               methods (especially more advanced GAN tech-
+  to the GAN, except that there was some loss in co-                            niques).
+  variance between features. Unlike PCA there is no                         2. Testing on a broader range of patient-level data
+  requirement of the encoded reduced dimension layer                            sets.
+  to have encoded features that are orthogonal to each
+  other, so it is perhaps not surprisingly that the VAE                     3. Testing the ability to produce synthetic data
+  does not necessarily maintain feature covariance.                             suitable for machine learning classification with-
+                                                                     6
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20210138.this version posted October 13, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                               perpetuity.
+                                      It is made available under a CC-BY 4.0 International license .
+          out the need to separately train methods on                    5      Conclusions
+          different classes of data.
+                                                                         The pilot work described here shows, as proof of con-
+                                                                         cept, that synthetic data may be produced, which is
+                                                                         of sufficient quality to publish with open methodology,
+                                                                         to allow people to better understand and test method-
+      4. Testing ensembles of artificial neural nets                     ology. The quality of the synthetic data also gives
+          (GANs, VAEs), picking the best performing                      promise of data sets that may be used for screening
+          engine and testing against a separate held-back                of ideas, or for research project (perhaps especially
+          data set (for machine learning classification).                in an education setting).
+  6       References
+  References
+    [1] M. Woelfle, P. Olliaro, and M. H. Todd, “Open science is a research accelerator,” Nature Chemistry,
+         vol. 3, pp. 745–748, Oct. 2011. Number: 10 Publisher: Nature Publishing Group.
+    [2] C. Dwork, F. McSherry, K. Nissim, and A. Smith, “Calibrating Noise to Sensitivity in Private Data
+        Analysis,” in Theory of Cryptography (S. Halevi and T. Rabin, eds.), Lecture Notes in Computer Science,
+        (Berlin, Heidelberg), pp. 265–284, Springer, 2006.
+    [3] K. P. F.R.S, “On lines and planes of closest fit to systems of points in space,” The London, Edinburgh,
+        and Dublin Philosophical Magazine and Journal of Science, vol. 2, pp. 559–572, Nov. 1901. Publisher:
+         Taylor & Francis eprint: https://doi.org/10.1080/14786440109462720.
+    [4] N. V. Chawla, K. W. Bowyer, L. O. Hall, and W. P. Kegelmeyer, “SMOTE: Synthetic Minority Over-
+         sampling Technique,” Journal of Artificial Intelligence Research, vol. 16, pp. 321–357, June 2002. arXiv:
+        1106.1813.
+    [5] I. Goodfellow, J. Pouget-Abadie, M. Mirza, B. Xu, D. Warde-Farley, S. Ozair, A. Courville, and Y. Bengio,
+        “Generative Adversarial Nets,” in Advances in Neural Information Processing Systems 27 (Z. Ghahramani,
+         M. Welling, C. Cortes, N. D. Lawrence, and K. Q. Weinberger, eds.), pp. 2672–2680, Curran Associates,
+         Inc., 2014.
+    [6] L. Xu, M. Skoularidou, A. Cuesta-Infante, and K. Veeramachaneni, “Modeling Tabular data using
+         Conditional GAN,” arXiv:1907.00503 [cs, stat], Oct. 2019. arXiv: 1907.00503.
+    [7] D. P. Kingma and M. Welling, “Auto-Encoding Variational Bayes,” arXiv:1312.6114 [cs, stat], Dec.
+         2013. arXiv: 1312.6114.
+    [8] M. A. Kramer, “Nonlinear principal component analysis using autoassociative neu-
+         ral networks,” AIChE Journal, vol. 37, no. 2, pp. 233–243, 1991.                                                    eprint:
+         https://aiche.onlinelibrary.wiley.com/doi/pdf/10.1002/aic.690370209.
+    [9] N. Street, W. Wolberg, and O. Mangasarian, “Nuclear Feature Extraction For Breast Tumor Diagnosis,”
+        Proc. Soc. Photo-Opt. Inst. Eng., vol. 1993, Jan. 1999.
+  [10] M. Allen, K. Pearn, T. Monks, B. D. Bray, R. Everson, A. Salmon, M. James, and K. Stein, “Can clinical
+         audits be enhanced by pathway simulation and machine learning? An example from the acute stroke
+         pathway,” BMJ Open, vol. 9, p. e028296, Sept. 2019. Publisher: British Medical Journal Publishing
+         Group Section: Health services research.
+  [11] G. Van Rossum and F. L. Drake Jr, Python reference manual. Centrum voor Wiskunde en Informatica
+        Amsterdam, 1995.
+  [12] F. Pedregosa, G. Varoquaux, A. Gramfort, V. Michel, B. Thirion, O. Grisel, M. Blondel, P. Prettenhofer,
+         R. Weiss, V. Dubourg, J. Vanderplas, A. Passos, D. Cournapeau, M. Brucher, M. Perrot, and E. Duches-
+         nay, “Scikit-learn: Machine Learning in Python,” Journal of Machine Learning Research, vol. 12, no. 85,
+         pp. 2825–2830, 2011.
+  [13] G. Lemaitre, F. Nogueira, and C. K. Aridas, “Imbalanced-learn: A Python Toolbox to Tackle the Curse
+         of Imbalanced Datasets in Machine Learning,” arXiv:1609.06570 [cs], Sept. 2016. arXiv: 1609.06570.
+                                                                     7
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20210138.this version posted October 13, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                               perpetuity.
+                                      It is made available under a CC-BY 4.0 International license .
+  [14] A. Paszke, S. Gross, F. Massa, A. Lerer, J. Bradbury, G. Chanan, T. Killeen, Z. Lin, N. Gimelshein,
+         L. Antiga, A. Desmaison, A. Kopf, E. Yang, Z. DeVito, M. Raison, A. Tejani, S. Chilamkurthy,
+         B. Steiner, L. Fang, J. Bai, and S. Chintala, “PyTorch: An Imperative Style, High-Performance Deep
+         Learning Library,” in Advances in Neural Information Processing Systems 32 (H. Wallach, H. Larochelle,
+        A. Beygelzimer, F. d. Alché-Buc, E. Fox, and R. Garnett, eds.), pp. 8024–8035, Curran Associates, Inc.,
+         2019.
+  [15] M. Abadi, A. Agarwal, P. Barham, E. Brevdo, Z. Chen, C. Citro, G. S. Corrado, A. Davis, J. Dean,
+         M. Devin, S. Ghemawat, I. Goodfellow, A. Harp, G. Irving, M. Isard, Y. Jia, R. Jozefowicz, L. Kaiser,
+         M. Kudlur, J. Levenberg, D. Mané, R. Monga, S. Moore, D. Murray, C. Olah, M. Schuster, J. Shlens,
+         B. Steiner, I. Sutskever, K. Talwar, P. Tucker, V. Vanhoucke, V. Vasudevan, F. Viégas, O. Vinyals,
+         P. Warden, M. Wattenberg, M. Wicke, Y. Yu, and X. Zheng, “TensorFlow: Large-scale machine learning
+         on heterogeneous systems,” 2015. Software available from tensorflow.org.
+  [16] C. R. Harris, K. J. Millman, S. J. van der Walt, R. Gommers, P. Virtanen, D. Cournapeau, E. Wieser,
+         J. Taylor, S. Berg, N. J. Smith, R. Kern, M. Picus, S. Hoyer, M. H. van Kerkwijk, M. Brett, A. Haldane,
+         J. F. del Rı́o, M. Wiebe, P. Peterson, P. Gérard-Marchant, K. Sheppard, T. Reddy, W. Weckesser,
+         H. Abbasi, C. Gohlke, and T. E. Oliphant, “Array programming with NumPy,” Nature, vol. 585,
+         pp. 357–362, Sept. 2020. Number: 7825 Publisher: Nature Publishing Group.
+  [17] Wes McKinney, “Data Structures for Statistical Computing in Python,” in Proceedings of the 9th Python
+        in Science Conference (Stéfan van der Walt and Jarrod Millman, eds.), pp. 56 – 61, 2010.
+  [18] J. D. Hunter, “Matplotlib: A 2d graphics environment,” Computing in Science & Engineering, vol. 9,
+         no. 3, pp. 90–95, 2007.
+  [19] M. Arjovsky, S. Chintala, and L. Bottou, “Wasserstein GAN,” arXiv:1701.07875 [cs, stat], Dec. 2017.
+         arXiv: 1701.07875.
+                                                                     8
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20210138.this version posted October 13, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                               perpetuity.
+                                      It is made available under a CC-BY 4.0 International license .
+  Appendices
+  A        Wisoconsin Breast Cancer data set
+  Figures 1 to 10 show a) a comparison of means and standard deviations between the original and synthetic
+  data sets, and b) correlation between all features in original and synthetic data sets. The figures show five
+  synthetic runs for each method.
+                                                                     9
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20210138.this version posted October 13, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                               perpetuity.
+                                      It is made available under a CC-BY 4.0 International license .
+  Figure 1: Comparison of mean and standard deviations of features between original and synthetic Wisconsin
+  Breast Cancer data, with synthetic data produced using a Principal Component based approach. Different
+  colours represent five alaternative model runs.
+                                                                     10
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20210138.this version posted October 13, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                               perpetuity.
+                                      It is made available under a CC-BY 4.0 International license .
+  Figure 2: Comparison of correlation between all features in original and synthetic Wisconsin Breast Cancer
+  data with synthetic data produced using a Principal Component based approach. Different colours represent
+  five alaternative model runs.
+                                                                     11
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20210138.this version posted October 13, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                               perpetuity.
+                                      It is made available under a CC-BY 4.0 International license .
+  Figure 3: Comparison of mean and standard deviations of features between original and synthetic Wisconsin
+  Breast Cancer data, with synthetic data produced using SMOTE. Different colours represent five alaternative
+  model runs.
+                                                                     12
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20210138.this version posted October 13, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                               perpetuity.
+                                      It is made available under a CC-BY 4.0 International license .
+  Figure 4: Comparison of correlation between all features in original and synthetic Wisconsin Breast Cancer
+  data with synthetic data produced using SMOTE. Different colours represent five alaternative model runs.
+                                                                     13
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20210138.this version posted October 13, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                               perpetuity.
+                                      It is made available under a CC-BY 4.0 International license .
+  Figure 5: Comparison of mean and standard deviations of features between original and synthetic Wisconsin
+  Breast Cancer data, with synthetic data produced using a Generate Adversarial Network. Different colours
+  represent five alaternative model runs.
+                                                                     14
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20210138.this version posted October 13, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                               perpetuity.
+                                      It is made available under a CC-BY 4.0 International license .
+  Figure 6: Comparison of correlation between all features in original and synthetic Wisconsin Breast Cancer
+  data with synthetic data produced using a Generate Adversarial Network. Different colours represent five
+  alaternative model runs.
+                                                                     15
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20210138.this version posted October 13, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                               perpetuity.
+                                      It is made available under a CC-BY 4.0 International license .
+  Figure 7: Comparison of mean and standard deviations of features between original and synthetic Wisconsin
+  Breast Cancer data, with synthetic data produced using CT-GAN. Different colours represent five alaternative
+  model runs.
+                                                                     16
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20210138.this version posted October 13, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                               perpetuity.
+                                      It is made available under a CC-BY 4.0 International license .
+  Figure 8: Comparison of correlation between all features in original and synthetic Wisconsin Breast Cancer
+  data with synthetic data produced using CT-GAN. Different colours represent five alaternative model runs.
+                                                                     17
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20210138.this version posted October 13, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                               perpetuity.
+                                      It is made available under a CC-BY 4.0 International license .
+  Figure 9: Comparison of mean and standard deviations of features between original and synthetic Wisconsin
+  Breast Cancer data, with synthetic data produced using a Variational Auto Encoder. Different colours
+  represent five alaternative model runs.
+                                                                     18
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20210138.this version posted October 13, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                               perpetuity.
+                                      It is made available under a CC-BY 4.0 International license .
+  Figure 10: Comparison of correlation between all features in original and synthetic Wisconsin Breast Cancer
+  data with synthetic data produced using a Variational Auto Encoder. Different colours represent five
+  alaternative model runs.
+                                                                     19
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20210138.this version posted October 13, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                               perpetuity.
+                                      It is made available under a CC-BY 4.0 International license .
+  B       Stroke thrombolysis pathway data set
+  Figures 11 to 20 show a) a comparison of means and standard deviations between the original and synthetic
+  data sets, and b) correlation between all features in original and synthetic data sets. The figures show five
+  synthetic runs for each method.
+                                                                     20
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20210138.this version posted October 13, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                               perpetuity.
+                                      It is made available under a CC-BY 4.0 International license .
+  Figure 11: Comparison of mean and standard deviations of features between original and synthetic stroke
+  thrombolysis pathway data, with synthetic data produced using a Principal Component based approach.
+  Different colours represent five alaternative model runs.
+                                                                     21
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20210138.this version posted October 13, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                               perpetuity.
+                                      It is made available under a CC-BY 4.0 International license .
+  Figure 12: Comparison of correlation between all features in original and synthetic stroke thrombolysis
+  pathway data with synthetic data produced using a Principal Component based approach. Different colours
+  represent five alaternative model runs.
+                                                                     22
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20210138.this version posted October 13, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                               perpetuity.
+                                      It is made available under a CC-BY 4.0 International license .
+  Figure 13: Comparison of mean and standard deviations of features between original and synthetic stroke
+  thrombolysis pathway data, with synthetic data produced using SMOTE. Different colours represent five
+  alaternative model runs.
+                                                                     23
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20210138.this version posted October 13, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                               perpetuity.
+                                      It is made available under a CC-BY 4.0 International license .
+  Figure 14: Comparison of correlation between all features in original and synthetic stroke thrombolysis
+  pathway data with synthetic data produced using SMOTE. Different colours represent five alaternative model
+  runs.
+                                                                     24
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20210138.this version posted October 13, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                               perpetuity.
+                                      It is made available under a CC-BY 4.0 International license .
+  Figure 15: Comparison of mean and standard deviations of features between original and synthetic stroke
+  thrombolysis pathway data, with synthetic data produced using a Generate Adversarial Network. Different
+  colours represent five alaternative model runs.
+                                                                     25
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20210138.this version posted October 13, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                               perpetuity.
+                                      It is made available under a CC-BY 4.0 International license .
+  Figure 16: Comparison of correlation between all features in original and synthetic stroke thrombolysis
+  pathway data with synthetic data produced using a Generate Adversarial Network. Different colours represent
+  five alaternative model runs.
+                                                                     26
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20210138.this version posted October 13, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                               perpetuity.
+                                      It is made available under a CC-BY 4.0 International license .
+  Figure 17: Comparison of mean and standard deviations of features between original and synthetic stroke
+  thrombolysis pathway data, with synthetic data produced using CT-GAN. Different colours represent five
+  alaternative model runs.
+                                                                     27
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20210138.this version posted October 13, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                               perpetuity.
+                                      It is made available under a CC-BY 4.0 International license .
+  Figure 18: Comparison of correlation between all features in original and synthetic stroke thrombolysis
+  pathway data with synthetic data produced using CT-GAN. Different colours represent five alaternative
+  model runs.
+                                                                     28
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20210138.this version posted October 13, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                               perpetuity.
+                                      It is made available under a CC-BY 4.0 International license .
+  Figure 19: Comparison of mean and standard deviations of features between original and synthetic stroke
+  thrombolysis pathway data, with synthetic data produced using a Variational Auto Encoder. Different colours
+  represent five alaternative model runs.
+                                                                     29
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20210138.this version posted October 13, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                               perpetuity.
+                                      It is made available under a CC-BY 4.0 International license .
+  Figure 20: Comparison of correlation between all features in original and synthetic stroke thrombolysis
+  pathway data with synthetic data produced using a Variational Auto Encoder. Different colours represent
+  five alaternative model runs.
+                                                                     30

@@ -1,0 +1,353 @@
+   medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209619.this version posted October 13, 2020. The copyright holder for this preprint
+     (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                         It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                                                                                                 1
+ 1       Associations between governor political affiliation and COVID-19 cases and deaths in the
+ 2                                                                United States
+ 3
+ 4                    Brian Neelon, PhD,1,2* Fedelis Mutiso, MS,1 Noel T Mueller, PhD, MPH,3,4
+ 5                            John L Pearce, PhD,5 Sara E Benjamin-Neelon, PhD, JD, MPH6,7
+ 6
+       1
+ 7       Division of Biostatistics, Department of Public Health Sciences, Medical University of South
+ 8     Carolina, Charleston, South Carolina
+ 9
+       2
+10       Charleston Health Equity and Rural Outreach Innovation Center (HEROIC), Ralph H.
+11     Johnson VA Medical Center, Charleston, South Carolina
+12
+       3
+13       Department of Epidemiology, Johns Hopkins Bloomberg School of Public Health, Baltimore,
+14     Maryland
+15
+       4
+16       Welch Center for Prevention, Epidemiology and Clinical Research, Johns Hopkins University,
+17     Baltimore, Maryland
+18
+       5
+19       Division of Environmental Health, Department of Public Health Sciences, Medical University
+20     of South Carolina, Charleston, South Carolina
+21
+       6
+22       Department of Health, Behavior and Society, Johns Hopkins Bloomberg School of Public
+23     Health, Baltimore, Maryland
+                                                                            1
+          NOTE: This preprint reports new research that has not been certified by peer review and should not be used to guide clinical practice.
+
+   medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209619.this version posted October 13, 2020. The copyright holder for this preprint
+     (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                         It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                                                                                          2
+24
+       7
+25       Lerner Center for Public Health Promotion, Johns Hopkins Bloomberg School of Public Health,
+26     Baltimore, Maryland
+27
+28     * Corresponding author
+29     Brian Neelon, PhD
+30     Department of Public Health Science
+31     Medical University of South Carolina
+32     Charleston, SC 29425
+33     E-mail: neelon@musc.edu
+34     Telephone: (843) 876-1149
+35
+36     Word Count: 1200
+37
+38     Conflicts of Interest: Dr. Mueller was supported by the National Heart, Lung, And Blood
+39     Institute of the National Institutes of Health under Award Number K01HL141589 (PI: Mueller).
+40     The funder had no influence on the study’s design, implementation, or findings.
+41
+42     Financial Disclosure: No financial disclosures were reported by the authors of this manuscript.
+                                                                          2
+
+   medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209619.this version posted October 13, 2020. The copyright holder for this preprint
+     (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                         It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                                                                                          3
+43     Abstract
+44     Introduction
+45     As the response to the COVID-19 pandemic has become increasingly politicized in the United
+46     States (US), political party affiliation of state leaders may contribute to policies affecting the
+47     spread of the disease. We examined differences in COVID-19 infection and death rates stratified
+48     by governor party affiliation across the 50 US states and the District of Columbia (DC).
+49
+50     Methods
+51     We conducted a longitudinal analysis examining daily COVID-19 incidence and death rates from
+52     March 1 to September 30, 2020, for each US state and DC. We fit a Bayesian negative binomial
+53     model to estimate adjusted daily risk ratios (RRs) and posterior intervals (PIs) comparing
+54     infection and death rates by gubernatorial (mayoral for DC) party affiliation. We adjusted for
+55     several state-level variables, including population density, age, race, poverty, and health.
+56
+57     Results
+58     From March to early June 2020, Republican-led states had, on average, lower COVID-19
+59     incidence rates compared to Democratic-led states. However, on June 8, the association
+60     reversed, and Republican-led states had higher per capita COVID-19 incidence rates (RR=1.15,
+61     95% PI: 1.02, 1.25). This trend persisted until September 30 (RR=1.26, 95% PI: 0.96, 1.51).
+62     For death rates, Republican-led states had lower average rates early in the pandemic, but higher
+63     rates from July 13 (RR=1.22, 95% PI: 1.03,1.37) to September 30 (RR=1.74, 95% PI: 1.20,
+64     2.24).
+65
+                                                                          3
+
+   medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209619.this version posted October 13, 2020. The copyright holder for this preprint
+     (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                         It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                                                                                          4
+66     Conclusion
+67     Gubernatorial party affiliation may drive policy decisions that impact COVID-19 infections and
+68     deaths across the US. As attitudes toward the pandemic become increasingly polarized, policy
+69     decisions should be guided by public health considerations rather than political ideology.
+70
+                                                                          4
+
+   medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209619.this version posted October 13, 2020. The copyright holder for this preprint
+     (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                         It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                                                                                          5
+71     Introduction
+72     Coronavirus disease 2019 (COVID-19) has resulted in a global public health crisis. As of
+73     October 3, 2020, there have been over 7 million confirmed COVID-19 cases and over 2 million
+74     related deaths in the US.1 In response to the pandemic, the governors of all 50 states declared
+75     states of emergency. Shortly thereafter, states began enacting policies to help stop the spread of
+76     the virus. However, these policies vary and are guided, in part, by decisions from state
+77     governors.
+78
+79     Under the 10th Amendment to the US Constitution, which gives states all powers not specifically
+80     apportioned to the federal government, state governors have the authority to take action in public
+81     health emergencies. For example, earlier this year, nearly all state governors issued stay-at-home
+82     executive orders that advised or required residents to shelter in place.2 Two recent studies found
+83     that Republican governors, however, were slower to adopt stay-at-home orders, if they did so at
+84     all.3,4 Moreover, another study found that Democratic governors had longer durations of stay-at-
+85     home orders.5 Further, researchers identified governor Democratic political party affiliation as
+86     the most important predictor of state mandates to wear face masks.6
+87
+88     Although recent studies have examined individual state policies, such as mandates to socially
+89     distance, wear masks, and close schools and parks,3,4,6-8 multiple policies may act in unison to
+90     impact the spread of COVID-19. Additionally, the pandemic response has become increasingly
+91     politicized.7,9,10 As such, political affiliation of state leaders, and specifically governors, might
+92     best capture the omnibus impact of state policies. Therefore, the purpose of this study was to
+                                                                          5
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209619.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                                                                                           6
+ 93     examine differences in incidence and death rate trends over time, stratified by governors’
+ 94     political affiliation among the 50 states and DC.
+ 95
+ 96     Methods
+ 97     We conducted a longitudinal analysis examining COVID-19 incidence and death rates from
+ 98     March 1 to September 30, 2020 for the 50 states and DC. Based on prior research,3,4,6,7 we
+ 99     hypothesized that states with Republican governors would have lower incidence and death rates
+100     early in the pandemic as many Democratic governors preside over international hubs that served
+101     as points of entry for the virus in early 2020.11,12 We also hypothesized that Republican-led
+102     states would have higher rates in later months, potentially reflecting policy differences that break
+103     along party lines. The Institutional Review Boards at the Medical University of South Carolina
+104     and Johns Hopkins Bloomberg School of Public Health deemed this research exempt.
+105
+106     We documented governor party affiliation for each US state; for DC, we used mayoral
+107     affiliation. We obtained daily COVID-19 incident case and death data from USAFacts,13 a well-
+108     validated source of COVID-19 tracking information, for each county in the US.14,15 We
+109     aggregated county data to obtain state-level data. We then adjusted for potential confounders
+110     chosen a priori from the US Census Bureau and the Robert Wood Johnson Foundation.16-18
+111     These included state population size to compute population density, the percentage of state
+112     residents aged 65 and older, the percentage of Black and Hispanic residents, the percentage
+113     below the federal poverty line, the percentage in poor or fair health, and the number of primary
+114     care physicians per 100,000 residents.
+115
+                                                                           6
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209619.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                                                                                           7
+116     Statistical analysis
+117     We fit Bayesian negative binomial models with daily incident cases and deaths for each state as
+118     the outcomes. The models included penalized cubic Bsplines for both the fixed and random
+119     (state-specific) temporal effects. We included state population as an offset on the log scale. We
+120     assigned ridging priors to the spline coefficients.19 We standardized adjustment variables and
+121     assigned diffuse normal priors to their coefficients. We assigned a gamma prior to the dispersion
+122     parameter. For posterior computation, we developed an efficient Gibbs sampler20,21 and ran the
+123     algorithm for 50,000 iterations with a burn-in 10,000 to ensure convergence. Sensitivity
+124     analyses demonstrated the model’s robustness to prior specification.
+125
+126     We stratified states by governors’ affiliation and graphed the posterior mean incidence and death
+127     rates daily for the reference covariate group, as well as the 95% posterior intervals (PIs). We
+128     reported adjusted risk ratios (RRs) and 95% PIs comparing states, with RRs > 1.00 indicating
+129     higher rates among Republican-led states. We conducted analyses using R software version 3.6
+130     (R Core Team, 2019).
+131
+132     Results
+133     The final sample comprised 10,914 observations (51 states x 214 study days) with 26
+134     Republican-led and 25 Democratic-led states. Figures 1(a) and 1(b) present incidence trends (in
+135     cases per 100,000) and adjusted RRs by gubernatorial affiliation. Republican-led states had
+136     lower rates from March to early June 2020. However, on June 8, the association reversed
+137     (RR=1.15, 95% PI: 1.02, 1.25), indicating that Republican-led states had on average 1.15 times
+138     more cases per 100,000 than Democratic-led states. The RRs increased steadily thereafter,
+                                                                           7
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209619.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                                                                                           8
+139     achieving a maximum of 1.59 (95% PI: 1.42, 1.73) on July 1. The trends leveled but remained
+140     positive through September 29 (RR=1.31, 95% PI: 1.06, 1.52). However, on September 30, risk
+141     ratio overlapped the null (RR=1.26, 95% PI: 0.96, 1.51).
+142
+143     Figure 1. (a) Per capita COVID-19 incidence rates by governor affiliation; (b) adjusted risk
+144     ratios (RRs) and 95% posterior intervals (PIs)
+145
+146
+147     We observed a similar pattern for the death trends shown in Figures 2(a) and 2(b). Republican-
+148     led states had lower death rates (per million) early in the pandemic, but the trend reversed on
+149     July 13 (RR=1.22, 95% PI: 1.03,1.37). The estimated RRs increased sharply through July 25
+150     (RR=1.69, 95% PI: 1.46, 1.87) and hovered between 1.50 and 2.00 through September 30
+151     (RR=1.74, 95% PI: 1.20, 2.24).
+152
+153
+154
+                                                                           8
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209619.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                                                                                           9
+155     Figure 2. (a) Per capita COVID-19 death rates by governor affiliation; (b) adjusted risk ratios
+156     (RRs) and posterior intervals (PIs)
+157
+158
+159     Discussion
+160     In this longitudinal analysis, we found that Republican-led states had fewer per capita COVID-
+161     19 cases and deaths early in the pandemic, but these trends reversed in early June (for cases) and
+162     in July (for deaths). These early trends could be explained by high COVID-19 rates among
+163     Democratic-led states that are home to initial ports of entry for the virus in early 2020.11,12
+164     However, the subsequent reversal in trends to Republican-led states may reflect policy
+165     differences that could have facilitated the spread of the virus.3,4,6-9
+166
+167     For instance, Adolph et al. found that Republican governors were slower to adopt both stay-at-
+168     home orders and mandates to wear face masks.3,6 Other studies have shown that Democratic
+169     governors were more likely to issue stay-at-home orders with longer durations.4,5 Moreover,
+170     decisions by Republican governors in spring 2020 to retract policies, such as the lifting of stay-
+                                                                           9
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209619.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                                                                                         10
+171     at-home orders on April 28 in Georgia,22 may have contributed to increased cases and deaths.
+172     Thus, governors’ political affiliation might function as an upstream progenitor of multifaceted
+173     policies that, in unison, impact the spread of the virus. Although there were notable exceptions
+174     among Republican governors in states such as Maryland, Ohio, and Massachusetts, Republican
+175     governors were by and large less likely than their Democratic counterparts to enact policies
+176     aligned with public health social distancing recommendations.3
+177
+178     There are, however, limitations to this study. We conducted a population-level rather than
+179     individual-level analysis. Although we controlled for potential confounders (e.g., population
+180     density), the findings could reflect the virus’s spread from urban to rural areas.11,12 Additionally,
+181     as with any observational study, we cannot infer causality. Finally, governors are not the only
+182     authoritative actor in a state. Future research could explore associations between party affiliation
+183     of state or local legislatures, particularly when these differ from governors.
+184
+185     Our findings suggest that governor political party affiliation may differentially impact COVID-
+186     19 incidence and death rates. As attitudes toward the pandemic become increasingly
+187     polarized,7,9,10 policy decisions should be guided by public health considerations rather than
+188     political expedience,23 as the latter may lead to increases COVID-19 cases and deaths.
+189
+190     Acknowledgments
+191     Dr. Neelon is a part-time employee of the Department of Veterans Affairs. The content of this
+192     article does not represent the views of the Department of Veterans Affairs or the U.S.
+193     government. The article represents the views of the authors and not those of the VA or Health
+                                                                          10
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209619.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                                                                                         11
+194     Services Research and Development. Dr. Mueller was supported by the National Heart, Lung,
+195     And Blood Institute of the National Institutes of Health under Award Number K01HL141589
+196     (PI: Mueller). The funder had no influence on the study design, implementation, or findings. Dr.
+197     Neelon had full access to all data in the study and takes responsibility for the integrity of the data
+198     and the accuracy of the data analysis. Dr. Neelon, Dr. Mueller, Dr. Pearce and Dr. Benjamin-
+199     Neelon contributed to the concept and design of the study. Dr. Neelon and Mr. Mutiso
+200     contributed to acquisition, analysis, and interpretation of the data. Dr. Neelon and Benjamin-
+201     Neelon drafted the manuscript, and all Dr. Mueller, Dr. Pearce, and Mr. Mutiso provided critical
+202     revisions. No financial disclosures were reported by the authors of this manuscript.
+203
+                                                                          11
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209619.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                                                                                         12
+204     References
+205     1.        CDC COVID Data Tracker: United States Laboratory Testing.
+206               https://www.cdc.gov/covid-data-tracker/index.html#testing. Published 2020. Accessed
+207               September 1, 2020.
+208     2.        Gostin LO, Wiley LF. Governmental Public Health Powers During the COVID-19
+209               Pandemic: Stay-at-home Orders, Business Closures, and Travel Restrictions. Jama. 2020.
+210     3.        Adolph C, Amano K, Bang-Jensen B, Fullman N, Wilkerson J. Pandemic Politics:
+211               Timing State-Level Social Distancing Responses to COVID-19. Journal of Health
+212               Politics, Policy and Law. 2020.
+213     4.        Baccini LB, A. Explaining governors’ response to the COVID-19 pandemic in the United
+214               States. IZA Discussion Paper No 13137. 20202.
+215     5.        Kosnik LR, Bellas A. Drivers of COVID-19 Stay at Home Orders: Epidemiologic,
+216               Economic, or Political Concerns? Econ Disaster Clim Chang. 2020:1-12.
+217     6.        Adolph C, Amano K, Bang-Jensen B, et al. Governor partisanship explains the adoption
+218               of statewide mandates to wear face coverings. medRxiv. 2020:2020.2008.2031.20185371.
+219     7.        Grossman G, Kim S, Rexer JM, Thirumurthy H. Political partisanship influences
+220               behavioral responses to governors' recommendations for COVID-19 prevention in the
+221               United States. Proceedings of the National Academy of Sciences of the United States of
+222               America. 2020;117(39):24144-24153.
+223     8.        Matzinger P, Skinner J. Strong impact of closing schools, closing bars and wearing masks
+224               during the Covid-19 pandemic: results from a simple and revealing analysis. medRxiv.
+225               2020:2020.2009.2026.20202457.
+226     9.        Christensen SR, Pilling EB, Eyring JB, Dickerson G, Sloan CD, Magnusson BM.
+227               Political and personal reactions to COVID-19 during initial weeks of social distancing in
+228               the United States. PloS one. 2020;15(9):e0239693.
+229     10.       Jiang J, Chen E, Lerman K, Ferrara E. Political Polarization Drives Online Conversations
+230               About COVID-19 in the United States. Hum Behav Emerg Technol. 2020.
+231     11.       Paul R, Arif AA, Adeyemi O, Ghosh S, Han D. Progression of COVID-19 From Urban to
+232               Rural Areas in the United States: A Spatiotemporal Analysis of Prevalence Rates. J Rural
+233               Health. 2020;36(4):591-601.
+234     12.       Wang Y, Liu Y, Struthers J, Lian M. Spatiotemporal Characteristics of COVID-19
+235               Epidemic in the United States. Clin Infect Dis. 2020.
+236     13.       USAFacts. US Coronavirus Cases and Deaths.
+237               https://usafacts.org/visualizations/coronavirus-covid-19-spread-map/. Published 2020.
+238               Accessed September 1, 2020.
+239     14.       Wang G, Gu Z, Li X, et al. Comparing and Integrating US COVID-19 Data from
+240               Multiple Sources with Anomaly Detection and Repairing. 2020.
+241     15.       Smith JP. Comparison of COVID-19 case and death counts in the United States reported
+242               by four online trackers: January 22-May 31, 2020. medRxiv.
+243               2020:2020.2006.2020.20135764.
+244     16.       Bureau USC. County Population Totals: 2010-2019.
+245               https://www.census.gov/data/tables/time-series/demo/popest/2010s-counties-total.html.
+246               Published 2019. Accessed September 1, 2020.
+                                                                          12
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209619.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                                                                                         13
+247     17.       Foundation RWJ. County Health Rankings & Roadmaps: Rankings Data &
+248               Documentation. https://www.countyhealthrankings.org/explore-health-rankings/rankings-
+249               data-documentation. Published 2020. Accessed August 8, 2020.
+250     18.       Centers for Disease Control and Prevention/Agency for Toxic Substances and Disease
+251               Registry/ Geospatial Research A, and Services Program. Social Vulnerability Index 2018
+252               Database US. https://svi.cdc.gov/data-and-tools-download.html. Published 2018.
+253               Accessed September 30, 2020.
+254     19.       Kneib T, Konrath S, Fahrmeir L. High dimensional structured additive regression
+255               models: Bayesian regularization, smoothing and predictive performance. Journal of the
+256               Royal Statistical Society: Series C (Applied Statistics). 2011;60(1):51-70.
+257     20.       Pillow JWS, J. Fully Bayesian inference for neural models with negative-binomial
+258               spiking. 2012:1898--1906.
+259     21.       Dadaneh SZ, Zhou M, Qian X. Bayesian negative binomial regression for differential
+260               expression with confounding factors. Bioinformatics. 2018;34(19):3349-3356.
+261     22.       Each State’s COVID-19 Reopening and Reclosing Plans and Mask Requirements
+262               https://www.nashp.org/governors-prioritize-health-for-all/. Published 2020. Accessed
+263               September 30, 2020, 2020.
+264     23.       Guest JL, Del Rio C, Sanchez T. The Three Steps Needed to End the COVID-19
+265               Pandemic: Bold Public Health Leadership, Rapid Innovations, and Courageous Political
+266               Will. JMIR Public Health Surveill. 2020;6(2):e19043.
+267
+268
+                                                                          13

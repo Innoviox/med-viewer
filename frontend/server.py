@@ -12,7 +12,7 @@ PDFS = json.loads(open("pdfs.json").read())
 
 @app.context_processor
 def utils():
-    def get_pdfs(number=6, width=3):
+    def get_pdfs(number=80, width=3):
         ## todo: customize
         pdfs = PDFS['articles'][:number]
         for i in pdfs:
@@ -89,5 +89,20 @@ def index(msg=None, error=None):
 
     if error := session.get('error'):
         session['error'] = None
+
+    return render_template('index.html', user=session.get('user'), error=error, message=msg)
+
+@app.route('/recommended')
+def index(msg=None, error=None):
+    if not session.get('likes'):
+        set_user({'username': session['user']}, msg=False)
+
+    if msg := session.get('message'):
+        session['message'] = None
+
+    if error := session.get('error'):
+        session['error'] = None
+
+
 
     return render_template('index.html', user=session.get('user'), error=error, message=msg)

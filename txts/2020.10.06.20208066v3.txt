@@ -1,794 +1,598 @@
 medRxiv preprint doi: https://doi.org/10.1101/2020.10.06.20208066.this version posted October 14, 2020. The copyright holder for this preprint
   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
                                       It is made available under a CC-BY-NC-ND 4.0 International license .
+       TITLE: Real-world effectiveness of hydroxychloroquine, azithromycin, and ivermectin among
+       hospitalized COVID-19 patients: results of a target trial emulation using observational data from a
+       nationwide healthcare system in Peru.
+       Brief Title: Target trial emulation of hydroxychloroquine, azithromycin, and ivermectin
+       effectiveness.
+       Authors:
+       Percy Soto-Becerra, MD1
+       Carlos Culquichicón, MD1
+       Yamilee Hurtado-Roca, MD, PhD1
+       Roger V. Araujo-Castillo, MD1
+       Affiliations:
+       1) Instituto de Evaluación de Tecnologías en Salud e Investigación – IETSI, EsSalud
+       Jiron Domingo Cueto 120, Eight floor, Jesus Maria
+       Lima 15073, Peru.
+       Corresponding author:
+       Roger V. Araujo-Castillo
+       Av. Arenales 1302, office 310. Jesus Maria, Lima 15073, Peru.
+       Phone: 51(1) 265-6000 - Extension 1955
+       E-mail: roger.araujo@essalud.gob.pe
+       NOTE: This preprint reports new research that has not been certified by peer review and should not be used to guide clinical practice.
 
-
-
-
-        TITLE: Real-world effectiveness of hydroxychloroquine, azithromycin, and ivermectin among
-        hospitalized COVID-19 patients: results of a target trial emulation using observational data from a
-        nationwide healthcare system in Peru.
-
-
-        Brief Title: Target trial emulation of hydroxychloroquine, azithromycin, and ivermectin
-        effectiveness.
-
-
-        Authors:
-        Percy Soto-Becerra, MD1
-        Carlos Culquichicón, MD1
-        Yamilee Hurtado-Roca, MD, PhD1
-        Roger V. Araujo-Castillo, MD1
-
-
-        Affiliations:
-        1) Instituto de Evaluación de Tecnologías en Salud e Investigación – IETSI, EsSalud
-        Jiron Domingo Cueto 120, Eight floor, Jesus Maria
-        Lima 15073, Peru.
-
-
-        Corresponding author:
-        Roger V. Araujo-Castillo
-        Av. Arenales 1302, office 310. Jesus Maria, Lima 15073, Peru.
-        Phone: 51(1) 265-6000 - Extension 1955
-        E-mail: roger.araujo@essalud.gob.pe
-
-
-
-
-        NOTE: This preprint reports new research that has not been certified by peer review and should not be used to guide clinical practice.
-
 medRxiv preprint doi: https://doi.org/10.1101/2020.10.06.20208066.this version posted October 14, 2020. The copyright holder for this preprint
   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
                                       It is made available under a CC-BY-NC-ND 4.0 International license .
-
-
-
-
-        ABSTRACT
-
-
-        Introduction: Peru is one of the most impacted countries due to COVID-19. Given the authorized
-        use of hydroxychloroquine (HCQ), azithromycin (AZIT), and ivermectin (IVM), we aimed to
-        evaluate their effectiveness alone or combined to reduce mortality among COVID-19 hospitalized
-        patients without life-threatening illness.
-        Methods: Retrospective cohort emulating a target trial, using nationwide data of mid- and high-
-        level hospitals from the Peruvian Social Health Insurance 01/April/2020–19/July/2020. Patients 18
-        yo and above with PCR-confirmed SARS-CoV-2, and no life-threatening illness at admission were
-        included. Five treatment groups (HCQ alone, IVM alone, AZIT alone, HCQ+AZIT, and
-        IVM+AZIT within 48 hours of admission) were compared with standard of care alone. Primary
-        outcome was all-cause mortality rate; secondary outcomes were all-cause death and/or ICU transfer,
-        and all-cause death and/or oxygen prescription. Analyses were adjusted using inverse probability of
-        treatment weighting. Propensity scores were estimated using machine learning boosting models.
-        Weighted hazard ratios (wHR) were calculated using Cox regression.
-        Results: Among 5683 patients, 200 received HCT, 203 IVM, 1600 AZIT, 692 HCQ+AZIT, 358
-        IVM+AZIT, and 2630 standard of care. HCQ+AZIT was associated with 84% higher all-cause
-        death hazard compared to standard care (wHR=1.84, 95%CI 1.12-3.02). Consistently, HCQ+AZIT
-        was also associated with higher death and/or ICU transfer (wHR=1.49, 95%CI 1.01-2.19), and
-        death and/or oxygen prescription (wHR=1.70, 95%CI 1.07-2.69). HCQ only showed higher death
-        and/or oxygen prescription hazard. No effect was found for AZIT or IVM+AZIT.
-        Conclusions: Our study reported no beneficial effects of hydroxychloroquine, ivermectin,
-        azithromycin. The HCQ+AZIT treatment seems to increase risk for all-cause death.
-        Funding: Instituto de Evaluación de Tecnologías en Salud e Investigación – IETSI, EsSalud
-
-
-        KEYWORDS: COVID-19 drug treatment; Hydroxychloroquine; Azithromycin; Ivermectin;
-        Machine Learning; Peru.
-
-
-
-
+       ABSTRACT
+       Introduction: Peru is one of the most impacted countries due to COVID-19. Given the authorized
+       use of hydroxychloroquine (HCQ), azithromycin (AZIT), and ivermectin (IVM), we aimed to
+       evaluate their effectiveness alone or combined to reduce mortality among COVID-19 hospitalized
+       patients without life-threatening illness.
+       Methods: Retrospective cohort emulating a target trial, using nationwide data of mid- and high-
+       level hospitals from the Peruvian Social Health Insurance 01/April/2020–19/July/2020. Patients 18
+       yo and above with PCR-confirmed SARS-CoV-2, and no life-threatening illness at admission were
+       included. Five treatment groups (HCQ alone, IVM alone, AZIT alone, HCQ+AZIT, and
+       IVM+AZIT within 48 hours of admission) were compared with standard of care alone. Primary
+       outcome was all-cause mortality rate; secondary outcomes were all-cause death and/or ICU transfer,
+       and all-cause death and/or oxygen prescription. Analyses were adjusted using inverse probability of
+       treatment weighting. Propensity scores were estimated using machine learning boosting models.
+       Weighted hazard ratios (wHR) were calculated using Cox regression.
+       Results: Among 5683 patients, 200 received HCT, 203 IVM, 1600 AZIT, 692 HCQ+AZIT, 358
+       IVM+AZIT, and 2630 standard of care. HCQ+AZIT was associated with 84% higher all-cause
+       death hazard compared to standard care (wHR=1.84, 95%CI 1.12-3.02). Consistently, HCQ+AZIT
+       was also associated with higher death and/or ICU transfer (wHR=1.49, 95%CI 1.01-2.19), and
+       death and/or oxygen prescription (wHR=1.70, 95%CI 1.07-2.69). HCQ only showed higher death
+       and/or oxygen prescription hazard. No effect was found for AZIT or IVM+AZIT.
+       Conclusions: Our study reported no beneficial effects of hydroxychloroquine, ivermectin,
+       azithromycin. The HCQ+AZIT treatment seems to increase risk for all-cause death.
+       Funding: Instituto de Evaluación de Tecnologías en Salud e Investigación – IETSI, EsSalud
+       KEYWORDS: COVID-19 drug treatment; Hydroxychloroquine; Azithromycin; Ivermectin;
+       Machine Learning; Peru.
                                                                                                                                    1
-
+
 medRxiv preprint doi: https://doi.org/10.1101/2020.10.06.20208066.this version posted October 14, 2020. The copyright holder for this preprint
   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
                                       It is made available under a CC-BY-NC-ND 4.0 International license .
-
-
-
-
-        INTRODUCTION
-
-
-        The coronavirus disease 2019 (COVID-19) imposed a major global challenge given its rapid
-        transmission worldwide and high mortality (1, 2). No pharmacological treatment have demonstrated
-        effectiveness to control the SARS-CoV-2 infection or improving clinical outcomes, worsening the
-        current sanitary emergency, especially for low-middle income countries (3). Traditionally, the
-        development of any specific drug might take several years. However, given the rapid spread of the
-        pandemic, several existing drugs have been repurposed based on in-vitro studies or low-quality
-        evidence. Consequently, there has been extensive efforts on investigating the efficacy and
-        effectiveness of several pharmacological treatments using randomized clinical trials as well as
-        observational studies (4).
-
-
-        Currently, only dexamethasone has demonstrated benefit to reduce all-cause mortality and
-        mechanical ventilation use; meanwhile, remdesivir seems to reduce symptoms duration and
-        occurrence of severe adverse events (5). On the other hand, some emergently repurposed treatments
-        have consistently demonstrated no benefits on all-cause mortality, including hydroxychloroquine
-        with or without azithromycin, lopinavir-ritonavir, and convalescent plasma (5). Ivermectin has only
-        demonstrated efficacy in laboratory conditions, but not evidence has yet reported on hospitalized
-        patients with COVID-19 (6). Despite many of these studies had serious limitations, these drugs
-        continue to being used in different health systems worldwide, and some of them have even been
-        tested for pre-exposure prophylaxis finding the same unsuccessful results (7).
-
-
-        Peru has been greatly impacted by the pandemic. By October 5, 2020, it is the sixth country by
-        number of reported cases (828 169 cases), and has the highest mortality rate worldwide (101.94
-        deaths per 100 000 inhabitants) (8, 9). The urgent need to address this national crisis, drove the
-        Peruvian Ministry of Health to authorize the use of hydroxychloroquine with or without
-        azithromycin for COVID-19 patients, later adding oral ivermectin alone or in combination with the
-        other drugs (10, 11). Given the authorized use of these drugs, and the availability of electronic
-        health records in the nationwide Peruvian Social Health Insurance (EsSalud), we intended to use
-        this real-world data to emulate a randomized controlled clinical trial using propensity score
-        weighting (12, 13). In this way, the biases traditionally associated with observational studies might
-        be minimized producing more realistic estimates of effectiveness (14), especially when combined
-        with novel machine-learning algorithms. Thus, our study aimed to evaluate the effectiveness of
-        hydroxychloroquine, azithromycin, and ivermectin alone or combined, to prevent all-cause deaths
-
+       INTRODUCTION
+       The coronavirus disease 2019 (COVID-19) imposed a major global challenge given its rapid
+       transmission worldwide and high mortality (1, 2). No pharmacological treatment have demonstrated
+       effectiveness to control the SARS-CoV-2 infection or improving clinical outcomes, worsening the
+       current sanitary emergency, especially for low-middle income countries (3). Traditionally, the
+       development of any specific drug might take several years. However, given the rapid spread of the
+       pandemic, several existing drugs have been repurposed based on in-vitro studies or low-quality
+       evidence. Consequently, there has been extensive efforts on investigating the efficacy and
+       effectiveness of several pharmacological treatments using randomized clinical trials as well as
+       observational studies (4).
+       Currently, only dexamethasone has demonstrated benefit to reduce all-cause mortality and
+       mechanical ventilation use; meanwhile, remdesivir seems to reduce symptoms duration and
+       occurrence of severe adverse events (5). On the other hand, some emergently repurposed treatments
+       have consistently demonstrated no benefits on all-cause mortality, including hydroxychloroquine
+       with or without azithromycin, lopinavir-ritonavir, and convalescent plasma (5). Ivermectin has only
+       demonstrated efficacy in laboratory conditions, but not evidence has yet reported on hospitalized
+       patients with COVID-19 (6). Despite many of these studies had serious limitations, these drugs
+       continue to being used in different health systems worldwide, and some of them have even been
+       tested for pre-exposure prophylaxis finding the same unsuccessful results (7).
+       Peru has been greatly impacted by the pandemic. By October 5, 2020, it is the sixth country by
+       number of reported cases (828 169 cases), and has the highest mortality rate worldwide (101.94
+       deaths per 100 000 inhabitants) (8, 9). The urgent need to address this national crisis, drove the
+       Peruvian Ministry of Health to authorize the use of hydroxychloroquine with or without
+       azithromycin for COVID-19 patients, later adding oral ivermectin alone or in combination with the
+       other drugs (10, 11). Given the authorized use of these drugs, and the availability of electronic
+       health records in the nationwide Peruvian Social Health Insurance (EsSalud), we intended to use
+       this real-world data to emulate a randomized controlled clinical trial using propensity score
+       weighting (12, 13). In this way, the biases traditionally associated with observational studies might
+       be minimized producing more realistic estimates of effectiveness (14), especially when combined
+       with novel machine-learning algorithms. Thus, our study aimed to evaluate the effectiveness of
+       hydroxychloroquine, azithromycin, and ivermectin alone or combined, to prevent all-cause deaths
                                                                                                                                    2
-
+
 medRxiv preprint doi: https://doi.org/10.1101/2020.10.06.20208066.this version posted October 14, 2020. The copyright holder for this preprint
   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
                                       It is made available under a CC-BY-NC-ND 4.0 International license .
-
-
-
-
-        in hospitalized patients with COVID-19 but without life-threatening illness. Secondarily, we
-        evaluated two composite outcomes: death and/or intense care unit (ICU) transfer, and death and/or
-        oxygen prescription.
-
-
-
-
-        METHODS
-
-
-        Study design and population
-        We conducted a retrospective cohort analyzing data obtained from electronic records of patients
-        hospitalized with COVID-19 in mid- and high-level complexity hospitals from the Peruvian Social
-        Security Health System (EsSalud). We emulated a target trial to obtain robust estimates of clinical
-        effectiveness for hydroxychloroquine/chloroquine, azithromycin, ivermectin, alone or combined, on
-        relevant clinical outcomes (12, 15). We retrieved anonymized data from EsSalud central data
-        system (16) using the International Classification of Disease Tenth (ICD-10) codes for COVID-19,
-        as defined by the Pan-American Health Organization (17).
-
-
-        We included patients hospitalized between April 1 and July 19, 2020 with the following criteria: 18
-        years old or above; confirmed SARS-CoV-2 infection by RT-qPCR; clinical manifestations
-        compatible with non-life-threatening disease at admission (no acute respiratory failure, no sepsis or
-        septic shock, no acute respiratory distress syndrome [ARDS], no acute pulmonary edema, no
-        disseminated intravascular coagulation [DIC]). We excluded patients who were prescribed oxygen
-        at admission since it is part of one of the outcomes. We also excluded patients with: self-report of
-        pregnancy at admission; discharge, ICU admission, or death within 24 hours of admission;
-        prescription of other experimental drugs (tocilizumab, lopinavir-ritonavir or remdesivir) within 48
-        hours of admission; self-reported treatment of hydroxychloroquine for rheumatological diseases;
-        and patients with records of having received any of the studied drugs before admission.
-
-
-        Treatment strategies
-        The standard of care was defined as antipyretics, hydration, monitorization and basic supportive
-        care. We compared it with five treatment arms, defined as the standard of care plus:
-        hydroxychloroquine/chloroquine alone (HCQ), ivermectin alone (IVM), azithromycin alone
-        (AZIT), hydroxychloroquine/chloroquine plus azithromycin (HCQ+AZIT), and ivermectin plus
-        azithromycin (IVM+AZIT) at doses recommended by the Peruvian Ministry of Health (10, 11). The
-        decision to administer any of these treatments depended on the treating physician’s own criteria
-
+       in hospitalized patients with COVID-19 but without life-threatening illness. Secondarily, we
+       evaluated two composite outcomes: death and/or intense care unit (ICU) transfer, and death and/or
+       oxygen prescription.
+       METHODS
+       Study design and population
+       We conducted a retrospective cohort analyzing data obtained from electronic records of patients
+       hospitalized with COVID-19 in mid- and high-level complexity hospitals from the Peruvian Social
+       Security Health System (EsSalud). We emulated a target trial to obtain robust estimates of clinical
+       effectiveness for hydroxychloroquine/chloroquine, azithromycin, ivermectin, alone or combined, on
+       relevant clinical outcomes (12, 15). We retrieved anonymized data from EsSalud central data
+       system (16) using the International Classification of Disease Tenth (ICD-10) codes for COVID-19,
+       as defined by the Pan-American Health Organization (17).
+       We included patients hospitalized between April 1 and July 19, 2020 with the following criteria: 18
+       years old or above; confirmed SARS-CoV-2 infection by RT-qPCR; clinical manifestations
+       compatible with non-life-threatening disease at admission (no acute respiratory failure, no sepsis or
+       septic shock, no acute respiratory distress syndrome [ARDS], no acute pulmonary edema, no
+       disseminated intravascular coagulation [DIC]). We excluded patients who were prescribed oxygen
+       at admission since it is part of one of the outcomes. We also excluded patients with: self-report of
+       pregnancy at admission; discharge, ICU admission, or death within 24 hours of admission;
+       prescription of other experimental drugs (tocilizumab, lopinavir-ritonavir or remdesivir) within 48
+       hours of admission; self-reported treatment of hydroxychloroquine for rheumatological diseases;
+       and patients with records of having received any of the studied drugs before admission.
+       Treatment strategies
+       The standard of care was defined as antipyretics, hydration, monitorization and basic supportive
+       care. We compared it with five treatment arms, defined as the standard of care plus:
+       hydroxychloroquine/chloroquine alone (HCQ), ivermectin alone (IVM), azithromycin alone
+       (AZIT), hydroxychloroquine/chloroquine plus azithromycin (HCQ+AZIT), and ivermectin plus
+       azithromycin (IVM+AZIT) at doses recommended by the Peruvian Ministry of Health (10, 11). The
+       decision to administer any of these treatments depended on the treating physician’s own criteria
                                                                                                                                    3
-
+
 medRxiv preprint doi: https://doi.org/10.1101/2020.10.06.20208066.this version posted October 14, 2020. The copyright holder for this preprint
   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
                                       It is made available under a CC-BY-NC-ND 4.0 International license .
-
-
-
-
-        guided by the Ministry of Health recommendations, which varied over time (10, 11). Thus, there
-        was an expected heterogeneity of regimens across different services, hospitals, and even month of
-        hospitalization.
-
-
-        We allowed a grace period of 48 hours to initiate therapy to assess a more realistic clinical question:
-        what is the effectiveness of initiating therapy compared to only receiving standard care within 48
-        hours of hospitalization? Hence, patients who received any of the treatment regimens after 48 hours
-        of hospitalization were assigned to the control group, similar to an intention-to-treat analysis. As
-        mentioned before, we only excluded patients who developed any of the outcomes within 24 hours
-        of admission; therefore, some included patients could have developed an outcome before being
-        assigned to any group due to the grace period (48 hours). Given that these patients could have
-        potentially been assigned to any group, they were randomly distributed between the control and
-        treatment groups to avoid time-dependent bias due to inappropriate exclusion or treatment
-        assignment (12).
-
-
-        Start, end of follow-up and outcomes
-        The onset of follow-up or time zero for each patient was the date of hospitalization. The end of the
-        follow-up was the date of occurrence of any outcome (death, death and/or transfer to ICU, death
-        and/or oxygen prescription), discharge, or end of follow-up by July 19, 2020. The primary outcome
-        was all-cause in-hospital death, and the secondary composite outcomes were all-cause in-hospital
-        death and/or transfer to ICU, and all-cause in-hospital death and/or oxygen prescription.
-
-
-        Strategy for emulating random assignments
-        In order to emulate the random assignments of a target trial, we used a propensity score weighting
-        for multivalued treatments employing a machine-learning approach that let us calculate balanced
-        differences for each control and treatment groups according to their baseline covariates (18, 19). A
-        propensity score (PS) estimates the subject probability of receiving a certain treatment given their
-        pre-treatment characteristics, but can also be used to create weights that allows robust estimations
-        of causal effects in observational studies (20). Moreover, we used generalized boosting models
-        (GBM) based on machine-learning algorithms to determine which baseline covariates should be
-        included, and to estimate the PS (15, 21). The GBM is a non-parametric approach that fits
-        classification trees using large and non-parsimonious number of pre-treatment covariates. This
-        improves traditional PS estimation (22) because it minimizes bias from model misspecification
-        commonly obtained by incorrect parametric model assumptions (23), and works well with missing
-
+       guided by the Ministry of Health recommendations, which varied over time (10, 11). Thus, there
+       was an expected heterogeneity of regimens across different services, hospitals, and even month of
+       hospitalization.
+       We allowed a grace period of 48 hours to initiate therapy to assess a more realistic clinical question:
+       what is the effectiveness of initiating therapy compared to only receiving standard care within 48
+       hours of hospitalization? Hence, patients who received any of the treatment regimens after 48 hours
+       of hospitalization were assigned to the control group, similar to an intention-to-treat analysis. As
+       mentioned before, we only excluded patients who developed any of the outcomes within 24 hours
+       of admission; therefore, some included patients could have developed an outcome before being
+       assigned to any group due to the grace period (48 hours). Given that these patients could have
+       potentially been assigned to any group, they were randomly distributed between the control and
+       treatment groups to avoid time-dependent bias due to inappropriate exclusion or treatment
+       assignment (12).
+       Start, end of follow-up and outcomes
+       The onset of follow-up or time zero for each patient was the date of hospitalization. The end of the
+       follow-up was the date of occurrence of any outcome (death, death and/or transfer to ICU, death
+       and/or oxygen prescription), discharge, or end of follow-up by July 19, 2020. The primary outcome
+       was all-cause in-hospital death, and the secondary composite outcomes were all-cause in-hospital
+       death and/or transfer to ICU, and all-cause in-hospital death and/or oxygen prescription.
+       Strategy for emulating random assignments
+       In order to emulate the random assignments of a target trial, we used a propensity score weighting
+       for multivalued treatments employing a machine-learning approach that let us calculate balanced
+       differences for each control and treatment groups according to their baseline covariates (18, 19). A
+       propensity score (PS) estimates the subject probability of receiving a certain treatment given their
+       pre-treatment characteristics, but can also be used to create weights that allows robust estimations
+       of causal effects in observational studies (20). Moreover, we used generalized boosting models
+       (GBM) based on machine-learning algorithms to determine which baseline covariates should be
+       included, and to estimate the PS (15, 21). The GBM is a non-parametric approach that fits
+       classification trees using large and non-parsimonious number of pre-treatment covariates. This
+       improves traditional PS estimation (22) because it minimizes bias from model misspecification
+       commonly obtained by incorrect parametric model assumptions (23), and works well with missing
                                                                                                                                    4
-
+
 medRxiv preprint doi: https://doi.org/10.1101/2020.10.06.20208066.this version posted October 14, 2020. The copyright holder for this preprint
   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
                                       It is made available under a CC-BY-NC-ND 4.0 International license .
-
-
-
-
-        data (22). We trained 5000 classification trees setting the following parameters: bag fraction of 1,
-        shrinkage factor of 0.01, test all two- and three-covariates interactions (24), and standardized mean
-        minimization as the stop method to select optimal balance. The PS obtained were transformed into
-        propensity score odds weights (PSW) used to estimate the average assignment effect on treated
-        subjects (25, 26). This method sets the PSW to 1 for each treatment group participants and
-        calculates the PSW for standard care group using the odds in the reference group (PSW =
-        propensity score/(1-propensity score)) (26).
-
-
-        All the variables included in the propensity score model were selected beforehand based on expert
-        knowledge about COVID-19, or because they were considered possible confounders, or were
-        prognostically relevant to the outcomes (18). We did not include variables theoretically associated
-        only with treatment assignment, but not with outcome, to avoid power reduction and/or bias
-        amplification (18, 27). The baseline covariates were: age; sex; month of admission; healthcare
-        center location (Capital, North, South, Centre, Rainforest); Charlson’s index at hospital admission;
-        known comorbidities in the first 48 hours (myocardial infarct/chronic heart failure/peripheral
-        vascular disease; chronic lung disease; mild/severe liver disease; uncomplicated/complicated
-        diabetes mellitus; cancer, stroke/dementia/paralysis; chronic kidney disease; metabolic disease;
-        peptic ulcer disease; HIV; uncomplicated/complicated hypertension); emergency care before
-        admission; antibiotics (other than azithromycin) used within 48 hours of admission; previous use of
-        angiotensin-converting enzyme inhibitors/angiotensin-II receptor antagonists; pneumonia diagnosed
-        within 48 hours of admission. We assessed the overlap of propensity score distributions between the
-        control group and each treatment arm to verify the common support assumption. The balance was
-        assessed using standardized mean differences for numerical covariates, and row differences for
-        categorical variables. We considered a threshold of 10% as indicative of meaningful imbalance
-        (18). During balance optimization, we remained blinded to the outcome results of the study.
-        Propensity score estimation was performed using the function mnps from the Twang package (24),
-        and covariate balance was assessed using cobalt (28), both in R version 4.0.2 (29) for MS Windows
-        Pro 10x64 bits.
-
-
-        Statistical analysis
-        We reported baseline characteristics of the control and treatment groups and 30-days cumulative
-        incidence estimated with the Kaplan-Meier method. Comparisons of time-to-event outcomes
-        between treatment groups were done using weighted Kaplan-Meier (KM) survival curves. We
-        estimated unweighted (uHR) and propensity score weighted hazard ratios (wHR) using Cox
-
+       data (22). We trained 5000 classification trees setting the following parameters: bag fraction of 1,
+       shrinkage factor of 0.01, test all two- and three-covariates interactions (24), and standardized mean
+       minimization as the stop method to select optimal balance. The PS obtained were transformed into
+       propensity score odds weights (PSW) used to estimate the average assignment effect on treated
+       subjects (25, 26). This method sets the PSW to 1 for each treatment group participants and
+       calculates the PSW for standard care group using the odds in the reference group (PSW =
+       propensity score/(1-propensity score)) (26).
+       All the variables included in the propensity score model were selected beforehand based on expert
+       knowledge about COVID-19, or because they were considered possible confounders, or were
+       prognostically relevant to the outcomes (18). We did not include variables theoretically associated
+       only with treatment assignment, but not with outcome, to avoid power reduction and/or bias
+       amplification (18, 27). The baseline covariates were: age; sex; month of admission; healthcare
+       center location (Capital, North, South, Centre, Rainforest); Charlson’s index at hospital admission;
+       known comorbidities in the first 48 hours (myocardial infarct/chronic heart failure/peripheral
+       vascular disease; chronic lung disease; mild/severe liver disease; uncomplicated/complicated
+       diabetes mellitus; cancer, stroke/dementia/paralysis; chronic kidney disease; metabolic disease;
+       peptic ulcer disease; HIV; uncomplicated/complicated hypertension); emergency care before
+       admission; antibiotics (other than azithromycin) used within 48 hours of admission; previous use of
+       angiotensin-converting enzyme inhibitors/angiotensin-II receptor antagonists; pneumonia diagnosed
+       within 48 hours of admission. We assessed the overlap of propensity score distributions between the
+       control group and each treatment arm to verify the common support assumption. The balance was
+       assessed using standardized mean differences for numerical covariates, and row differences for
+       categorical variables. We considered a threshold of 10% as indicative of meaningful imbalance
+       (18). During balance optimization, we remained blinded to the outcome results of the study.
+       Propensity score estimation was performed using the function mnps from the Twang package (24),
+       and covariate balance was assessed using cobalt (28), both in R version 4.0.2 (29) for MS Windows
+       Pro 10x64 bits.
+       Statistical analysis
+       We reported baseline characteristics of the control and treatment groups and 30-days cumulative
+       incidence estimated with the Kaplan-Meier method. Comparisons of time-to-event outcomes
+       between treatment groups were done using weighted Kaplan-Meier (KM) survival curves. We
+       estimated unweighted (uHR) and propensity score weighted hazard ratios (wHR) using Cox
                                                                                                                                    5
-
+
 medRxiv preprint doi: https://doi.org/10.1101/2020.10.06.20208066.this version posted October 14, 2020. The copyright holder for this preprint
   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
                                       It is made available under a CC-BY-NC-ND 4.0 International license .
-
-
-
-
-        proportional hazards regression to assess effectiveness. To additionally control for residual
-        confounding, we estimated weighted HR with doubly robust adjustment (drwHR) by performing a
-        multivariable and weighted Cox model that incorporated all the covariates used to create the
-        propensity score. We also performed a Bonferroni adjustment of the p-values and the 95%
-        confidence intervals (CI) dividing the type-I-error rate of 5% by five comparisons. All survival
-        analyses were weighted by PSWs in Stata SE version 16.1 for Windows Pro 10 x64 bits (30).
-
-
-        Ethics
-        This study was classified as minimal risk for participants. To maintain the privacy of the patients,
-        EsSalud’s informatics office anonymized all datasets before transfer to researchers. The protocol
-        was approved by EsSalud’s Institutional Review Board for COVID studies (91-SGRyGIS-DIS-
-        IETSI-ESSALUD-2020) and was also registered in the Peruvian Health Research Projects
-        repository (PRISA, by its acronym in Spanish) with ID EI-1243 (31).
-
-
-
-
-        RESULTS
-
-
-        We included 5683 patients from 72 healthcare centers distributed in 28 health networks at national
-        level. Of whom 200 received HCQ, 203 IVM, 1600 AZIT, 692 HCQ+AZIT, 358 IVM+AZIT, and
-        2630 received standard of care (Figure 1). The 36.8% (n = 2091) of participants were women, and
-        the age ranged from 18 to 104 years old with a mean of 59.4 years old (SD 16.3 years old). Table 1
-        describes the baseline characteristics of each arm of the study population.
-
-
-        Propensity score model development
-        Propensity scores showed well overlapping in the region of common support between treatment
-        groups versus control group (>95%) (SM Figure 1). Before inverse probability of treatment
-        weighting, twelve of 30 baseline covariates had high misbalance (>10% standardized mean
-        difference) across different groups. After applying the weighting, only one of the 30 baseline
-        covariates (age) remained imbalanced (>10% standardized mean difference) (Figure 2).
-
-
-        Follow-up and outcomes
-        The median follow-up for overall survival was 7 days (9 for HCQ, 8 for IVM, 8 for AZIT, 9 for
-        HCQ+AZIT, 8 for IVM+AZIT). At the end of follow-up, 1072 out of 5683 (18.9%) patients had
-        died: 49 (15.3%) in HCQ, 47 (24.5%) in IVM, 325 (23.2%) in AZIT, 165 (23.5%) in HCQ+AZIT,
-
+       proportional hazards regression to assess effectiveness. To additionally control for residual
+       confounding, we estimated weighted HR with doubly robust adjustment (drwHR) by performing a
+       multivariable and weighted Cox model that incorporated all the covariates used to create the
+       propensity score. We also performed a Bonferroni adjustment of the p-values and the 95%
+       confidence intervals (CI) dividing the type-I-error rate of 5% by five comparisons. All survival
+       analyses were weighted by PSWs in Stata SE version 16.1 for Windows Pro 10 x64 bits (30).
+       Ethics
+       This study was classified as minimal risk for participants. To maintain the privacy of the patients,
+       EsSalud’s informatics office anonymized all datasets before transfer to researchers. The protocol
+       was approved by EsSalud’s Institutional Review Board for COVID studies (91-SGRyGIS-DIS-
+       IETSI-ESSALUD-2020) and was also registered in the Peruvian Health Research Projects
+       repository (PRISA, by its acronym in Spanish) with ID EI-1243 (31).
+       RESULTS
+       We included 5683 patients from 72 healthcare centers distributed in 28 health networks at national
+       level. Of whom 200 received HCQ, 203 IVM, 1600 AZIT, 692 HCQ+AZIT, 358 IVM+AZIT, and
+       2630 received standard of care (Figure 1). The 36.8% (n = 2091) of participants were women, and
+       the age ranged from 18 to 104 years old with a mean of 59.4 years old (SD 16.3 years old). Table 1
+       describes the baseline characteristics of each arm of the study population.
+       Propensity score model development
+       Propensity scores showed well overlapping in the region of common support between treatment
+       groups versus control group (>95%) (SM Figure 1). Before inverse probability of treatment
+       weighting, twelve of 30 baseline covariates had high misbalance (>10% standardized mean
+       difference) across different groups. After applying the weighting, only one of the 30 baseline
+       covariates (age) remained imbalanced (>10% standardized mean difference) (Figure 2).
+       Follow-up and outcomes
+       The median follow-up for overall survival was 7 days (9 for HCQ, 8 for IVM, 8 for AZIT, 9 for
+       HCQ+AZIT, 8 for IVM+AZIT). At the end of follow-up, 1072 out of 5683 (18.9%) patients had
+       died: 49 (15.3%) in HCQ, 47 (24.5%) in IVM, 325 (23.2%) in AZIT, 165 (23.5%) in HCQ+AZIT,
                                                                                                                                    6
-
+
 medRxiv preprint doi: https://doi.org/10.1101/2020.10.06.20208066.this version posted October 14, 2020. The copyright holder for this preprint
   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
                                       It is made available under a CC-BY-NC-ND 4.0 International license .
-
-
-
-
-        and 85 (23.5%) in IVM+AZIT. Figure 3 shows weighted KM survival curves for the primary
-        outcome, while SM Figure 2 and SM Figure 3 show weighted KM survival curves for secondary
-        outcomes.
-
-
-        Thirty-day cumulative incidence, plus unweighted and weighted hazard rates are shown in Table 2.
-        After using the inverse probability weighting approach, we observed that HCQ+AZIT was
-        associated with 84% higher all-cause death hazard compared to standard care (wHR = 1.84; 95%CI
-        1.12-3.02). Consistently, HCQ+AZIT was associated with higher all-cause death and/or ICU
-        transfer hazard (wHR = 1.49, 95% CI: 1.01-2.19) and higher all-cause death and/or oxygen
-        prescription hazard (wHR = 1.70, 95% CI: 1.07-2.69). Except for survival without transfer to ICU,
-        these results were consistent even after doing double-robust adjustment to reduce residual
-        confounding in the sensitivity analysis (see SM Table 1).
-
-
-        We found inconsistent results regarding the estimated effect of HCQ using weighted analysis. It did
-        not show association with the primary outcome or with death/ICU transfer, but with all-cause death
-        and/or oxygen prescription, revealing a 77% higher hazard (wHR = 1.77, 95% CI: 1.01-3.11). The
-        double-robust adjustment sensitivity analysis showed that HCQ treatment was associated with
-        higher all-death hazard (drwHR = 2.08, 95% CI: 1.12-3.86), all-cause death and/or ICU transfer
-        hazard (drwHR = 1.69, 95% CI: 1.04-2.76), and all-cause death and/or oxygen prescription hazard
-        (drwHR = 2.13, 95% CI: 1.20-3.77) compared to the control group.
-
-
-        We observed that IVM was associated with higher all-cause death and/or ICU transfer hazard in the
-        weighted analysis (wHR = 1.58, 95% CI:1.11-2.25) but not with the other two outcomes.
-        Surprisingly, this finding persisted in the sensibility analysis (drwHR = 1.60, 95% CI: 1.12-2.27).
-        On the other hand, we did not find effect on all-cause deaths or the composite endpoints for neither
-        AZIT nor IVM+AZIT in all weighted (Table 2) and double-adjusted weighted analyses (SM Table
-        1).
-
-
-
-
-        DISCUSSION
-
-
-        This is the first study in Latin America, a region widely impacted by the pandemic, emulating a
-        clinical trial based on observational data comparing different drug treatments for COVID-19. Using
-        a database based on thousands of electronic clinical records, it was possible to replicate conditions
-
+       and 85 (23.5%) in IVM+AZIT. Figure 3 shows weighted KM survival curves for the primary
+       outcome, while SM Figure 2 and SM Figure 3 show weighted KM survival curves for secondary
+       outcomes.
+       Thirty-day cumulative incidence, plus unweighted and weighted hazard rates are shown in Table 2.
+       After using the inverse probability weighting approach, we observed that HCQ+AZIT was
+       associated with 84% higher all-cause death hazard compared to standard care (wHR = 1.84; 95%CI
+       1.12-3.02). Consistently, HCQ+AZIT was associated with higher all-cause death and/or ICU
+       transfer hazard (wHR = 1.49, 95% CI: 1.01-2.19) and higher all-cause death and/or oxygen
+       prescription hazard (wHR = 1.70, 95% CI: 1.07-2.69). Except for survival without transfer to ICU,
+       these results were consistent even after doing double-robust adjustment to reduce residual
+       confounding in the sensitivity analysis (see SM Table 1).
+       We found inconsistent results regarding the estimated effect of HCQ using weighted analysis. It did
+       not show association with the primary outcome or with death/ICU transfer, but with all-cause death
+       and/or oxygen prescription, revealing a 77% higher hazard (wHR = 1.77, 95% CI: 1.01-3.11). The
+       double-robust adjustment sensitivity analysis showed that HCQ treatment was associated with
+       higher all-death hazard (drwHR = 2.08, 95% CI: 1.12-3.86), all-cause death and/or ICU transfer
+       hazard (drwHR = 1.69, 95% CI: 1.04-2.76), and all-cause death and/or oxygen prescription hazard
+       (drwHR = 2.13, 95% CI: 1.20-3.77) compared to the control group.
+       We observed that IVM was associated with higher all-cause death and/or ICU transfer hazard in the
+       weighted analysis (wHR = 1.58, 95% CI:1.11-2.25) but not with the other two outcomes.
+       Surprisingly, this finding persisted in the sensibility analysis (drwHR = 1.60, 95% CI: 1.12-2.27).
+       On the other hand, we did not find effect on all-cause deaths or the composite endpoints for neither
+       AZIT nor IVM+AZIT in all weighted (Table 2) and double-adjusted weighted analyses (SM Table
+       1).
+       DISCUSSION
+       This is the first study in Latin America, a region widely impacted by the pandemic, emulating a
+       clinical trial based on observational data comparing different drug treatments for COVID-19. Using
+       a database based on thousands of electronic clinical records, it was possible to replicate conditions
                                                                                                                                    7
-
+
 medRxiv preprint doi: https://doi.org/10.1101/2020.10.06.20208066.this version posted October 14, 2020. The copyright holder for this preprint
   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
                                       It is made available under a CC-BY-NC-ND 4.0 International license .
-
-
-
-
-        of a clinical trial under real-world conditions for several drugs prescribed during the pandemic. This
-        study also employed novel statistical tools to emulate adequate randomization of the patients. Not
-        only a propensity score weighting was used to balance the control and intervention groups, but they
-        were obtained through generalized boosting models based on repeated decision trees. The resulting
-        models for our main outcome, all-cause in-hospital deaths, and for the two secondary composite
-        outcomes, showed no benefit from any of the treatment arms compared with standard care. There
-        was even a consistent increase of risk developing the outcome with the hydroxychloroquine and
-        azithromycin combination. It is then possible that the drugs evaluated have no effect on hospitalized
-        persons who are at risk or have already developed lung involvement.
-
-
-        Azithromycin alone
-        Our study showed no effect of azithromycin alone over mortality, survival without ICU, and
-        survival without oxygen requirement. Few published studies have compared azithromycin alone,
-        versus standard of care. Albani et al followed a cohort of 1403 patients either receiving
-        azithromycin alone, hydroxychloroquine alone, the combination of both, or none of them. Using
-        propensity score weighting, they found that azithromycin alone was associated with lower mortality
-        (OR 0.60; 95%CI 0.42-0.85) compared to no treatment. Guerin et al (32) compared 34 patients on
-        azithromycin alone with no treatment, finding reduction in days to achieve clinical recovery (12.9
-        vs 25.8; p=0.015). On the other hand, Geleris et al (33) analyzed a large single-center cohort in
-        NYC using propensity score matching to evaluate hydroxychloroquine, but also azithromycin alone
-        vs standard of care, finding no benefit for death and/or ICU transfer (HR 1.03; 95%CI 0.81-1.31).
-        Arshad et al (34) also evaluated azithromycin alone as a secondary aim in their multicenter,
-        retrospective, propensity score matched observational study, finding no effect (HR 1.05; 95%CI
-        0.68-1.62). Rodriguez-Molinero et al followed a cohort of 239 patients treated with azithromycin
-        alone (35), matching 29 patients on azithromycin alone with an equal number of controls using
-        multiple clinical and prognosis factors. They found no difference in oxygen saturation/fraction of
-        oxygen at 48h, and a longer time to discharge in the azithromycin group. When using the
-        unmatched whole cohort, they found no difference in any of these outcomes. In summary, the
-        available evidence is still contradictory, but leaning on no effect.
-
-
-        Hydroxychloroquine alone
-        We found a slight increase of risk for death and/or oxygen requirement, but not for our primary
-        outcome (death), or death and/or ICU transfer in our weighted models. This is consistent with the
-        systematic review published by Fiolet et al (36) including three randomized controlled trials
-
+       of a clinical trial under real-world conditions for several drugs prescribed during the pandemic. This
+       study also employed novel statistical tools to emulate adequate randomization of the patients. Not
+       only a propensity score weighting was used to balance the control and intervention groups, but they
+       were obtained through generalized boosting models based on repeated decision trees. The resulting
+       models for our main outcome, all-cause in-hospital deaths, and for the two secondary composite
+       outcomes, showed no benefit from any of the treatment arms compared with standard care. There
+       was even a consistent increase of risk developing the outcome with the hydroxychloroquine and
+       azithromycin combination. It is then possible that the drugs evaluated have no effect on hospitalized
+       persons who are at risk or have already developed lung involvement.
+       Azithromycin alone
+       Our study showed no effect of azithromycin alone over mortality, survival without ICU, and
+       survival without oxygen requirement. Few published studies have compared azithromycin alone,
+       versus standard of care. Albani et al followed a cohort of 1403 patients either receiving
+       azithromycin alone, hydroxychloroquine alone, the combination of both, or none of them. Using
+       propensity score weighting, they found that azithromycin alone was associated with lower mortality
+       (OR 0.60; 95%CI 0.42-0.85) compared to no treatment. Guerin et al (32) compared 34 patients on
+       azithromycin alone with no treatment, finding reduction in days to achieve clinical recovery (12.9
+       vs 25.8; p=0.015). On the other hand, Geleris et al (33) analyzed a large single-center cohort in
+       NYC using propensity score matching to evaluate hydroxychloroquine, but also azithromycin alone
+       vs standard of care, finding no benefit for death and/or ICU transfer (HR 1.03; 95%CI 0.81-1.31).
+       Arshad et al (34) also evaluated azithromycin alone as a secondary aim in their multicenter,
+       retrospective, propensity score matched observational study, finding no effect (HR 1.05; 95%CI
+       0.68-1.62). Rodriguez-Molinero et al followed a cohort of 239 patients treated with azithromycin
+       alone (35), matching 29 patients on azithromycin alone with an equal number of controls using
+       multiple clinical and prognosis factors. They found no difference in oxygen saturation/fraction of
+       oxygen at 48h, and a longer time to discharge in the azithromycin group. When using the
+       unmatched whole cohort, they found no difference in any of these outcomes. In summary, the
+       available evidence is still contradictory, but leaning on no effect.
+       Hydroxychloroquine alone
+       We found a slight increase of risk for death and/or oxygen requirement, but not for our primary
+       outcome (death), or death and/or ICU transfer in our weighted models. This is consistent with the
+       systematic review published by Fiolet et al (36) including three randomized controlled trials
                                                                                                                                    8
-
+
 medRxiv preprint doi: https://doi.org/10.1101/2020.10.06.20208066.this version posted October 14, 2020. The copyright holder for this preprint
   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
                                       It is made available under a CC-BY-NC-ND 4.0 International license .
-
-
-
-
-        (RCTs), one non-randomized trial, and 25 observational studies. They included 11932 patients on
-        the hydroxychloroquine alone group, 8081 on the hydroxychloroquine/azithromycin group, and
-        12930 on the control group. They found no association of hydroxychloroquine alone with mortality
-        with a pooled relative risk (RR) of 0.83 (95%CI 0.65-1.06) for all 17 studies and RR of 1.09
-        (95%CI 0.97-1.24) for the three RCTs. Among these studies, Geleris et al (33), after using
-        propensity score matching, found no significant association between hydroxychloroquine and
-        intubation or death (HR 1.04; 95%CI 0.82-1.32). On the other hand, hydroxychloroquine was
-        associated with all three outcomes in our double-adjusted models. These results are in accord with
-        the recently published RCT on hydroxychloroquine by the Recovery Collaborative Group (37).
-        They found less probability of being discharged alive from hospital within 28 days (RR 0.90;
-        95%CI 0.83-0.98) with hydroxychloroquine, and a higher frequency of invasive mechanical
-        ventilation or death (RR 1.14; 95%CI 1.03-1.27).
-
-
-        Hydroxychloroquine/azithromycin combination
-        Noticeably, we found a consistent increase on the risk for the three outcomes among patients who
-        received the hydroxychloroquine/azithromycin combination compared with standard of care.
-        Similarly, the systematic review by Fiolet et al (36) found that hydroxychloroquine/azithromycin
-        was associated with an increased mortality (RR 1.27; 95%CI 1.04-1.54) using six observational
-        studies plus a RCT. This RCT (38), 447 patients, showed no improvement of clinical outcomes with
-        the use of azithromycin in addition to standard of care that included hydroxychloroquine (OR 1.36;
-        95%CI 0.94-1.97) in severe COVID-19. Two other RCTs, not included in the Fiolet review, also
-        showed no benefit. A Brazilian multicenter open-label RCT (39), 504 patients, found no difference
-        on a seven-point ordinal scale at 15 days either with hydroxychloroquine alone, or in combination
-        with azithromycin. More important, they found more episodes of QT prolongation and liver-enzyme
-        elevation among patients receiving hydroxychloroquine, alone or with azithromycin. An open-label
-        RCT in Iran compared 55 patients on hydroxychloroquine plus lopinavir with 56 patients who
-        received azithromycin on top of that regimen, finding no difference in mortality (40). However,
-        there are at least two big observational studies, which found a beneficial effect of the combination.
-        Arshad et al (34) included 2561 patients, and found a 66% HR reduction with hydroxychloroquine,
-        and a 71% reduction with hydroxychloroquine/azithromycin. Lauriola et al reported an
-        observational study with 377 patients, finding a reduced in-hospital mortality with the
-        hydroxychloroquine/azithromycin combination (HR 0.265; 95%CI 0.17-0.41) (41). Therefore, it is
-        still not clear which is the real effect of the combination; however, there is a physio-pathological
-        plausibility that the combination increased cardiac adverse events, affecting survival (42).
-
+       (RCTs), one non-randomized trial, and 25 observational studies. They included 11932 patients on
+       the hydroxychloroquine alone group, 8081 on the hydroxychloroquine/azithromycin group, and
+       12930 on the control group. They found no association of hydroxychloroquine alone with mortality
+       with a pooled relative risk (RR) of 0.83 (95%CI 0.65-1.06) for all 17 studies and RR of 1.09
+       (95%CI 0.97-1.24) for the three RCTs. Among these studies, Geleris et al (33), after using
+       propensity score matching, found no significant association between hydroxychloroquine and
+       intubation or death (HR 1.04; 95%CI 0.82-1.32). On the other hand, hydroxychloroquine was
+       associated with all three outcomes in our double-adjusted models. These results are in accord with
+       the recently published RCT on hydroxychloroquine by the Recovery Collaborative Group (37).
+       They found less probability of being discharged alive from hospital within 28 days (RR 0.90;
+       95%CI 0.83-0.98) with hydroxychloroquine, and a higher frequency of invasive mechanical
+       ventilation or death (RR 1.14; 95%CI 1.03-1.27).
+       Hydroxychloroquine/azithromycin combination
+       Noticeably, we found a consistent increase on the risk for the three outcomes among patients who
+       received the hydroxychloroquine/azithromycin combination compared with standard of care.
+       Similarly, the systematic review by Fiolet et al (36) found that hydroxychloroquine/azithromycin
+       was associated with an increased mortality (RR 1.27; 95%CI 1.04-1.54) using six observational
+       studies plus a RCT. This RCT (38), 447 patients, showed no improvement of clinical outcomes with
+       the use of azithromycin in addition to standard of care that included hydroxychloroquine (OR 1.36;
+       95%CI 0.94-1.97) in severe COVID-19. Two other RCTs, not included in the Fiolet review, also
+       showed no benefit. A Brazilian multicenter open-label RCT (39), 504 patients, found no difference
+       on a seven-point ordinal scale at 15 days either with hydroxychloroquine alone, or in combination
+       with azithromycin. More important, they found more episodes of QT prolongation and liver-enzyme
+       elevation among patients receiving hydroxychloroquine, alone or with azithromycin. An open-label
+       RCT in Iran compared 55 patients on hydroxychloroquine plus lopinavir with 56 patients who
+       received azithromycin on top of that regimen, finding no difference in mortality (40). However,
+       there are at least two big observational studies, which found a beneficial effect of the combination.
+       Arshad et al (34) included 2561 patients, and found a 66% HR reduction with hydroxychloroquine,
+       and a 71% reduction with hydroxychloroquine/azithromycin. Lauriola et al reported an
+       observational study with 377 patients, finding a reduced in-hospital mortality with the
+       hydroxychloroquine/azithromycin combination (HR 0.265; 95%CI 0.17-0.41) (41). Therefore, it is
+       still not clear which is the real effect of the combination; however, there is a physio-pathological
+       plausibility that the combination increased cardiac adverse events, affecting survival (42).
                                                                                                                                    9
-
+
 medRxiv preprint doi: https://doi.org/10.1101/2020.10.06.20208066.this version posted October 14, 2020. The copyright holder for this preprint
   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
                                       It is made available under a CC-BY-NC-ND 4.0 International license .
+       Ivermectin
+       Until the date of this manuscript, there are no published clinical trials or large observational studies
+       analyzing the effect of ivermectin on patients hospitalized with COVID-19. We found no
+       association of ivermectin with all-cause mortality or with death and/or oxygen requirement;
+       however, a deleterious effect was found on death and/or ICU admission. The reason of this
+       association is not immediately clear for us, given the no-effect on the other two outcomes. One
+       possibility is the presence of residual confounding despite the propensity score matching and further
+       model adjustments. We only found pre-printed observational studies evaluating the effectiveness of
+       this drug. The largest series is the ICON study, USA (43). They compared 173 patients on
+       ivermectin versus 107 under usual care. They found less mortality in the ivermectin group (OR
+       0.52; 95%CI 0.29-0.96) and even greater effect on the subgroup with severe pulmonary disease (OR
+       0.15;      95%CI        0.05-0.47).        A    pilot    study    in  Iraq     compared        71   patients    receiving
+       hydroxychloroquine/azithromycin with 16 patients receiving ivermectin in addition (44). They
+       found no difference on mortality (2/71 vs 0/16), but less hospitalization time in days (13.2±0.9 vs
+       7.6±2.8, p<0.001). Finally, there is a descriptive study in Argentina with 167 patients and no control
+       group. They evaluated a treatment protocol that includes ivermectin, and reported an overall
+       mortality of 0.59%, lower than their country average (45). Therefore, our study is the largest series
+       assessing ivermectin effect among hospitalized patients and employing an adequate comparison
+       technique.
+       Limitations and Strengths
+       Despite being a trial emulation, this study still is an observational retrospective cohort. Without a
+       random assignment, residual confounding is a possibility. To control this, we used a robust
+       approach based on incident users, defining a significant time zero to prevent immortal time-bias,
+       allowing a grace period inclusion, and using modern data science techniques to emulate random
+       assignment. Especially, the machine learning approach (generalized boosting model) allow us to
+       include many more potential confounders (~30 covariates) in the weighting model, than a
+       conventional logistic regression would allow. This is reflected in the appropriate balance and
+       overlapping achieved between treatment and control groups once the weighting scores were
+       applied. Moreover, a sensitivity analysis was performed using doubly robust adjustment in the
+       weighted Cox regression models, obtaining consistently estimates of causal effects. Despite all
+       these robust strategies, we cannot guarantee that there is some degree of residual confusion in our
+       study. Specifically, our finding that IVM could be associated with an increased risk of one of the
+                                                                                                                                 10
 
-
-
-
-        Ivermectin
-        Until the date of this manuscript, there are no published clinical trials or large observational studies
-        analyzing the effect of ivermectin on patients hospitalized with COVID-19. We found no
-        association of ivermectin with all-cause mortality or with death and/or oxygen requirement;
-        however, a deleterious effect was found on death and/or ICU admission. The reason of this
-        association is not immediately clear for us, given the no-effect on the other two outcomes. One
-        possibility is the presence of residual confounding despite the propensity score matching and further
-        model adjustments. We only found pre-printed observational studies evaluating the effectiveness of
-        this drug. The largest series is the ICON study, USA (43). They compared 173 patients on
-        ivermectin versus 107 under usual care. They found less mortality in the ivermectin group (OR
-        0.52; 95%CI 0.29-0.96) and even greater effect on the subgroup with severe pulmonary disease (OR
-        0.15;     95%CI       0.05-0.47).      A     pilot    study     in    Iraq    compared        71    patients     receiving
-        hydroxychloroquine/azithromycin with 16 patients receiving ivermectin in addition (44). They
-        found no difference on mortality (2/71 vs 0/16), but less hospitalization time in days (13.2±0.9 vs
-        7.6±2.8, p<0.001). Finally, there is a descriptive study in Argentina with 167 patients and no control
-        group. They evaluated a treatment protocol that includes ivermectin, and reported an overall
-        mortality of 0.59%, lower than their country average (45). Therefore, our study is the largest series
-        assessing ivermectin effect among hospitalized patients and employing an adequate comparison
-        technique.
-
-
-        Limitations and Strengths
-        Despite being a trial emulation, this study still is an observational retrospective cohort. Without a
-        random assignment, residual confounding is a possibility. To control this, we used a robust
-        approach based on incident users, defining a significant time zero to prevent immortal time-bias,
-        allowing a grace period inclusion, and using modern data science techniques to emulate random
-        assignment. Especially, the machine learning approach (generalized boosting model) allow us to
-        include many more potential confounders (~30 covariates) in the weighting model, than a
-        conventional logistic regression would allow. This is reflected in the appropriate balance and
-        overlapping achieved between treatment and control groups once the weighting scores were
-        applied. Moreover, a sensitivity analysis was performed using doubly robust adjustment in the
-        weighted Cox regression models, obtaining consistently estimates of causal effects. Despite all
-        these robust strategies, we cannot guarantee that there is some degree of residual confusion in our
-        study. Specifically, our finding that IVM could be associated with an increased risk of one of the
-
-                                                                                                                                  10
-
 medRxiv preprint doi: https://doi.org/10.1101/2020.10.06.20208066.this version posted October 14, 2020. The copyright holder for this preprint
   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
                                       It is made available under a CC-BY-NC-ND 4.0 International license .
+       secondary outcomes, but not with the rest, could be due to residual confusion not properly
+       controlled even after double adjustment.
+       Other possible limitation is the occurrence of non-registered variations of the treatment, as we relied
+       on electronic records of drug dispensing. This process is strictly monitored and even audited;
+       however, the system does not account for unexpected missing doses. On the other hand, it is
+       important to highlight that our study, like an intention-to-treat approach, allows to estimate the
+       effectiveness (effect in real conditions) of the studied drugs. This approach includes drug
+       discontinuation or regimen modification due to adverse events, poor tolerability, or simply non-
+       adherence. Thus, our results are a good approximation to the effectiveness of these treatments, but
+       they do not necessarily reflect their efficacy (effect under ideal conditions). Although the studied
+       drugs were administered based on the Peruvian Minister of Health guidelines, wide variations
+       between different healthcare centers were expected. We are confident that our weighting strategy
+       controlled most of the heterogeneity introduced by inter-hospital disparities; however, some
+       residual confusion is still possible.
+       Despite these limitations, to the best of our knowledge, this is the first clinical trial emulation done
+       in Latin America that assessed the real-world effectiveness of different treatments for COVID-19,
+       and so far, the largest performed using robust methods to balance groups. Different from traditional
+       observational studies, a clinical trial emulation allows for robust design, yielding reliable results.
+       However, equilibrating control and intervention groups is no easy task. Since most common
+       methods have disadvantages as sample size reduction (matching) or poor overlapping (weighting),
+       the use of machine learning algorithms based on iterative decision trees (boosting) offers an
+       excellent opportunity to optimize the balance between groups, maintaining stable models. Besides,
+       the use of large observational data from electronic health records provides enough power to
+       compare different treatment arms simultaneously, does not require the logistics of a RCT, and
+       approximates treatment effect under real-world conditions.
+       Conclusions
+       The results of this clinical trial emulation match the findings of previous RCTs and observational
+       studies among hospitalized patients with COVID-19, which mostly showed no beneficial effects of
+       hydroxychloroquine, ivermectin, azithromycin, or their combinations. Once assignation bias and
+       possible confounders are controlled, the effect of the drugs studied is not significant, implying that
+       any effect perceived in observational studies and case series is probably due to confounding effect
+                                                                                                                                 11
 
-
-
-
-        secondary outcomes, but not with the rest, could be due to residual confusion not properly
-        controlled even after double adjustment.
-
-
-        Other possible limitation is the occurrence of non-registered variations of the treatment, as we relied
-        on electronic records of drug dispensing. This process is strictly monitored and even audited;
-        however, the system does not account for unexpected missing doses. On the other hand, it is
-        important to highlight that our study, like an intention-to-treat approach, allows to estimate the
-        effectiveness (effect in real conditions) of the studied drugs. This approach includes drug
-        discontinuation or regimen modification due to adverse events, poor tolerability, or simply non-
-        adherence. Thus, our results are a good approximation to the effectiveness of these treatments, but
-        they do not necessarily reflect their efficacy (effect under ideal conditions). Although the studied
-        drugs were administered based on the Peruvian Minister of Health guidelines, wide variations
-        between different healthcare centers were expected. We are confident that our weighting strategy
-        controlled most of the heterogeneity introduced by inter-hospital disparities; however, some
-        residual confusion is still possible.
-
-
-        Despite these limitations, to the best of our knowledge, this is the first clinical trial emulation done
-        in Latin America that assessed the real-world effectiveness of different treatments for COVID-19,
-        and so far, the largest performed using robust methods to balance groups. Different from traditional
-        observational studies, a clinical trial emulation allows for robust design, yielding reliable results.
-        However, equilibrating control and intervention groups is no easy task. Since most common
-        methods have disadvantages as sample size reduction (matching) or poor overlapping (weighting),
-        the use of machine learning algorithms based on iterative decision trees (boosting) offers an
-        excellent opportunity to optimize the balance between groups, maintaining stable models. Besides,
-        the use of large observational data from electronic health records provides enough power to
-        compare different treatment arms simultaneously, does not require the logistics of a RCT, and
-        approximates treatment effect under real-world conditions.
-
-
-        Conclusions
-        The results of this clinical trial emulation match the findings of previous RCTs and observational
-        studies among hospitalized patients with COVID-19, which mostly showed no beneficial effects of
-        hydroxychloroquine, ivermectin, azithromycin, or their combinations. Once assignation bias and
-        possible confounders are controlled, the effect of the drugs studied is not significant, implying that
-        any effect perceived in observational studies and case series is probably due to confounding effect
-
-                                                                                                                                  11
-
 medRxiv preprint doi: https://doi.org/10.1101/2020.10.06.20208066.this version posted October 14, 2020. The copyright holder for this preprint
   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
                                       It is made available under a CC-BY-NC-ND 4.0 International license .
+       and selection bias. We even detected a consistent increase in death risk, as well as transfer to ICU
+       and oxygen requirement, with the hydroxychloroquine/azithromycin combination. This association
+       has been reported in other studies and clinical trials, corroborating a potentially harmful effect of
+       this combination. However, we did not have an adequate registry of pharmacological side effects in
+       our electronic database, to suggest adverse reactions to this combination as a path for mortality
+       increase.
+                                                                                                                                 12
 
-
-
-
-        and selection bias. We even detected a consistent increase in death risk, as well as transfer to ICU
-        and oxygen requirement, with the hydroxychloroquine/azithromycin combination. This association
-        has been reported in other studies and clinical trials, corroborating a potentially harmful effect of
-        this combination. However, we did not have an adequate registry of pharmacological side effects in
-        our electronic database, to suggest adverse reactions to this combination as a path for mortality
-        increase.
-
-
-
-
-                                                                                                                                  12
-
 medRxiv preprint doi: https://doi.org/10.1101/2020.10.06.20208066.this version posted October 14, 2020. The copyright holder for this preprint
   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
                                       It is made available under a CC-BY-NC-ND 4.0 International license .
+       ACKNOWLEDGMENTS: We thank Engr. Pedro Vasquez, Engr. Elard Pastor and all the team
+       from the EsSalud’s informatics office (GCTIC - Gerencia Central de Tecnologías de lnformación y
+       Comunicaciones) for extracting and structuring the anonymized data from the electronic medical
+       records.
+       AUTHORS' CONTRIBUTIONS: PSB conceived and designed the research idea, wrote the
+       research protocol, conceived and designed the analysis, compiled and organized the data, performed
+       the analysis, interpreted the data, wrote the paper, and reviewed the last version of the manuscript.
+       Carlos Culquichicon compiled and organized the data, performed the analysis, contributed to the
+       writing of the paper, and reviewed the last version of the manuscript. Yamilee Hurtado-Roca
+       conceived and designed the research idea, contributed with analysis tools, interpreted the results,
+       contributed to the writing of the paper, and reviewed the last version of the manuscript. Roger V.
+       Araujo-Castillo conceived and designed the research idea, designed the analysis, contributed with
+       analysis tools, interpreted the results, wrote the paper, and reviewed the last version of the
+       manuscript.
+       CONFLICT OF INTEREST STATEMENTS: All the authors declare that there is no conflict of
+       interest regarding the content of this study.
+       ROLE OF FUNDING SOURCE: The study was funded by the Instituto de Evaluacion de
+       Tecnologias en Salud e Investigacion - IETSI, EsSalud, Lima, Peru. No other institutions or
+       companies participated in the funding of this study.
+       ETHICS STATEMENT: This study has followed all the recommendations of the Declaration of
+       Helsinki regarding research involving human subjects. The protocol was approved by EsSalud’s
+       Institutional Review Board for COVID studies.
+                                                                                                                                 13
 
-
-
-
-        ACKNOWLEDGMENTS: We thank Engr. Pedro Vasquez, Engr. Elard Pastor and all the team
-        from the EsSalud’s informatics office (GCTIC - Gerencia Central de Tecnologías de lnformación y
-        Comunicaciones) for extracting and structuring the anonymized data from the electronic medical
-        records.
-
-
-        AUTHORS' CONTRIBUTIONS: PSB conceived and designed the research idea, wrote the
-        research protocol, conceived and designed the analysis, compiled and organized the data, performed
-        the analysis, interpreted the data, wrote the paper, and reviewed the last version of the manuscript.
-        Carlos Culquichicon compiled and organized the data, performed the analysis, contributed to the
-        writing of the paper, and reviewed the last version of the manuscript. Yamilee Hurtado-Roca
-        conceived and designed the research idea, contributed with analysis tools, interpreted the results,
-        contributed to the writing of the paper, and reviewed the last version of the manuscript. Roger V.
-        Araujo-Castillo conceived and designed the research idea, designed the analysis, contributed with
-        analysis tools, interpreted the results, wrote the paper, and reviewed the last version of the
-        manuscript.
-
-
-        CONFLICT OF INTEREST STATEMENTS: All the authors declare that there is no conflict of
-        interest regarding the content of this study.
-
-
-        ROLE OF FUNDING SOURCE: The study was funded by the Instituto de Evaluacion de
-        Tecnologias en Salud e Investigacion - IETSI, EsSalud, Lima, Peru. No other institutions or
-        companies participated in the funding of this study.
-
-
-        ETHICS STATEMENT: This study has followed all the recommendations of the Declaration of
-        Helsinki regarding research involving human subjects. The protocol was approved by EsSalud’s
-        Institutional Review Board for COVID studies.
-
-
-
-
-                                                                                                                                  13
-
 medRxiv preprint doi: https://doi.org/10.1101/2020.10.06.20208066.this version posted October 14, 2020. The copyright holder for this preprint
   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
                                       It is made available under a CC-BY-NC-ND 4.0 International license .
+       REFERENCES
+       1. Baby K, Maity S, Mehta CH, Suresh A, Nayak UY, Nayak Y. Targeting SARS-CoV-2 Main
+       Protease: A Computational Drug Repurposing Study. Arch Med Res. 2020.
+       2. Richman DD. Antiviral Drug Discovery To Address the COVID-19 Pandemic. mBio.
+       2020;11(5):e02134-20.
+       3. Yu H, Li C, Wang X, Duan J, Yang N, Xie L, et al. Techniques and strategies for the potential
+       protein-targets discovery and active pharmaceutical molecules screening in Pandemic. Journal of
+       Proteome Research. 2020.
+       4. Sohag AAM, Hannan MA, Rahman S, Hossain M, Hasan M, Khan MK, et al. Revisiting
+       potential druggable targets against SARS-CoV-2 and repurposing therapeutics under preclinical
+       study and clinical trials: A comprehensive review. Drug Dev Res. 2020:10.1002/ddr.21709.
+       5. Juul S, Nielsen EE, Feinberg J, Siddiqui F, Jørgensen CK, Barot E, et al. Interventions for
+       treatment of COVID-19: A living systematic review with meta-analyses and trial sequential
+       analyses (The LIVING Project). PLOS Medicine. 2020;17(9):e1003293.
+       6. Li N, Zhao L, Zhan X. Quantitative proteomics reveals a broad-spectrum antiviral property of
+       ivermectin, benefiting for COVID-19 treatment. Journal of Cellular Physiology. 2020;n/a(n/a).
+       7. Abella BS, Jolkovsky EL, Biney BT, Uspal JE, Hyman MC, Frank I, et al. Efficacy and Safety of
+       Hydroxychloroquine vs Placebo for Pre-exposure SARS-CoV-2 Prophylaxis Among Health Care
+       Workers: A Randomized Clinical Trial. JAMA Internal Medicine. 2020.
+       8. Johns Hopkins University. Coronavirus resource center: COVID-19 Dashboard by the Center for
+       Systems Science and Engineering (CSSE) at Johns Hopkins University (JHU); 2020 [Last accessed
+       Oct 5, 2020]. Available from: https://coronavirus.jhu.edu/map.html.
+       9. Johns Hopkins University. Coronavirus resource center: Mortality in the most affected countries;
+       2020 [Last accessed Oct 5, 2020]. Available from: https://coronavirus.jhu.edu/data/mortality.
+       10. Peruvian Ministry of Health. Prevencion, diagnostico y tratamiento de personas afectadas por
+       COVID-19            en      el     Peru;    2020       [Last    accessed    Oct      5,     2020].    Available      from:
+       https://www.gob.pe/institucion/minsa/informes-publicaciones/473587-prevencion-diagnostico-y-
+       tratamiento-de-personas-afectadas-por-covid-19-en-el-peru.
+       11. Peruvian Ministry of Health. Manejo ambulatorio de personas afectadas por COVID-19 en el
+       Peru;           2020           [Last         accessed          Oct       5,        2020].           Available        from:
+       https://cdn.www.gob.pe/uploads/document/file/830595/RM_375-2020-MINSA.PDF.
+       12. Hernán MA, Robins JM. Using Big Data to Emulate a Target Trial When a Randomized Trial Is
+       Not Available. American journal of epidemiology. 2016;183(8):758-64.
+                                                                                                                                 14
 
-
-
-
-        REFERENCES
-
-
-        1. Baby K, Maity S, Mehta CH, Suresh A, Nayak UY, Nayak Y. Targeting SARS-CoV-2 Main
-        Protease: A Computational Drug Repurposing Study. Arch Med Res. 2020.
-        2. Richman DD. Antiviral Drug Discovery To Address the COVID-19 Pandemic. mBio.
-        2020;11(5):e02134-20.
-        3. Yu H, Li C, Wang X, Duan J, Yang N, Xie L, et al. Techniques and strategies for the potential
-        protein-targets discovery and active pharmaceutical molecules screening in Pandemic. Journal of
-        Proteome Research. 2020.
-        4. Sohag AAM, Hannan MA, Rahman S, Hossain M, Hasan M, Khan MK, et al. Revisiting
-        potential druggable targets against SARS-CoV-2 and repurposing therapeutics under preclinical
-        study and clinical trials: A comprehensive review. Drug Dev Res. 2020:10.1002/ddr.21709.
-        5. Juul S, Nielsen EE, Feinberg J, Siddiqui F, Jørgensen CK, Barot E, et al. Interventions for
-        treatment of COVID-19: A living systematic review with meta-analyses and trial sequential
-        analyses (The LIVING Project). PLOS Medicine. 2020;17(9):e1003293.
-        6. Li N, Zhao L, Zhan X. Quantitative proteomics reveals a broad-spectrum antiviral property of
-        ivermectin, benefiting for COVID-19 treatment. Journal of Cellular Physiology. 2020;n/a(n/a).
-        7. Abella BS, Jolkovsky EL, Biney BT, Uspal JE, Hyman MC, Frank I, et al. Efficacy and Safety of
-        Hydroxychloroquine vs Placebo for Pre-exposure SARS-CoV-2 Prophylaxis Among Health Care
-        Workers: A Randomized Clinical Trial. JAMA Internal Medicine. 2020.
-        8. Johns Hopkins University. Coronavirus resource center: COVID-19 Dashboard by the Center for
-        Systems Science and Engineering (CSSE) at Johns Hopkins University (JHU); 2020 [Last accessed
-        Oct 5, 2020]. Available from: https://coronavirus.jhu.edu/map.html.
-        9. Johns Hopkins University. Coronavirus resource center: Mortality in the most affected countries;
-        2020 [Last accessed Oct 5, 2020]. Available from: https://coronavirus.jhu.edu/data/mortality.
-        10. Peruvian Ministry of Health. Prevencion, diagnostico y tratamiento de personas afectadas por
-        COVID-19          en     el    Peru;     2020      [Last     accessed         Oct    5,   2020].      Available       from:
-        https://www.gob.pe/institucion/minsa/informes-publicaciones/473587-prevencion-diagnostico-y-
-        tratamiento-de-personas-afectadas-por-covid-19-en-el-peru.
-        11. Peruvian Ministry of Health. Manejo ambulatorio de personas afectadas por COVID-19 en el
-        Peru;         2020            [Last       accessed           Oct         5,         2020].         Available          from:
-        https://cdn.www.gob.pe/uploads/document/file/830595/RM_375-2020-MINSA.PDF.
-        12. Hernán MA, Robins JM. Using Big Data to Emulate a Target Trial When a Randomized Trial Is
-        Not Available. American journal of epidemiology. 2016;183(8):758-64.
-
-                                                                                                                                  14
-
 medRxiv preprint doi: https://doi.org/10.1101/2020.10.06.20208066.this version posted October 14, 2020. The copyright holder for this preprint
   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
                                       It is made available under a CC-BY-NC-ND 4.0 International license .
+       13. Labrecque JA, Swanson SA. Target trial emulation: teaching epidemiology and beyond. Eur J
+       Epidemiol. 2017;32(6):473-5.
+       14. Mahévas M, Tran V-T, Roumier M, Chabrol A, Paule R, Guillaud C, et al. Clinical efficacy of
+       hydroxychloroquine in patients with covid-19 pneumonia who require oxygen: observational
+       comparative study using routine care data. BMJ. 2020;369:m1844.
+       15. Lee BK, Lessler J, Stuart EA. Improving propensity score weighting using machine learning.
+       Statistics in medicine. 2010;29(3):337-46.
+       16. Peruvian Social Health Insurance - EsSalud. EsSI EsSalud's Digital Clinical Records; 2020
+       [Last accessed Oct 5, 2020]. Available from: https://essi.pe/.
+       17. PAHO. Covid-19 codification with ICD-10; 2020 [Last accessed Oct 5, 2020]. Available from:
+       https://www.paho.org/arg/index.php?option=com_docman&view=download&alias=468-covid-cie-
+       codigos-2020-03-25-espanol&category_slug=documentos&Itemid=624.
+       18. Austin PC, Stuart EA. Moving towards best practice when using inverse probability of
+       treatment weighting (IPTW) using the propensity score to estimate causal treatment effects in
+       observational studies. Statistics in medicine. 2015;34(28):3661-79.
+       19. McCaffrey DF, Griffin BA, Almirall D, Slaughter ME, Ramchand R, Burgette LF. A tutorial on
+       propensity score estimation for multiple treatments using generalized boosted models. Statistics in
+       medicine. 2013;32(19):3388-414.
+       20. Austin PC. An Introduction to Propensity Score Methods for Reducing the Effects of
+       Confounding in Observational Studies. Multivariate Behav Res. 2011;46(3):399-424.
+       21. McCaffrey DF, Ridgeway G, Morral AR. Propensity Score Estimation with Boosted Regression
+       for Evaluating Causal Effects in Observational Studies. Psychol Methods. 2004 Dec;9(4):403-25.
+       22. Coffman DL, Zhou J, Cai X. Comparison of methods for handling covariate missingness in
+       propensity score estimation with a binary exposure. BMC medical research methodology.
+       2020;20(1):168-.
+       23. Parast L, McCaffrey DF, Burgette LF, de la Guardia FH, Golinelli D, Miles JNV, et al.
+       Optimizing Variance-Bias Trade-off in the TWANG Package for Estimation of Propensity Scores.
+       Health Serv Outcomes Res Methodol. 2017;17(3-4):175-97.
+       24. Ridgeway G, McCaffrey D, Morral A, Griffin BA, Burgette L, M C. Toolkit for Weighting and
+       Analysis of Nonequivalent Groups (TWANG): CRAN; 2020 [Last accessed Oct 5, 2020]. Available
+       from: https://cran.r-project.org/web/packages/twang/.
+       25. Sato T, Matsuyama Y. Marginal Structural Models as a Tool for Standardization. Epidemiology.
+       2003;14(6).
+                                                                                                                                 15
 
-
-
-
-        13. Labrecque JA, Swanson SA. Target trial emulation: teaching epidemiology and beyond. Eur J
-        Epidemiol. 2017;32(6):473-5.
-        14. Mahévas M, Tran V-T, Roumier M, Chabrol A, Paule R, Guillaud C, et al. Clinical efficacy of
-        hydroxychloroquine in patients with covid-19 pneumonia who require oxygen: observational
-        comparative study using routine care data. BMJ. 2020;369:m1844.
-        15. Lee BK, Lessler J, Stuart EA. Improving propensity score weighting using machine learning.
-        Statistics in medicine. 2010;29(3):337-46.
-        16. Peruvian Social Health Insurance - EsSalud. EsSI EsSalud's Digital Clinical Records; 2020
-        [Last accessed Oct 5, 2020]. Available from: https://essi.pe/.
-        17. PAHO. Covid-19 codification with ICD-10; 2020 [Last accessed Oct 5, 2020]. Available from:
-        https://www.paho.org/arg/index.php?option=com_docman&view=download&alias=468-covid-cie-
-        codigos-2020-03-25-espanol&category_slug=documentos&Itemid=624.
-        18. Austin PC, Stuart EA. Moving towards best practice when using inverse probability of
-        treatment weighting (IPTW) using the propensity score to estimate causal treatment effects in
-        observational studies. Statistics in medicine. 2015;34(28):3661-79.
-        19. McCaffrey DF, Griffin BA, Almirall D, Slaughter ME, Ramchand R, Burgette LF. A tutorial on
-        propensity score estimation for multiple treatments using generalized boosted models. Statistics in
-        medicine. 2013;32(19):3388-414.
-        20. Austin PC. An Introduction to Propensity Score Methods for Reducing the Effects of
-        Confounding in Observational Studies. Multivariate Behav Res. 2011;46(3):399-424.
-        21. McCaffrey DF, Ridgeway G, Morral AR. Propensity Score Estimation with Boosted Regression
-        for Evaluating Causal Effects in Observational Studies. Psychol Methods. 2004 Dec;9(4):403-25.
-        22. Coffman DL, Zhou J, Cai X. Comparison of methods for handling covariate missingness in
-        propensity score estimation with a binary exposure. BMC medical research methodology.
-        2020;20(1):168-.
-        23. Parast L, McCaffrey DF, Burgette LF, de la Guardia FH, Golinelli D, Miles JNV, et al.
-        Optimizing Variance-Bias Trade-off in the TWANG Package for Estimation of Propensity Scores.
-        Health Serv Outcomes Res Methodol. 2017;17(3-4):175-97.
-        24. Ridgeway G, McCaffrey D, Morral A, Griffin BA, Burgette L, M C. Toolkit for Weighting and
-        Analysis of Nonequivalent Groups (TWANG): CRAN; 2020 [Last accessed Oct 5, 2020]. Available
-        from: https://cran.r-project.org/web/packages/twang/.
-        25. Sato T, Matsuyama Y. Marginal Structural Models as a Tool for Standardization. Epidemiology.
-        2003;14(6).
-
-
-
-                                                                                                                                  15
-
 medRxiv preprint doi: https://doi.org/10.1101/2020.10.06.20208066.this version posted October 14, 2020. The copyright holder for this preprint
   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
                                       It is made available under a CC-BY-NC-ND 4.0 International license .
+       26. Desai RJ, Franklin JM. Alternative approaches for confounding adjustment in observational
+       studies using weighting based on the propensity score: a primer for practitioners. BMJ.
+       2019;367:l5657.
+       27. Pearl J. Invited Commentary: Understanding Bias Amplification. American Journal of
+       Epidemiology. 2011;174(11):1223-7.
+       28. Greifer N. Covariate Balance Tables and Plots (cobalt): CRAN; 2020 [Last accessed Oct 5,
+       2020]. Available from: https://cran.r-project.org/web/packages/cobalt/index.html.
+       29. R Core Team - R: A language and environment for statistical computing: R Foundation for
+       Statistical Computing; 2020 [Last accessed Oct 5, 2020]. Available from: https://www.R-
+       project.org/.
+       30. Stata Statistical Software: Release 16. College Station, TX: StataCorp LLC: StataCorp 2019.
+       31. Soto-Becerra P. Efectividad Clínica Comparativa de Hidroxicloroquina en el Tratamiento de
+       COVID-19 utilizando Datos Observacionales de Registros Clínicos Electrónicos de EsSalud.:
+       PRISA;             2020            [Last        accessed        Oct       5,        2020].          Available        from:
+       https://www.ins.gob.pe/prisa/ver_investigacion.aspx?5A53F316-F127-41D6-B894-
+       663E9C8C5E3C.
+       32. Guérin V, Lévy P, Thomas J-L, Lardenois T, Lacrosse P, Sarrazin E, et al. Azithromycin and
+       Hydroxychloroquine Accelerate Recovery of Outpatients with Mild/Moderate COVID-19. AJMAH
+       18(7):45-5.
+       33. Geleris J, Sun Y, Platt J, Zucker J, Baldwin M, Hripcsak G, et al. Observational Study of
+       Hydroxychloroquine in Hospitalized Patients with Covid-19. The New England journal of
+       medicine. 2020;382(25):2411-8.
+       34. Arshad S, Kilgore P, Chaudhry ZS, Jacobsen G, Wang DD, Huitsing K, et al. Treatment with
+       hydroxychloroquine, azithromycin, and combination in patients hospitalized with COVID-19. Int J
+       Infect Dis. 2020;97:396-403.
+       35. Rodríguez-Molinero A, Pérez-López C, Gálvez-Barrón C, Miñarro A, Macho O, López GF, et
+       al. Observational study of azithromycin in hospitalized patients with COVID-19. PloS one.
+       2020;15(9):e0238681-e.
+       36. Fiolet T, Guihur A, Rebeaud ME, Mulot M, Peiffer-Smadja N, Mahamat-Saleh Y. Effect of
+       hydroxychloroquine with or without azithromycin on the mortality of coronavirus disease 2019
+       (COVID-19) patients: a systematic review and meta-analysis. Clinical microbiology and infection:
+       the official publication of the European Society of Clinical Microbiology and Infectious Diseases.
+       2020:S1198-743X(20)30505-X.
+                                                                                                                                 16
 
-
-
-
-        26. Desai RJ, Franklin JM. Alternative approaches for confounding adjustment in observational
-        studies using weighting based on the propensity score: a primer for practitioners. BMJ.
-        2019;367:l5657.
-        27. Pearl J. Invited Commentary: Understanding Bias Amplification. American Journal of
-        Epidemiology. 2011;174(11):1223-7.
-        28. Greifer N. Covariate Balance Tables and Plots (cobalt): CRAN; 2020 [Last accessed Oct 5,
-        2020]. Available from: https://cran.r-project.org/web/packages/cobalt/index.html.
-        29. R Core Team - R: A language and environment for statistical computing: R Foundation for
-        Statistical Computing; 2020 [Last accessed Oct 5, 2020]. Available from: https://www.R-
-        project.org/.
-        30. Stata Statistical Software: Release 16. College Station, TX: StataCorp LLC: StataCorp 2019.
-        31. Soto-Becerra P. Efectividad Clínica Comparativa de Hidroxicloroquina en el Tratamiento de
-        COVID-19 utilizando Datos Observacionales de Registros Clínicos Electrónicos de EsSalud.:
-        PRISA;           2020         [Last         accessed          Oct         5,       2020].          Available          from:
-        https://www.ins.gob.pe/prisa/ver_investigacion.aspx?5A53F316-F127-41D6-B894-
-        663E9C8C5E3C.
-        32. Guérin V, Lévy P, Thomas J-L, Lardenois T, Lacrosse P, Sarrazin E, et al. Azithromycin and
-        Hydroxychloroquine Accelerate Recovery of Outpatients with Mild/Moderate COVID-19. AJMAH
-        18(7):45-5.
-        33. Geleris J, Sun Y, Platt J, Zucker J, Baldwin M, Hripcsak G, et al. Observational Study of
-        Hydroxychloroquine in Hospitalized Patients with Covid-19. The New England journal of
-        medicine. 2020;382(25):2411-8.
-        34. Arshad S, Kilgore P, Chaudhry ZS, Jacobsen G, Wang DD, Huitsing K, et al. Treatment with
-        hydroxychloroquine, azithromycin, and combination in patients hospitalized with COVID-19. Int J
-        Infect Dis. 2020;97:396-403.
-        35. Rodríguez-Molinero A, Pérez-López C, Gálvez-Barrón C, Miñarro A, Macho O, López GF, et
-        al. Observational study of azithromycin in hospitalized patients with COVID-19. PloS one.
-        2020;15(9):e0238681-e.
-        36. Fiolet T, Guihur A, Rebeaud ME, Mulot M, Peiffer-Smadja N, Mahamat-Saleh Y. Effect of
-        hydroxychloroquine with or without azithromycin on the mortality of coronavirus disease 2019
-        (COVID-19) patients: a systematic review and meta-analysis. Clinical microbiology and infection:
-        the official publication of the European Society of Clinical Microbiology and Infectious Diseases.
-        2020:S1198-743X(20)30505-X.
-
-
-
-                                                                                                                                  16
-
 medRxiv preprint doi: https://doi.org/10.1101/2020.10.06.20208066.this version posted October 14, 2020. The copyright holder for this preprint
   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
                                       It is made available under a CC-BY-NC-ND 4.0 International license .
+       37. RECOVERY Collaborative Group; Horby P, Mafham M, Linsell L, Bell JL, Staplin N,
+       Emberson JR, et al. Effect of Hydroxychloroquine in Hospitalized Patients with Covid-19. New
+       England Journal of Medicine. 2020 Oct 8. Online ahead of print.
+       38. Cavalcanti AB, Zampieri FG, Rosa RG, Azevedo LCP, Veiga VC, Avezum A, et al.
+       Hydroxychloroquine with or without Azithromycin in Mild-to-Moderate Covid-19. The New
+       England journal of medicine. 2020:NEJMoa2019014.
+       39. Furtado RHM, Berwanger O, Fonseca HA, Corrêa TD, Ferraz LR, Lapa MG, et al.
+       Azithromycin in addition to standard of care versus standard of care alone in the treatment of
+       patients admitted to the hospital with severe COVID-19 in Brazil (COALITION II): a randomised
+       clinical trial. The Lancet. 2020;396(10256):959-67.
+       40. Sekhavati E, Jafari F, SeyedAlinaghi S, Jamalimoghadamsiahkali S, Sadr S, Tabarestani M, et
+       al. Safety and effectiveness of azithromycin in patients with COVID-19: An open-label randomised
+       trial. International journal of antimicrobial agents. 2020;56(4):106143-.
+       41. Lauriola M, Pani A, Ippoliti G, Mortara A, Milighetti S, Mazen M, et al. Effect of combination
+       therapy of hydroxychloroquine and azithromycin on mortality in COVID-19 patients. Clinical and
+       Translational Science. 2020;n/a(n/a).
+       42. Alizargar J. Dangers of the Use of hydroxychloroquine and azithromycin combination in
+       COVID-19 patients. Travel medicine and infectious disease. 2020;38:101881-.
+       43. Rajter JC, Sherman M, Fatteh N, Vogel F, Sacks J, Rajter J-J. ICON (Ivermectin in COvid
+       Nineteen) study: Use of Ivermectin is Associated with Lower Mortality in Hospitalized Patients
+       with COVID19. medRxiv. 2020:2020.06.06.20124461.
+       44. Gorial FI, Mashhadani S, Sayaly HM, Dakhil BD, AlMashhadani MM, Aljabory AM, et al.
+       Effectiveness of Ivermectin as add-on Therapy in COVID-19 Management (Pilot Trial). medRxiv.
+       2020:2020.07.07.20145979.
+       45. Carvallo HE, Hirsch RR, Farinella ME. Safety and Efficacy of the combined use of ivermectin,
+       dexamethasone, enoxaparin and aspirin against COVID-19. medRxiv. 2020:2020.09.10.20191619.
+                                                                                                                                 17
 
-
-
-
-        37. RECOVERY Collaborative Group; Horby P, Mafham M, Linsell L, Bell JL, Staplin N,
-        Emberson JR, et al. Effect of Hydroxychloroquine in Hospitalized Patients with Covid-19. New
-        England Journal of Medicine. 2020 Oct 8. Online ahead of print.
-        38. Cavalcanti AB, Zampieri FG, Rosa RG, Azevedo LCP, Veiga VC, Avezum A, et al.
-        Hydroxychloroquine with or without Azithromycin in Mild-to-Moderate Covid-19. The New
-        England journal of medicine. 2020:NEJMoa2019014.
-        39. Furtado RHM, Berwanger O, Fonseca HA, Corrêa TD, Ferraz LR, Lapa MG, et al.
-        Azithromycin in addition to standard of care versus standard of care alone in the treatment of
-        patients admitted to the hospital with severe COVID-19 in Brazil (COALITION II): a randomised
-        clinical trial. The Lancet. 2020;396(10256):959-67.
-        40. Sekhavati E, Jafari F, SeyedAlinaghi S, Jamalimoghadamsiahkali S, Sadr S, Tabarestani M, et
-        al. Safety and effectiveness of azithromycin in patients with COVID-19: An open-label randomised
-        trial. International journal of antimicrobial agents. 2020;56(4):106143-.
-        41. Lauriola M, Pani A, Ippoliti G, Mortara A, Milighetti S, Mazen M, et al. Effect of combination
-        therapy of hydroxychloroquine and azithromycin on mortality in COVID-19 patients. Clinical and
-        Translational Science. 2020;n/a(n/a).
-        42. Alizargar J. Dangers of the Use of hydroxychloroquine and azithromycin combination in
-        COVID-19 patients. Travel medicine and infectious disease. 2020;38:101881-.
-        43. Rajter JC, Sherman M, Fatteh N, Vogel F, Sacks J, Rajter J-J. ICON (Ivermectin in COvid
-        Nineteen) study: Use of Ivermectin is Associated with Lower Mortality in Hospitalized Patients
-        with COVID19. medRxiv. 2020:2020.06.06.20124461.
-        44. Gorial FI, Mashhadani S, Sayaly HM, Dakhil BD, AlMashhadani MM, Aljabory AM, et al.
-        Effectiveness of Ivermectin as add-on Therapy in COVID-19 Management (Pilot Trial). medRxiv.
-        2020:2020.07.07.20145979.
-        45. Carvallo HE, Hirsch RR, Farinella ME. Safety and Efficacy of the combined use of ivermectin,
-        dexamethasone, enoxaparin and aspirin against COVID-19. medRxiv. 2020:2020.09.10.20191619.
-
-
-
-
-                                                                                                                                  17
-
                                                                                                                                                medRxiv preprint doi: https://doi.org/10.1101/2020.10.06.20208066.this version posted October 14, 2020. The copyright holder for this preprint
-                                                                                                                                                 (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
 Table 1. Baseline characteristics of patients with COVID-19 assigned to standard care (control group), or one of the treatment groups:
 hydroxychloroquine alone (HCQ), ivermectin alone (IVM), azithromycin alone (AZIT), hydroxychloroquine plus azithromycin
 (HCQ+AZIT), or ivermectin plus azithromycin (IVM+AZIT).
@@ -797,14 +601,10 @@ hydroxychloroquine alone (HCQ), ivermectin alone (IVM), azithromycin alone (AZIT
 Baselines covariates                 care
                                       n %          n %           n %             n %           n %            n %              n %
 Total                                2,630          200           203           1,600           692            358            5,683
-
-
-
-
-                                                                                                                                                                                     It is made available under a CC-BY-NC-ND 4.0 International license .
 Sex
 Female                             1,128 42.9     62 31         73 36          493 30.8      220 31.8       115 32.1       2,091 36.8
 Male                               1,502 57.1    138 69        130 64        1,107 69.2      472 68.2       243 67.9       3,592 63.2
+                                                                                                                                                 (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
 Mean age (SD), years               56.3 (17.2)   59.1 (14.8)   62.9 (15.2)   60.2 (15.4)     59.9 (14.4)    60.0 (15.7)    58.4 (16.3)
 Healthcare center location
 Capital of Peru                    1,402 53.3    111   55.5     66   32.5      864   54      317   45.8     113   31.6     2,873   50.6
@@ -820,6 +620,7 @@ July                               1,093 41.6     17   8.5      91   44.8      6
 Emergency stay prior to hospitalization
 No                                 1,802 68.5    131 65.5      147 72.4      1,234 77.1      443 64         249 69.6       4,006 70.5
 Yes                                  828 31.5     69 34.5       56 27.6        366 22.9      249 36         109 30.4       1,677 29.5
+                                                                                                                                                                                     It is made available under a CC-BY-NC-ND 4.0 International license .
 Charlson index
 0                                  2,416 91.9    190   95.0    190   93.6    1,497   93.6    650   93.9     336   93.9     5,279   92.9
 1                                    125 4.8       7   3.5      10   4.9        79   4.9      31   4.5       18   5.0        270   4.8
@@ -829,13 +630,9 @@ Charlson index
 5                                      1 0.0       0   0.0       0   0.0         1   0.1       0   0.0        0   0.0          2   0.04
 6                                      3 0.1       0   0.0       0   0.0         0   0.0       0   0.0        0   0.0          3   0.05
 7                                      1 0.0       0   0.0       0   0.0         1   0.1       0   0.0        0   0.0          2   0.04
-
-
-
                                                                                                                                           18
-
+
                                                                                                                            medRxiv preprint doi: https://doi.org/10.1101/2020.10.06.20208066.this version posted October 14, 2020. The copyright holder for this preprint
-                                                                                                                             (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
 Obesity
 No                              2,522    95.9   188 94     191 94.1   1,534 95.9   648 93.6   345 96.4   5,428 95.5
 Yes                               108    4.1     12 6       12 5.9       66 4.1     44 6.4     13 3.6      255 4.5
@@ -844,15 +641,11 @@ No                              2,220    84.4   173 86.5   153 75.4   1,364 85.3
 Yes                               410    15.6    27 13.5    50 24.6     236 14.8   105 15.2    65 18.2     893 15.7
 Cardiovascular disease
 No                              2,593    98.6   199 99.5   200 98.5   1,584 99     689 99.6   354 98.9   5,619 98.9
-
-
-
-
-                                                                                                                                                                 It is made available under a CC-BY-NC-ND 4.0 International license .
 Yes                                37    1.4      1 0.5      3 1.5       16 1        3 0.4      4 1.1       64 1.1
 Neurological disorder
 No                              2,582    98.2   198 99     195 96.1   1,586 99.1   689 99.6   354 98.9   5,604 98.6
 Yes                                48    1.8      2 1        8 3.9       14 0.9      3 0.4      4 1.1       79 1.4
+                                                                                                                             (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
 Chronic lung disease
 No                              2,594    98.6   196 98     199 98     1,572 98.3   676 97.7   349 97.5   5,586 98.3
 Yes                                36    1.4      4 2        4 2         28 1.8     16 2.3      9 2.5       97 1.7
@@ -866,6 +659,7 @@ Chronic kidney disease
 No                              2,498 95        192 96     190 93.6   1,549 96.8   674 97.4   349 97.5   5,452 95.9
 Yes                               132 5           8 4       13 6.4       51 3.2     18 2.6      9 2.5      231 4.1
 Cancer
+                                                                                                                                                                 It is made available under a CC-BY-NC-ND 4.0 International license .
 No                              2,589 98.4      198 99     201 99     1,588 99.3   690 99.7   356 99.4   5,622 98.9
 Yes                                41 1.6         2 1        2 1         12 0.8      2 0.3      2 0.6       61 1.1
 Metabolic disease
@@ -876,12 +670,9 @@ No                              2,628 99.9      200 100    203 100    1,600 100 
 Yes                                 2 0.1         0 0        0 0          0 0        0 0        0 0          2 0
 HIV
 No                              2,621 99.7      200 100    203 100    1,599 99.9   688 99.4   357 99.7   5,668 99.7
-
-
                                                                                                                       19
-
+
                                                                                                                                                                 medRxiv preprint doi: https://doi.org/10.1101/2020.10.06.20208066.this version posted October 14, 2020. The copyright holder for this preprint
-                                                                                                                                                                  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
 Yes                                       9 0.3         0 0              0 0               1 0.1            4 0.6             1 0.3             15 0.3
 Antibiotics use first 48 hours after admission
 No                                    2,303 87.6     180 90           172 84.7         1,357 84.8         604 87.4         316 88.5          4,932 86.8
@@ -890,15 +681,11 @@ Treatment with ACEI or ARB
 No                                    2,468 93.9     184 92           196 96.6         1,548 96.8         670 97           341 95.5          5,407 95.2
 Yes                                     160 6.1       16 8               7 3.4            52 3.3           21 3             16 4.5             272 4.8
 Corticoid use during first 48 hours
-
-
-
-
-                                                                                                                                                                                                      It is made available under a CC-BY-NC-ND 4.0 International license .
 No                                    2,399 91.2     182 91           188 92.6         1,455 90.9         641 92.6         341 95.3          5,206 91.6
 Yes                                     231 8.8       18 9             15 7.4            145 9.1           51 7.4           17 4.7             477 8.4
 Anticoagulation
 No                                    2,287 87       173 86.5         182 89.7         1,410 88.1         598 86.4         318 88.8          4,968 87.4
+                                                                                                                                                                  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
 Yes                                     343 13        27 13.5          21 10.3           190 11.9          94 13.6          40 11.2            715 12.6
 Pneumonia diagnosis at first 48 hours
 No                                    2,186 83.1     143 71.5         159 78.3         1,292 80.8         485 70.1         244 68.2          4,509 79.3
@@ -906,29 +693,20 @@ Yes                                     444 16.9      57 28.5          44 21.7  
 HCQ: Hydroxychloroquine or chloroquine. IVM: ivermectin. AZIT: azithromycin. AZIT + HCQ: azithromycin plus hydroxychloroquine. AZIT + IVM:
 azithromycin plus ivermectin. ACEI: angiotensin converting enzyme inhibitor. ARB: angiotensin receptor blocker. SD: standard deviation; %: Percentage of
 column.
-
-
-
-
+                                                                                                                                                                                                      It is made available under a CC-BY-NC-ND 4.0 International license .
                                                                                                                                                            20
-
+
                                                                                                                                                                        medRxiv preprint doi: https://doi.org/10.1101/2020.10.06.20208066.this version posted October 14, 2020. The copyright holder for this preprint
-                                                                                                                                                                         (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
 Table 2. Primary and secondary outcomes in patients with COVID-19 assigned to treatment groups or standard care (control group)
 Outcome                                   Standard of care      HCQ group          IVM group         AZIT group        HCQ+AZIT group          IVM+AZIT group
 All-cause deaths
 Nº of events / Total                         401/2630             49/200           47/203          325/1600                  165/692                 85/358
 30-days Cumulative Incidence (%) *        42.6 (37.5-48.2)    49.7 (33.1-69.1) 51.4 (35.2-69.9) 50.3 (43.5-57.6)         48.7 (40.1-58.2)        47.2 (37.0-58.6)
 uHR (95% CI) **                              1.00 (Ref)       1.39 (0.94-2.05) 1.40 (0.94-2.08) 1.13 (0.94-1.37)         1.20 (0.95-1.53)        1.40 (1.03-1.90)
-wHR (95% CI) ***                             1.00 (Ref)       1.73 (0.94-3.17) 1.39 (0.88-2.22) 1.15 (0.94-1.40)                                 1.37 (0.91-2.05)
-
-
-
-
-                                                                                                                                                                                                             It is made available under a CC-BY-NC-ND 4.0 International license .
-                                                                                                                         1.84 (1.12-3.02)
+wHR (95% CI) ***                             1.00 (Ref)       1.73 (0.94-3.17) 1.39 (0.88-2.22) 1.15 (0.94-1.40)         1.84 (1.12-3.02)        1.37 (0.91-2.05)
 All-cause deaths and/or ICU transfer
 Nº of events / Total                         652/2630             71/200           79/203          481/1600                  237/692                 122/358
+                                                                                                                                                                         (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
 30-days Cumulative Incidence (%) *        51.3 (45.1-57.9)    65.6 (43.8-86.1) 58.7 (42.5-75.5) 54.3 (47.2-61.8)          54.4 (47-62.2)         55.7 (45.9-66.0)
 uHR (95% CI) **                              1.00 (Ref)       1.29 (0.93-1.78) 1.57 (1.16-2.14) 1.06 (0.91-1.23)         1.13 (0.93-1.37)        1.24 (0.96-1.59)
 wHR (95% CI) ***                             1.00 (Ref)       1.55 (0.96-2.49) 1.58 (1.11-2.25) 1.08 (0.92-1.27)         1.49 (1.01-2.19)        1.28 (0.94-1.76)
@@ -942,156 +720,100 @@ uHR = unweighted hazard ratio; wHR = weighted hazard ratio; 95% CI = 95% confide
 ** Unweighted hazard ratios and 95% confidence intervals
 *** Weighted hazard ratios and 95% confidence intervals were obtained by inverse probability treatment weighting. A gradient boosting machine was trained to
 estimate each patient's probability of receiving treatments given their baseline probabilities. Baselines covariates used to train the GBM were age, sex, healthcare
+                                                                                                                                                                                                             It is made available under a CC-BY-NC-ND 4.0 International license .
 centre location, month, Charlson's index at hospital admission, comorbidities registered in the first 48 hours (myocardial infarct/chronic heart failure/peripheral
 vascular disease, stroke, chronic lung disease, mild/severe liver disease, uncomplicated/complicated diabetes mellitus, cancer, stroke/dementia/paralysis, chronic
 kidney disease, metabolic disease, peptic ulcer disease, HIV, uncomplicated/complicated hypertension), emergency care before admission, antibiotics (other than
 azithromycin) used in the first 48 hours, angiotensin-converting enzyme inhibitors/angiotensin-II receptor antagonists use, and pneumonia diagnosis in the first
 48 hours.
-
-
-
-
                                                                                                                                                                  21
-
-                                                                                                                                                            medRxiv preprint doi: https://doi.org/10.1101/2020.10.06.20208066.this version posted October 14, 2020. The copyright holder for this preprint
-                                                                                                                                                              (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
-Figure 1. Study flowchart
 
+                                                                                                                                                            medRxiv preprint doi: https://doi.org/10.1101/2020.10.06.20208066.this version posted October 14, 2020. The copyright holder for this preprint
+Figure 1. Study flowchart
                                                   Adult patients with confirmed COVID-19 by RT-qPCR without
                                                                        life-threatening illness
                                                                               (n = 5863)
-
-
-
-
-                                                                                                                                                                                                  It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                                                                                                              (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
     Patients received         Patients received           Patients received             Patients received      Patients received      Patients received
       HCQ within                IVM within                  AZIT within                AZIT+HCQ within        AZIT + IVM within        standard of care
       48 hours of                48 hours of                48 hours of                   48 hours of            48 hours of          within 48 hours of
        admission                 admission                   admission                     admission              admission               admission
         (n = 200)                (n = 203)                   (n = 1600)                     (n = 692)              (n = 358)              (n = 2630)
-
-
-
-
+                                                                                                                                                                                                  It is made available under a CC-BY-NC-ND 4.0 International license .
            Died                     Died                       Died                           Died                    Died                  Died
          (n = 49)                 (n = 47)                   (n = 325)                      (n = 165)               (n = 85)              (n = 401)
-
   Transfer to ICU/Died      Transfer to ICU/Died        Transfer to ICU/Died          Transfer to ICU/Died    Transfer to ICU/Died   Transfer to ICU/Died
         (n = 71)                  (n = 79)                    (n = 481)                     (n = 237)               (n =122)               (n = 652)
-
        Prescribed               Prescribed                  Prescribed                      Prescribed            Prescribed             Prescribed
       Oxygen/Died              Oxygen/Died                 Oxygen/Died                     Oxygen/Died           Oxygen/Died            Oxygen/Died
         (n = 59)                 (n = 52)                   (n = 414)                        (n = 198)             (n = 101)              (n = 494)
-
+
                                     Figure 2. Baseline covariates balance measured as standardized mean differences, before and after
                                     inverse probability of treatment weighting
-
-                                     Standard care vs. AZIT   Standard care vs. HCQ   Standard care vs. HCQ + AZIT   Standard care vs. IVM   Standard care vs. IVM + AZIT
-
-                      Sex: Male*
-                     Age (Years)
-                  Obesity (Y/N)*
-         Charlson index (Score)
-  Cardiovascular disease (Y/N)*
+                                      Standard care vs. AZIT Standard care vs. HCQ    Standard care vs. HCQ + AZIT Standard care vs. IVM Standard care vs. IVM + AZIT
+                        Sex: Male*
+                       Age (Years)
+                    Obesity (Y/N)*
+           Charlson index (Score)
+   Cardiovascular disease (Y/N)*
      Neurological disease (Y/N)*
      Chronic lung disease (Y/N)*
-            Liver disease (Y/N)*
-        Diabetes mellitus (Y/N)*
+              Liver disease (Y/N)*
+         Diabetes mellitus (Y/N)*
    Chronic kidney disease (Y/N)*
-                  Cancer (Y/N)*
-            Hypertension (Y/N)*
-             Procedence: Lima*
-              Procedence: East*
-           Procedence: Center*                                                                                                                                              Sample
-             Procedence: North*                                                                                                                                                Weighted
-            Procedence: South*                                                                                                                                                 Unweighted
-                   Month: April*
-                    Month: May*
-                   Month: June*
-                    Month: July*
+                     Cancer (Y/N)*
+              Hypertension (Y/N)*
+               Procedence: Lima*
+               Procedence: East*
+             Procedence: Center*                                                                                                                                      Sample
+              Procedence: North*                                                                                                                                         Weighted
+              Procedence: South*                                                                                                                                         Unweighted
+                      Month: April*
+                       Month: May*
+                      Month: June*
+                       Month: July*
 History of emergency care (Y/N)*
-           Antibiotics use (Y/N)*
-  Antibiotics use (Y/N), missing*
-        ACEI or ARB use (Y/N)*
-            Corticoid use (Y/N)*
-          Anticoagulation (Y/N)*
+             Antibiotics use (Y/N)*
+   Antibiotics use (Y/N), missing*
+         ACEI or ARB use (Y/N)*
+              Corticoid use (Y/N)*
+            Anticoagulation (Y/N)*
         Metabolic disease (Y/N)*
       Peptic ulcer disease (Y/N)*
-                      HIV (Y/N)*
-                    Pneumonia*
-                                      −0.25   0.00   0.25     −0.25   0.00   0.25         −0.25   0.00   0.25        −0.25   0.00    0.25       −0.25   0.00    0.25
-                                                                                    Standardized Mean Differences
-
+                         HIV (Y/N)*
+                       Pneumonia*
+                                      −0.25   0.00     0.25   −0.25  0.00     0.25        −0.25   0.00    0.25     −0.25   0.00    0.25     −0.25    0.00    0.25
+                                                                                   Standardized Mean Differences
+
         Figure 3. Weighted Kaplan-Meier curves for survival between each
              group of treatment versus standard care (control group)
-
                        100                                                                   100
                                                     Standard care                                                         Standard care
                                                     AZIT                                                                  HCQ
-Overall survival (%)
-
-
-
-
-                                                                      Overall survival (%)
+Overall survival (%)                                                  Overall survival (%)
                         75                                                                    75
-
-
                         50                                                                    50
-
-
                         25                                                                    25
-
-
                          0                                                                     0
                              0   10    20    30    40      50    60                                0   10    20    30    40     50     60
                                       Days of follow-up                                                     Days of follow-up
-
-
-
                        100                                                                   100
                                                     Standard care                                                         Standard care
                                                     IVM                                                                   HCQ + AZIT
-Overall survival (%)
-
-
-
-
-                                                                      Overall survival (%)
+Overall survival (%)                                                  Overall survival (%)
                         75                                                                    75
-
-
                         50                                                                    50
-
-
                         25                                                                    25
-
-
                          0                                                                     0
                              0   10    20    30    40      50    60                                0   10    20    30    40     50     60
                                       Days of follow-up                                                     Days of follow-up
-
-
-
                        100
                                                     Standard care
                                                     IVM + AZIT
 Overall survival (%)
-
-
-
-
                         75
-
-
                         50
-
-
                         25
-
-
                          0
                              0   10    20    30    40      50    60
                                       Days of follow-up
-

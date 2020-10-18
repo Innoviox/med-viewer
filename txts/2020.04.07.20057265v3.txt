@@ -1,0 +1,414 @@
+   medRxiv preprint doi: https://doi.org/10.1101/2020.04.07.20057265.this version posted October 9, 2020. The copyright holder for this preprint
+     (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                        It is made available under a CC-BY-NC-ND 4.0 International license .
+ 1     Polygenic associations and causal inferences between serum
+ 2     immunoglobulins and amyotrophic lateral sclerosis
+ 3     Xu Chen1,2*, Xiaojun Shen2, Xuzhuo Zhang1, Yiqiang Zhan3,4 and Fang Fang4
+ 4
+ 5     1
+        Department of Central Laboratory, Shenzhen Baoan Women’s and Children’s Hospital,
+ 6     Jinan University, Shenzhen, China.
+ 7     2
+        Institute of Maternal-Fetal Medicine, Shenzhen Baoan Women’s and Children’s Hospital,
+ 8     Jinan University, Shenzhen, China.
+ 9     3
+        German Center for Neurodegenerative Diseases (DZNE), Ulm, Germany.
+10     4
+        Institute of Environmental Medicine, Karolinska Institutet, Stockholm, Sweden.
+11
+12
+13     Correspondence:
+14     Dr. Xu Chen. Department of Central Laboratory, Shenzhen Baoan Women’s and Children’s
+15     Hospital, Jinan University, 56 YuLv Road, Shenzhen 518100, China. Phone: +86-
+16     15989385199; Email: dr.xuchen@outlook.com
+          NOTE: This preprint reports new research that has not been certified by peer review and should not be used to guide clinical practice.
+
+   medRxiv preprint doi: https://doi.org/10.1101/2020.04.07.20057265.this version posted October 9, 2020. The copyright holder for this preprint
+     (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                        It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                                                                                PAGE 2
+17     Abstract
+18     Chronic inflammation might contribute to the development of amyotrophic lateral sclerosis (ALS),
+19     the relationship between serum immunoglobulins and risk of ALS remains however unclear. In order
+20     to overcome limitations like reverse causation and residual confounding commonly seen in the
+21     observational studies, we applied molecular epidemiological analyses to examine the polygenic and
+22     causal associations between serum immunoglobulins and ALS. Summary statistics from the large-
+23     scale genome-wide association studies (GWAS) among European ancestry populations (~15000
+24     individuals for serum immunoglobulins, and more than 36000 individuals for ALS) were accessed
+25     from different consortia. The relationships between three types of serum immunoglobulins (IgA,
+26     IgM, and IgG) and ALS were investigated in a discovery phase and then in a replication phase.
+27     Polygenic risk score (PRS) analysis was performed with PRSice package to test the polygenic
+28     association, and Mendelian randomization (MR) analysis was performed with TwoSampleMR
+29     package to infer the causality. An inverse polygenic association was discovered between IgA and
+30     ALS as well as between IgM and ALS. Such associations were however not replicated using a larger
+31     GWAS of ALS, and no causal association was observed for either IgA-ALS or IgM-ALS. A positive
+32     polygenic association was both discovered [odds ratio (OR) = 1.18, 95% confidence interval (CI):
+33     1.12-1.25, P=5.9×10-7] and replicated (OR=1.13, 95% CI: 1.06-1.20, P=0.001) between IgG and
+34     ALS. A causal association between IgG and ALS was also suggested in both the discovery
+35     (OR=1.06, 95%CI: 1.02-1.10, P=0.009) and replication (OR=1.07, 95%CI: 0.90-1.24, P=0.420)
+36     analyses, although the latter was not statistically significant. This study suggests a shared polygenic
+37     risk between serum IgG (as a biomarker for chronic inflammation) and ALS.
+38
+39
+40     Keywords
+41     Immunoglobulins, Amyotrophic lateral sclerosis, Polygenic risk score, Causal inference, Mendelian
+42     randomization
+
+   medRxiv preprint doi: https://doi.org/10.1101/2020.04.07.20057265.this version posted October 9, 2020. The copyright holder for this preprint
+     (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                        It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                                                                                PAGE 3
+43     Introduction
+44     Amyotrophic lateral sclerosis (ALS) is a relatively rare but fatal neurodegenerative disease. Chronic
+45     inflammation and altered immune responses have been suggested to contribute to the pathogenesis
+46     of ALS [1]. The relationship between serum immunoglobulins, as known biomarkers for
+47     inflammation and immune responses, and risk of ALS remains however unclear. In a previous study
+48     [2], we did not find a statistically significant positive association between immunoglobulin G (IgG)
+49     and risk of ALS [hazard ratio=1.04, 95% confidence interval (CI): 0.89-1.22; per 2.99 g/L increase
+50     of IgG]. In the same study, we also found that during the 20 years before diagnosis, patients with
+51     ALS had more rapidly declining levels of IgG compared to others. We speculate that the noted lack
+52     of association between IgG and ALS might be attributable to both a real positive association
+53     between IgG and ALS (i.e., higher levels of IgG lead to higher risk of ALS) and reverse causation
+54     (i.e., ALS results in declined levels of IgG). In addition to reverse causation, observational studies
+55     are also prone to other systemic errors, which collectively make it often difficult to infer causality
+56     for associations noted in observational studies [3].
+57
+58     By using the summary statistics from large-scale genome-wide association studies (GWAS),
+59     polygenic risk score (PRS) and Mendelian randomization (MR) analyses have added novel evidence
+60     to support polygenic and causal relationships between several traits and ALS, corroborating
+61     importantly findings from previous observational studies [4-6]. In this study, we used GWAS
+62     summary statistics to assess the associations of genetically predicted levels of immunoglobulins with
+63     the genetically predicted risk of ALS, and to test whether such associations are causal. Since IgG is a
+64     biomarker for chronic inflammation, we hypothesized that there is a positive and causal relationship
+65     between IgG and ALS. We additionally studied another two serum immunoglobulins (IgA and IgM,
+66     two biomarkers that have rarely been studied in ALS) to assess the specificity of the IgG result.
+67
+68
+69     Methods
+70     Summary statistics
+71     We used publicly available summary statistics of several GWAS within the European ancestry
+72     population in this study. GWAS of serum immunoglobulins (IgA, IgM, and IgG) were conducted
+73     among ~15000 individuals (from Iceland and Sweden), from which single nucleotide
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.04.07.20057265.this version posted October 9, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                         It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                                                                                 PAGE 4
+ 74     polymorphisms (SNPs) with the association P-values <1.0×10-6 were available [7]. GWAS summary
+ 75     statistics of ALS were obtained from two studies (available in the IEU GWAS database;
+ 76     https://gwas.mrcieu.ac.uk, ID for ALS_2016: ieu-a-1085; ID for ALS_2018: ebi-a-GCST005647). In
+ 77     the discovery analysis, summary statistics of ALS (ALS_2016) were obtained from a GWAS
+ 78     performed among 36052 individuals (including 12577 patients with ALS and 23475 controls) by the
+ 79     Project MinE group [8]. In the replication analysis, summary statistics of ALS (ALS_2018) were
+ 80     obtained from a meta-analysis incorporating the results from ALS_2016 and another GWAS
+ 81     including 40598 individuals (8229 patients with ALS and 32369 controls) [9]. Because we only used
+ 82     GWAS summary statistics rather than individual-level data in this study, participant inform consent
+ 83     and ethical review permit were waived according to the ethical review board of Shenzhen Baoan
+ 84     Women's and Children's Hospital.
+ 85
+ 86     Using IgA, IgM, and IgG as the exposures (base traits) and ALS as the outcome (target trait), the
+ 87     polygenic and causal associations of six exposure-outcome pairs (three in the discovery analysis and
+ 88     three in the replication analysis) were investigated by PRS and MR analyses, respectively. Because
+ 89     the values of immunoglobulins were standardized in the GWAS, we estimated accordingly odds
+ 90     ratio (OR) per standard deviation of genetically predicted level for each type of immunoglobulin in
+ 91     the present study.
+ 92
+ 93     PRS analyses
+ 94     Polygenic associations were investigated by PRS analyses in Linux with PRSice package (version
+ 95     1.25) [10]. For the summary statistics of each exposure, correlated SNPs were pruned by linkage
+ 96     disequilibrium (LD) clumping with default parameter settings. Genotypes of the HapMap_ceu_all
+ 97     (release 22, 60 individuals, 3.96 million SNPs) were used as the reference panel, clumping threshold
+ 98     p1=p2=0.5, LD threshold r2=0.05, and the distance threshold of 300Kb. Independent SNPs were then
+ 99     extracted and included in 100000 quantiles with gradually increasing P-value thresholds (PT, ranging
+100     from 0 to 1.0×10-6, in steps of 1.0×10-11 per quantile). The PT of the quantile that explained the
+101     largest variance of the target was defined as the best-fitted PT.
+102
+103     MR analyses
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.04.07.20057265.this version posted October 9, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                         It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                                                                                 PAGE 5
+104     Utilizing the instrumental variable (IV) methods (Fig. 1), MR analyses were performed in R (version
+105     3.6.1) with TwoSampleMR package (version 0.5.2) [11]. Causal inference by MR analysis requires
+106     three basic assumptions: 1) relevance, i.e., IVs have causal effects on the exposure (e.g., IgG); 2)
+107     exclusion restriction, i.e., IVs affect the outcome (e.g., ALS), only through the exposure; and 3)
+108     exchangeability or independence, i.e., no common causes exist between IVs and the outcome [12].
+109     Lead SNPs from the genetic loci reported to be associated with each exposure were extracted from
+110     the GWAS of immunoglobulins [7]. The associations of the SNPs with other traits (associations with
+111     a P-value <5×10-8) were checked in GWAS Catalog (https://www.ebi.ac.uk/gwas) and excluded,
+112     leaving independent lead SNPs after LD clumping as the IVs (Additional file: Table S1). The causal
+113     relationship of each exposure-outcome pair was primarily examined by the inverse variance
+114     weighted (IVW) method and complemented with another four methods (MR Egger regression,
+115     weighted median, simple and weighted mode) as sensitivity analyses.
+116
+117
+118     Results and discussion
+119     Inverse polygenic associations were discovered for IgA-ALS and IgM-ALS, neither of the
+120     associations was however replicated (Table 1, Additional file: Figs. 1-2). A positive polygenic
+121     association between IgG and ALS was found both in the discovery and replication analyses (Table 1,
+122     Additional file: Fig. 3). The OR was 1.18 (95% CI: 1.12-1.25, P=5.9×10-7) in the discovery analysis
+123     and 1.13 (95%CI: 1.06-1.20, P=0.001) in the replication analysis.
+124
+125     In the MR analyses, causal association was not found for either IgA-ALS or IgM-ALS (Table 2),
+126     regardless of the use of MR methods (Additional file: Figs. 4-5 and Table S2). For IgG-ALS (Table
+127     2, Additional file: Fig. 6), a statistically significant causal association was found in the discovery
+128     analysis (OR=1.06, 95% CI: 1.02-1.10, P=0.009). A causal positive association was also suggested
+129     in the replication analysis, although not statistically significant (OR=1.07, 95%CI: 0.90-1.24,
+130     P=0.420).
+131
+132     Utilizing PRS and MR analyses of large-scale GWAS of immunoglobulins and ALS, we provided
+133     new evidence supporting a potentially causal positive association between IgG, but not IgA or IgM,
+134     and risk of ALS.
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.04.07.20057265.this version posted October 9, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                         It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                                                                                 PAGE 6
+135
+136     Accumulating evidence supports that inflammation and altered immune responses are involved in
+137     the different phases of ALS [13]. Physiological barriers (e.g., blood-brain barrier) and innate
+138     immunity cells (e.g., macrophages) are fundamental in the maintenance and modulation of the
+139     central nervous system, whereas chronic inflammation might lead to dysfunction of the neurons [14].
+140     B cells play important roles in adaptive immunity, through producing immunoglobulins and
+141     presenting antigens to T cells [15]. IgA constitutes 10-20% of serum immunoglobulins and is mainly
+142     involved in the mucosal immune response. IgM constitutes 5-10% of serum immunoglobulins and is
+143     the earliest released antibody during adaptive immune response. IgG constitutes ~75% of serum
+144     immunoglobulins and can be transmitted through placental and blood-brain barriers [16].
+145
+146     Several studies have indicated a link between IgG and ALS. Deposit of IgG has been found in the
+147     spinal cord and motor cortex of some ALS patients [17]. Prevalence of serum monoclonal
+148     immunoglobulins (60%, including 44% IgG and 16% IgM) was found to be higher among ALS
+149     patients than that of the control group (13%) [18]. High levels of 20 IgG antibodies were also found
+150     to be help diagnose ALS cases [19]. In our previous cohort study including more than half a million
+151     participants with >20 years of follow-up, we found that per 2.99 g/L increase of IgG levels in blood,
+152     there was a 4% increased risk of ALS, although the association was not statistically significant [2].
+153     The lack of statistical significance might be multifactorial, including first a potentially real positive
+154     association between IgG and ALS risk, a lack of statistical power due to the relatively small number
+155     of ALS cases identified (N=152), and also reverse causation (i.e., patients with ALS had more
+156     rapidly declining IgG levels, compared to individuals not developing ALS, during the 20 years
+157     before ALS diagnosis). However, because genotypes are determined at birth and unchangeable
+158     during the life course, our results about a potentially causal relationship between genetically
+159     predicted IgG level and genetically predicted ALS risk are unlikely to be dependent on early or late
+160     stage of ALS.
+161
+162     By using summary statistics from several large-scale GWAS, in the present study, we identified a
+163     statistically significant positive polygenic association between IgG and ALS in both the discovery
+164     and replication analyses. The association is further suggested to be causal in the MR analysis.
+165     Although statistically significant result was only obtained in the discovery analysis, similar point
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.04.07.20057265.this version posted October 9, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                         It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                                                                                 PAGE 7
+166     estimate was noted in the replication analysis. The differences between the discovery (ALS_2016)
+167     and replication (ALS_2018) samples might have contributed to the lack of statistical significance in
+168     the replication analysis. For instance, in the discovery GWAS (ALS_2016), patients with ALS and
+169     controls were matched for age, sex, and geographic regions, whereas more than 50% of participants
+170     in the replication GWAS (ALS_2018) were only matched for race/ethnicity.
+171
+172     In contrast to IgG, no clear polygenic association nor causal relationship was noted for IgA-ALS and
+173     IgM-ALS. A recent observational study, including 489 patients with ALS and 17475 neurologically
+174     healthy controls, also failed to detect an association between total serum IgA and ALS [20]. The
+175     different result pattern between IgA, IgM and IgG might be partly explained by the fact that IgG is a
+176     biomarker for chronic inflammation and bypasses the blood-brain-barrier, which might be more
+177     relevant for neurodegenerative diseases including ALS, compared to the other immunoglobulins [21].
+178
+179     Even though we used the latest and largest GWAS of immunoglobulins, only two independent SNPs
+180     could be selected as IVs for IgG. As a result, we could only use IVW methods in the MR analysis.
+181     According to the current GWAS Catalog, no genome-wide significant association was identified
+182     between the two IVs of IgG and other non-ALS traits. Interestingly, the two genes near these two
+183     IVs are both biologically related to immune responses, neuroinflammation, and neurodegeneration.
+184     Genetic variant rs7554873 is close to the FCGR2B (Fc fragment of IgG receptor IIb) gene on
+185     chromosome 1. Protein FcγRIIB encoded by FCGR2B gene is a low-affinity receptor for the Fc
+186     region of IgG. FcγRIIB involves in the regulation of antibodies produced by B-cells and in the
+187     phagocytosis of immune complexes, it is also reported to mediate the inhibitory effect of aggregated
+188     α-synuclein on microglial phagocytosis [22]. Genetic variant rs2133037 is close to the HLA-DQB1
+189     (major histocompatibility complex, class II, DQ beta 1) gene on chromosome 6. Its encoded protein
+190     HLA-DQB1 is also reported to be associated with immunity and neuronal survival [23].
+191
+192     In this study, we had only access to GWAS summary statistics data when testing the polygenic and
+193     causal relationship between serum immunoglobulins (IgA, IgM, IgG) and ALS. Using a Mendelian
+194     randomization analysis, our study is less prone to methodological limitations commonly seen in
+195     observational studies such as confounding and reverse causation. Future studies with individual
+196     genotype data are warranted in further understanding the roles of other factors (such as age, sex,
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.04.07.20057265.this version posted October 9, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                         It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                                                                                 PAGE 8
+197     ethnicity, etc.) in the link between different immunoglobulins (especially IgG) and ALS. Further, to
+198     test whether chronic inflammation is indeed a mechanism linking together IgG and ALS, the role of
+199     IgG on other diseases (both diseases with a known link with chronic inflammation and diseases
+200     without such a link) needs to be studied. Finally, as high levels of IgG antibodies were suggested to
+201     improve the diagnosis of ALS [19], the potential use of IgG measurement in clinical diagnosis of
+202     ALS needs to be further examined.
+203
+204
+205     Conclusions
+206     In conclusion, our study suggests a shared polygenic risk between serum IgG and ALS. The
+207     causality between IgG and ALS needs to be further validated when more instrumental variables are
+208     available and when different methods of causal inference are possible to use.
+209
+210
+211     Supplementary information
+212     Additional file: Table S1. Selection of instrumental variables for serum immunoglobulins in the
+213     Mendelian randomization analyses. Table S2. Comparison of results from different methods in
+214     Mendelian randomization analyses. Figure S1. Results from the polygenic risk score analyses
+215     between serum IgA and ALS. Figure S2. Results from the polygenic risk score analyses between
+216     serum IgM and ALS. Figure S3. Results from the polygenic risk score analyses between serum IgG
+217     and ALS. Figure S4. Results from the Mendelian randomization analyses between serum IgA and
+218     ALS. Figure S5. Results from the Mendelian randomization analyses between serum IgM and ALS.
+219     Figure S6. Results from the Mendelian randomization analyses between serum IgG and ALS.
+220
+221
+222     List of abbreviations
+223     ALS: Amyotrophic lateral sclerosis; Ig: immunoglobulin; CI: confidence interval; GWAS: genome-
+224     wide association study; PRS: polygenic risk score; MR: Mendelian randomization; SNP: single
+225     nucleotide polymorphism; OR: odds ratio; LD: linkage disequilibrium; IVW: inverse variance
+226     weighted; FCGR2B: Fc fragment of IgG receptor IIb; HLA-DQB1: Major histocompatibility
+227     complex, class II, DQ beta 1.
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.04.07.20057265.this version posted October 9, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                         It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                                                                                 PAGE 9
+228
+229
+230     Declarations
+231     Acknowledgements: The authors would like to thank the Project MinE group and the ALS Variant
+232     Server for sharing the summary statistics of GWAS on ALS.
+233     Authors' contributions: X.C. and F.F. contributed to the conception and design of the study; X.C.,
+234     X.S., X.Z., and Y.Z. contributed to acquisition and analyses of data; X.C., X.S., X.Z.,Y.Z., and F.F.
+235     contributed to drafting and revising the manuscript.
+236     Funding: This project is supported by the Science, Technology and Innovation Bureau of Baoan
+237     District (Grant No.: 2020JD445), the Swedish Research Council (Grant No.: 2019-01088) and
+238     Karolinska Institutet (Senior Researcher Award and Strategic Research Area in Epidemiology).
+239     Availability of data and materials: GWAS summary statistics of ALS were accessed from the
+240     Project MinE group (https://www.projectmine.com/research/download-data) and the ALS Variant
+241     Server (http://als.umassmed.edu).
+242     Ethics approval and consent to participate: Because GWAS summary statistics rather than
+243     individual-level data were used in this study, both informed consent and ethical approval were
+244     waived according to the ethical review board in Shenzhen Baoan Women's and Children's Hospital.
+245     Consent for publication: Not applicable.
+246     Competing interests: The authors declare that they have no competing interests.
+247
+248
+249     References
+250     1.   Beers DR, Appel SH: Immune dysregulation in amyotrophic lateral sclerosis: mechanisms and emerging
+251          therapies. Lancet Neurol 2019, 18:211-220.
+252     2.   Yazdani S, Mariosa D, Hammar N, Andersson J, Ingre C, Walldius G, Fang F: Peripheral immune
+253          biomarkers and neurodegenerative diseases: A prospective cohort study with 20 years of follow-up.
+254          Ann Neurol 2019, 86:913-926.
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.04.07.20057265.this version posted October 9, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                         It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                                                                                 PAGE 10
+255     3.   Vandenbroucke JP, Broadbent A, Pearce N: Causality and causal inference in epidemiology: the need for
+256          a pluralistic approach. Int J Epidemiol 2016, 45:1776-1786.
+257     4.   Chen X, Yazdani S, Piehl F, Magnusson PKE, Fang F: Polygenic link between blood lipids and amyotrophic
+258          lateral sclerosis. Neurobiol Aging 2018, 67: e201-e206.
+259     5.   Bandres-Ciga S, Noyce AJ, Hemani G, Nicolas A, Calvo A, Mora G, Consortium I, International ALSGC,
+260          Tienari PJ, Stone DJ, et al: Shared polygenic risk and causal inferences in amyotrophic lateral sclerosis.
+261          Ann Neurol 2019, 85:470-481.
+262     6.   Zhan Y, Fang F: Smoking and amyotrophic lateral sclerosis: A mendelian randomization study. Ann
+263          Neurol 2019, 85:482-484.
+264     7.   Jonsson S, Sveinbjornsson G, de Lapuente Portilla AL, Swaminathan B, Plomp R, Dekkers G, Ajore R, Ali
+265          M, Bentlage AEH, Elmer E, et al: Identification of sequence variants influencing immunoglobulin levels.
+266          Nat Genet 2017, 49:1182-1191.
+267     8.   van Rheenen W, Shatunov A, Dekker AM, McLaughlin RL, Diekstra FP, Pulit SL, van der Spek RA, Vosa U,
+268          de Jong S, Robinson MR, et al: Genome-wide association analyses identify new risk variants and the
+269          genetic architecture of amyotrophic lateral sclerosis. Nat Genet 2016, 48:1043-1048.
+270     9.   Nicolas A, Kenna KP, Renton AE, Ticozzi N, Faghri F, Chia R, Dominov JA, Kenna BJ, Nalls MA, Keagle P, et
+271          al: Genome-wide Analyses Identify KIF5A as a Novel ALS Gene. Neuron 2018, 97:1268-1283.
+272     10. Euesden J, Lewis CM, O'Reilly PF: PRSice: Polygenic Risk Score software. Bioinformatics 2015, 31:1466-
+273          1468.
+274     11. Hemani G, Zheng J, Elsworth B, Wade KH, Haberland V, Baird D, Laurin C, Burgess S, Bowden J, Langdon
+275          R, et al: The MR-Base platform supports systematic causal inference across the human phenome. Elife
+276          2018, 7:e34408.
+277     12. Armon C: Smoking is a cause of amyotrophic lateral sclerosis. High low-density lipoprotein cholesterol
+278          levels? Unsure. Ann Neurol 2019, 85:465-469.
+279     13. Molteni M, Rossetti C: Neurodegenerative diseases: The immunological perspective. J Neuroimmunol
+280          2017, 313:109-115.
+281     14. Novellino F, Sacca V, Donato A, Zaffino P, Spadea MF, Vismara M, Arcidiacono B, Malara N, Presta I,
+282          Donato G: Innate Immunity: A Common Denominator between Neurodegenerative and
+283          Neuropsychiatric Diseases. Int J Mol Sci 2020, 21(3):1115.
+284     15. Sabatino JJ, Jr., Probstel AK, Zamvil SS: B cells in autoimmune and neurodegenerative central nervous
+285          system diseases. Nat Rev Neurosci 2019, 20:728-745.
+286     16. Chen K, Magri G, Grasset EK, Cerutti A: Rethinking mucosal antibody responses: IgM, IgG and IgD join
+287          IgA. Nat Rev Immunol 2020,20(7):427-441.
+288     17. Donnenfeld H, Kascsak RJ, Bartfeld H: Deposits of IgG and C3 in the spinal cord and motor cortex of ALS
+289          patients. J Neuroimmunol 1984, 6(1):51-57.
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.04.07.20057265.this version posted October 9, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                         It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                                                                                 PAGE 11
+290     18. Duarte F, Binet S, Lacomblez L, Bouche P, Preud'homme JL, Meininger V: Quantitative analysis of
+291          monoclonal immunoglobulins in serum of patients with amyotrophic lateral sclerosis. J Neurol Sci 1991,
+292          104(1):88-91.
+293     19. May C, Nordhoff E, Casjens S, Turewicz M, Eisenacher M, Gold R, Brüning T, Pesch B, Stephan C,
+294          Woitalla D, et al: Highly immunoreactive IgG antibodies directed against a set of twenty human proteins
+295          in the sera of patients with amyotrophic lateral sclerosis identified by protein array. PLoS One 2014,
+296          9(2):e89596.
+297     20. Crayle J, Elmallah M, Sleasman J, Bedlack R: Total serum immunoglobulin A in ALS. Amyotroph Lateral
+298          Scler Frontotemporal Degener 2020, 1-5.
+299     21. Watson N, Ding B, Zhu X, Frisina RD: Chronic inflammation - inflammaging - in the ageing cochlea: A
+300          novel target for future presbycusis therapy. Ageing Res Rev 2017, 40:142-148.
+301     22. Choi YR, Kang SJ, Kim JM, Lee SJ, Jou I, Joe EH, Park SM: FcgammaRIIB mediates the inhibitory effect of
+302          aggregated alpha-synuclein on microglial phagocytosis. Neurobiol Dis 2015, 83:90-99.
+303     23. Hallberg P, Smedje H, Eriksson N, Kohnke H, Daniilidou M, Ohman I, Yue QY, Cavalli M, Wadelius C,
+304          Magnusson PKE, et al: Pandemrix-induced narcolepsy is associated with genes related to immunity and
+305          neuronal survival. EBioMedicine 2019, 40:595-604.
+306
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.04.07.20057265.this version posted October 9, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                         It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                                                                                 PAGE 12
+307     Figure 1. Illustration of the Mendelian randomization analysis
+308     Mendelian randomization analysis utilizes the instrumental variable (IV) methods to infer the
+309     causality between exposure and outcome. Because alleles are randomly assigned during mitosis,
+310     restricted single nucleotide polymorphisms (SNPs) could be used as instrumental variables to test the
+311     causal effect of exposure on the outcome. ALS: amyotrophic lateral sclerosis.
+312
+313
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.04.07.20057265.this version posted October 9, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                         It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                                                                                 PAGE 13
+314     Table 1. Polygenic associations between serum immunoglobulins and ALS in PRS analyses
+        Base          Target                Best-fitted PT            nSNP       OR          SE             r2 (%)          P-value
+        IgA           ALS_2016              8.6000×10-10              54         0.861       0.032          0.059           4.2×10-6
+                      ALS_2018              7.0001×10-7               43         0.948       0.031          0.004           0.085
+        IgM           ALS_2016              4.8000×10-10              47         0.905       0.032          0.028           0.002
+                      ALS_2018              3.5010×10-8               42         1.051       0.028          0.004           0.074
+        IgG           ALS_2016              5.1001×10-7               49         1.181       0.033          0.069           5.9×10-7
+                      ALS_2018              5.7001×10-7               22         1.130       0.036          0.014           0.001
+315     PRS=polygenic risk score; ALS=amyotrophic lateral sclerosis; Best-fitted PT=association P-value
+316     threshold of the quantile that explained the largest variance of the target; nSNP=numbers of
+317     independent single nucleotide polymorphisms (SNPs) included in the best-fitted quantile; OR: odds
+318     ratio per standard deviation of genetically determined level for each type of immunoglobulin;
+319     SE=standard error; r2= the proportion of the target variation explained by SNPs in the best-fitted
+320     quantile.
+321
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.04.07.20057265.this version posted October 9, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                         It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                                                                                 PAGE 14
+322     Table 2. Causal inferences between serum immunoglobulins and ALS in the MR analyses
+        Base            Target                   nSNP           ORIVW              SEIVW                PIVW          Het_PIVW
+        IgA             ALS_2016                 6              0.968              0.022                0.148         0.206
+                        ALS_2018                 6              0.880              0.100                0.201         0.125
+        IgM             ALS_2016                 5              0.996              0.015                0.787         0.574
+                        ALS_2018                 5              1.021              0.054                0.706         0.874
+        IgG             ALS_2016                 2              1.056              0.021                0.009         0.617
+                        ALS_2018                 2              1.073              0.087                0.420         0.407
+323     MR=mendelian randomization; ALS=amyotrophic lateral sclerosis; nSNP= numbers of independent
+324     single nucleotide polymorphisms (SNPs) uses as instrumental variables; OR: odds ratio per standard
+325     deviation of genetically determined level for each type of immunoglobulin; SE=standard error;
+326     IVW= inverse variance weighted method; Het_P=P-value of heterogeneity.
+327

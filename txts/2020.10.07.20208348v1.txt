@@ -1,0 +1,901 @@
+   medRxiv preprint doi: https://doi.org/10.1101/2020.10.07.20208348.this version posted October 9, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                              All rights reserved. No reuse allowed without permission.
+ 1                                                     Near-Fibre Electromyography
+ 2     Authors - Mathew Piasecki1, Oscar Garnés C. Estruch2, Daniel W Stashuk3.
+ 3     Affiliations -
+ 4     1. Clinical, Metabolic and Molecular Physiology, MRC-Versus Arthritis Centre for Musculoskeletal Ageing
+ 5     Research, National Institute for Health Research (NIHR) Nottingham Biomedical Research Centre,
+ 6     University of Nottingham, Nottingham, United Kingdom.
+ 7     2. Department of Physical Medicine and Rehabilitation - Clinical Neurophysiology, Jiménez Díaz
+ 8     Foundation University Hospital, Madrid, Spain
+ 9     3. Department of Systems Design Engineering, University of Waterloo, Ontario, Canada
+10     Keywords – near fibre electromyography, near fibre motor unit potential, quantitative
+11     electromyography
+12     Corresponding Author: Dr Mathew Piasecki, University of Nottingham,
+13     mathew.piasecki@nottingham.ac.uk
+14     Abstract
+15     Near fibre electromyography (NFEMG) is the use of specifically high-pass filtered motor unit potential
+16     (MUPs) (i.e. near fibre MUPs (NFMs)) extracted from needle-detected EMG signals for the examination of
+17     changes in motor unit (MU) morphology and electrophysiology caused by neuromuscular disorders or
+18     ageing. The concepts of NFEMG, the parameters used, including NFM duration and dispersion, which
+19     relates to fibre diameter variability and/or endplate scatter, and a new measure of neuromuscular
+20     junction transmission (NMJ) instability, NFM segment jitter, and the methods for obtaining their values
+21     are explained. Evaluations using simulated needle-detected EMG data and exemplary human data are
+22     presented, described and discussed. The data presented demonstrate the ability of using NFEMG
+23     parameters to detect changes in MU fibre diameter variability, end plate scatter, and neuromuscular
+24     transmission time variability. These changes can be detected prior to alterations of MU size, numbers or
+25     muscle recruitment patterns.
+26     1.0 Introduction
+27     A motor unit (MU) is comprised of a somatic motor neuron (MN), its axon and distal axonal branches,
+28     neuromuscular junctions (NMJs) and associated skeletal muscle fibres. Neuromuscular disorders can
+29     affect somatic MNs, their axons, axonal branches, NMJs and/or associated muscle fibres. Anatomically
+30     neuromuscular disorders can cause loss of somatic MNs, axonal demyelination, and MU remodelling; fibre
+31     denervation and the sprouting of new axonal branches and the formation of new NMJs, acting to minimise
+32     muscle fibre loss; and fibre atrophy and/or hypertrophy. Electrophysiologically, neuromuscular disorders
+                                                                                                                                                 1
+          NOTE: This preprint reports new research that has not been certified by peer review and should not be used to guide clinical practice.
+
+   medRxiv preprint doi: https://doi.org/10.1101/2020.10.07.20208348.this version posted October 9, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                              All rights reserved. No reuse allowed without permission.
+33     can cause NMJ transmission delay, increased NMJ transmission time variability and/or NMJ transmission
+34     failure (Daube 2000). An effective way of detecting the anatomical and electrophysiological effects of a
+35     neuromuscular disorder, and therefore its presence and extent, is to examine electrical signals generated
+36     by nerves and muscles. With respect to an affected muscle, these anatomical and electrophysiological
+37     alterations can be inferred by characterizing its electrophysiology via the detection and analysis of
+38     electromyographic signals.
+39     The discharge/activation of a MN creates a trans-axolemmal or axonal action potential (AAP), which
+40     propagates along its axon and each axonal branch to initiate neuromuscular transmission to its associated
+41     muscle fibre. Successful neuromuscular transmission results in the generation of propagating trans-
+42     sarcolemmal or muscle fibre action potentials (MFAPs) and coordinated contraction of the sarcomeres of
+43     the associated muscle fibre. As such, the MU is the fundamental element of muscle force generation
+44     (Heckman and Enoka 2012).
+45     Extracellular electrodes placed in or on a skeletal muscle can detect the time changing electric potentials
+46     created by the propagating MFAPs of a MU. The time changing electric potential created by the
+47     propagating MFAPs of a single muscle fibre can be considered a muscle fibre potential (MFP) while the
+48     summation of the MFPs created by the fibres of a MU is called a motor unit potential (MUP). For a healthy
+49     MU, each discharge of a MN will result in the generation of a MFAP in each fibre of the MU. As such,
+50     MUPs represent the summation of the MFPs of all of the MU fibres.
+51     During the activation of a healthy muscle, populations of MUs are recruited and independently discharge
+52     at pseudo-regular firing times to generate a desired level of muscle force. With simple level or window
+53     triggering or more sophisticated pattern recognition methods, MUP trains (MUPTs) (i.e. sets of
+54     consecutively detected MUPs generated by the same MU) can be extracted from a recorded EMG signal.
+55     The number of trains extracted can be indicative of the level of MU recruitment. The occurrence times of
+56     the MUPs within MUPTs can be indicative of MU discharge patterns. Both of these are related to a
+57     combination of muscle anatomy and electrophysiology. For known levels of activation, the number of
+58     MUs recruited, their discharge patterns and anatomical characteristics can be used to infer the presence
+59     and extent of a neuromuscular disorder.
+60     MU recruitment and firing patterns can be used to infer the relative numbers and sizes of MUs in a muscle
+61     (Sonoo 2002). A typical MUP within a train or a calculated MUP template can be used to infer MU
+62     anatomical features, such as size and the extent of terminal axonal branching. MUP shape instability
+63     within a train can be used to infer electrophysiological features, such as terminal AAP and/or MFAP
+                                                                                                                                           2
+
+   medRxiv preprint doi: https://doi.org/10.1101/2020.10.07.20208348.this version posted October 9, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                              All rights reserved. No reuse allowed without permission.
+64     conduction velocity variability in combination with NMJ transmission time variability. NMJ transmission
+65     time variability is often much greater than AAP and/or MFAP conduction velocity variability and therefore
+66     greater MUP instability largely reflects NMJ transmission time variability.
+67     More specifically, standard clinical EMG examinations are now, almost exclusively, based on signals
+68     detected using concentric needle electrodes. During low-level muscle activation, MUPTs are extracted
+69     using triggering or pattern recognition techniques. MU recruitment is qualitatively –i.e. subjectively-
+70     assessed at increasing levels of force, whereas discharge patterns are usually not considered. A
+71     representative or template MUP is used to infer MU size based on MUP duration, amplitude and/or area.
+72     Increased MUP size is expected to be related to axonal sprouting which is in turn related to re-innervation
+73     of denervated muscle fibres and indicative of MN loss. Reduced MUP size is expected to be related to
+74     fibre loss, atrophy or NMJ blocking. Axonal sprouting and fibre atrophy or hypertrophy are indirectly
+75     assessed using the number of phases and/or the number of turns in the representative or template MUP.
+76     The formation of new NMJs and NMJ transmission delay, NMJ transmission time variability and/or NMJ
+77     transmission failure are assessed using either separate SFEMG examination techniques (which are more
+78     accurate though time consuming) or using a triggering technique and high-pass filtered EMG signals at
+79     low levels of contraction to evaluate MUP complexity and morphological instability (i.e. jiggle).
+80     Specific aspects of neuromuscular disease could be better detected if signals better reflecting the
+81     anatomical and electrophysiological effects of disease on individual muscle fibres could be assessed. In
+82     general, it is not possible to detect only the MFP created by the MFAP of a single muscle fibre. However,
+83     as the characteristics of a MFP generated by a muscle fibre are dependent on fibre diameter and its radial
+84     distance to the electrode detection surface, as radial distance increases, the amplitude and high frequency
+85     content of a detected MFP decreases. This means that MFP contributions to a MUP from distant fibres
+86     will be of lower amplitude and have a greater proportion of lower frequency energy. Conversely, MFP
+87     contributions from near fibres (NFs) will be of higher amplitude and have a greater proportion of higher
+88     frequency energy. Electrodes with smaller detection surface area increase the disparity of the radial
+89     distances across the fibres of MU and, for a given electrode position relative to the fibres of a MU, allow
+90     some fibres to be effectively near the electrode and some to be distant. For a suitably positioned electrode
+91     with small detection surface area, the number of muscle fibres with small radial distance (i.e. the number
+92     of NFs) can be small and the detected MUP will be primarily composed of NF MFPs and significant NF MFP
+93     contributions may be detected. As suggested by Payan (1978) the use of high-pass filtering enhances the
+94     effects of radial distance, and in effect, for the same detection surface area, reduces the number of NFs
+                                                                                                                                           3
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.07.20208348.this version posted October 9, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                               All rights reserved. No reuse allowed without permission.
+ 95     and increases the chance of detecting significant NF MFP contributions. This is essentially the basis of
+ 96     single-fibre electromyography (SFEMG) whether using a traditional single-fibre or concentric needle
+ 97     electrode (Sanders & Stålberg, 1996; Stålberg, 2012). Because of the enhancement of NF contributions
+ 98     relative to distant fibre contributions, a suitably high-pass filtered concentric-needle detected MUP is
+ 99     called a NF MUP (NFM).
+100     Near fibre electromyography (NFEMG) is the study of NFMs for the assessment of the sprouting of new
+101     unmyelinated axonal branches and the formation of new NMJs, NMJ transmission delay, NMJ
+102     transmission time variability or NMJ transmission failure and muscle fibre loss, atrophy or hypertrophy.
+103     Several previous studies (Allen et al. 2015; Hourigan et al. 2015; Piasecki et al. 2016b, 2016a, 2020; Power
+104     et al. 2016; Gilmore et al. 2017; Estruch and Stashuk 2019; Estruch et al. 2019) have incorporated NFEMG
+105     parameters to demonstrate the effects of specific diseases or ageing on individual MUs. The focus of this
+106     paper is to utilise MUPs and NFMs extracted from simulated EMG signals and those obtained from human
+107     muscles to explicitly describe and evaluate a range of NFEMG methods and parameters used to investigate
+108     neuromuscular alterations, including a new measure of NMJ instability, NFM segment jitter. Methods for
+109     MUPT extraction, high-pass filtering, MUP and NFM contamination reduction and parameter calculation
+110     are outlined.
+111     2.0 Methods
+112     2.1 Generation of Simulated Motor Unit Data
+113     A commercially available application for creating simulated needle-detected EMG signals was used to
+114     create sets of signals detected using an electrode of known geometry and generated by MUs for which
+115     the numbers of fibres, their sizes, and their radial positions and NMJ axial positions, relative to the
+116     detection surface of the electrode, are known (Stålberg & Karlsson, 2001). The simulated EMG signals
+117     used are simple compared to real EMG data, lacking external 50/60Hz noise and movement artifacts,
+118     however they provide a basis from which useful evaluations of MUP/NFM parameters can be evaluated.
+119     The simulation of an EMG signal starts by modelling MUs which comprise a muscle in which the signals
+120     are detected. In this work, a muscle comprised of four MUs was modelled. For each MU, the number of
+121     fibres, their fibre diameter and NMJ axial location distribution and their NMJ transmission time variability
+122     (i.e. jitter), as well as the expected diameter of the MU territory was selected. Firing pattern characteristics
+123     of each MU were also selected. To evaluate the separate effects of fibre diameter variability, end plate
+124     scatter, MU remodelling and jitter on MUP and NFM template and instability parameter values, specific
+125     muscle/EMG detection scenarios were modelled. Except for specific changes related to the scenarios
+                                                                                                                                            4
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.07.20208348.this version posted October 9, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                               All rights reserved. No reuse allowed without permission.
+126     described below, all muscles were simulated with default properties and signals were simulated as being
+127     recorded using the enlarged uptake area of a CNEMG electrode positioned axially 20 mm from the center
+128     of the endplate region, and randomly positioned radially within the territories of the simulated MUs. For
+129     each scenario, ten EMG signals each containing 4 MUPTs were simulated for 10 unique radial needle
+130     positions. Forty MUPTs per scenario were then extracted from the EMG signals using DQEMG algorithms.
+131     2.2 Exemplary human data
+132     Exemplary data is presented through three examples (Figures 5 to 7), corresponding to a control,
+133     neurogenic and myopathic subject. Muscles sampled were the gastrocnemius, gastrocnemius, extensor
+134     digitorum communis and vastus lateralis, and deltoid respectively, as detailed in section 3.5.
+135     Data for all three cases were collected through retrospective review and were analysed using DQEMG®
+136     with the approval of the local ethics committee (Biomedical Research Institute, Jiménez Díaz Foundation
+137     University Hospital; code EO181-20_FJD). Diagnoses were those made by the examining neurophysiologist
+138     (OGE) at the time of the study, based on the results of the clinical and neurophysiological examination.
+139     EMG signals were acquired during a sustained mild effort protocol of 10 sec duration as part of the routine
+140     neurophysiological examination. Intramuscular signals were detected with a standard concentric needle
+141     electrode (38 x 0.45 mm (1.5” x 26G) Neuroline Concentric; Ambu®, Denmark). Raw EMG signals were
+142     bandpass filtered (20 Hz - 10 kHz) and stored using a KeyPoint.Net 3.22® device (Alpine Biomed, USA).
+143     2.3 MUPT Extraction
+144     To obtain representative as well as shape instability MUP/NFM information a MUPT must be extracted
+145     from a recorded EMG signal from which a representative/template MUP/NFM can be selected or
+146     estimated and across which MUP/NFM shape instability can be measured. MUPTs can be extracted using
+147     level or window trigger or pattern recognition algorithms. In this work, MUPTs were extracted from
+148     simulated or real concentric needle-detected EMG signals using the algorithms contained in DQEMG
+149     (Stashuk 1999a). These algorithms execute the following steps for MUPT extraction and analysis: 1) MUP
+150     detection, 2) initial MUP clustering, 3) supervised MUP classification, 4) MUPT splitting and merging, 5)
+151     extracted MUPT characterization. During MUPT extraction, the current DQEMG algorithms specifically
+152     account for MUP instability within a MUPT.
+153     2.4 Choice of High-Pass Filter
+154     To increase the effects of the radial distances to muscle fibres on detected MUPs and thus enhance
+155     contributions of near fibres to detected MUPs, the detected EMG signals are high-pass filtered. For
+                                                                                                                                            5
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.07.20208348.this version posted October 9, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                               All rights reserved. No reuse allowed without permission.
+156     conventional SFEMG analysis signals are usually filtered using a Butterworth high-pass filter with a 500 or
+157     1000 Hz cut-off frequency. Earlier work (Stashuk 1999b), has demonstrated that the use of low-pass-
+158     double-differentiation (LPDD) filters (Usui and Amidror 1982; McGill et al. 1985) have similar amplitude
+159     responses as traditionally-used Butterworth filters, but because of different phase responses create MUPs
+160     in which it is easier to detect the contribution of single muscle fibres (i.e. MFPs). Therefore, in this work,
+161     the NFMs analyzed have been created by LPDD filtering concentric-needle-detected MUPs.
+162     2.5 Definition of representative/template MUP and NFM parameters
+163     MUP Area - integral of the absolute value of the MUP values between the onset and end markers, times
+164              the sampling time interval, in Vms.
+165     MUP Duration - duration between the onset and end markers, in ms.
+166     Turns – number of significant slope reversals within the MUP duration (height > 20 v)
+167     NFM Area - integral of the absolute value of the NFM values between the onset and end markers, times
+168              the sampling time interval, in kV/s2ms.
+169     NFM Duration – duration between the onset and end markers of the NF MUP, in ms.
+170     NF Count – number of fibre contributions detected within the NFM duration
+171              (i.e. significant slope reversals (height > 5*NF baseline RMS) with similar rising and falling slopes)
+172     NF Dispersion – time between the first and last detected fibre contribution, in ms
+173     2.6 Definition of MUPT parameters
+174     One objective of analyzing the MUPs comprising a MUPT is to characterize the discharge pattern of the
+175     associated MN using the occurrence or detection times of the composite MUPs. An additional objective
+176     is to assess NMJ transmission time variability and/or AAP and MFAP conduction time variability. The
+177     former of these is the focus of SFEMG, in which a fibre pair (FP) jitter measurement is obtained when a
+178     pair of fibre contributions are repeatedly detected in successive MUPs across a MUPT, and the variance
+179     of their inter potential intervals (IPIs) is used to characterize the NMJ transmission time variability of the
+180     fibre pair. To obtain a measure related to the NMJ transmission time variability of a larger number of NMJs
+181     of a MU, statistics related to the instability of the shapes of the MUPs of a MUPT, such a jiggle, have been
+182     developed (Stålberg & Sonoo, 1994). In this work, MUP jiggle has been measured using the MUPs of
+183     MUPTs as well as NFM jiggle using LPDD filtered MUPs of MUPTs.
+                                                                                                                                            6
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.07.20208348.this version posted October 9, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                               All rights reserved. No reuse allowed without permission.
+184     Jiggle values, and those of other similar global-MUP-shape based statistics (Stålberg & Sonoo, 1994),
+185     represent a larger number of NMJs of a MU than do fibre pair jitter measurements, are dependent on
+186     shape changes and therefore the relative sizes of MUP segments and not purely their temporal variability,
+187     and have normalized units which indirectly represent NMJ transmission time variability. A new statistic
+188     called NFM segment jitter (NFM SJ) is introduced in this work, which represents a larger number of NMJs
+189     of a MU than do fibre pair jitter measurements, is independent of the relative sizes of MUP segments and
+190     more dependent on their temporal variability and is measured in s, to more directly represent NMJ
+191     transmission time variability.
+192     To accurately assess NMJ transmission and/or AP conduction velocity variability using extracted MUPTs,
+193     the MUPs of each MUPT must first be aligned to each other. In this work, MUPs within a train are aligned
+194     during the process of MUPT extraction using methods similar to the correlation maximization method of
+195     Campos et al (2000).
+196     2.6.1 Calculation of NFM Segment Jitter (NFM_SJ):
+197     Given a set of N, NFMs comprising a MUPT, let NFMi represent the ith NFM of the MUPT.
+198     Each NFMi is a set of consecutive sample values.
+199     Each NFMi of the MUPT is divided into Si segments.
+200     A NFM segment is an interval of a NFM over which the absolute change in the amplitude of the NFM
+201     amplitude is equal to a threshold amount, segmentHeight.
+202     NFMij is the jth segment of NFMi.
+203     NFMij is a set of consecutive samples from NFMi such that NFMij1 is the starting index in NFMi of the jth
+204     segment and NFMij2 is the ending index in NFMi of the jth segment.
+205     Therefore, |NFMij1 – NFMij2| = segmentHeight
+206     The segments of a NFM are contiguous.
+207     Therefore, NFMi(j+1)1 = NFMij2 + 1
+208     WeightedShiftSum = 0
+209     SumOfWeights = 0
+210     For i = 1 to i = N
+211       For j = 1 to j = Si
+212         If (i < N)
+213                Calculate the optimal shift sij between segment NFMij and NFMi+1
+214                by successively shifting NFMij relative to NFMi+1 to maximize their shape similarity wij
+215                WeightedShiftSum = WeightedShiftSum + sij*wij
+216                SumOfWeights = SumOfWeights + wij
+217         If (i > 1)
+218                Calculate the optimal shift sij between segment NFMij and NFMi-1
+219                by successively shifting NFMij relative to NFMi-1 to maximize their shape similarity wij
+                                                                                                                                            7
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.07.20208348.this version posted October 9, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                               All rights reserved. No reuse allowed without permission.
+220              WeightedShiftSum = WeightedShiftSum + sij*wij
+221              SumOfWeights = SumOfWeights + wij
+222     NFM Segment jitter = WeightedShiftSum / SumOfWeights
+223     In this work, the value of segmentHeight was the greater of 0.10% of the NFM template peak to peak
+224     voltage and 5 times the baseline RMS.
+225     The value of sij was constrained to be in the range between -200 s to +200s.
+226     2.7 Definition and Selection of Isolated MUPs/NFMs:
+227     To accurately assess NMJ transmission and/or AP conduction velocity variability using detected
+228     MUPs/NFMs it is also essential that the MUPs/NFMs used represent the activation of a single MU and not
+229     be contaminated by the activity of other MUs. Such MUPs/NFMs, can be characterized as isolated
+230     MUPs/NFMs. To select isolated MUPs/NFMs within a MUPT, NFMs contaminated with contributions of
+231     other MUs need to be excluded. MUP/NFM contamination will cause a segment of a MUP/NFM to have
+232     significantly different values than corresponding segments of previous and subsequent MUPs/NFMs.
+233     Detecting these significant differences must take into account the inherent instability of the shapes of the
+234     NFMs within the train as well as any trend in NFM shape across the train due to needle movement.
+235     MUP/NFM instability measures are calculated over the NFM duration of the representative or template
+236     NFM. Therefore, an isolated NFM only needs to be contamination free across the NFM duration interval.
+237     2.7.1 Selecting Isolated NFMs:
+238     An isolated NFM is not significantly contaminated by the activity of other MUs.
+239     A set of isolated NFMs allow the estimation of the true electrophysiological instability of the NFMs
+240     generated by a MU.
+241     Given a set of N, NFMs comprising a MUPT, let NFMi represent the ith NFM of the MUPT.
+242     Each NFMi is a set of consecutive sample values.
+243     Let NFM_t be the NF MUP template used to represent the N, NFMs of the MUPT.
+244     The NFM_t of the MUPT is divided into St segments.
+245     A NFM_t segment is an interval of the NFM_t over which the absolute change in the amplitude of the
+246     NFM_t amplitude is equal to a threshold amount, segmentHeight.
+247     NFM_tj is the jth segment of the NFM_t.
+248     NFM_tj is a set of consecutive samples from the NFM_t such that NFM_tj1 is the starting index in the
+249     NFM_t of the jth segment and NFM_tj2 is the ending index in the NFM_t of the jth segment.
+250     Therefore, |NFM_tj1 – NFM_tj2| = segmentHeight
+251     The segments of the NFM_t are contiguous.
+252     Therefore, NFM_t(j+1)1 = NFM_tj2 + 1
+253     Each of the N NFMs in the MUPT are positioned as rows in a two dimensional array with N rows and k
+254     columns, where k is the number of samples in NFM_t.
+255     Each of the N NFMs in the MUPT are segmentally aligned with the respective St segments of NFM_t to
+256     produce k columns of aligned NFM values.
+                                                                                                                                            8
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.07.20208348.this version posted October 9, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                               All rights reserved. No reuse allowed without permission.
+257     Across each of the k aligned NFM value columns an average mean absolute consecutive difference (MACD)
+258     is calculated, with MACDj being the value for the jth column.
+259     A NFM is considered isolated if for each of its k samples the average absolute deviation of m consecutive
+260     samples, centered at k, from m corresponding samples of the previous isolated NFM and from m
+261     corresponding samples of the NFM template are less than 10*MACDk, where m corresponds to the
+262     number of samples required to span 100 s.
+263     Having a vector of MACD values allows the level of expected variation (i.e. the amount of acceptable
+264     contamination) to be different for each time point across the set of NFMs with in the MUPT. Therefore,
+265     the threshold values used as criteria for significant contamination in the baseline segments of the MUPT
+266     will be more restrictive (have smaller values) that the threshold values used during the higher energy
+267     segments. This in turn, allows the shape variability across the NFMs of the MUPT to be accurately
+268     measured. The alignment of portions of the NFMs with the NFM template allow for more accurate
+269     estimation of the noise present.
+270     2.8 Statistical Analysis
+271     All statistical analysis was completed using STATA (v.15). All parameters within each scenario were
+272     assessed across levels of severity (i.e. increasing fibre diameter variability) using multi-level mixed effects
+273     linear regression models, with each needle position a fixed factor. Beta (β) coefficients and 95%
+274     confidence intervals are reported. Significance was accepted at p<0.05.
+275     3.0 Results
+276     3.1 Increasing fibre diameter variability
+277     Four sets of 40 MUPTs were extracted from EMG signals recorded from muscles with MUs having default
+278     mean fibre diameters (50 m) with diameter standard deviations of 1, 5, 10 and 15 m. Figure 1 panels A
+279     to C show MUP and NFM size parameters across increases in fibre diameter variability. Increased MFP
+280     temporal dispersion associated with increased fibre diameter variability decreases MUP area (Figure 1A)
+281     and increases MUP duration (Figure 1C), but does not affect NFM area (Figure 1B).
+282     Figure 1 panels D and F show number of MUP turns and NF count values across increases in fibre diameter
+283     variability, respectively. All of these complexity related measures increase with the increased MFP
+284     temporal dispersion associated with increased fibre diameter variability. With increased MFP dispersion,
+285     increased numbers of underlying MFP contributions become evident/detectable. Figure 1 panels E and G
+286     show NFM duration and NF dispersion across increases in fibre diameter variability, respectively. Increases
+287     in MFP temporal dispersion are clearly and consistently reflected in all of these measures. Figure 1 panels
+                                                                                                                                            9
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.07.20208348.this version posted October 9, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                               All rights reserved. No reuse allowed without permission.
+288     H and J show MUP and NFM jiggle values, while panel I shows NFM segment jitter values across increases
+289     in fibre diameter variability. Even though the modelled NMJ jitter was constant, across the increasing
+290     levels of modelled fibre diameter variability, increased average MFP dispersion caused increased shape
+291     instability. This caused more consistent increases in MUP versus NFM jiggle, evidenced by the larger
+292     relative  coefficient (/CI) and for MUP jiggle. The temporally-based NFM segment jitter values show
+293     moderate increases as indicated by the small relative  value.
+                                                                                                                                          10
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.07.20208348.this version posted October 9, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                               All rights reserved. No reuse allowed without permission.
+294
+                                                                                                                                          11
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.07.20208348.this version posted October 9, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                               All rights reserved. No reuse allowed without permission.
+295     Figure 1. Motor unit potential and near fibre motor unit potential parameters with increases in fibre
+296     diameter variability. Beta coefficients, 95% confidence intervals and p values from multi level mixed
+297     effects linear regression shown inset for each parameter.
+298     3.2 Increasing NMJ axial location variability
+299     Five sets of 40 MUPTs were extracted from EMG signals recorded from muscles with MUs having constant
+300     fibre size, and mean axial endplate locations of 0 mm with endplate location standard deviations of 1, 2,
+301     5, 7, and 10 mm. Figure 2 panels A to C show MUP and NFM size parameters across increases in end plate
+302     scatter. As with increasing fibre diameter variability, increased MFP temporal dispersion associated with
+303     increased end plate scatter clearly decreases MUP area (Figure 2A) and increases MUP duration (Figure
+304     2C), but only moderately increases NFM area (Figure 2B).
+305     Figure 2 panels D and F show number of MUP turns and NF count values across increases in end plate
+306     scatter, respectively. All of these complexity related measures increased with the increased MFP temporal
+307     dispersion associated with increased end plate scatter. The increases in numbers of turns and NF count
+308     were greater than for the study of increased fibre diameter variability (range of mean turns values 4-10
+309     versus 4-8; range of mean NF count values 2-6 versus 2-3). Figure 2 panels E and G show NFM duration
+310     and NF dispersion values across increases in end plate scatter, respectively. Increases in MFP temporal
+311     dispersion are clearly and consistently reflected in all of these measures. As with the complexity measures,
+312     the NFM duration, and NF dispersion values were about greater than for the study of increased fibre
+313     diameter variability (range of mean NFM duration values 2.5-7.5 versus 2.5-4; range of mean NF
+314     dispersion values 0.5-4.5 versus 0.5-2). Figure 2 panels H and J show MUP and NFM jiggle values, while
+315     panel I shows NFM segment jitter values across increases in end plate scatter. Even though the modelled
+316     NMJ jitter was constant, across the increasing levels of modelled end plate scatter, increased average MFP
+317     dispersion lead to increased shape instability. This caused more consistent increases in MUP versus NFM
+318     jiggle, evidenced by the larger relative  coefficient (/CI) for MUP jiggle. The temporally-based NFM
+319     segment jitter values show clear increases as indicated by the large relative  value.
+320
+                                                                                                                                          12
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.07.20208348.this version posted October 9, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                               All rights reserved. No reuse allowed without permission.
+321
+322     Figure 2. Motor unit potential and near fibre motor unit potential parameters with increases in end plate
+323     scatter. Beta coefficients, 95% confidence intervals and p values from multi level mixed effects linear
+324     regression shown inset for each parameter.
+                                                                                                                                          13
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.07.20208348.this version posted October 9, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                               All rights reserved. No reuse allowed without permission.
+325     3.3 Simulated MU diminution and expansion
+326     To consider a simple model of partial/distal denervation and reinnervation with fibre atrophy and
+327     hypertrophy, four sets of 40 MUPTs related to 4 degrees of involvement were extracted. The MUs were
+328     simulated to have characteristic as outlined in Table 1 below. Of the 4 simulated MUs for each muscle, 2
+329     have ‘denervated’ and 2 have ‘compensated/reinnervated’ characteristics. Where fibre number is
+330     increased, so is fibre diameter variability and endplate scatter.
+331     Table 1. Features of remodelled motor units
+                                            Healthy               Denervated                       Reinnervated
+         Model                                                    1       2        3       4       1         2          3           4
+         Fibre number                       100                   90      80       70      60      110       120        130         140
+         Fibre Dia SD                       5                     5       5        5       5       7         10         13          15
+         Endplate pos. SD                   1                     1       1        1       1       3         5          7           10
+332     Fibre number is the number of MU fibres, Fibre Dia SD is the standard deviation of the MU fibre diameters
+333     and Endplate pos. SD is the standard deviation of the axial endplate locations about the mean axial end
+334     plate location (20mm).
+335
+336     Figure 3 panel A shows MUP area decreasing with denervation and remaining unchanged with
+337     reinnervation relative to the default model. Only at the highest level of involvement simulated do
+338     reinnervated MUs have increased MUP area relative to denervated MUs. For denervated MUs, the
+339     decreases in MUP area are not due to increased temporal dispersion of the MFPs comprising the
+340     simulated MUPs but only the reduced numbers of MU fibres. For the reinnervated MUs, the increased
+341     temporal MFP dispersion, caused by increased fibre diameter variability and increased end plate scatter,
+342     combined with increased numbers of MU fibres result in no clear trend in MUP area. MUP duration
+343     however, shown in Figure 3 panel C, clearly decreases and increases for denervated and reinnervated
+344     MUs, respectively, as expected. NFM area, shown in Figure 3 panel B, did not change with denervation.
+345     With reinnervation, NFM area was increased with respect to the default and denervated models, but with
+346     increased variability no trend with reinnervation was evident. Figure 3 panels D and F do not show any
+347     trends in the numbers of turns and NF count values with increased denervation. The constant fibre
+348     diameter variability and end plate scatter modelled across the levels of increased denervation modelled
+349     resulted in no changes to these complexity measures despite the reduced numbers of MU fibres. These
+350     panels do show increasing trends in the numbers of turns and NF count values with increased
+351     reinnervation. The increased fibre diameter variability and end plate scatter modelled across the levels of
+352     increased reinnervation modelled resulted in clear changes to these complexity measures despite the
+353     increased numbers of MU fibres.
+                                                                                                                                          14
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.07.20208348.this version posted October 9, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                               All rights reserved. No reuse allowed without permission.
+354
+                                                                                                                                          15
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.07.20208348.this version posted October 9, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                               All rights reserved. No reuse allowed without permission.
+355     Figure 3. Motor unit potential and near fibre motor unit potential parameters with decreases or increases
+356     in the numbers of MU fibres. For increases in the numbers of MU fibres, fibre diameter variability and end
+357     plate scatter are also increased (See Table 1 for details). Beta coefficients, 95% confidence intervals and
+358     p values from multi level mixed effects linear regression shown inset for each parameter.
+359
+360     Figure 3 panels E and G do not show any trends in NFM duration or NFM dispersion with increased
+361     denervation. The constant fibre diameter variability and end plate scatter modelled across the levels of
+362     increased denervation modelled resulted in no changes to these NFM measures. These panels do show
+363     increasing trends in NFM duration or NF dispersion with increased reinnervation. The increased fibre
+364     diameter variability and end plate scatter modelled across the levels of increased reinnervation modelled
+365     resulted in clear changes to these NFM measures. Figure 3 panels H, J and I do not show any trends in
+366     MUP or NFM jiggle and NFM segment jitter with increased denervation, respectively. These panels do
+367     show increasing trends in MUP jiggle and NFM segment jitter, but not NFM jiggle with increased
+368     reinnervation. With the constant amount of NMJ jitter modelled across the increasing levels of
+369     denervation and reinnervation modelled no trend in instability measures are expected. However, the
+370     increased fibre diameter variability and end plate scatter modelled across the levels of increased
+371     reinnervation modelled resulted in increased MUP jiggle and NFM segment jitter values.
+372     3.4 Increasing levels of jitter (NMJ transmission time variability)
+373     Six levels of jitter (NMJ transmission time variability) were modelled (20, 40, 60, 80, 100, and 120 s). For
+374     each jitter level, ten EMG signals each containing 4 MUPTs were simulated for 10 unique radial needle
+375     positions. Forty MUPTs were then extracted from the EMG signals for each level of jitter using DQEMG
+376     algorithms. Figure 4 panels A to C show MUP and NFM size parameters across increases in jitter. Increased
+377     MFP temporal dispersion associated with increased jitter does not decrease MUP area, except for 120 s
+378     jitter, (Figure 4A), while NFM area (Figure 4B) and MUP duration (Figure 4C) do not change across all jitter
+379     values studied. Figure 4 panels D and F show no changes in number of MUP turns or NF count values
+380     across all increases in jitter studied. Figure 4 panels E and G show no changes in NFM duration or NF
+381     dispersion across all increases in jitter studied. Figure 4 panels H and J show MUP and NFM jiggle values,
+382     while panel I shows NFM segment jitter values across increases in jitter. All of these measures clearly
+383     reflect the increases in modelled jitter. The temporally-based NFM segment jitter values, with units in s,
+384     had the highest  and relative  values.
+385
+                                                                                                                                          16
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.07.20208348.this version posted October 9, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                               All rights reserved. No reuse allowed without permission.
+386
+387     Figure 4. Motor unit potential and near fibre motor unit potential parameters with increased jitter. Beta
+388     coefficients, 95% confidence intervals and p values from multi level mixed effects linear regression shown
+389     inset for each parameter.
+                                                                                                                                          17
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.07.20208348.this version posted October 9, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                               All rights reserved. No reuse allowed without permission.
+390
+391     3.5 Exemplary Human Patient Data
+392     Figures 5 to 7 show exemplary real EMG data from healthy, enlarging/reinnervating and depleted MUs of
+393     a control, neurogenic and myopathic subject, respectively.
+394     Figure 5 shows a normal MUP template, an NFM template with moderate duration and dispersion and a
+395     stable NFM raster/shimmer. It corresponds to a 65 y.o. woman presenting with right lumbar pain and
+396     occasional paresthesia in the right L5 dermatome. EMG and MRI findings were normal and symmetric
+397     compared with the asymptomatic contralateral side. The MUP data displayed was taken from the
+398     contralateral asymptomatic gastrocnemius considered as a reference.
+399     Figure 6 corresponds to a 70 y.o. male presenting with progressive asymmetric weakness, muscle mass
+400     loss and spasticity over the last year. Needle EMG revealed extended ongoing denervation (i.e. fibrillation
+401     potentials and positive sharp waves), fasciculations and reduced recruitment together with polyphasic
+402     unstable and enlarged MUPs in three body segments, meeting the revised El Escorial criteria for definite
+403     ALS. Panels A to C show different stages of MUP denervation-reinnervation. In panel A, two normal shaped
+404     and sized MUP templates along with NFM templates with increased dispersion and moderately unstable
+405     NFM shimmers, suggest an early stage of reinnervation. In panel B, two normal sized MUP templates with
+406     increased shape complexity as well as NFM templates with increased duration, dispersion and increasingly
+407     unstable NFM shimmers suggest an advanced stage of ongoing reinnervation. Panel C displays two
+408     enlarged MUP templates associated with NFM templates with increased duration and dispersion, and
+409     only moderately unstable NFM shimmers suggesting mature reinnervation, as well as a small MUP
+410     template associated with a NFM template with increased duration and dispersion and a stable NFM
+411     shimmer, possibly suggesting depletion of an enlarged MUP through degeneration of distal nerve
+412     terminals (de Carvalho & Swash, 2016).
+413     Figure 7 corresponds to a middle-aged woman diagnosed with dermatopolymyositis in childhood
+414     currently on immunosuppressant at low doses for intercurrent arthritis (Azathioprine), who presented
+415     with symmetric residual weakness in proximal muscles during both moderate and sustained efforts.
+416     Needle EMG did not show evidence of active myositis and routine nerve conduction studies were
+417     anodyne. The figure shows a small size MUP template, complex in shape (increased number of turns) and
+418     a NFM template with increased NF counts and dispersion, but duration in the upper limit of normality and
+419     a stable NFM shimmer.
+420
+                                                                                                                                          18
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.07.20208348.this version posted October 9, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                               All rights reserved. No reuse allowed without permission.
+421
+422     Figure 5. Data from a healty MU in a healty muscle (gastrocnemius) . A raster of 3, 12 ms sweep, columns
+423     of isolated NFMs, an 18 and 8 ms sweep MUP template, and an 8 ms sweep NFM shimmer and template
+424     are shown. The top to bottom vertical lines demarcate the NFM duration, in the NFM template the
+425     elements of the NFM count are demarcated by short vertical lines. The interval between the first and last
+426     short vertical line is the NFM dispersion. Associated MUP and NFM template as well as MUPT parameter
+427     values are shown. The MUP template is of somewhat below average size, the NFM template is of average
+428     duration and dispersion and the NFM raster/shimmer is stable. Note that the rasters of isolated NFMs as
+429     well as the calculated NFP SJ value indicate healthy NMJ transmission temporal stability in spite of slight
+430     needle movement during signal acquisition.
+431
+                                                                                                                                          19
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.07.20208348.this version posted October 9, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                               All rights reserved. No reuse allowed without permission.
+432     A.
+433     Gastrocnemius:
+434
+435     Ext. Dig. Communis:
+436
+437     B.
+438     Gastrocnemius:
+439
+440     Vastus Lateralis:
+441
+442     C.
+443     Vastus Lateralis:
+444
+445
+446
+447
+448     Figure 6. Different stages of reinnervation are depicted across panels A to C. In panel A emerging
+449     reinnervation is manifested as increased NFM instability and a mild rise in NFM duration and dispersion.
+450     In panel B reinnervation is prominent, showing a complex shaped MUP with increased NFM parameters.
+451     In panel C three stable MUPs are depicted. From top to bottom MUP size wanes yet with increased
+                                                                                                                                          20
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.07.20208348.this version posted October 9, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                               All rights reserved. No reuse allowed without permission.
+452     temporal dispersion (high NFM duration and dispersion). It is hypothesised that progression of certain
+453     neurogenic disorders can cause partial denervation (see text). From left to right: MUP template, MUP
+454     template NFM interval, NFM shimmer and NFM template are displayed. The top to bottom vertical lines
+455     demarcate the NFM duration.
+456
+457     MUP #1:
+458
+459     MUP #2:
+460
+461     MUP #3:
+462
+463     MUP #4:
+464
+465     MUP #5:
+466
+467     MUP #6:
+468
+469     Figure 7. Example of a mild myopathic deltoid showing MUPs of partially depleted MUs recorded during
+470     an isometric contraction during low level of activation. Each row corresponds to individual MUs from the
+471     same contraction. From left to right: MUP template, MUP template NFM interval, NFM shimmer and NFM
+472     template are displayed. The top to bottom vertical lines demarcate the NFM duration.
+                                                                                                                                          21
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.07.20208348.this version posted October 9, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                               All rights reserved. No reuse allowed without permission.
+473     4.0 Discussion
+474     NFEMG focuses on contributions/MFPs of MU muscle fibres lying close to the detection surface of a
+475     needle electrode. NFM measurements of the number, temporal dispersion and temporal consistency of
+476     generated MFPs are dependent on local MU morphology and electrophysiology and as such can infer
+477     subtle MU changes as occurring with ageing and/or disease. As demonstrated with simulations of
+478     increased fibre diameter variability or endplate scatter, as the spread in the expected MFAP arrival times
+479     (i.e. the times at which the MFAPs are expected to pass closest to the center of the electrode detection
+480     surface) increases so do the number and temporal dispersion of detected MFPs. Increasing fibre diameter
+481     variability and end plate scatter are early effects of neuromuscular disorders and ageing and precursors
+482     to changes in MU size and fibre grouping. Being able to detect these initial MU changes potentially allows
+483     early more sensitive detection of MU abnormalities.
+484     The effects of increasing amounts of simulated fibre diameter variability on MUP and NFM template and
+485     instability parameters are presented in Figure 1. MUP area decreases with increasing fibre diameter
+486     variability (MUP amplitude( Vpp) follows the same pattern, values not shown) which can be a consequence
+487     of increased MFP dispersion associated with increasing fibre diameter variability, which can result in more
+488     destructive MFP superpositions causing phase cancelation, even though the number of contributing MFP
+489     remains constant. Notably, these effects would likely be reduced with a smaller axial distance separating
+490     the electrode and endplate region. MUP duration, in contrast, increased with increasing fibre diameter
+491     variability (Figure 1C) which can also be a consequence of increased MFP dispersion associated with
+492     increasing fibre diameter variability, ultimately increasing the time interval between MUP onset and end
+493     positions. These results are consistent with those of Stålberg & Karlsson (2001) who reported both MUP
+494     Vpp and area decreases for simulated data with increases in MFP dispersion. NFM area was not affected
+495     by increased fibre diameter variability (Fig 1B) which can be related to the relatively smaller number of
+496     MFPs that make significant contributions to NFMs. As such, NFM area measures were in general more
+497     variable and did not show a clear relationship with fibre diameter variability. Turns and NF count both
+498     increased with fibre diameter variability (Fig 1 D, F) without increases in numbers of MU fibres or MU fibre
+499     density and specifically due to increases in MFP dispersion allowing increased numbers of MFP
+500     contributions to be detected. NFM duration and NF dispersion both increased with increases in fibre
+501     diameter variability (Fig 1 E,G). Each of these temporal measures are directly related to MFP dispersion
+502     and clearly reflect increases in MFP dispersion caused by increases in the range of MFAP conduction
+503     velocities associated with increases in fibre diameter variability. MUP jiggle, NFM jiggle and NFM SJ across
+504     MUPTs all had similar modest increases with increased MFP dispersion associated with increased fibre
+                                                                                                                                          22
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.07.20208348.this version posted October 9, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                               All rights reserved. No reuse allowed without permission.
+505     diameter variability, explained by MFP contributions and their associated temporal variability becoming
+506     easier to observe.
+507     The results of simulating increasing amounts of end plate scatter on MUP and NFM template and
+508     instability parameters are presented in Figure 2. Overall, the respective template parameters were
+509     similarly affected by increases in end plate scatter as with increases in fibre diameter variability. However,
+510     the effects of the amounts of endplate scatter were greater than those of the amounts of fibre diameter
+511     variability. The levels of endplate scatter simulated generated greater amounts of MFP dispersion which
+512     is reflected in the increased trends of the template parameter values. The MUP and NFM instability
+513     measures all had similar modest increases, which were, despite the increased amounts of MFP dispersion,
+514     similar in extent as with the fibre diameter variability simulations (Fig 2 H,J,I).
+515     The effects of simulating MU remodelling, the denervation and reinnervation of fibres, on MUP and NFM
+516     template and instability parameters are presented in Figure 3. These data demonstrate effects of
+517     decreasing numbers of MU fibres (denervation), and increasing numbers of MU fibres along with
+518     increasing fibre diameter variability and endplate scatter (reinnervation). For MUs with fewer numbers of
+519     fibres, MUP area and duration decreased with decreasing numbers of MU fibres. The reversal of this
+520     pattern could be assumed of all other modelled parameters remained constant. For MUs with greater
+521     fibre numbers, diameter and endplate variability, MUP area clearly increased only after 40 fibres were
+522     added, while duration consistently increased with increasing numbers of MU fibres (Fig 3 A, C). For both
+523     scenarios NFM area remained constant but became more variable with increasing numbers of MU fibres
+524     and the increasing MFP dispersion modelled (Fig 3 B). Turns and NF count remained constant across
+525     decreasing numbers of MU fibres and both increased with increasing numbers of MU fibres and the
+526     increasing MFP dispersion modelled (Fig 3 D, F). NFM duration and dispersion remained constant across
+527     decreasing numbers of MU fibres and both increased with increasing numbers of MU fibres and the
+528     increasing MFP dispersion modelled (Fig 3 E, G). Across the increasing numbers of MU fibres simulated,
+529     NFM duration and dispersion clearly reflect the increasing level of MFP dispersion modelled. Despite the
+530     increased amounts of MFP dispersion modelled, the MUP and NFM instability measures all had similar
+531     modest increases, which were similar in extent as with the fibre diameter variability simulations (Fig 3
+532     H,J,I).
+533     With or without MFP dispersion, MUP Vpp and area values were strongly correlated (r=0.82, data not
+534     shown). Without MFP dispersion (denervation), MUP area and MUP duration decreased and reflects the
+535     number of MU fibres. However with MFP dispersion (reinnervation), MUP area showed little change and
+                                                                                                                                          23
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.07.20208348.this version posted October 9, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                               All rights reserved. No reuse allowed without permission.
+536     MUP duration increased, therefore either may not reflect the number of MU fibres. NFM area is less
+537     affected by MFP dispersion than MUP area and duration. Therefore, if MFP dispersion is increased, NFM
+538     area may not be strongly correlated with MUP area or duration but nonetheless can be reflective of the
+539     number of MU fibres. NF count is well correlated with number of turns and can equally reflect the MFP
+540     dispersion underlying MUP/NFM complexity. NF count is not directly related to fibre density
+541     measurements obtained using a SFEMG electrode (Stalberg and Thiele 1975) because to obtain the latter
+542     measurements, the needle is positioned to obtain minimal MUP rise times from a single MU, whereas for
+543     the former, the needle is positioned to obtain suitably sharp MUPs across the interference pattern. NFM
+544     duration is strongly correlated with NFM dispersion and both most clearly and directly reflect MFP
+545     dispersion.
+546     The results of simulating increasing amounts of jitter on MUP and NFM template and instability
+547     parameters are presented in Figure 4. MUP area and duration drop for high jitter values (Fig 4 A, C). All
+548     other MUP and NFM template parameters are unaffected by increasing jitter. However, MUP and NFM
+549     jiggle and NFM SJ values increased with increasing jitter (Fig 4 H, J, I) and are therefore all strongly
+550     correlated with and clearly reflect NMJ transmission time variability.
+551     Unlike fibre pair jitter, measured using a single-fibre or concentric needle electrode to detect sets of MFP
+552     contributions from isolated pairs of muscle fibres (Sanders & Stålberg, 1996; Stålberg & Sanders, 2009),
+553     MUP and NFM jiggle and NFM SJ represent the amount of MFP temporal variability across all of the MFPs
+554     significantly contributing to the MUPs/NFMs of a MUPT. Jiggle expresses MFP temporal variability
+555     (primarily NMJ transmission time variability) by measuring MUP instability along the amplitude axis. Jiggle,
+556     measured using sums of median consecutive absolute amplitude differences, which reduce the effects of
+557     small needle movements and contamination from other MUs, and the ratio to template area, which
+558     reduces the effects of needle focusing/positioning, was determined the best of several instability
+559     measures considered by Stålberg and Sonoo, 1994. Nonetheless, in real signals, MUP jiggle values are
+560     more contaminated by contributions from other MUs (Campos et al. 2000) than are NFM jiggle or NFM SJ
+561     values. Algorithms used in this work to extract MUPTs and to select isolated MUPs/NFMs are specifically
+562     designed to account for MUP/NFM instability, to minimize the effects of needle positioning/focusing and
+563     to effectively align MUPs/NFMs for instability assessment to reduce contamination and other sources of
+564     instability measurement error described in earlier works (Campos et al., 2000; Stålberg & Sonoo, 1994).
+565     With jitter held at a constant “reference” value (25 s), MUP and NFM jiggle and NFM SJ increased with
+566     MFP temporal dispersion as the effects of more individual MFP components could be determined (Fig. 1
+                                                                                                                                          24
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.07.20208348.this version posted October 9, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                               All rights reserved. No reuse allowed without permission.
+567     H,I,J and Fig. 2 H,I,J). However, the increased values do not exceed “reference” values (<50%, < 50 s).
+568     Stålberg & Sonoo (1994) discussed how MUP polyphasia, caused by increased MFP temporal dispersion
+569     exposes inherent/true instability which can be masked with decreased MFP temporal dispersion where
+570     jittering MFPs are simply consistently superimposed such that the apparent/measurable jitter/temporal
+571     instability is reduced. In other words, instability measures can increase due solely to MFP temporal
+572     dispersion as the inherent/true temporal variability can be more accurately measured. This in turn
+573     suggests that increased polyphasia without increased jiggle can indicate chronic myopathic fibre diameter
+574     variability increases (Stålberg & Sonoo, 1994). MUP jiggle was affected more by mean MFP temporal
+575     dispersion than were NFM jiggle and NFM SJ and NFM SJ was affected more by mean MFP temporal
+576     dispersion than was NFM jiggle. Due to the larger MUs simulated, 100+ here versus their 10 fibres, the
+577     drop in MUP jiggle versus MU size reported by Stålberg & Sonoo was not apparent in this data for either
+578     MUP and NFM jiggle of NFM SJ (Fig 3 H,J,I). Even though for small amounts of jitter (20 s), its mean values
+579     were relatively high and for high amounts of jitter (100 and 120 s) its mean values were relatively low,
+580     the temporally based NFM SJ measure had the strongest relationship with increasing jitter. Because
+581     increases in NFM SJ more closely track those of simulated jitter it can be considered more directly related
+582     to the inherent temporal instability of MFP contributions to MUPs than are MUP and NFM jiggle, and is
+583     therefore more sensitive for detecting temporal instability in MUPTs.
+584     Figures 5 to 7 show exemplary real data recorded from healthy, expanding and depleted MUs,
+585     respectively. Results from a healthy MU (Fig 5) show a moderate MUP area (size), with average NFM
+586     duration and dispersion and stable NFM raster and shimmer plots (healthy NMJ transmission). Results
+587     from the expanding MU (Fig 6) show two average size MUPs (panel A), with incipient increases in NFM
+588     duration and dispersion and increased instability in the NFM shimmer plot (increased NMJ transmission
+589     time variability reflecting emerging reinnervation). In panel 6B results from two average size MUPs with
+590     increased shape complexity show prominent increases in NFM duration, dispersion and NFM shimmer
+591     instability, reflecting prominent reinnervation. Whereas panel 6C shows an enlarged, a moderately
+592     enlarged and a reduced sized MUP, all with increased and similar NFM duration and dispersion values and
+593     rather stable NFM shimmer plots, possibly resembling distal axonal damage affecting longstanding
+594     enlarged and stable MUs as part of the neurogenic process. Results from the depleted MU (Fig 7) show
+595     slightly reduced MUP sizes, with increased NFM duration and dispersion and stable NFM shimmer plots.
+596     The NFM duration and dispersion (7.7, 8.2 and 3.0, 2.9 ms, respectively) measured for the two expanding
+597     MUs in Figure 6C are clearly longer than for the healthy MU (4.3 and 1.3 ms, respectively) and greater
+                                                                                                                                          25
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.07.20208348.this version posted October 9, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                               All rights reserved. No reuse allowed without permission.
+598     than for any values obtained from simulations of only increased fibre diameter variability. This suggests,
+599     an MFP dispersion associated with more than just increased fibre diameter variability. It suggests some
+600     degree of increased end plate scatter and possibly some increased fibre diameter variability consistent
+601     with axonal branch sprouting and possibly some fibre atrophy and/or hypertrophy. The increased NFM SJ
+602     value in both MUPs in panel 6A (68.7 and 54.1 s) clearly suggests increased NMJ transmission time
+603     variability consistent with immature/nascent NMJ formations. All of these NFM results are consistent
+604     with ongoing reinnervation and given that their respective MUP areas (2402 and 2236 Vms) are only
+605     slightly increased and duration is within the normal range (11.0 and 11.2 ms, respectively) suggests an
+606     initial/early stage of reinnervation.
+607     When considering myopathic depleted MUs (Fig 7), NF count, NFM duration and dispersion values, for all
+608     the MUs sampled from a single contraction, are longer than for the healthy MU (4, 4.3 ms and 1.3 ms,
+609     respectively) and greater than for any values obtained from simulations of only increased fibre diameter
+610     variability. This suggests an MFP dispersion associated with more than just increased fibre diameter
+611     variability. It suggests some degree of increased end plate scatter and possibly some increased fibre
+612     diameter variability consistent with axonal branch sprouting and possibly some fibre atrophy and/or
+613     hypertrophy. The reduced MUP areas and normal durations suggest MUs may have reduced numbers of
+614     fibres of variable diameter and possibly some increased end plate scatter.
+615     Sonoo, 2002 suggests the most important aspects of MU changes caused by neuromuscular disorders
+616     manifest as recruitment abnormalities, rather than as changes in MUP morphology. However, NFM
+617     measurements have the ability to reflect MU changes before the MUs and/or the numbers of MUs in a
+618     muscle significantly change and therefore before significant changes in MUP size (See Fig. 6 B). Sonoo,
+619     2002 also suggests that needle position (focusing) and the level of muscle activation during MU sampling,
+620     greatly influence the parameters of sampled MUPs. NFM measures of dispersion and instability are not
+621     directly dependent of MUP size and shape and therefore are less affected by focusing and level of
+622     activation. And finally, Sonoo, 2002 suggests that MUP duration, considered to be the cardinal parameter
+623     in MUP analysis, has several drawbacks, including high measurement variability and low discriminant
+624     sensitivity. This is no doubt true when baseline noise affects onset and end marker positions. However,
+625     for low noise waveforms, as with the noise-free simulated data, MUP duration, as suggested by (Buchthal
+626     and Rosenfalck 1955), is most sensitive to MU size. MUP duration increases with MU size and MFP
+627     dispersion, while MUP area increases with MU size but decreases with MFP dispersion, which often
+628     accompanies MU enlargement via reinnervation, and therefore confounds the relationship between MU
+                                                                                                                                          26
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.07.20208348.this version posted October 9, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                               All rights reserved. No reuse allowed without permission.
+629     size and MUP area (See Figs. 1C, 2C, 3C and 4C). Nonetheless in practice, low-noise waveforms may not
+630     be available and therefore area, which is highly repeatable in young and old muscles (Piasecki et al. 2018),
+631     and less affected by specific onset and end marker positions may better reflect MU size, despite its
+632     decreases with MFP dispersion. Actually, increased MUP duration results from several factors in addition
+633     to the number of innervated muscle fibres, including end-plate scatter, NMJ transmission delay, and slow
+634     conduction through terminal branching axonal sprouts. This results in decreased synchronicity of muscle
+635     fibre activation (i.e. MFP generation) across a motor unit, and increased MUP duration (de Carvalho &
+636     Swash, 2016). As shown in the simulated data results, NFM duration and NF dispersion are both very
+637     sensitive to MFP temporal dispersion caused by fibre diameter variability and/or end plate scatter (which
+638     as simulated can also account for NMJ transmission delay and slow axonal branch conduction).
+639     With active denervation and reinnervation MUPs and NFMs are unstable. Newly-formed, immature end-
+640     plates have immature acetylcholine receptor subunits, with a lower safety factor for neuromuscular
+641     transmission (Stålberg, 1982; Stålberg & Antoni, 1980). In addition, slowed distal motor nerve conduction
+642     in partially myelinated regenerating nerve fibres and atrophied, newly reinnervated muscle fibres leads
+643     to increased fibre diameter variability and end plate scatter which results in sufficient MFP dispersion that
+644     the inherent NMJ transmission time variability can be accurately measured. For these measurements,
+645     Stålberg and Sonoo (1994) suggest MUP instability, the ‘jiggle’, is best evaluated using a 500 Hz or1 kHz
+646     high-pass filter, giving important qualitative information regarding MUP morphology and MUP instability.
+647     NFM jiggle and NFM SJ are both based on high-pass filtered signals and both can provide useful measures
+648     strongly related to NMJ transmission time variability. MUP instability anticipates the development of
+649     neurogenic MUPs as shown by concentric needle EMG (de Carvalho & Swash, 2013) and can be useful in
+650     differential diagnoses. (See Fig 6A and B). Furthermore, de Carvalho et al., 2014 report that mean MUP
+651     duration and jitter increases are the most sensitive parameters for tracking ALS and that at the end stages
+652     of ALS, small MUPs may be observed, possibly resulting from degeneration of distal nerve terminals
+653     through axonal dying-back pathology (de Carvalho & Swash, 2016) (possibly the lower MU shown in Fig
+654     6C). As such, MUP area, NFM duration, NFM dispersion, NFM jitter and NFM SJ, assessed together are
+655     well suited for detecting and tracking MU morphology and electrophysiological changes.
+656     Conclusion
+657     Standard needle EMG examination can detect fibre denervation, reinnervation, loss, atrophy and
+658     hypertrophy, but detecting initial changes and quantifying their extent and progress requires more
+659     sophisticated techniques which can also provide a temporal profile of a disease process across longitudinal
+                                                                                                                                          27
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.07.20208348.this version posted October 9, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                               All rights reserved. No reuse allowed without permission.
+660     examinations. The data presented here demonstrate NFEMG methods can augment a standard needle
+661     EMG examination with quantitative MU morphological and electrophysiological information and can be
+662     applied to study the neural effects of specific disease processes and ageing.
+663
+664     Declaration of Competing Interest
+665     The authors declare that they have no known competing financial interests or personal relationships that
+666     could have appeared to influence the work reported in this paper.
+667
+668     Acknowledgements
+669     Mathew Piasecki is supported by the Medical Research Council [grant number MR/P021220/1] as part of
+670     the MRC-Versus Arthritis Centre for Musculoskeletal Ageing Research awarded to the Universities of
+671     Nottingham and Birmingham, and by the NIHR Nottingham Biomedical Research Centre.
+672
+673     References
+674     Allen MD, Stashuk DW, Kimpinski K, Doherty TJ, Hourigan ML, Rice CL. Increased neuromuscular
+675           transmission instability and motor unit remodelling with diabetic neuropathy as assessed using
+676           novel near fibre motor unit potential parameters. Clin Neurophysiol. 2015;
+677     Buchthal F, Rosenfalck P. ACTION POTENTIAL PARAMETERS IN DIFFERENT HUMAN MUSCLES. Acta
+678           Psychiatr Scand. 1955;30(1‐2):125–31.
+679     Campos C, Malanda A, Gila L, Segura V, Lasanta I, Artieda J. Quantification of jiggle in real
+680           electromyographic signals. Muscle Nerve. 2000;23(7):1022–34.
+681     de Carvalho M, Swash M. Origin of fasciculations in amyotrophic lateral sclerosis and benign
+682           fasciculation syndrome. JAMA Neurol. 2013;70(12):1562–5.
+683     de Carvalho M, Swash M. Lower motor neuron dysfunction in ALS. Clin Neurophysiol. 2016;127(7):2670–
+684           81.
+685     Carvalho M De, Turkman A, Swash M. Sensitivity of MUP parameters in detecting change in early ALS.
+686           Clin Neurophysiol. 2014;125(1):166–9.
+687     Daube JR. Electrodiagnostic studies in amyotrophic lateral sclerosis and other motor neuron disorders.
+688           Muscle and Nerve. 2000;23(10):1488–502.
+689     Estruch OGC, Cano GD, Stashuk D. P32-S Application of decomposition based quantitative EMG
+690           (DQEMG) to focal neuropathies. Clin Neurophysiol. 2019;130(7):e104.
+691     Estruch OGC, Stashuk D. P36-S Validation of near fiber motor unit potential stability and dispersion
+692           measures using simulated signals. Clin Neurophysiol. 2019;130(7):e104.
+                                                                                                                                          28
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.07.20208348.this version posted October 9, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                               All rights reserved. No reuse allowed without permission.
+693     Gilmore KJ, Allen MD, Doherty TJ, Kimpinski K, Rice CL. Electrophysiological and neuromuscular stability
+694           of persons with chronic inflammatory demyelinating polyneuropathy. Muscle and Nerve.
+695           2017;56(3):413–20.
+696     Heckman CJ, Enoka RM. Motor unit. Compr Physiol [Internet]. 2012;2(4):2629–82. Available from:
+697           http://www.ncbi.nlm.nih.gov/pubmed/23720261
+698     Hourigan ML, McKinnon NB, Johnson M, Rice CL, Stashuk DW, Doherty TJ. Increased motor unit
+699           potential shape variability across consecutive motor unit discharges in the tibialis anterior and
+700           vastus medialis muscles of healthy older subjects. Clin Neurophysiol. 2015;126(12).
+701     McGill KC, Cummins KL, Dorfman LJ. Automatic Decomposition of the Clinical Electromyogram. IEEE
+702           Trans Biomed Eng. 1985 Jul;BME-32(7):470–7.
+703     Payan J. The blanket principle: A technical note. Muscle Nerve. 1978;1(5):423–6.
+704     Piasecki J, Inns TB, Bass JJ, Scott R, Stashuk DW, Bethan E, et al. Influence of sex on the age-related
+705           adaptations of neuromuscular function and motor unit properties in elite masters athletes. J
+706           Physiol. 2020;
+707     Piasecki M, Ireland A, Coulson J, Stashuk DW, Hamilton-Wright A, Swiecicka A, et al. Motor unit number
+708           estimates and neuromuscular transmission in the tibialis anterior of master athletes: evidence that
+709           athletic older people are not spared from age-related motor unit remodeling. Physiol Rep.
+710           2016a;4(19).
+711     Piasecki M, Ireland A, Piasecki J, Stashuk DW, McPhee JS, Jones DA. The reliability of methods to
+712           estimate the number and size of human motor units and their use with large limb muscles. Eur J
+713           Appl Physiol. 2018;118(4):767–75.
+714     Piasecki M, Ireland A, Stashuk D, Hamilton-Wright A, Jones DA, McPhee JS. Age-related neuromuscular
+715           changes affecting human vastus lateralis. J Physiol. 2016b Aug;594(16):4525–36.
+716     Power GA, Allen MD, Gilmore KJ, Stashuk DW, Doherty TJ, Hepple RT, et al. Motor unit number and
+717           transmission stability in octogenarian world class athletes: Can age-related deficits be outrun? J
+718           Appl Physiol. 2016 Oct;121(4):1013–20.
+719     Sanders DB, Stålberg E V. AAEM minimonograph 25: Single-fiber electromyography. Muscle and Nerve.
+720           1996;19(9):1069–83.
+721     Sonoo M. New attempts to quantify concentric needle electromyography. Muscle Nerve.
+722           2002;999(S11):S98–102.
+723     Stålberg E. Electrophysiological studies of reinnervation in ALS. Adv Neurol. 1982;36:47–59.
+724     Stålberg E. Jitter analysis with concentric needle electrodes. Ann N Y Acad Sci. 2012;1274(1):77–85.
+725     Stålberg E, Antoni L. Electrophysiological cross section of the motor unit. J Neurol Neurosurg Psychiatry.
+726           1980 Jun;43(6):469–74.
+727     Stålberg E, Karlsson L. Simulation of the normal concentric needle electromyogram by using a muscle
+728           model. Clin Neurophysiol. 2001;112(3):464–71.
+729     Stalberg E, Thiele B. Motor unit fibre density in the extensor digitorum communis muscle. Single fibre
+730           electromyographic study in normal subjects at different ages. J Neurol Neurosurg Psychiatry
+                                                                                                                                          29
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.07.20208348.this version posted October 9, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                               All rights reserved. No reuse allowed without permission.
+731           [Internet]. 1975;38(9):874–80. Available from: http://www.ncbi.nlm.nih.gov/pubmed/1185226
+732     Stålberg E V., Sanders DB. Jitter recordings with concentric needle electrodes. Muscle and Nerve.
+733           2009;40(3):331–9.
+734     Stålberg E V., Sonoo M. Assessment of variability in the shape of the motor unit action potential, the
+735           “jiggle,” at consecutive discharges. Muscle Nerve. 1994;17(10):1135–44.
+736     Stashuk DW. Decomposition and quantitative analysis of clinical electromyographic signals. Med Eng
+737           Phys [Internet]. 1999a;21(6–7):389–404. Available from:
+738           http://www.ncbi.nlm.nih.gov/pubmed/10624736
+739     Stashuk DW. Detecting single fiber contributions to motor unit action potentials. Muscle Nerve
+740           [Internet]. 1999b;22(2):218–29. Available from: http://www.ncbi.nlm.nih.gov/pubmed/10024135
+741     Usui S, Amidror I. Digital Low-Pass Differentiation for Biological Signal Processing. IEEE Trans Biomed
+742           Eng. 1982 Oct;BME-29(10):686–93.
+743
+744
+745
+746
+                                                                                                                                          30

@@ -1,0 +1,400 @@
+ medRxiv preprint doi: https://doi.org/10.1101/2020.08.18.20177626.this version posted October 9, 2020. The copyright holder for this preprint
+    (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                           It is made available under a CC-BY 4.0 International license .
+               A Bayesian estimate of the COVID-19 infection fatality rate in Brazil
+                                        based on a random seroprevalence survey
+                                                  Valerio Marra1, ∗ and Miguel Quartin2, †
+                                     1
+                                       Núcleo de Astrofísica e Cosmologia & Departamento de Física,
+                                        Universidade Federal do Espírito Santo, Vitória, ES, Brazil
+      2
+        Instituto de Física & Observatório do Valongo, Universidade Federal do Rio de Janeiro, Rio de Janeiro, RJ, Brazil
+                                                                       (Dated:)
+                   We infer the infection fatality rate (IFR) of SARS-CoV-2 in Brazil by combining three datasets.
+                 We compute the prevalence via the population-based seroprevalence survey EPICOVID19-BR, which
+                 tested 89000 people in 3 stages over a period of 5 weeks. This randomized survey selected people of
+                 133 cities (accounting for 35.5% of the Brazilian population) and tested them for IgM/IgG antibodies
+                 making use of a rapid test. We estimate the time delay between the development of antibodies and
+                 subsequent fatality using the public SIVEP-Gripe dataset. The number of fatalities is obtained using
+                 the public Painel Coronavírus dataset. We obtain the IFR via Bayesian inference for each survey
+                 stage and 27 federal states. In particular, we include the effect of fading IgG levels by marginalizing
+                 over the time T after contagion at which the test gives a negative result. We adopt a flat broad prior
+                 on the interval [40, 80] days. We infer a country-wide average IFR of 0.85% (95% CI: 0.76–0.99%).
+   The infection fatality rate (IFR) is one of the most im-                     cases in China. After adjusting for demography and
+portant quantities of any new disease. An accurate esti-                        under-ascertainment Verity et al. arrived at the estimate
+mate of both the case fatality rate (CFR) and IFR is thus                       of 1.38% (95% CI: 1.23–1.53%).11 A similar study based
+usually a challenge before the end of a pandemic.1 Nev-                         only on the Wuhan province found a CFR of 1.4% (95%
+ertheless, the IFR has direct implications on the amount                        CI: 0.9–2.1%).12 In France, a study recently modeled
+of resources and effort that should be allocated to pre-                        both death and hospital data and estimated the IFR to be
+vent the spread of the disease and on steer policy-making                       0.5% (95% CI: 0.3–0.9%).13 Another model-based investi-
+in general. For instance using the United States as ref-                        gation arrived at an IFR of 0.8% (95% CI: 0.45–1.25%).14
+erence, Perlroth et al.2 concluded that a CFR below                             In Brazil, the focus of this work, the IFR was recently
+1% makes school-closures and social distancing not cost-                        forecast with models. Results varied substantially be-
+effective.                                                                      tween two different groups. A Brazilian team found that
+   In order to estimate the IFR one needs not only an                           it should be much lower than the first estimates, around
+estimate of the number of deaths, but also of the total                         0.3%.15 On the other hand, a report by the group at Im-
+infected population, and then to compare both within the                        perial College London estimated much higher values for
+same time period. It is, therefore, a difficult task as many                    the 16 Brazilian states they considered,16 which, com-
+cases are asymptomatic or develop only mild symptoms                            bined, suggest an overall IFR of 0.9%.
+and are often unaccounted for. It is also hampered due
+                                                                                   The incompatible estimates above highlight the in-
+to the lack of testing in many countries.3
+                                                                                herent uncertainty in modeling a new disease that has
+   The total number of deaths during an epidemic can
+                                                                                caused such an unprecedented change in lifestyle world-
+be biased by the mislabeling of undiagnosed fatalities.
+                                                                                wide. This is the main reason why one should rely on
+To circumvent this possibility, one can rely on statis-
+                                                                                seroprevalence estimates in order to estimate the IFR of
+tical estimates from the study of the excess deaths in
+                                                                                COVID-19. In a recent study, relying on antibody screen-
+a given period of time. In the case of COVID-19 this
+                                                                                ing of blood donors, the IFR was estimated to be much
+method is being pursued by many groups,4–6 including
+                                                                                lower, less than 0.21% at 95% CL.17 Such an approach
+the mainstream media,7–9 as a method which is com-
+                                                                                is, however, limited by the fact that blood donors may
+plementary to the officially reported numbers. However,
+                                                                                not be representative of the population. In particular all
+this approach invariably suffers from important model-
+                                                                                donors are younger than 70 and healthy. The ideal ap-
+ing uncertainties.5 This may be especially true during
+                                                                                proach to circumvent the limitations above is to conduct
+the current pandemic which has seen an unprecedented
+                                                                                random serology studies in the population. One such
+amount of disruption of economic activity and social be-
+                                                                                study – conducted in Geneva, Switzerland, with 2766
+havior, which includes a large fraction of the population
+                                                                                participants – found that for every reported COVID-
+undertaking social distancing measures.10
+                                                                                19 case there were another 10.6 unreported ones,18 a
+   One of the first detailed analysis of the IFR of COVID-
+                                                                                large discrepancy which again stresses the difficulties that
+19 was based on around 70 thousand clinically diagnosed
+                                                                                models have to deal with. The same group reported an
+                                                                                IFR of 0.64% (95% CI: 0.38–0.98%).19 A much larger
+                                                                                survey with 61075 participants was conducted in Spain,
+∗  Contributed equally
+                                                                                but IFR estimates were not reported.20
+ † Contributed equally; Corresponding author: mquartin@if.ufrj.br                  A meta-analysis of 36 seroprevalence studies performed
+          NOTE: This preprint reports new research that has not been certified by peer review and should not be used to guide clinical practice.
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.08.18.20177626.this version posted October 9, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                         It is made available under a CC-BY 4.0 International license .
+                                                                                                                                                2
+EPICOVID19-BR              SIVEP-Gripe         Painel Coronavírus                               Negative cases        Positive cases
+ 89397 patients,       97924 patients, with     42309 deaths in
+split into 3 stages,   SARS-CoV-2 positive      the 133 cities of
+                                                                                     0.10
+as of July 1, 2020         RT-PCR test,        EPICOVID19-BR,
+                        as of June 16, 2020    as of July 17, 2020
+                                                                                     0.08
+                                                                         frequency
+                         29631 COVID-19
+                                                                                     0.06
+  2064 patients
+                         deaths with valid
+with SARS-CoV-2
+                        dates of symptoms                                            0.04
+    antibodies
+                           and outcome
+                                                                                     0.02
+                                                                                     0.00
+                                                                                            0       20           40         60         80
+    antibody               average time            cumulative
+   presence in           from symptoms             number of                                                          age
+      Brazil              onset to death             deaths
+                                                                         Figure 2. Age distributions relative to the EPICOVID19-BR
+                                                                         survey (split according to positive and negative test results).
+      average time from
+      symptoms onset to
+      antibody presence
+                                                                         Table I. Results for Brazil, in percentages (maximum of prob-
+                               IFR
+                                                                         ability distribution and 95%CI).
+       Figure 1. Flowchart of data used in this study.                     Brazil                date
+                                                                                                    antibody                           IFR
+                                                                                                   prevalence
+                                                                           Round 1 17 May 2020 2.59(2.03–3.21)                   0.80(0.64–1.04)
+               21
+by Ioannidis found that the IFR values ranged from                         Round 2 5 June 2020 3.78(3.22–4.40)                   0.87(0.70–1.04)
+0.00% to 1.31%, and among 32 different locations the                       Round 3 22 June 2020 3.80(3.27–4.37)                  1.10(0.77–1.30)
+median IFR was 0.24%. Another meta-analysis of 25 IFR                      All          –               –                        0.85(0.76–0.99)
+studies found an IFR of 0.68% (95% CI: 0.53–0.82%).22
+These results hint at a possible large variation in IFR
+values around the globe, although data from different                    ily criticized,27 and in September 2020 the number of
+countries were reported to be highly heterogeneous.                      confirmed cases and deaths crossed 4 million and 140
+   In Brazil, a large random seroprevalence study was per-               thousand, respectively, second only to the USA in the
+formed by the EPICOVID19-BR team23–25 which aimed                        raw number of deaths. Furthermore, strong ethnic end
+to test 250 individuals in each of the 133 selected large                regional variations in hospital mortality were found, cast-
+sentinel cities. It has so far been carried out in 4 stages              ing doubts on the availability of public health care for the
+using the Wondfo lateral flow test for immunoglobulin                    sections of society that cannot afford private care.28 This
+M and G antibodies against SARS-CoV-2. Here, we con-                     daring situation motivates even further the need for an
+sider data relative to the first three stages. The first stage           estimation of the IFR which is as accurate as possible
+was conducted between May 14 and 21, 2020, but did not                   in order to trigger an adequate political response to the
+reach its target number of samples, and in only 90 of the                crisis.
+133 cities at least 200 tests were performed. The total                     As summarized by Figure 1, in order to estimate the
+number of tests in all cities was 25025. Round 2 was con-                IFR we make use of three complementary datasets. We
+ducted from June 4 to 7 and reached over 200 tests in 120                compute the percentage pa (t) of Brazilians that have
+cities. Considering all cities a total of 31165 individuals              been infected by SARS-CoV-2 at the city, state and
+were tested. Round 3 was performed between June 21                       Brazilian levels via the EPICOVID19-BR data. We ro-
+and 24 and made over 200 tests in all 133 cities for a to-               bustly correct for false positive and negative rates and
+tal of 33207 tests. The total number of tests in all rounds              combine prevalences from different cities without neglect-
+was 89397, see Figure 1. Figure 2 depicts the age distri-                ing the non-Gaussian nature of the distributions (details
+butions for the first three rounds of the EPICOVID19-                    in the Supplementary Materials). The result is shown in
+BR survey, split according to positive and negative test                 Figure 3 and in Table I (the federal state acronyms ex-
+results. As can be seen, the survey tested people of all                 planation and full numerical tables can be found in the
+age groups and prevalence seems not to correlate with                    Supplementary Materials). We note a sharp increase in
+age: the mean ages of COVID-19 positive and negative                     prevalence between rounds 1 and 2, and a subsequent
+Brazilians are 42.7 and 42.9 years, respectively.                        stabilization between rounds 2 and 3. The state of Pará
+   The COVID-19 pandemic has strongly affected                           (PA) exhibits a sharp decrease in prevalence in round 3.
+Brazil.26 The federal government response has been heav-                    We obtain the number of fatalities via the public Painel
+
+   medRxiv preprint doi: https://doi.org/10.1101/2020.08.18.20177626.this version posted October 9, 2020. The copyright holder for this preprint
+     (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                            It is made available under a CC-BY 4.0 International license .
+                                                                                                                                                    3
+                       AL AP CE ES MA MS PA PE PR RN RR SC SP
+                                                                                        Table II. Time scales used in the analysis.
+                 25                  Round 1, 17/Mai
+                                                                               Time scales for SARS-CoV-2                            Mean (days)
+                                     Round 2, 05/Jun
+                                                                               τcs (contagion → symptoms)                                    5.5
+prevalence (%)
+                 20                  Round 3, 22/Jun
+                                                                               τsa (symptoms → antibody)                                     5.8
+                 15                                                            τca (contagion → antibody)                                   11.5
+                                                                               τ∆ (symptoms → severe sympt.)                                   2
+                 10                                                            Time scales specific to Brazil                        Mean (days)
+                                                                                sivep
+                                                                               τsd    (severe sympt. → death)                                14.1
+                  5                                                            τsd (symptoms → death)                                        16.1
+                                                                               τcd (contagion → death)                                       21.8
+                  0                                                            τad (antibodies → death)                                      10.3
+                      AC AM BA DF GO MG MT PB PI RJ RO RS SE TO
+                                     Brazilian state
+                                                                                  700
+                                                                                                              average
+Figure 3. Prevalence (maximum posterior and 95% CI) of                            600
+COVID-19 antibodies in each of the 27 Brazilian states in the
+                                                                                  500
+3 rounds of the EPICOVID19-BR survey.                                                                           Round 2
+                                                                                  400 Round 1
+                                                                            PDF                                           Round 3
+                                                                                  300
+Coronavírus dataset.29 Painel Coronavírus is the Brazil-
+ian reference to keep track of the pandemic at the federal                        200
+level and provides the deaths by COVID-19 with their                              100
+geographic location. Long et al.30 reported that IgG lev-
+els fade in recovered patients on a timescale of a few                              0
+months, which was also suggested by the results rela-                                0.6      0.7    0.8     0.9    1.0        1.1     1.2   1.3
+tive to the first 2 rounds of EPICOVID19-BR.25 More-
+over, preliminary results from the recent fourth round of                                                      IFR (%)
+EPICOVID19-BR exhibit a large decrease in seropreva-
+lence in the country,31 which is consistent with a short                    Figure 4. IFR posterior PDF for Brazil for each of the 3
+window of detectability. For this reason we consider here                   rounds and all rounds combined.
+a detectability window T and thus the number of fatali-
+ties relative only to such a window, which is equivalent to                 Brazil we find τad ' 10.3 days. Table II summarize all
+assume a sharp drop of IgG levels after T days. In order                    the estimated time-delays which are used in our calcula-
+to take into account the uncertainty on T , we marginal-                    tions (details in the Supplementary Materials).
+ize our results with respect to this parameter adopting                        Using this combined information we can then compute
+a broad flat prior on the interval [40, 80] days (details in                the IFR at the state and country levels:
+the Supplementary Materials).
+   We cannot compute the IFR directly via the ratio of                                                      pd (t̄ + τad )
+pd and pa because, at a given time t̄, there are patients                                           IFR =                  ,                    (1)
+                                                                                                                pa (t̄)
+that developed antibodies but did not die yet from the
+disease.32 In order to estimate the time delay τad be-                      where t̄ is the time of a given EPICOVID19-BR phase.
+tween the development of antibodies and subsequent fa-                      The results for Brazil are given in Table I and Figure 4,
+tality we use the public SIVEP-Gripe dataset (“Sistema                      the ones for the states (combining all rounds) in Fig-
+de Informação da Vigilância Epidemiológica da Gripe”),                      ure 5. We note significant statistical tension in the data
+a prospectively collected respiratory infection registry                    of Roraima (RR). We, therefore, consider its IFR esti-
+data that is maintained by the Ministry of Health for                       mate unreliable, but due to its small population it has an
+the purposes of recording cases of Severe Acute Respi-                      insignificant impact on the IFR estimates at the country-
+ratory Syndrome (SARS) across both public and private                       level. The numerical results for all the states and for the
+hospitals. The SIVEP-Gripe dataset contains the dates                       three rounds separately can be found in the Supplemen-
+of symptoms onset and death for patients with SARS-                         tary Materials. The confidence intervals are computed by
+CoV-2 positive RT-PCR test, together with their geo-                        combining the statistical sources of error and including
+graphic location, which allow us to estimate the time de-                   the non-Gaussian nature of the distributions. Since we
+lay τsd between the development of symptoms and sub-                        marginalize the posterior on the IFR over the IgG fading
+sequent fatality. We also make use of an empirical distri-                  time T , our estimation is robust against the uncertainty
+bution between the first symptoms and the development                       on T and the confidence interval includes the effect of the
+of antibodies33 to estimate the mean time-delay τsa be-                     correlation between IFR and T .
+tween both events. Together, these estimates allow us                          Our overall estimate of the IFR of 0.85% (95% CI:
+to obtain the time-delay τad ' τsd − τsa . For the whole                    0.76–0.99%) is in agreement with some, but not all, of
+
+ medRxiv preprint doi: https://doi.org/10.1101/2020.08.18.20177626.this version posted October 9, 2020. The copyright holder for this preprint
+   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY 4.0 International license .
+                                                                                                                                                 4
+                 AL AP CE ES MA MS PA PE PR RN RR SC SP                   ends, we smooth the dnd /dt data according to a forward
+          3.5                                                             7-day moving average (details in the Supplementary Ma-
+          3.0                                                             terials).
+                                                                             Third, the SIVEP-Gripe dataset is biased towards
+          2.5                                                             cases with severe symptoms. Indeed, there is a significant
+IFR (%)
+          2.0                                                             number of cases that are hospitalized when symptoms are
+                                                                          notified (see Supplementary Materials). We took this
+          1.5                                                                                                                sivep
+                                                                          into account via a delay parameter τ∆ = τsd − τsd        =
+          1.0                                                             2 ± 1 days (see Table II) which models the time that a
+          0.5                                                             patient takes to go from symptoms onset to severe symp-
+                                                                          toms (details in the Supplementary Materials). Had we
+          0.0                                                             set τ∆ = 0, we would have obtained for the IFR in Brazil
+                AC AM BA DF GO MG MT PB PI RJ RO RS SE TO
+                                                                          a value of 0.83% (95% CI: 0.75–0.96%), an only 2% lower
+                               Brazilian state
+                                                                          estimate.
+                                                                             Finally, the participants of the study may not be fully
+Figure 5. Combined IFR using all 3 rounds (maximum pos-
+                                                                          representative of the whole population of Brazil. Indeed
+terior and 95%CI). The black dots represent model-based re-
+sults by the Imperial College COVID-19 Response Team.16                   the overall IFR we computed is relative to the 133 large
+The horizontal red line is the IFR estimate for Brazil given              cities that were tested by the EPICOVID19-BR survey.
+in Table I.                                                               These cities amount to 35.5% of the Brazilian population,
+                                                                          but one may speculate that the IFR could be different in
+                                                                          smaller cities and rural or poorer areas.
+the previous world estimates discussed earlier. In partic-                   It is well known that the IFR of COVID-19 depends
+ular, at the country level, our combined estimate agrees                  on the patient’s health and age,34 and one expects sig-
+with the one by the Imperial College COVID-19 Re-                         nificant country-by-country variations of the population
+sponse Team,16 even though at the state level we find                     IFR. Our IFR estimate should, therefore, be contextu-
+several disagreements between their values and our 95%                    alized to the Brazilian population. To this end, a rea-
+CIs, see Figure 5.                                                        sonable proxy for the overall health of a country is life
+   Our estimate features a small 7% standard deviation                    expectancy, and the lower socioeconomic development of
+including the uncertainty on the IgG fading time T , but                  Brazil is reflected into a lower life expectancy as com-
+it may suffer from the following systematic biases. First,                pared to, for example, Europe—76.0 years as compared
+not all COVID-19 related deaths may be registered in                      with 80.9 years, as of 2017.35,36
+Painel Coronavírus. One expects this to happen for out-                      As new medications and treatment protocols for the
+of-hospital fatalities and be stronger in the poorest areas               disease are discovered and become available it is hoped
+with a less present health care infrastructure. As we are                 that the IFR will decrease. Since our data comes from the
+analyzing the 133 large sentinel cities that entered the                  first months of the pandemic, our results therefore also
+EPICOVID19-BR survey this bias is not expected to be                      set a baseline for future comparisons of the fight against
+sizable. Its effect is, nonetheless, the underestimation of               COVID-19 in Brazil.
+the IFR.                                                                     Concluding, we hope that our careful evaluation of the
+   A second potential bias comes from the fact that the                   IFR in Brazil will help reinforce, at the federal, state
+time in Painel Coronavírus is not the actual time of death                and municipal levels, the seriousness of the COVID-19
+but rather the time of notification. In order to alleviate                pandemic and the urgency of taking the proper actions
+this issue and also average out oscillations due to week-                 in order to reduce its societal and economic impact.
+  1
+          B. Y. Lee, L. A. Haidari, and M. S. Lee, “Modelling                  of Excess Deaths Associated With the COVID-19
+          during an emergency: the 2009 h1n1 influenza                         Pandemic in the United States, March to May 2020,”
+          pandemic,” Clinical Microbiology and Infection 19 no. 11,            JAMA Internal Medicine (07, 2020) .
+                                                                           5
+          (2013) 1014–1022.                                                    S. H. Woolf, D. A. Chapman, R. T. Sabo, D. M.
+  2
+          D. J. Perlroth, R. J. Glass, V. J. Davey, et al., “Health            Weinberger, and L. Hill, “Excess Deaths From COVID-19
+          Outcomes and Costs of Community Mitigation Strategies                and Other Causes, March-April 2020,” JAMA 324 no. 5,
+          for an Influenza Pandemic in the United States,” Clinical            (08, 2020) 510–513.
+                                                                           6
+          Infectious Diseases 50 no. 2, (2010) 165–174.                        S. Vandoros, “Excess mortality during the covid-19
+  3
+          H. Ritchie, E. Ortiz-Ospina, D. Beltekian, et al.,                   pandemic: Early evidence from england and wales,”
+          “Coronavirus (COVID-19) Testing,” 2020.                              Social Science & Medicine 258 (2020) 113101.
+                                                                           7
+          https://ourworldindata.org/coronavirus-testing.                      J. Aron and J. Muellbauer, “A pandemic primer on
+          (accessed August 7, 2020).                                           excess mortality statistics and their comparability across
+  4
+          D. M. Weinberger, J. Chen, T. Cohen, et al., “Estimation             countries,” 2020. https:
+
+ medRxiv preprint doi: https://doi.org/10.1101/2020.08.18.20177626.this version posted October 9, 2020. The copyright holder for this preprint
+   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY 4.0 International license .
+                                                                                                                                               5
+   //ourworldindata.org/covid-excess-mortality.                               2020).
+                                                                           24
+   (accessed July 21, 2020).                                                  P. Hallal, F. Hartwig, B. Horta, et al., “Remarkable
+ 8
+   The Economist, “Tracking covid-19 excess deaths across                     variability in sars-cov-2 antibodies across brazilian
+   countries,” 2020. https:                                                   regions: nationwide serological household survey in 27
+   //www.economist.com/graphic-detail/2020/07/15/                             states,” medRxiv 2020.05.30.20117531 (2020) .
+                                                                           25
+   tracking-covid-19-excess-deaths-across-countries.                          Hallal, Pedro C and others, “SARS-CoV-2 antibody
+   (accessed July 21, 2020).                                                  prevalence in Brazil: results from two successive
+ 9
+   J. Katz, D. Lu, and M. Sanger-Katz, “Tracking covid-19                     nationwide serological household surveys,” The Lancet
+   excess deaths across countries,” 2020.                                     Global Health 0 (2020) 0.
+                                                                           26
+   https://www.nytimes.com/interactive/2020/05/05/                            D. S. Candido, I. M. Claro, J. G. de Jesus, W. M. Souza,
+   us/coronavirus-death-toll-us.html. (accessed July                          et al., “Evolution and epidemic spread of sars-cov-2 in
+   22, 2020).                                                                 brazil,” Science (2020) .
+10                                                                         27
+   Brazilian Ministry of Economy, “Impactos Econômicos da                     T. Lancet, “Covid-19 in brazil:“so what?”,” Lancet
+   COVID-19 ,” 2020. https:                                                   (London, England) 395 no. 10235, (2020) 1461.
+                                                                           28
+   //www.gov.br/economia/pt-br/centrais-de-conteudo/                          Baqui, Pedro and Bica, Ioana and Marra, Valerio and
+   publicacoes/notas-informativas/2020/                                       Ercole, Ari and van der Schaar, Mihaela, “Ethnic and
+   nota-impactos-economicos-da-covid-19.pdf/view.                             regional variations in hospital mortality from COVID-19
+   (accessed August 7, 2020).                                                 in Brazil: a cross-sectional observational study,” The
+11
+   R. Verity, L. C. Okell, I. Dorigatti, et al., “Estimates of                Lancet Global Health 8 (2020) 1018–26.
+                                                                           29
+   the severity of coronavirus disease 2019: a model-based                    Brazilian Ministry of Health, “Painel Coronavírus,” 2020.
+   analysis,” The Lancet Infectious Diseases 20 no. 6, (2020)                 https://covid.saude.gov.br. (accessed July 18, 2020).
+                                                                           30
+   669–677.                                                                   Q.-X. Long, X.-J. Tang, Q.-L. Shi, et al., “Clinical and
+12
+   J. T. Wu, K. Leung, M. Bushman, et al., “Estimating                        immunological assessment of asymptomatic sars-cov-2
+   clinical severity of covid-19 from the transmission                        infections,” Nature Medicine (2020) 1–5.
+                                                                           31
+   dynamics in wuhan, china,” Nature Medicine 26 no. 4,                       K. Gaythorpe, N. Imai, G. Cuomo-Dannenburg, et al.,
+   (2020) 506–510.                                                            “4a fase do EPICOVID19 mostra desaceleração do
+13
+   H. Salje, C. Tran Kiem, N. Lefrancq, et al., “Estimating                   coronavírus no Brasil,” 2020. http://www.
+   the burden of sars-cov-2 in france,” Science 369 no. 6500,                 epidemio-ufpel.org.br/site/content/sala_imprensa/
+   (2020) 208–211.                                                            4-fase-do-epicovid19-mostra-desaceleracao-do-coronavirus-no-
+14
+   L. Roques, E. K. Klein, J. Papaix, A. Sar, and                             php?noticia=3149. (accessed September 19, 2020).
+                                                                           32
+   S. Soubeyrand, “Using early data to estimate the actual                    D. Baud, X. Qi, K. Nielsen-Saines, D. Musso, L. Pomar,
+   infection fatality ratio from covid-19 in france,” Biology 9               and G. Favre, “Real estimates of mortality following
+   no. 5, (2020) 97.                                                          COVID-19 infection,” The Lancet infectious diseases 20
+15
+   S. Dana, A. B. Simas, B. A. Filardi, et al., “Brazilian                    (2020) 773.
+                                                                           33
+   modeling of covid-19 (bram-cod): a bayesian monte carlo                    Q.-X. Long, B.-Z. Liu, H.-J. Deng, et al., “Antibody
+   approach for covid-19 spread in a limited data set                         responses to SARS-CoV-2 in patients with COVID-19,”
+   context,” medRxiv 2020.04.29.20081174 (2020) .                             Nature Medicine 26 no. 6, (2020) 845–848.
+16                                                                         34
+   T. A. Mellan, H. H. Hoeltgebaum, S. Mishra, et al.,                        The Novel Coronavirus Pneumonia Emergency Response
+   “Report 21: Estimating covid-19 cases and reproduction                     Epidemiology Team, “The Epidemiological
+   number in brazil,” Imperial College London (2020) 1–24.                    Characteristics of an Outbreak of 2019 Novel Coronavirus
+17
+   C. Erikstrup, C. E. Hother, O. B. V. Pedersen, et al.,                     Diseases (COVID-19) – China, 2020,” China CDC Weekly
+   “Estimation of SARS-CoV-2 infection fatality rate by                       2 (2020) 113.
+                                                                           35
+   real-time antibody screening of blood donors,” Clinical                    Brazilian Institute of Geography and Statistics, “Tábua
+   Infectious Diseases (2020) .                                               completa de mortalidade para o Brasil – 2017,” 2018.
+18
+   S. Stringhini, A. Wisniak, G. Piumatti, et al.,                            ftp://ftp.ibge.gov.br/Tabuas_Completas_de_
+   “Seroprevalence of anti-sars-cov-2 igg antibodies in                       Mortalidade/Tabuas_Completas_de_Mortalidade_2017/
+   geneva, switzerland (serocov-pop): a population-based                      tabua_de_mortalidade_2017_analise.pdf. (accessed
+   study,” The Lancet 396 no. 10247, (2020) 313–319.                          May 10, 2020).
+19                                                                         36
+   J. Perez-Saez, S. A. Lauer, L. Kaiser, et al.,                             Eurostat, “Life expectancy at birth in the EU: men
+   “Serology-informed estimates of sars-cov-2 infection                       vs. women,” 2017. https://ec.europa.eu/eurostat/
+   fatality risk in geneva, switzerland,” The Lancet                          web/products-eurostat-news/-/DDN-20190725-1.
+   Infectious Diseases (2020) .                                               (accessed May 10, 2020).
+20
+   M. Pollán, B. Pérez-Gómez, R. Pastor-Barriuso, et al.,
+   “Prevalence of sars-cov-2 in spain (ene-covid): a
+   nationwide, population-based seroepidemiological study,”
+   The Lancet (2020) .                                                     ACKNOWLEDGEMENTS
+21
+   J. Ioannidis, “The infection fatality rate of covid-19
+   inferred from seroprevalence data,” medRxiv (2020) .
+22
+   G. Meyerowitz-Katz and L. Merone, “A systematic                            MQ’s research is partially supported by the Brazil-
+   review and meta-analysis of published research data on                  ian research agencies CNPq and FAPERJ. VM’s re-
+   covid-19 infection-fatality rates,” medRxiv                             search is partially supported by Brazilian research agency
+   2020.05.03.20089854 (2020) .                                            CNPq. Funding: This project has not received any
+23
+   Epicovid19-BR, “Epicovid19,” 2020.                                      funding. Author contributions: Both authors con-
+   http://www.epicovid19brasil.org/. (accessed Sep 17,                     tributed equally for this work. Competing inter-
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.08.18.20177626.this version posted October 9, 2020. The copyright holder for this preprint
+   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                         It is made available under a CC-BY 4.0 International license .
+                                                                                                                                              6
+ests: The authors declare no competing interests. Data                    ica codes and the data used for this work are available
+and materials availability: The Wolfram Mathemat-                         at: www.github.com/mquartin/covid19-ifr-br.

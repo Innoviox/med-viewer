@@ -1,0 +1,481 @@
+medRxiv preprint doi: https://doi.org/10.1101/2020.09.04.20188359.this version posted October 14, 2020. The copyright holder for this preprint
+    (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY 4.0 International license .
+                       COVID-19 superspreading in cities versus the countryside
+                                                   Andreas Eilersen and Kim Sneppen
+                                              Niels Bohr Institute, University of Copenhagen∗
+                                                           (Dated: October 13, 2020)
+                 So far, the COVID-19 pandemic has been characterised by an initial rapid rise in new cases
+              followed by a peak and a more erratic behaviour that varies between regions. This is not easy to
+              reproduce with traditional SIR models, which predict a more symmetric epidemic. Here, we argue
+              that superspreaders and population heterogeneity are the core factors explaining this discrepancy.
+              We do so through an agent-based lattice model of a disease spreading in a heterogeneous population.
+              We predict that an epidemic driven by superspreaders will spread rapidly in cities, but not in the
+              countryside where the sparse population limits the maximal number of secondary infections. This
+              suggests that mitigation strategies should include restrictions on venues where people meet a large
+              number of strangers. Furthermore, mitigating the epidemic in cities and in the countryside may
+              require different levels of restrictions.
+                      INTRODUCTION                                            contacts to smaller family and work groups were less dan-
+                                                                              gerous.
+   At its onset the COVID-19 pandemic shocked the                                Looking at COVID-19 data from the United States in
+world, with the number of new cases and deaths growing                        the analysis by [12], it is clear that a rapidly spreading
+more than 20 % per day in the main hotspots [1]. With a                       epidemic occurs primarily in densely populated areas. In
+growth rate this high, the disease was expected to spread                     less densely populated areas, the epidemic onset is de-
+through the population in less than six months without                        layed, and in rural areas the epidemic never really starts,
+mitigation, and to reach a peak after three months, at                        with most cases appearing to be spillover from the cities.
+which point 30 % of the population would have had the                         The peak daily per capita mortality in [12] varies by a
+disease [2]. This, however, was not how the initial wave                      factor of ten between the most and least densely popu-
+of the epidemic played out [3].                                               lated areas in the USA.
+   While most of the epidemic undoubtedly was halted                             The density dependence of COVID epidemics could
+due to mitigation efforts, it is striking that even in coun-                  in principle be explained by the higher chance of meet-
+tries that have implemented a very light lockdown, such                       ing infected people in dense areas. However, only 1% of
+as Sweden, the epidemic has peaked long before herd im-                       COVID-19 spread was outdoors in China [13], suggest-
+munity was achieved. Furthermore, even societies that                         ing that only indoor meetings counts. Furthermore, only
+slowly reopened businesses and public life did not expe-                      few infections happens within households [10], suggesting
+rience an immediate explosive resurgence of the epidemic                      that it is social visits and meetings in confined areas that
+expected given the low levels of immunity and the speed                       facilitate infection [14]. We will base our model on these
+with which the disease spread initially [3].                                  observations.
+   Here, we will propose an agent-based lattice model of
+an infectious disease that spreads in a geographically het-
+erogeneous population. The model is a simplified depic-                                                     MODEL
+tion of the dynamics of COVID-19 with its characteristic
+parameters. We will examine the effect of the heteroge-                          Our model plays out on a lattice of side L with peri-
+neous infection pattern that is so characteristic of this                     odic boundary conditions. Each lattice site may either
+disease, using a gamma distributed infectiousness with                        be empty or contain one agent. The agents can be in one
+dispersion factor k = 0.1 from [4]. Infection heterogene-                     of three states, susceptible, infectious, or recovered. In-
+ity is a feature of several epidemic diseases [5], and plays                  dividuals interact with their neighbours with a frequency
+a particularly important role for COVID-19 [4, 6–8]. In                       fmeet which is fixed along with the mean infection prob-
+individual events, a single person has caused dozens of                       ability per meeting to give the desired number of sec-
+infections [9]. At the same time, the attack rate within                      ondary infections, R0 . The distance that agents travel we
+households has been reported to be very low, at less than                     draw from the distribution p(r) = r10 e−r/r0 with a mean
+20 % [10], despite prolonged close contact. This suggests                     of r0 = 10 sites unless stated otherwise. The real proba-
+that the majority of COVID-19 patients infect very little.                    bility distribution of travel distances for cars has in Italy
+   In [11] an agent-based model was used to demonstrate                       been determined to be an exponential function below 20
+that the Achilles heel of an epidemic driven by super-                        kilometers, and then a powerlaw with a steeper cutoff
+spreaders was public social contacts, while the repeated                      around 500 kilometers [15]. The interaction radius r0 is
+                                                                              not by itself a meaningful parameter. Rather, it is the
+                                                                              number of neighbours within this radius, given by πρr02
+                                                                              (where ρ is the population density) which determines the
+∗ sneppen@nbi.ku.dk                                                           behaviour of the system, as will be demonstrated below.
+        NOTE: This preprint reports new research that has not been certified by peer review and should not be used to guide clinical practice.
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.09.04.20188359.this version posted October 14, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY 4.0 International license .
+                                                                                                                                                                            2
+FIG. 1. Model: A superspreader in a city interacts a little with a lot of people and will infect some fraction of them. On the
+other hand, a superspreader outside the city will interact a lot with each of a smaller set of people. The superspreader then
+infects practically all of them, but there is a lower cap on the number of secondary infections.
+   COVID-19 is known to be transmitted before the on-
+set of symptoms [16]. For simplicity, rather than using                                                          10
+                                                                                                                      -1                                         = 0.02
+the SEIR modeling framework, we combined the exposed,                                                                                                            = 0.04
+                                                                               infected fraction of population
+presymptomatic state and the overlapping infectious pe-                                                          10
+                                                                                                                      -2                                         = 0.06
+riod (both estimated at about five days) into one single
+infectious period of 1/γ = 10 days [17, 18]. Infected                                                            10-3
+agents randomly leave the infectious state with a prob-
+                                                                                                                      -4
+ability of γ per day, meaning that the duration of the                                                           10
+disease is exponentially distributed.                                                                            10
+                                                                                                                      -1
+                                                                                                                                                                 = 0.08
+   When an infectious agent i interacts with a susceptible                                                                                                       = 0.1
+                                                                                                                      -2                                         = 0.12
+agent, the susceptible agent will become infected with a                                                         10
+probability pi that is specific to the infecting agent. We
+                                                                                                                      -3
+draw these probabilities from a gamma distribution with                                                          10
+dispersion factor k = 0.1 [4, 5], within the range observed
+                                                                                                                 10-4
+for COVID-19 [4, 6, 8]. The distribution is normalised                                                                     0   100   200       300       400   500    600
+to give an average reproduction number R0 of 3 at a                                                                                        time [days]
+population density of 1.
+   The geographical heterogeneity of the population is                    FIG. 2. Epidemic trajectories: Infected fraction of the
+modeled by placing a square ”city” of side L/5 on a lat-                  population over time changes with the countryside population
+tice with periodic boundary conditions and lattice size                   density ρ. In the low-ρ regime, increasing the population
+L. The city has the population density 1 , i.e. all sites                 density stretches the curve, as the epidemic spreads further
+                                                                          from the city. When ρ is above ∼ 0.06, the epidemic again
+are occupied, and the city population is thus L2 /25. The
+                                                                          approaches the behaviour of a SIR model, as the epidemic now
+city is surrounded by ”countryside” with a population                     spreads unhindered across the whole system. Around ρcrit ,
+density ρ and total population of 24ρL2 /25.                              there is a large variation in the duration of the epidemic.
+   Importantly we assume that the rate of interactions                    The parameters used are γ = 0.1, r0 = 10, fmeet = 10 and
+per agent is kept the same in both city and countryside,                  dispersion parameter k = 0.1.
+meaning that we assume that people are equally social.
+If an agent in the countryside attempts to interact with
+an empty site, the attempt is counted as failed, and new
+attempts are made until the number of contacts is the
+same as in the city, where all sites are occupied.                        model assumes an infection rate that depends on density,
+   Thus, people in the countryside interact with a smaller                but not in a simple linear fashion as sometimes assumed
+set of people while still spending the same amount of time                [19].
+on social activities. In a wider perspective this proposes
+that density dependence of disease spreading is more due                    We seed the disease within the city. Even if we were
+to difference in diversity of contacts than due to differ-                to seed it randomly, the city would usually be hit early
+ences in time spent around other people. Thereby our                      on provided that the epidemic catches on.
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.09.04.20188359.this version posted October 14, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY 4.0 International license .
+                                                                                                                                                                                                               3
+                                                                                                                                                                                           0.9
+                                          1
+                                                   r0 = 10
+                                                                                                                                                                                           0.8
+                                                   r0 = 5
+                                                                                                                                              0.8
+                                                                                                                                                                                           0.7
+                                      0.5
+                                                                                                                                                                                           0.6
+                                                                                                                                                                                                 Attack rate
+                                                                                                                                              0.6
+                                                                                                                                                                                           0.5
+                                                                                                                                          k
+   Attack rate
+                                                                                                                              (a)                                                          0.4
+                                          0                                                                                                   0.4
+                                          1                                                                                                                                                0.3
+                                                   r0 = 10
+                                                   r0 = 5                                                                                     0.2                                          0.2
+                                                                                                                                                                                           0.1
+                                      0.5
+                                                                                                                                               0
+                                                                                                                                                       2       4          6   8
+                                                                                                                              (b)                                   r20
+                                          0
+                                               0   0.5       1         1.5     2       2.5       3     3.5         4    4.5         5
+                                                                                         r20
+                                                                                                                                        FIG. 4. Dependence of attack rate on density and k.
+                                                                                                                                        Since the variable determining percolation is not the abso-
+                                     10-1
+   infected fraction of population
+                                                                                                             Superspreaders             lute density, but the number of neighbours, we plot ρr02 on
+                                                                                                             No superspreaders
+                                                                                                                                        the x-axis rather than ρ. It is seen that the disease perco-
+                                                                                                                                        lates much more easily at a higher k, which implies a more
+                                     10-2                                                                                               homogeneous infectivity. The more overdispersed the disease
+                                                                                                                                        (corresponding to lower k), the more neighbours are required
+                                                                                                                                        for percolation.
+                                     10-3
+                                                                                                                              (c)
+                                     10
+                                          -4                                                                                            In both extremes, the fraction of infected individuals rise
+                                               0     50          100         150      200        250         300       350      400     and fall symmetrically. The figure illustrates how the
+                                                                                   time [days]
+                                                                                                                                        epidemic is ”stretched out” in the intermediate density
+                                                                                                                                        range. The epidemic has the longest lifetime when ρ is
+FIG. 3. Comparison of models without and with su-
+                                                                                                                                        just above the percolation threshhold ρcrit , as the disease
+perspreaders. Panel (a) shows the attack rate as a function
+of the number of neighbours within the radius of interaction
+                                                                                                                                        still spreads in the countryside, but is nonetheless slowed
+(∼ ρr02 ) in a population where everyone infects with the same                                                                          down by the lower population density.
+rate. (b) shows attack rate with heterogeneous infection rates,                                                                            In fig. 3 (a, b) we measure the attack rate of the
+using a gamma distribution with dispersion factor k = 0.1.                                                                              epidemic in a homogeneously distributed population in
+The two overlaid curves demonstrate that the parameter r0                                                                               order to find the percolation threshhold, below which
+does not affect the physics of the system, and what really de-                                                                          the epidemic will stop propagating. Panel (a) identifies
+termines the ability of the disease to percolate is the number                                                                          ρcrit ≈ 0.01 for a homogeneously spreading disease. In
+of neighbours, proportional to ρr02 . (c) Epidemic trajectory                                                                           contrast, a disease with an overdispersion of k = 0.1 has
+when superspreaders dominate (blue) and when infectiousness                                                                             a much higher critical density ρcrit ≈ 0.04, as seen in
+is evenly distributed (red) for equal countryside population
+                                                                                                                                        (b). The same figure demonstrates that it is not the
+density and radius of interaction (ρr02 = 6). When super-
+spreaders are the main drivers of the epidemic, it is strongly                                                                          density alone that determines the ability of the disease
+impeded once the city has reached herd immunity. When ev-                                                                               to percolate, but rather the number of neighbours, pro-
+eryone infects equally, the epidemic simply spreads radially                                                                            portional to ρr02 . As expected, the disease with homo-
+out from the city, leading to a ”second wave” in the country-                                                                           geneous infectivity can spread already when each person
+side. Parameters are as in fig. 2.                                                                                                      has one neighbour on average, whereas the overdispersed
+                                                                                                                                        disease requires almost four neighbours to percolate. The
+                                                                                                                                        overdispersed simulation and the simulation with homo-
+                                                                                                                                        geneous infection were done with same average disease
+                                                                        RESULTS
+                                                                                                                                        transmission rate and the factor ∼ 4 difference in critical
+                                                                                                                                        density comes about because a disease with k = 0.1 has
+   In fig. 2 we consider a disease with heterogeneous in-                                                                               10 % of the infected being responsible for 80 % of the in-
+fection rates and study how simulated epidemic trajec-                                                                                  fections. Thus most people do not transmit the disease,
+tories depend on population density. One sees that the                                                                                  and it is therefore the density of the few people who do
+dynamics resembles that of a SIR model at ρ values much                                                                                 spread the disease that sets the critical threshhold.
+lower and much higher than the critical density. In the                                                                                    Since our model analysis centers on superspreaders as
+low regime, the epidemic only spreads in the city which                                                                                 a main driver of the epidemic, fig. 3(c) compares epi-
+is relatively well-mixed, whereas in the high regime the                                                                                demics with and without superspreaders. It can be seen
+countryside begins to resemble the city more and more.                                                                                  that with no superspreaders, the epidemic will spread un-
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.09.04.20188359.this version posted October 14, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY 4.0 International license .
+                                                                                                                                                                                   4
+                                    0.2
+                                                                        =1
+                                                                        = 1/3
+                                                                        = 1/9
+                                                                        = 1/27
+                                                                        = 1/81
+  infected fraction of population
+                                    0.1
+                                                                                       infected fraction of population
+                                                                                                                              -1
+                                     0                                                                                   10
+                                                                                                                         10 -2
+                                    0.1
+                                                                                                                         10 -3
+                                                                                                                                   0   100   200      300        400   500   600
+                                                                                                                                                   time [days]
+                                     0
+                                          0   100      200        300        400
+                                                    time [days]                    FIG. 6. Simulation with multiple cities: Infected individ-
+                                                                                   uals are shown in red, susceptibles are green, empty sites are
+                                                                                   white and recovered are black. City size distribution mimics
+FIG. 5. Epidemic trajectory in regions of varying den-                             Zipf’s law [23], such that there is one city of with 40000 in-
+sity. When infectivity is homogeneous (top), the epidemic is                       habitants, 4 with 10000, and so forth. The graphs show the
+a lot less sensitive to a lower population density than when                       fraction of the population currently infected as a function of
+the epidemic is driven by superspreaders (bottom). Here, the                       time for three example runs of the simulation. Here, ρ = 0.03
+epidemic is nearly absent in the low-density regions, and ap-                      and the other parameters are the same as the above figures.
+pears to be driven by spillover. Inset illustrates the layout of
+the lattice.
+                                                                                   by heterogeneous infectivity. Importantly, as opposed to
+                                                                                   traditional disease models, we assume that everyone is
+hindered in the countryside, albeit more slowly since the                          equally social, but that the set of available contacts is
+countryside is geographically larger than in the city.                             smaller in sparsely populated regions. The significance
+   This leads to a graph similar to two superimposed SIR-                          of this will be discussed further below.
+like models. If superspreaders are present, however, the                              The delayed onset and erratic behaviour of the coun-
+epidemic may spread both slowly and erratically in the                             tryside epidemic obviously depends on the density and
+countryside and continue long after herd immunity is                               other characteristics of the countryside and the assumed
+achieved in the city.                                                              travelling pattern of individuals. Also, real countryside
+   The dependence of the percolation threshhold on the                             contains a diverse pattern of smaller and large settle-
+dispersion parameter k is further investigated in fig. 4,                          ments. Therefore we considered a system with several
+which shows the attack rate as a function of both the                              cities distributed on a lattice with side length L = 1000.
+number of neighbours and k. The figure shows that                                  The system mimics the observed city size distribution
+the percolation threshhold increases drastically at low k,                         which is fairly close to the Zipf law [20]. The random
+meaning that a superspreader-driven epidemic requires                              distribution of smaller cities is not entirely naturalistic,
+more social contacts per person in order to spread. Once                           since evidence suggests that real cities are organised in a
+the epidemic becomes sufficiently overdispersed (k <                               fractal pattern [21, 22]. A figure using a city distribution
+0.05), it is no longer viable.                                                     closer to a fractal can be found in the supplement. For il-
+   In fig. 5, we try to replicate the data compiled by [12]                        lustrative purposes we chose a density in the countryside
+and see that local disease incidence in a model with het-                          that is close to but below the percolation threshhold for
+erogeneous infectivity is indeed much more population                              the disease (ρ = 0.03). With this below-critical spread-
+density dependent than a model assuming homogeneous                                ing we observe cities that are spared and cities that are
+infectivity. This fits well with the cited data, which sug-                        nearly completely infected. In reality assuming near crit-
+gest a strong dependence of COVID-19 incidence on pop-                             ical spreading in the countryside would not be not nec-
+ulation density. It has already been known for years that                          essary for global spread, since people occasionally travel
+the spread of epidemics is population density dependent                            long distances [15], facilitating rare direct transmissions
+[19]. Here, we show that this dependence is enhanced                               between distant cities.
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.09.04.20188359.this version posted October 14, 2020. The copyright holder for this preprint
+    (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY 4.0 International license .
+                                                                                                                                              5
+                          DISCUSSION                                       tight-knit group will inherently be highly limited in how
+                                                                           many secondary infections they can generate.
+   Based on the above, we suggest that the lopsided ap-                       If superspreading makes a disease vulnerable to varia-
+pearance of COVID-19 epidemic curves can be explained                      tions in population density, we should conversely expect
+by heterogeneous infection ability combined with a ge-                     to see that diseases with a homogeneous infectivity, i.e.
+ographically heterogeneous population. However, our                        a dispersion factor close to or above 1, exhibit little vari-
+model makes a number of assumptions and breaks from                        ation with population density. One example of a disease
+reality, whose importance must be discussed.                               with a homogeneous infectivity is influenza, with an es-
+                                                                           timated dispersion factor of k = 0.94 for the 1918 pan-
+   First and foremost, the distribution of full and empty
+                                                                           demic flu [26]. When examining the incidence of seasonal
+lattice sites does not represent the geographical distribu-
+                                                                           influenza, which we assume to have a similar dispersion
+tion of people as such. Rather, it represents the density of
+                                                                           factor, [27] find no consistent variation with population
+contacts. The density ratio between people in the coun-
+                                                                           density. This is a point in favour of the link between
+tryside compared to an inner city is much lower than used
+                                                                           superspreading and population density dependence.
+in our model. On the other hand, persons living outside
+                                                                              Finally, the effect of lockdowns and changes of social
+the cities may be more mobile than city-dwellers. The
+                                                                           behaviour is important. A previous paper [11] suggests
+density contrast of agents on our lattice represents the
+                                                                           that even moderate mitigation may limit the action of
+combined effect of these factors.
+                                                                           superspreaders by reducing the maximal number of peo-
+   A further complication is the distribution of disease                   ple any person can be in contact with. If this hypothesis
+duration and incubation periods. We here assume a sim-                     is true, bans on gatherings and a reduction in public so-
+ple exponential distribution of infectious period dura-                    cial life would lead to early peaks in the number of new
+tion, whereas the real mechanics of COVID-19 includes                      cases. Our study compounds this finding, and suggests
+presymptomatic transmission and a broad gamma dis-                         that a change in behaviour is not strictly necessary to
+tribution of incubation periods [17]. A different infec-                   cause an epidemic peak well before herd immunity has
+tious period distribution might complicate our findings.                   been achieved. Mitigation strategies that primarily tar-
+Therefore, we examine the effect of a gamma distributed                    get cities may well be sufficiently effective in bringing
+infectious period duration in the supplement. We find                      down the epidemic. However, large events like funerals,
+that, while changing this distribution has an effect on                    weddings, or festivals are not included in our model and
+the percolation threshhold, it does not change our fun-                    will of course facilitate spreading in any location.
+damental conclusions.                                                         Despite some caveats, our model reproduces the main
+   It has long been discussed how disease transmission                     aspects of geographical heterogeneity and suggests a new
+rate depends on population density [19, 24, 25]. We here                   view on density dependence of epidemic dynamics. An
+present a new way of looking at this problem. A classical                  epidemic with a large heterogeneity in infection rates is
+SIR model with pseudo-mass action transmission would                       predicted to be most intense in large cities while it slowly
+assume a simple linear dependence of R0 on population                      tapers off in the countryside. This is consistent with what
+density, implicitly assuming that people become more so-                   we see in data from the COVID-19 pandemic [12, 28].
+cial by living in a densely populated area.                                Our results thus favour the hypothesis that the COVID-
+   Our model makes a different assumption: People will                     19 pandemic is driven by superspreaders, and that the
+be equally social regardless of population density, but                    observed quick exponential growth phase, early peak, and
+when population density is lower, the groups that they                     slow recovery phase are consequences of combining het-
+spend time with will be less diverse. The number of pos-                   erogeneity of infectivity with a heterogeneous population
+sible unique contacts for each individual declines linearly                density.
+with population density, but people in sparsely populated
+areas are likely to have multiple encounters with the same
+persons, as their communities are smaller.                                                   ACKNOWLEDGMENTS
+   If, however, the epidemic is dominated by superspread-
+ers who only need one or a few encounters to transmit the                     We thank Lone Simonsen, Viggo Andreasen, and
+disease, the duration of each encounter becomes less im-                   Bjarke Frost Nielsen for enlightening discussions. Our
+portant as even a rather brief contact to a superspreader                  research has received funding from the European Re-
+is likely to lead to infection. Instead, what limits the                   search Council (ERC) under the European Union’s Hori-
+action of superspreaders is their number of unique con-                    zon 2020 research and innovation programme under grant
+tacts. Superspreaders that interact with only a small,                     agreement No. [740704].
+ [1] A. Remuzzi and G. Remuzzi, Covid-19 and italy: what                    [2] R. M. Anderson, H. Heesterbeek, D. Klinkenberg, and
+      next?, The Lancet (2020).                                                  T. D. Hollingsworth, How will country-based mitigation
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.09.04.20188359.this version posted October 14, 2020. The copyright holder for this preprint
+   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY 4.0 International license .
+                                                                                                                                              6
+     measures influence the course of the covid-19 epidemic?,                   transmission of coronavirus disease 2019 (covid-19),
+     The Lancet 395, 931 (2020).                                                medRxiv (2020).
+ [3] E. Dong, H. Du, and L. Gardner, An interactive web-                   [15] L. Pappalardo, S. Rinzivillo, Z. Qu, D. Pedreschi, and
+     based dashboard to track covid-19 in real time, The                        F. Giannotti, Understanding the patterns of car travel,
+     Lancet infectious diseases 20, 533 (2020).                                 The European Physical Journal Special Topics 215, 61
+ [4] A. Endo, S. Abbott, A. J. Kucharski, S. Funk, et al., Esti-                (2013).
+     mating the overdispersion in covid-19 transmission using              [16] L. C. Tindale, J. E. Stockdale, M. Coombe, E. S. Gar-
+     outbreak sizes outside china, Wellcome Open Research 5,                    lock, W. Y. V. Lau, M. Saraswat, L. Zhang, D. Chen,
+     67 (2020).                                                                 J. Wallinga, and C. Colijn, Evidence for transmission of
+ [5] J. O. Lloyd-Smith, S. J. Schreiber, P. E. Kopp, and W. M.                  covid-19 prior to symptom onset, Elife 9, e57149 (2020).
+     Getz, Superspreading and the effect of individual varia-              [17] H. Nishiura, N. M. Linton, and A. R. Akhmetzhanov,
+     tion on disease emergence, Nature 438, 355 (2005).                         Serial interval of novel coronavirus (covid-19) infections,
+ [6] Q. Bi, Y. Wu, S. Mei, C. Ye, X. Zou, Z. Zhang, X. Liu,                     International journal of infectious diseases (2020).
+     L. Wei, S. A. Truelove, T. Zhang, et al., Epidemiology                [18] Q. Li, X. Guan, P. Wu, X. Wang, L. Zhou, Y. Tong,
+     and transmission of covid-19 in 391 cases and 1286 of                      R. Ren, K. S. Leung, E. H. Lau, J. Y. Wong, et al.,
+     their close contacts in shenzhen, china: a retrospective                   Early transmission dynamics in wuhan, china, of novel
+     cohort study, The Lancet Infectious Diseases (2020).                       coronavirus–infected pneumonia, New England Journal
+ [7] D. Adam, P. Wu, J. Wong, E. Lau, T. Tsang,                                 of Medicine (2020).
+     S. Cauchemez, G. Leung, and B. Cowling, Clustering and                [19] R. M. Anderson, B. Anderson, and R. M. May, Infec-
+     superspreading potential of severe acute respiratory syn-                  tious diseases of humans: dynamics and control (Oxford
+     drome coronavirus 2 (sars-cov-2) infections in hong kong,                  university press, 1992).
+     Research Square - preprint (2020).                                    [20] X. Gabaix, Zipf’s law for cities: an explanation, The
+ [8] D. Miller, M. A. Martin, N. Harel, T. Kustin,                              Quarterly journal of economics 114, 739 (1999).
+     O. Tirosh, M. Meir, N. Sorek, S. Gefen-Halevi, S. Amit,               [21] S.-H. Yook, H. Jeong, and A.-L. Barabási, Modeling the
+     O. Vorontsov, et al., Full genome viral sequences in-                      internet’s large-scale topology, Proceedings of the Na-
+     form patterns of sars-cov-2 spread into and within israel,                 tional Academy of Sciences 99, 13382 (2002).
+     medRxiv (2020).                                                       [22] T. Mori, T. E. Smith, and W.-T. Hsu, Common power
+ [9] Y. Shen, C. Li, H. Dong, Z. Wang, L. Martinez, Z. Sun,                     laws for cities and spatial fractal structures, Proceedings
+     A. Handel, Z. Chen, E. Chen, M. H. Ebell, F. Wang,                         of the National Academy of Sciences 117, 6469 (2020).
+     B. Yi, H. Wang, X. Wang, A. Wang, B. Chen, Y. Qi,                     [23] K. T. Soo, Zipf’s law for cities: a cross-country investi-
+     L. Liang, Y. Li, F. Ling, J. Chen, and G. Xu, Community                    gation, Regional science and urban Economics 35, 239
+     outbreak investigation of sars-cov-2 transmissionamong                     (2005).
+     bus riders in eastern china, JAMA Internal Medicine                   [24] B. Finkenstädt, M. Keeling, and B. Grenfell, Patterns of
+     (2020).                                                                    density dependence in measles dynamics, Proceedings of
+[10] S. Y. Park, Y.-M. Kim, S. Yi, S. Lee, B.-J. Na, C. B.                      the Royal Society of London. Series B: Biological Sciences
+     Kim, J.-i. Kim, H. S. Kim, Y. B. Kim, Y. Park, et al.,                     265, 753 (1998).
+     Early release-coronavirus disease outbreak in call center,            [25] B. Finkenstädt and B. Grenfell, Empirical determinants
+     south korea, Emerging Infectious Diseases (2020).                          of measles metapopulation dynamics in england and
+[11] K. Sneppen, R. J. Taylor, and L. Simonsen, Impact of                       wales, Proceedings of the Royal Society of London. Series
+     superspreaders on dissemination and mitigation of covid-                   B: Biological Sciences 265, 211 (1998).
+     19, medRxiv (2020).                                                   [26] C. Fraser, D. A. Cummings, D. Klinkenberg, D. S. Burke,
+[12] N. Medhi, Covid-19 cases in the u.s. by population den-                    and N. M. Ferguson, Influenza transmission in households
+     sity, https://www.endcoronavirus.org/projects-1/                           during the 1918 pandemic, American journal of epidemi-
+     covid-19-cases-in-the-us-by-population-density                             ology 174, 505 (2011).
+     (2020), accessed: 20-08-2020.                                         [27] E. Bonabeau, L. Toubiana, and A. Flahault, The geo-
+[13] C. J. Carlson, J. D. Chipperfield, B. M. Benito, R. J.                     graphical spread of influenza, Proceedings of the Royal
+     Telford, and R. B. O’Hara, Species distribution models                     Society of London. Series B: Biological Sciences 265,
+     are inappropriate for covid-19, Nature Ecology & Evolu-                    2421 (1998).
+     tion 4, 770 (2020).                                                   [28] M. Smith, K. Yourish, S. Almukhtar, K. Collins, D. Ivory,
+[14] H. Nishiura, H. Oshitani, T. Kobayashi, T. Saito,                          and A. Harmon, Covid-19 data repository, https://
+     T. Sunagawa, T. Matsui, T. Wakita, M. COVID, and                           github.com/nytimes/covid-19-data (2020), accessed:
+     M. Suzuki, Closed environments facilitate secondary                        03-09-2020.
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.09.04.20188359.this version posted October 14, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY 4.0 International license .
+             COVID-19 superspreading in cities versus the countryside -
+                                  supplement
+                                                       Andreas Eilersen and Kim Sneppen
+        Different distribution of infectious periods
+        In order to take into account that the duration of illness caused by COVID-19 does not actually follow
+        a neat exponential distribution, we have here considered the case where the duration of infection is
+        gamma distributed as well, though with a dispersion factor greater than one (k ≈ 4). We repeat the
+        central figures 3 and 5 from the main article in order to see if a different distribution of infectious
+        period durations changes our results. The gamma distribution should give fewer people with a very
+        short disease duration, though both distributions have a relatively long tail. The mean duration of
+        infectiousness is the same as in the main article (10 days). An important complication, that individuals
+        with a long period of illness are likely to be hospitalised or otherwise isolated for part of it and thus
+        less infectious, has not been accounted for here.
+            We find that, while the different distribution of infectious periods does lower the percolation thresh-
+        hold slightly and also diminishes the population density dependence of the epidemic, it does not fun-
+        damentally change our conclusions.
+                             1
+                                                                                0.1
+                                                                                                                        (c)
+                           0.5                                                 0.08
+                                                                               0.06
+             Attack rate
+                                                               (a)
+                                                                         PDF
+                            0
+                            1
+                                                                               0.04
+                           0.5
+                                                                               0.02
+                                                               (b)               0
+                            0
+                                 0   1   2         3       4         5                0   5   10     15      20    25         30
+                                             r20                                               days of illness
+        Figure 1: (a) and (b) show attack rates as a function of ρr02 , a measure of the number of neighbours
+        within a radius of r0 . (a) shows the case with no infectivity overdispersion (k = 1) and (b) shows the
+        case where infectivity is overdispersed with k = 0.1. We see that the system behaves similar to the
+        main model, but with a slightly lower percolation threshhold in both cases. (c) shows the probability
+        distribution function for disease duration used here.
+                                                                          1
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.09.04.20188359.this version posted October 14, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY 4.0 International license .
+                                                                    0.2                                 =1
+                                                                                                        = 1/3
+                                                                                                        = 1/9
+                                  infected fraction of population
+                                                                                                        = 1/27
+                                                                                                        = 1/81
+                                                                    0.1
+                                                                     0
+                                                                                                        =1
+                                                                    0.2                                 = 1/3
+                                                                                                        = 1/9
+                                                                                                        = 1/27
+                                                                                                        = 1/81
+                                                                    0.1
+                                                                     0
+                                                                          0   100      200        300        400
+                                                                                    time [days]
+        Figure 2: A comparison of the effect of population density on an epidemic that is not overdispersed
+        (top) and an overdispersed epidemic (bottom). As above, the duration of illness is gamma distributed.
+        The effect of density is somewhat reduced in the overdispersed case, but still noticeably greater than
+        the non-overdispersed case. The smaller number of people with very short disease durations using this
+        distribution seemingly also helps the epidemic spread more effectively.
+                                                                                       2
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.09.04.20188359.this version posted October 14, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY 4.0 International license .
+        Fractal city distribution
+        The random distribution of cities used in fig. 6 of the main article is not entirely realistic. Rather,
+        there is evidence suggesting that real geographical distribution of cities follows a fractal pattern [1,2].
+        We therefore repeat the figure here with a (partially) fractal distribution of cities. The results of this
+        simulation are fairly similar to the random city distribution.
+                                                                  10 -1
+                                infected fraction of population
+                                                                  10 -2
+                                                                  10 -3
+                                                                  10 -4
+                                                                          0   100   200   300       400   500   600   700
+                                                                                           time [days]
+        Figure 3: A simulation where, instead of a random distribution, the cities are laid out in a fractal
+        pattern. We see that this makes little difference from the random distribution shown in the main
+        article. The lower panel shows epidemic trajectories from three test runs.
+            1. Modeling the Internet’s large-scale topology, Soon-Hyung Yook, Hawoong Jeong, and Albert-
+        László Barabási, PNAS 99 (21) pp. 13382-13386 (2002)
+          2. Common power laws for cities and spatial fractal structures, Tomoya Mori, Tony E. Smith, and
+        Wen-Tai Hsu, PNAS 117 (12) pp. 6469-6475 (2020)
+                                                                                                3

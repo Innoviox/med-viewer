@@ -1,0 +1,647 @@
+   medRxiv preprint doi: https://doi.org/10.1101/2020.10.10.20210427.this version posted October 13, 2020. The copyright holder for this
+    preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                   perpetuity.
+                                           All rights reserved. No reuse allowed without permission.
+ 1               Mathematical Modeling of COVID-19 Pandemic in the African Continent
+ 2                                          Nawel ARIES1 * and Houdayfa OUNIS1,2
+           1
+ 3           Centre de Développement des Energies Renouvelables, CDER, 16340, Algiers, Algeria
+        2
+ 4        Institut de Recherche Dupuy de Lôme,CNRS UMR 6027, IRDL, Lorient F-56100, France,
+ 5                                                email :houdayfa.ounis@gmail.com
+ 6
+ 7          Centre de Développement des Energies Renouvelables, CDER, 16340, Algiers, Algeria
+ 8
+ 9   Abstract:
+10   The present work aims to give a contribution to the understanding of the highly infectious
+11   pandemic caused by the COVID-19 in the African continent. The study focuses on the
+12   modelling and the forecasting of COVID-19 spread in the most affected African continent,
+13   namely: Morocco, Algeria, Tunisia, Egypt and South Africa and for the sake of comparison
+14   two of the most affected European country are also considered, namely: France and Italy. To
+15   this end, an epidemiological SEIQRDP model is presented, which is an adaptation of the classic
+16   SIR model widely used in mathematical epidemiology. In order to better coincide with the
+17   preventive measures taken by the governments to deal with the spread of COVID-19, this
+18   model considers the quarantine. For the identification of the model’s parameters, official data
+19   of the pandemic up to August 1st, 2020 are considered. The results show that the number of
+20   infections due to the use of quarantine is expected to be very low provided the isolation is
+21   effective. However, it is increasing in some countries with the early lifting of containment.
+22   Finally, the information provided by the SEIQRDP model could help to establish a realistic
+23   assessment of the short-term pandemic situation. Moreover, this will help maintain the most
+24   appropriate and necessary public health measures after the lockdown lifting.
+25
+26   Keywords: COVID-19; SEIQRDP model; reproduction number; African continent.
+27
+     *
+       Corresponding author at: Centre de Développement des Energies Renouvelables, CDER, BP. 62 Route de
+       NOTE: This preprint reports new research that has not been certified by peer review and should not be used to guide clinical practice.
+     l’Observatoire Bouzaréah, 16340 Algiers, Algeria
+     .E-mail: n.aries@cder.dz (N. Aries).
+                                                                          1
+
+   medRxiv preprint doi: https://doi.org/10.1101/2020.10.10.20210427.this version posted October 13, 2020. The copyright holder for this
+    preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                   perpetuity.
+                                           All rights reserved. No reuse allowed without permission.
+28       1. Introduction
+29   The year 2020 is and will be forever marked by the COVID-19 pandemic caused by the highly
+30   infectious disease SARS-CoV-2. According to the World Health Organization, since its first
+31   appearance in late 2019 in the Wuhan region of China, the Covid-19 has affected more than 6
+32   million people and has caused the death of almost 400 thousand people worldwide, during the
+33   first half of 2020. However, the spread of the disease and the damage caused by it did not
+34   happen in the same way and at the same time for all continents. Indeed, taking the case of the
+35   African continent, the COVID-19 pandemic reached a significant point by exceeding 180,000
+36   cases in early June with more than 5,000 deaths. Although the pandemic has reached a
+37   worrying threshold, the spread of the disease in Africa has not followed the exponential path as
+38   in the rest of the world (e.g. Europe and United States). According to WHO’s analysis, the
+39   relatively low mortality rate compared to other continents is likely due to the demographic
+40   nature of the continent. Indeed, demographically, Africa is considered as the youngest
+41   continent, with more than 60% of the population under the age of 25. However, the disease still
+42   represents a danger for the African population, particularly, the South and African North. In
+43   fact, according to the WHO, the above-mentioned regions account for more than 56% of the
+44   cases recorded in Africa.
+45   To date, in the absence of an effective vaccine or treatment against COVID-19, African
+46   governments have taken several measures to limit the spread of the disease as much as possible
+47   (e.g. quarantine, social distancing, lockdown, curfew, masks, etc.). Furthermore, during this
+48   anti-COVID-19 battle, in addition to medical and biological research, theoretical studies based
+49   on mathematical models can also play an important role in understanding the pandemic
+50   dynamics (e.g. predicting the inflection point and of the end time). These models are therefore
+51   an important decision-making tool for coping with this pandemic. Since the apparition of the
+52   disease, the literature has witnessed an avalanche of work on modelling and predicting the
+53   behaviour of the COVID-19 pandemic. However, most of these works have focused on China
+54   [1-5], Europe [6-11] and the United States [7, 11-13], which is understandable because these
+55   are the regions which were the first and most affected by COVID-19. Nevertheless, studies on
+56   the African continent are practically negligible compared to those dedicated to the above-
+57   mentioned regions [14-16].
+58   The present paper aims to present a contribution on the modelling and the forecasting of
+59   COVID-19 spread in the most affected African continent, namely: Morocco, Algeria, Tunisia,
+60   Egypt and South Africa. In addition, for the sake of comparison two European countries are
+61   considered, namely: France and Italy. Thereby, an epidemic SEIQRDP model is presented,
+62   which is an adaptation of the classic SIR model widely used in mathematical epidemiology. In
+63   the next section, we present the data and the model. Section 3 presents the results of the
+64   application of the model for the above-mentioned countries through the estimation of the
+65   epidemic parameters and the adjustment of the model. The discussion of the results obtained as
+66   well as a forecast analysis, are presented in the same section. The last section provides some
+67   future directions for using the SEIQRDP model to control and prevent the spread of the
+68   COVID-19virus.
+69
+70
+                                                                        2
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.10.20210427.this version posted October 13, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+ 71       2. Data and Model
+ 72        2.1. Data
+ 73   The epidemiologic data of Covid-19 were provided by the Johns Hopkins University Center for
+ 74   Systems Science and Engineering (JHUCSSE) [17], and derived from the official case count
+ 75   from the World Health Organization. The data provides the total number of confirmed,
+ 76   quarantined, recovered and death cases, for each country since January 22, the day that WHO
+ 77   announced an epidemic caused by a new coronavirus in China. Our preliminary study includes
+ 78   the most affected African countries and one of the main endemic foci in Europe, namely:
+ 79   Algeria, Morocco, Egypt, South Africa, Tunisia, France, and Italy. Figure 1 shows the
+ 80   cumulative reported cases of COVID-19 in the considered countries. The data refer to daily
+ 81   cumulative cases from January 22, 2020 until August 1st, 2020. It is important to note that
+ 82   these data are influenced by the capacity and strategy of countries in case detection. Some
+ 83   countries perform more tests than others. However, the provided data still provide indicator for
+ 84   tracking the trajectories of the epidemic. It can be well seen from figure 1 that the curve of
+ 85   newly detected cases in European countries is gradually flattening. On the other hand, there is
+ 86   an epidemic surge in the African countries, where the number of cumulative cases shows a
+ 87   different picture. Indeed, South Africa and Egypt are currently the countries with most known
+ 88   confirmed and deaths cases and the curve of infections still pointing mostly upwards.
+ 89   Unlike the last ones, the curve of cumulative cases is increasing less rapidly in Algeria and
+ 90   Morocco. Although Algeria has the highest number of deaths ahead the African countries.
+ 91   While, the curve of newly detected cases in Tunisia quickly flattened. Infection numbers have,
+ 92   however, also shown some signs of slowing down. It should be noted that the African continent
+ 93   is the last to be affected by the coronavirus. Indeed,
+ 94   The epidemic spread to Africa a few weeks after Europe, allowing its leaders to adopt
+ 95   preventive measures well in advance. South Africa, Tunisia, Morocco and Algeria imposed the
+ 96   lockdown and curfews before the epidemic had had time to spread. In addition, the low
+ 97   population density has considerably limited the transmission of the virus. Indeed, the
+ 98   inhabitants are generally concentrated in the capitals.
+ 99
+100                                     Figure 1 Cumulative reported cases of COVID-19 disease.
+101
+102
+                                                                         3
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.10.20210427.this version posted October 13, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                     perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+103        2.2. SEIQRDP Model
+104   Using a pandemic modeling makes it possible to understand, describe and forecast its behavior
+105   and its spread. Indeed, the mathematical models assess hypotheses, indicate trends, and help
+106   develop public health responses by estimating risks, in real time, during an epidemic.
+107   Nevertheless, modeling is a simplified representation of reality. Its precision is limited here by
+108   the ignorance of certain factors and mechanism of propagation of COVID-19.
+109   In this work, the SEIQRDP epidemiological model with seven different components, proposed
+110   by [2] is used. The model is an adaptation of the classic SEIR model [18, 19], widely used to
+111   study the COVID-19 pandemic in many countries with variations in components and
+112   parameters for adaptations to regions and study period [16, 19-23]. The present model
+113   considers the effect of quarantine adopted by many countries as an effective means of
+114   preventing the spread. The stochastic SEIQRDP model is specified by the following system of
+115   differential equations:
+                                                             dSt           St I t
+                                                             dt    N
+                                                            
+                                                             dPt   S
+                                                             dt          t
+                                                            
+                                                             dEt   St I t   Et
+                                                             dt            N
+                                                             dI
+116                                                          
+                                                                  t
+                                                                      Et   I t                                                  (1)
+                                                               dt
+                                                              dQt
+                                                              dt   I t  t Qt   t Qt
+                                                             
+                                                              dRt   Q
+                                                              dt       t t
+                                                             
+                                                              dDt   Q
+                                                              dt
+                                                                         t t
+117   Where the different component at time t , i.e, St , Pt , Et , It , Qt , Rt , Dt are respectively, the number
+118   of susceptible cases (individuals who can contract the disease), the number of protected cases,
+119   who have become insensitive to the disease, mainly by following the recommended protective
+120   measures, the number of exposed case (individuals that have contracted the disease but not yet
+121   infectious), the number of infectious cases (infectious individuals but not yet quarantined), the
+122   number of quarantined cases, i.e active cases (confirmed and infected), the recovered and death
+123   cases (individuals removed from the chain of transmission), respectively. The component of
+124   protected part of people, namely, Pt , was introduced to reflect the growing awareness of the
+125   population while respecting the lockdown. It should be noted that the total population N is
+126   assumed to be homogenous, i.e. there is no birth or death and recovered people remain immune
+127   once they recover from the disease where, N  St  Pt  Et  It  Qt  Rt  Dt .
+128   The protection rate  , represents the population that takes into consideration security measures
+129   and the actions of health authorities, it was introduced assuming that the sensitive population
+130   decreases steadily. Moreover, beside the parameter  , all the remaining parameters depend on
+                                                                            4
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.10.20210427.this version posted October 13, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+131   the evolution of the epidemic, the health care and the screening capacities and are calculated
+132   based on the daily numbers of confirmed, recovery and death cases. The infection rate  ,
+133   represent the average number of contacts per-capita per time, multiplied by the probability of
+134   successfully getting infected when coming into contact with an infected individual. While, the
+      latent rate  , represent the average time for a latent individual to become infectious, which is
+                       1
+135
+136   estimated within several days [4, 24]. Furthermore, the quarantined rate  1 represent the
+137   average time for an infectious individual to enter in quarantine, which is considered to be
+138   between 2 and 14 days [2]. Finally, to consider the measures taken by the different countries in
+139   this study, we assume that the recovery rate t and the death rate  t are time dependent
+140   function, as confirmed by [2, 21].
+141   In case of a new disease as the COVID-19, the medical staff must learn new therapeutic
+142   procedures and treat patients with new symptoms every day. Hence, the time of recovery,
+143   cannot be a constant, because the recovery time at the start of the disease is longer, this means a
+144   slower recovery rate which gradually increasing with time, considering the measures taken by
+145   the governments. Consequently, we will assume that the recovery rate is modeled by following
+146   function,
+147                                                      t  0 1  exp  1t  ,                                             (2)
+148   where 0 and 1 are the fitted coefficients [2].
+149   Unlike the recovery rate, the mortality rate quickly decreases over time. This is due to the
+150   medical assistance, the adaptation of the pathogen and the development of new treatments.
+151   Hence, we will assume that the mortality rate is modeled by an exponential decay function
+152   given as follows,
+153                                                          t   0 exp  1t  ,                                                (3)
+154   where  0 and 1 are the fitted coefficients [2].
+155   However, one of the most discussed parameters in the current COVID-19 pandemic is the basic
+156   reproductive number [2, 24-26]. Biologically, this number, represented by R0 , corresponds to
+157   the number of new infections caused by an infected individual in a susceptible population. One
+158   of the main reasons of the importance of the basic reproduction number is that it determines the
+159   fraction of the population that needs to be immunized for the epidemic to start to decline. The
+160   reproductive number will vary during an epidemic for two reasons. On the one hand, the public
+161   health measures are put in place, like the lockdowns, social distancing, and other mitigation
+162   strategies to keep the case count and death toll low in this pandemic. On the other hand, the
+163   epidemic spreads and people who have recovered are protected against reinfection (at least in
+164   the near future). Thus, the population becomes immune.
+165   If the R0 is above 1, each infection breeds more, and the outbreak will continue to grow. When
+166   it falls below 1, the outbreak will continue but at a lower death rate.
+                                                                         5
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.10.20210427.this version posted October 13, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+167   In this study, the R0 is calculated by the next generation matrix method [22], based on a
+168   endemic equilibrium, given by : S  N , P  E  I  Q  R  D  0 . We must solve the
+169   equation, R0    FV 1  , where F and V are, respectively, the derivatives of the new
+170   infections matrix F and the transition matrix V , evaluated at the endemic equilibrium and is
+171   given by, 𝑅𝑡 = 𝛽 ∗ 𝛿 −1 (1 − 𝛼)𝑡 , where 𝑡 represent the number of days.
+172   The nonlinear system of the SEIQRDP model given by (1.1) can only be solved using
+173   numerical methods to observe the dynamics of the model. Firstly, we estimated the parameters,
+174   namely,  ,  ,  1 ,  1 , t ,  t . In this step, we search the unknown parameters for the SEIQRDP
+175   model by global optimization. This is done automatically by implementing the nonlinear least
+176   square regression method. The optimization of the model parameters to describe the
+177   experimental results was performed via the minimization of the sum of the squared errors
+178   between the epidemiologic and the modeling data, during successive iterations, which finally
+179   gives the best parameters for data fitting. It should be noted that the use of the cumulative data
+180   should be avoided, since the cumulative incidence data are highly correlated, and the least
+181   squares approaches relies on the fitting of independent data. Therefore, the use of daily new
+182   data should be preferred, since these data are independent. Once all the parameters are known,
+183   we can solve the system of differential equations (1.1).
+184      3. Results and Discussion
+185   The estimated parameters for the considered countries are given in Table 1, where we consider
+186   the mean values of the recovery rate and deaths rate, t and  t , respectively .
+187   Table 1. Parameter estimation of the SEIQRDP model
+      Country                      N                                              𝛾               𝛿            t              t
+      Morocco                   36e+6              0.017          0.524          0.475           0.175        0.057            0.003
+      Algeria                   43e+6              0.017          0.448          0.332           0.136        0.051            0.008
+      Tunisia                   12e+6              0.055          0.675          0.407           0.139        0.038            0.001
+      Egypt                    100e+6              0.032          0.379         0.0.249         0.0.479       0.003            0.007
+      South Africa              56e+6              0.008          0.424          0.461           0.169        0.049            0.002
+      France                    65e+6              0.022          0.799          0.349           0.173        0.015            0.009
+      Italy                   60.48e+6             0.028          0.954          0.347           0.174        0.028            0.006
+188
+189    The estimated parameter values are strongly linked to the discipline of the local population,
+190   public health systems and the severity of the lockdown measures. Although there is so far no
+191   gold standard for assessing the accuracy of the model parameters, the values of the obtained
+192   parameters are in good agreement with the estimates given by [4, 27, 28]. The protection rate is
+193   expected to remain very close to zero since there is currently no vaccine against COVID-19
+194   [20] . It can be seen from table 1 that Tunisia shows the highest protection rates, which reflects
+195   the increase of people infected with the new coronavirus after the opening of the country's
+196   borders. The infection rate  values are in the range of the recent estimate by [4]. The lower it
+                                                                         6
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.10.20210427.this version posted October 13, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+197   is, the less an infected individual will be able to infect healthy individuals. However, Tunisia
+198   shows a high infectious potential of the disease, compared to other African countries, which
+199   confirms the result of the protection rate. The obtained latent rates (Table 1) are, also, in
+200   agreement with the existing report [24], where Egypt has the longest latency period, which
+201   explains the number of infected people exceeding 94,000 cases. This may be due the delay in
+202   taking control and prevention measures against COVID-19. Notes that the latent period for
+203   COVID-19 is limited to   0.2 : 0.5 , so a latency period between 2 and 5 days [24]. While,
+204   Diekmann, Heesterbeek [22] notes that the average incubation period  1   1 for COVID-19
+205   is between 2.1 and 11.1 days, this implies an infection rate limited to    0.1:1 . Therefore, a
+206   quarantine period between 1 and 10 days. The estimation values obtained are within this
+207   estimation range, where the smallest quarantine period is recorded in Egypt. However, the
+208   parameters t and  t governing, respectively, the recovery rate and the mortality rate of the
+209   disease, seems quite similar in the different countries, except for Egypt and Algeria. It is
+210   interesting to note that the smallest value of t is recorded in Egypt compared to other
+211   countries, which coincides with the results of the quarantine time obtained (Table 1). This is
+212   probably due to an overload of the health system which implies a shorter average quarantine
+213   period. This reflects the poor control of virus spreading by the low testing capacity and the non-
+214   compliance with health security measures against coronavirus, especially in the most affected
+215   areas of the country. On the other hand, Algeria has the highest value of the parameter  t ,
+216   probably due to prevention and control measures as well as the dramatic improvement in
+217   medical conditions, such as the use new treatment protocol as well as the strict compliance with
+218   lockdown. The use of the quarantine considered by the current SEIQRDP model is based on the
+219   separation of the healthy population from the asymptomatic population in order to prevent the
+220   spread of the virus more quickly.
+221   Figure 2 shows the effective reproduction number (𝑅𝑡 ) as a function of time for the different
+222   modeled countries for the same period. Analyzing the effective reproduction number (𝑅𝑡 ) can
+223   give us more information about how the pandemic dynamics unfolded and detecting in real
+224   time the climax or turning point. Moreover, this figure is an indication of the speed and the
+225   severity of the preventive measures as well as quarantine, adopted to reduce the average
+226   infectious period by isolating certain infectious, so that they do not transmit the infection.
+227
+228
+229
+                                                                         7
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.10.20210427.this version posted October 13, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+230
+231
+232
+233                                     Figure 2 Estimated effectif reproduction number over time
+234   As can be seen, R t becomes less than 1 between early April and early June, about four to seven
+235   weeks after the lockdown in the Maghreb countries (figure 2a-c). In fact, this shows the effects
+236   of the lockdown, the quarantine and the strict curfews adopted to reduce the effect of virus
+237   transmission, while for Egypt and South Africa, the R t has not crossed the line R t = 1
+238   (mitigation phase), till end of June for Egypt and mid-July for South Africa. However, the
+239   lowest infection kinetics is recorded in Tunisia and has generated a first R 0 = 4.690, much
+240   lower than those of other African countries and that of Italy especially. For Egypt, the number
+241   R t decreased more slowly due to relative delayed lockdown compared to the other countries
+242   and an early lifting of the lockdown. However, the number of effective reproduction number
+243   depends on the parameter δ, which governs the rate of transfer from the infectious class to the
+244   quarantine class. Therefore, the use of quarantine to control the disease not only decreases the
+245   size of the endemic infectious class, but also reduces the reproduction number R t below 1, so
+246   that the disease vanishes.
+                                                                         8
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.10.20210427.this version posted October 13, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+247   The estimation results (Table 1 and Figure 2) indicate that the measures taken to prevent, and
+248   control the epidemic taken by the governments have strengthened over time. Indeed, the
+249   admission and follow-up of suspect cases, quarantine and treatment of confirmed cases
+250   significantly affect the parameters values. As a result, the number of active (quarantined),
+251   suspect, cured cases and the deaths predicted by the SEIQRDP model tend to decrease over
+252   time. On the other hand, the accuracy of long-term forecasts will also decrease.
+253   Figure 3(a-g) present the forecasts of actives (quarantined), recovery and death cases of the
+254   COVID-19 pandemic in the considered African countries and European depending on
+255   quarantine policy considered by the SEIQRDP model. While, Figure 4 presents the forecasts of
+256   the COVID-19 pandemic for France, Algeria, Morocco and Tunisia for the period after the
+257   lifting of the lockdown.
+258   Figure 3 and Figure 4 show the potential of the SEIQRDP model to predict the trend of
+259   pandemic dynamics. As can be seen from Figure 3, the curves follow roughly the same trend
+260   except for the two most affected African countries, namely, Egypt and South Africa. From
+261   Figure 4, we note that the curves follow the same trend to those of Figure 3, where we notice
+262   some non-homogeneity of the data. The curves show the potential of the model to predict the
+263   trend of pandemic dynamics. Consequently, for the forecasts of the pandemic dynamics of
+264   Algeria, Morocco, Tunisia and France, we consider the results appearing in Figure 4.
+265
+266
+                                                                         9
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.10.20210427.this version posted October 13, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+267
+268
+269                       Figure 3 COVID-19 epidemiologic data reported and fitted by SEIRQDP model
+270
+                                                                        10
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.10.20210427.this version posted October 13, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+271
+272
+273
+274    Figure 4 COVID-19 epidemiologic data reported and fitted by SEIRQDP model after the lockdown lifting.
+275
+276   As Figure 3 shows, we find that there is a good fit between the model fitting results and the
+277   actual COVID-19 data in each country under the optimized SEIQRDP model. Therefore, it
+278   could be considered relatively reasonable to use the optimal model to predict the current
+279   epidemic situation in other countries. In addition, it is estimated that countries lockdown and
+280   closure strategies would have avoided considerable loss and millions of infections. These
+281   results show that these measures are important and necessary to respond to this serious public
+282   health emergency.
+283   For some countries, namely, France, Algeria, Morocco and Tunisia, we notice a bad adjustment
+284   between the results of the SEIQRDP model and the actual COVID-19 data, after the lockdown
+285   lifting given by the following dates, 11 / 05, 14/06, 11/06, 04/05/2020, respectively. This can
+286   be explained by the ignorance of health security measures after the lockdown lifting. In
+287   addition, the present model, namely the SEIQRDP model, does not take into account such
+288   shocks or changes in the situation, given the very limited testing capacity, infected people can
+289   spread the virus if they do not comply with health security measures and they are not
+290   quarantined, remember that this component is very important in the model, and ignorance of
+291   the latter can affect the results of the model. Therefore, we only consider the data after the
+292   lockdown lifting to plot the forecasts of the countries in question. Figure 4 present the forecasts
+293   of active cases, recovery and death from the evolution of the COVID-19 pandemic by the
+294   SEIQRDP model adapted after the lockdown lifting.
+                                                                        11
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.10.20210427.this version posted October 13, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+295   Based on this model, the epidemic in Italy is in its final phase and should end by September.
+296   Other countries like Morocco and Algeria are expected to get rid of COVID-19 by the end of
+297   October. States like Egypt, South Africa must wait until the end of this epidemic until
+298   November. While for Tunisia and France they experience a considerable increase in the number
+299   of infected cases and an end to the epidemic is not predictable at this time. However, these
+300   forecasts would still be accurate over a short period, given the sensitivity of the model to the
+301   value of  , which in turn also depends on the number of contacts per person and per unit of
+302   time. This implies that the number of cases in the future could decrease or increase
+303   considerably depending on the health security measures and the respect of these measures by
+304   the population.
+305   The Maghreb has been relatively spared by the pandemic of the new coronavirus, compared to
+306   Europe, especially, the most affected (France and Italy).
+307   These Maghreb countries took precautionary measures very early on with border closings,
+308   general lockdown, social distancing or the wearing of protective masks. These proactive
+309   measures, dictated by the fragility of the hospital system in each country, have so far prevented
+310   the epidemic tsunami noted in France but also in Italy, as shown in Figure 3(f-g), where the
+311   peak of infected people reached around 10E6 infected in France and Italy, compared to the
+312   epidemiological situation is generally reassuring in the Maghreb nevertheless hides trajectories
+313   which diverge appreciably, after having been similar for a long time. Indeed, with more than
+314   30.900 confirmed and 1.200 deaths cases, Algeria is the country with the most worrying
+315   situation in the Maghreb. Indeed, from Figure 3b, the number of cases confirmed daily begins
+316   to decrease after reaching its maximum. We note that there was a slight decrease in daily cases
+317   in April which seems to be explained by a low number of tests and the random rules of the
+318   lockdown. With approximately 6.500 tests performed, only cases with advanced symptoms
+319   appear to be counted. After this plateau of active cases in April, there was a worrying return
+320   until the end of May. However, according to Algerian COVID-19 forecasts by the SEIQRDP
+321   model (Figure 4b), the situation will begin to stabilize. the number of recovery cases will
+322   increase exponentially, and the number of death cases will also stabilize despite the fact that it
+323   has not grown significantly compared to the European countries. The gradually flattening in
+324   deaths is may be due to the use of the chloroquine treatment protocol [29].
+325   However, Morocco will soon cross the threshold of 25.015 positive cases with more than 360
+326   deaths. After a peak around early May, a decline in late May, the resumption of daily cases in
+327   early May worried the health authorities. This can be explained by the non-compliance with the
+328   rules of social distancing rules and sanitary rules during groupings, it should be noted that most
+329   new cases were attributed to contact cases. Regarding the forecast for Morocco (Figure 4a), the
+330   curves of the recovered cases seem to increase contrary to the curves of infected after the
+331   lockdown lifting. Indeed, the country has allowed the reopening of cafes, restaurants and sports
+332   halls as well as the resumption of domestic tourism and interurban travel. On the other hand,
+333   the death curve tends to zero. This encouraging result may be explained by a better knowledge
+334   of the disease [30].
+335   With just over 1.550 cases tested positive and around 51 deaths, Tunisia is the least affected
+336   country of the three Maghreb countries by the pandemic. According to Figure 3c and Figure 4c,
+337   there is a decrease in active cases after a peak in mid-April, followed by a second significant
+                                                                        12
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.10.20210427.this version posted October 13, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+338   peak predicted approximately in mid-October, due to the lockdown lifting. The curve of active
+339   cases (Figures 3c and 4c) describes well this reassuring trend, with a peak in mid-April and a
+340   drop which accelerated at the beginning of May to reach 0. This confirms the adequacy of the
+341   proposed SEIQRDP model. In addition, we notice a lower mortality rate compared to other
+342   countries as well as a significant recovery rate coupled with the low number of new cases
+343   which have eased the pressure on the hospital system. As for its Maghreb neighbors, Tunisia
+344   resorted to a treatment based on chloroquine [31]. However, according to the result of forecasts
+345   by the SEIQRDP model, the results are encouraging and confirms the end of the health crisis
+346   with a few scattered daily cases by the early August. However, for Egypt and South Africa
+347   (Figure 3d-f), the disease manifests itself in different ways compared to the Maghreb. Indeed,
+348   we note that the trend of the curves is almost the same from mid-March to July. Nevertheless,
+349   the two countries already stood out with a higher number of cases than the other countries
+350   during this same period.
+351   was in the first place in terms of death until mid-July when the south of Africa is now the
+352   country most affected by the coronavirus in terms of death
+353   Egypt currently has nearly 94.320 cases and around 4.830 deaths for a population of 100
+354   million inhabitants. Until mid-July, the Egypt recorded the highest number of deaths,
+355   afterwards, South Africa became the most affected country in terms of deaths, despite the
+356   rigorous preventive measures. The situation in Egypt may be explained by the poor health
+357   system [32] and the wave of patients COVID-19 which is growing day after day. However, the
+358   results of the SEIQRDP models correspond very well to the provided data. Regarding the
+359   forecasts of the pandemic in Egypt (Figure 3d), the results show that the number of infected
+360   cases continues to increase rapidly to reach the peak around the end of August. While, the
+361   number of recovered cases will increase less rapidly, whereas, the number of deaths cases
+362   remains high compared to the Maghreb and continue to increase. This stabilization in death
+363   cases may be explained by the recent use of the drug Remdesivir to treat the patients [33]. This
+364   treatment was authorized a few days ago in the United States and Japan, based on a positive
+365   American clinical trial[34].
+366   South Africa tops the list of countries most affected by coronavirus (in terms of contamination).
+367   To date, there have been more than 503.290 cases of COVID-19 and around 8.153 deaths.
+368   From Figure 3e, we note that infected cases have experienced significant increase since the
+369   beginning of May and continues to increase. This is due to the lockdown lifting for certain
+370   industrial sectors, with a 1.5 million people who have been authorized to return to work, under
+371   strict health protection. Whereas, before these, the situation was under control because the very
+372   strict measures taken from the beginning made it possible to slow the progression of the
+373   pandemic of coronavirus. However, the curve of restored cases continues to grow and exceeds
+374   the infected cases since mid-May despite that the latter continues to increase. This can be
+375   explained by the community screening and testing (CST) operation in working-class
+376   neighborhoods. This massive campaign made it possible to isolate infected people as quickly as
+377   possible and trace their contacts. This massive campaign partially explains South Africa’s
+378   success in the very slow development of the epidemic compared to other African countries for
+379   the same period (Figure 3a-e). Regarding the number of deaths, we note that it is stable so far,
+380   this stability is explained using the treatment protocol with chloroquine and the CST. In
+381   addition, the experience of the Ebola epidemic in South Africa which taught caregivers and
+                                                                        13
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.10.20210427.this version posted October 13, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+382   populations the best practices in place, such as, isolation of the sick, precautions during care
+383   and basic hygiene such as hand washing. For the forecast of the COVID-19 pandemic in South
+384   Africa by the SEIQRDP model (Figure 3e), the situation will stabilize in terms of infected and
+385   recovered cases, while the dead experienced a certain increase in mid-July, due to the lifting of
+386   the lockdown of certain economic [35].
+387
+388      4. Conclusion
+389   In this paper, mathematical model for the coronavirus COVID-19 epidemic development is
+390   performed for the most affected African countries based on an epidemiological SEIQRDP
+391   model, which is an adaptation of the classic SIR model widely used in mathematical
+392   epidemiology. The SEIQRDP model takes quarantine into account to match with the medical
+393   security measures adapted by many countries as an effective way of preventing the spread of
+394   the coronavirus COVID-19. Furthermore, considering all major parameters of the progression
+395   of the coronavirus, several analytic results established, while proving all the necessary
+396   properties for epidemiological relevance. This model allowed us to estimate the main epidemic
+397   parameters and forecast the evolution of the reproduction number of the disease over time in
+398   order to assess the epidemic situation and the effect of the applied preventive health measures.
+399   An acceptable agreement between the statistical data and the curves of the model was
+400   established. This indicates the suitability of the SEIQRDP in modelling the spread of the
+401   COVID-19 disease for the considered countries.
+402   On the other hand, according to the statistical, fitted and predicted curves, we noticed that the
+403   epidemic peaks are between mid-April and mid-August, after which the epidemic declines.
+404   This situation can be explained by the policy adopted by African countries, aimed at effectively
+405   combating this virus. In addition, this confirms the effectiveness of the lockdown measures and
+406   curfews taken early enough to slow the spread of the disease. Most countries have implemented
+407   these measures as soon as the first case is detected. In France, it took 52 days after the first case
+408   to take such measures. In addition to this factor, there are many other factors that contribute to
+409   the robust and rapid response of these countries. The other main explanation is the youth of the
+410   African population, around 60% of the population under 25 years of age. In addition, the
+411   population density is lower in Africa, thus limiting the spread of the virus, as is the low
+412   mobility of African populations in comparison with Western populations, where most of the
+413   cases remain concentrated in the capitals and large cities.
+414   However, caution should probably follow. A general lockdown lifting seems unlikely, while
+415   the gradual lifting of lockdown experienced by the countries under study by city, depending on
+416   the mortality rate and the number of new infections observed, may be reasonable in compliance
+417   with the measures of security. However, Algeria and Tunisia may experience new peaks
+418   expected mid-October, due to the lifting of lockdown, where countries have allowed the
+419   reopening of cafes, restaurants and gymnasiums as well as the resumption of tourism domestic
+420   and interurban. Nevertheless, the three Maghreb countries will have to strengthen the control of
+421   health measures, to avoid the epidemic resumption. The crucial element will remain the
+422   generalization of tests which will remain one of the main ingredients in the fight against
+423   epidemics in the country. All these precautions will effectively reduce the number of basic
+                                                                        14
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.10.20210427.this version posted October 13, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+424   reproductions at each interaction, which is considered a crucial parameter during a pandemic
+425   used to estimate the risk of an outbreak of COVID-19 and assess the effectiveness of the
+426   measures implemented.
+427   Finally, the epidemiological situation is reassuring in the three Maghreb countries, while for
+428   South Africa, the situation seems controllable, mainly due to the CST operation. However, in
+429   Egypt the number of infected cases continues to increase, the situation comes mainly from
+430   ignorance of physical distancing measures and the violation of curfews after the last relaxation
+431   of the restrictions in mid-March. In fact, without control of the population and lack of effective
+432   treatment and vaccine, there will be no way to prevent the death of many people. Furthermore,
+433   hospitals will be flooded and will never be able to manage the pandemic.
+434       5. References
+435
+436   1.        Roosa, K., et al., Short-term forecasts of the COVID-19 epidemic in Guangdong and Zhejiang,
+437             China: February 13–23, 2020. Journal of clinical medicine, 2020. 9(2): p. 596.
+438   2.        Peng, L., et al., Epidemic analysis of COVID-19 in China by dynamical modeling. arXiv preprint
+439             arXiv:2002.06563, 2020.
+440   3.        Kucharski, A.J., et al., Early dynamics of transmission and control of COVID-19: a mathematical
+441             modelling study. The lancet infectious diseases, 2020.
+442   4.        Yang, Z., et al., Modified SEIR and AI prediction of the epidemics trend of COVID-19 in China
+443             under public health interventions. Journal of Thoracic Disease, 2020. 12(3): p. 165.
+444   5.        Khrapov, P. and A. Loginova, Mathematical modelling of the dynamics of the Coronavirus
+445             COVID-19 epidemic development in China. International Journal of Open Information
+446             Technologies, 2020. 8(4): p. 13-16.
+447   6.        Anastassopoulou, C., et al., Data-based analysis, modelling and forecasting of the COVID-19
+448             outbreak. PloS one, 2020. 15(3): p. e0230405.
+449   7.        Tan, S.X. and L. Chen, Real-Time Differential Epidemic Analysis and Prediction for COVID-19
+450             Pandemic. arXiv preprint arXiv:2004.06888, 2020.
+451   8.        Godio, A., F. Pace, and A. Vergnano, SEIR Modeling of the Italian Epidemic of SARS-CoV-2.
+452             2020.
+453   9.        Piccolomini, E.L. and F. Zama, Preliminary analysis of COVID-19 spread in Italy with an adaptive
+454             SEIRD model. arXiv preprint arXiv:2003.09909, 2020.
+455   10.       Fanelli, D. and F. Piazza, Analysis and forecast of COVID-19 spreading in China, Italy and
+456             France. Chaos, Solitons & Fractals, 2020. 134: p. 109761.
+457   11.       Bastos, S.B. and D.O. Cajueiro, Modeling and forecasting the early evolution of the Covid-19
+458             pandemic in Brazil. arXiv preprint arXiv:2003.14288, 2020.
+459   12.       Peirlinck, M., et al., Outbreak dynamics of COVID-19 in China and the United States.
+460             Biomechanics and modeling in mechanobiology, 2020: p. 1.
+461   13.       Dandekar, R. and G. Barbastathis, Neural Network aided quarantine control model estimation
+462             of global Covid-19 spread. arXiv preprint arXiv:2004.02752, 2020.
+463   14.       Zhao, Z., et al., Prediction of the COVID-19 spread in African countries and implications for
+464             prevention and controls: A case study in South Africa, Egypt, Algeria, Nigeria, Senegal and
+465             Kenya. Science of the Total Environment, 2020: p. 138959.
+466   15.       Baldé, M.A.M.T., Fitting SIR model to COVID-19 pandemic data and comparative forecasting
+467             with machine learning. medRxiv, 2020.
+468   16.       Rouabah, M.T., A. Tounsi, and N.-E. Belaloui, Early dynamics of COVID-19 in Algeria: a model-
+469             based study. arXiv preprint arXiv:2005.13516, 2020.
+470   17.       Engineering, J.H.U.C.f.S.S.a. 2019 Novel Coronavirus
+471   COVID-19 (2019-nCoV) Data Repository by Johns Hopkins CSSE.
+                                                                        15
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.10.20210427.this version posted October 13, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+472   18.       Anderson, R.M. and R.M. May, Infectious diseases of humans: dynamics and control1992:
+473             Oxford university press.
+474   19.       Hethcote, H.W. and P. Van den Driessche, Some epidemiological models with nonlinear
+475             incidence. Journal of Mathematical Biology, 1991. 29(3): p. 271-287.
+476   20.       Olivier, L. and I. Craig, An epidemiological model for the spread of COVID-19: A South African
+477             case study. arXiv preprint arXiv:2005.08012, 2020.
+478   21.       Caccavo, D., Chinese and Italian COVID-19 outbreaks can be correctly described by a modified
+479             SIRD model. medRxiv, 2020.
+480   22.       Diekmann, O., J. Heesterbeek, and M.G. Roberts, The construction of next-generation matrices
+481             for compartmental epidemic models. Journal of the Royal Society Interface, 2010. 7(47): p.
+482             873-885.
+483   23.       Cheynet, E., Generalized SEIR Epidemic Model (fitting and computation), 2020, GitHub.
+484   24.       Guan, W.-j., et al., Clinical characteristics of 2019 novel coronavirus infection in China.
+485             medRxiv, 2020.
+486   25.       de León, U.A.-P., A.G. Pérez, and E. Avila-Vales, A data driven analysis and forecast of an
+487             SEIARD epidemic model for COVID-19 in Mexico. arXiv preprint arXiv:2004.08288, 2020.
+488   26.       Nadim, S.S., I. Ghosh, and J. Chattopadhyay, Short-term predictions and prevention strategies
+489             for COVID-2019: A model based study. arXiv preprint arXiv:2003.08150, 2020.
+490   27.       Li, R., et al., Substantial undocumented infection facilitates the rapid dissemination of novel
+491             coronavirus (SARS-CoV-2). Science, 2020. 368(6490): p. 489-493.
+492   28.       Lai, C.-C., et al., Severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2) and corona
+493             virus disease-2019 (COVID-19): the epidemic and the challenges. International journal of
+494             antimicrobial agents, 2020: p. 105924.
+495   29.       Boutebal, S.E. and A. Madani, Gravity Index of the (COVID-19) pandemic in the first
+496             deconfinement phase in Algeria. Available at SSRN 3598663, 2020.
+497   30.       Yitong, W., et al., Rapid systematic review on clinical evidence of chloroquine and
+498             hydroxychloroquine in COVID-19: critical assessment and recommendation for future clinical
+499             trials. MedRxiv, 2020.
+500   31.       Toumi, M. and S. Aballea, Commentary on “Hydroxychloroquine and azithromycin as a
+501             treatment of COVID-19: results of an open label non-randomized clinical trial” by Gautret et al.
+502             Journal of Market Access & Health Policy, 2020. 8(1): p. 1758390.
+503   32.       Kamel, M.I., A view of the health services after COVID-19: an Egyptian perspective. Alexandria
+504             Journal of Medicine, 2020. 56(1): p. 118-129.
+505   33.       Saqrane, S. and M.A. El Mhammedi, Review on the global epidemiological situation and the
+506             efficacy of chloroquine and hydroxychloroquine for the treatment of COVID-19. New Microbes
+507             and New Infections, 2020. 35: p. 100680.
+508   34.       Jorgensen, S.C.J., R. Kebriaei, and L.D. Dresser, Remdesivir: Review of Pharmacology, Pre-
+509             clinical Data, and Emerging Clinical Experience for COVID-19. Pharmacotherapy: The Journal of
+510             Human Pharmacology and Drug Therapy, 2020. 40(7): p. 659-671.
+511   35.       Schröder, M., et al., COVID-19 in Africa--outbreak despite interventions? arXiv preprint
+512             arXiv:2004.12319, 2020.
+513
+514
+                                                                        16

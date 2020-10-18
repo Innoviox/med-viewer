@@ -1,122 +1,108 @@
 medRxiv preprint doi: https://doi.org/10.1101/2020.09.16.20195826.this version posted October 16, 2020. The copyright holder for this preprint
-  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
-                                      It is made available under a CC-BY-NC-ND 4.0 International license .
-
-
-
-
+     (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                            It is made available under a CC-BY-NC-ND 4.0 International license .
                        Modeling the Spread and Control of COVID-19
-               Ashutosh Trivedi                                 Nanda Kishore Sreenivas                                  Shrisha Rao
-                       Spext                                               Oracle                                        IIIT-Bangalore
-               ashu.trv@gmail.com                                  nandakishores1@acm.org                               shrao@ieee.org
-
-ABSTRACT                                                                               Certain specific aspects of our ABM for COVID-19 are a larger
-Data-centric models of COVID-19 have been tried, but have cer-                      set of possible states that enable distinctions between asymptomatic
-tain limitations. In this work, we propose an agent-based model of                  and symptomatic infections, and parameters to model different lev-
-the epidemic in a confined space of agents representing humans.                     els of hygiene and social distancing. The model also allows for
-An extension to the SEIR model allows us to consider the differ-                    different levels of hospital care for differences in severity of illness.
-ence between the appearance (black-box view) of the spread of                       Unlike statistical models which often assume a homogeneous pop-
-disease, and the real situation (glass-box view). Our model allows                  ulation, our model allows for agents with different levels of health,
-for simulations of lockdowns, social distancing, personal hygiene,                  immunity, and comorbidity. Using simulations based on this ABM,
-quarantine, and hospitalization, with further considerations of dif-                we are able to evaluate different possible circumstances and observe
-ferent parameters such as the extent to which hygiene and social                    their consequences.
-distancing are observed in a population. Our results give qualitative                  Modeling of infectious disease outbreaks is an endeavor of long
-indications of the effects of various policies and parameters; for                  standing [24, 49], but almost all efforts use mathematical (equation-
-instance, that lockdowns by themselves are extremely unlikely to                    based) modeling techniques [7]. There have also been specific efforts
-bring an end to an epidemic and may indeed make things worse,                       at modeling possible flu-like pandemics caused by H5N1 (“bird
-that social distancing matters more than personal hygiene, and that                 flu”) [3] and H1N1 (“swine flu”) [26].
-the growth of infection comes down significantly for moderately                        In case of the very real COVID-19 pandemic also, there have been
-high levels of social distancing and hygiene, even in the absence of                numerous analytical efforts based on mathematical models [1, 4],
-herd immunity.                                                                      as well as data-driven models and projections [16, 34].
-                                                                                       Agent-based models have also been used in epidemiology [21,
-KEYWORDS                                                                            33, 35, 47], and to model specific instances such as mosquito-borne
-                                                                                    diseases [22] and pandemic influenza [25]. Agent-based models
+                Ashutosh Trivedi                                Nanda Kishore Sreenivas                                     Shrisha Rao
+                           Spext                                                Oracle                                      IIIT-Bangalore
+                ashu.trv@gmail.com                                 nandakishores1@acm.org                                  shrao@ieee.org
+ABSTRACT                                                                                 Certain specific aspects of our ABM for COVID-19 are a larger
+Data-centric models of COVID-19 have been tried, but have cer-                        set of possible states that enable distinctions between asymptomatic
+tain limitations. In this work, we propose an agent-based model of                    and symptomatic infections, and parameters to model different lev-
+the epidemic in a confined space of agents representing humans.                       els of hygiene and social distancing. The model also allows for
+An extension to the SEIR model allows us to consider the differ-                      different levels of hospital care for differences in severity of illness.
+ence between the appearance (black-box view) of the spread of                         Unlike statistical models which often assume a homogeneous pop-
+disease, and the real situation (glass-box view). Our model allows                    ulation, our model allows for agents with different levels of health,
+for simulations of lockdowns, social distancing, personal hygiene,                    immunity, and comorbidity. Using simulations based on this ABM,
+quarantine, and hospitalization, with further considerations of dif-                  we are able to evaluate different possible circumstances and observe
+ferent parameters such as the extent to which hygiene and social                      their consequences.
+distancing are observed in a population. Our results give qualitative                    Modeling of infectious disease outbreaks is an endeavor of long
+indications of the effects of various policies and parameters; for                    standing [24, 49], but almost all efforts use mathematical (equation-
+instance, that lockdowns by themselves are extremely unlikely to                      based) modeling techniques [7]. There have also been specific efforts
+bring an end to an epidemic and may indeed make things worse,                         at modeling possible flu-like pandemics caused by H5N1 (“bird
+that social distancing matters more than personal hygiene, and that                   flu”) [3] and H1N1 (“swine flu”) [26].
+the growth of infection comes down significantly for moderately                          In case of the very real COVID-19 pandemic also, there have been
+high levels of social distancing and hygiene, even in the absence of                  numerous analytical efforts based on mathematical models [1, 4],
+herd immunity.                                                                        as well as data-driven models and projections [16, 34].
+                                                                                         Agent-based models have also been used in epidemiology [21,
+KEYWORDS                                                                              33, 35, 47], and to model specific instances such as mosquito-borne
+                                                                                      diseases [22] and pandemic influenza [25]. Agent-based models
 COVID-19, SEIR, agent-based modeling, lockdown, hygiene, social
-                                                                                    have some advantages over mathematical models [20], such as
+                                                                                      have some advantages over mathematical models [20], such as
 distancing
-                                                                                    in allowing for consideration of heterogeneity in the population,
-                                                                                    discovery of emergent properties that are not readily apparent
-1 INTRODUCTION                                                                      from the system description, and study of behaviors for which no
-The COVID-19 pandemic has presented humanity with grave social                      closed-form mathematical description is easily available.
-and economic challenges, and also a whole host of research ques-                       There are also some early efforts at modeling COVID-19 using
-tions that are not easily answered using standard statistical and                   agent-based models [10, 44].
-other methods, in large part on account of the lack of sufficient data                 The present work is distinct in that we create an extended agent-
-about the novel coronavirus SARS-CoV-2. Of particular interest is                   based model that allows for qualitative evaluations of the effects
-to understand emergent situations that may occur as a consequence                   of social distancing, personal hygiene, and lockdowns, while tak-
-of policy choices (e.g., lockdowns) and individual behaviors (e.g., ob-             ing into account epidemiological characteristics of COVID-19 [12]
-servance of social distancing and personal hygiene). Policy-makers                  and the heterogeneity of populations of people who may become
-and the public at large can benefit by a better understanding of the                affected. The basic SEIR model and its common extensions are not
-macro-level consequences of the delicate micro-level behaviors of                   entirely adequate to model the spread of the disease, as they do not
-individuals. These macro-level consequences are emergent proper-                    take into account the classification of infectious states by types—
-ties that arise from the interactions of a large number of diverse                  asymptomatic, symptomatic (but not hospitalized), hospitalized,
-individuals who are part of the system.                                             and needing intensive care—that is a concern in reality [2].
-   Agent-based models (ABMs) help us consider such possible reali-                     In our model, each agent represents a human in society who
-ties by creating and studying the effects of suitably designed agents               interacts with others. Human movements and interactions are cap-
-in an interactive environment. Each agent represents an individual                  tured by motion and occasional proximity in a two-dimensional
-person with certain specific properties and behaviors. These agent                  grid. Each agent has certain characteristics (see Section 3.2.1 for
-properties are carefully chosen to model humans realistically, and                  details), and some agents change states based on infections and re-
-agent behaviors are programmed keeping real behaviors in mind.                      covery. Our model allows us to understand the difference between
-With ABMs, it becomes feasible to study the complex system-level                    a black-box view of the epidemic and a glass-box view (Section 3.1).
-properties which arise from the interactions of individuals.                        It also allows us to control agent parameters to accord with the
-                                                                                    characteristics of different people in a large human population
-The code and documentation for this work can be accessed from https://github.com/   (Section 3.2), and to change the characteristics of the system to
-ABM-for-Covid/ABM-for-Covid-19. We have also created an interactive application     model the effects of different policies and public-health practices
+                                                                                      in allowing for consideration of heterogeneity in the population,
+                                                                                      discovery of emergent properties that are not readily apparent
+1 INTRODUCTION                                                                        from the system description, and study of behaviors for which no
+The COVID-19 pandemic has presented humanity with grave social                        closed-form mathematical description is easily available.
+and economic challenges, and also a whole host of research ques-                         There are also some early efforts at modeling COVID-19 using
+tions that are not easily answered using standard statistical and                     agent-based models [10, 44].
+other methods, in large part on account of the lack of sufficient data                   The present work is distinct in that we create an extended agent-
+about the novel coronavirus SARS-CoV-2. Of particular interest is                     based model that allows for qualitative evaluations of the effects
+to understand emergent situations that may occur as a consequence                     of social distancing, personal hygiene, and lockdowns, while tak-
+of policy choices (e.g., lockdowns) and individual behaviors (e.g., ob-               ing into account epidemiological characteristics of COVID-19 [12]
+servance of social distancing and personal hygiene). Policy-makers                    and the heterogeneity of populations of people who may become
+and the public at large can benefit by a better understanding of the                  affected. The basic SEIR model and its common extensions are not
+macro-level consequences of the delicate micro-level behaviors of                     entirely adequate to model the spread of the disease, as they do not
+individuals. These macro-level consequences are emergent proper-                      take into account the classification of infectious states by types—
+ties that arise from the interactions of a large number of diverse                    asymptomatic, symptomatic (but not hospitalized), hospitalized,
+individuals who are part of the system.                                               and needing intensive care—that is a concern in reality [2].
+    Agent-based models (ABMs) help us consider such possible reali-                      In our model, each agent represents a human in society who
+ties by creating and studying the effects of suitably designed agents                 interacts with others. Human movements and interactions are cap-
+in an interactive environment. Each agent represents an individual                    tured by motion and occasional proximity in a two-dimensional
+person with certain specific properties and behaviors. These agent                    grid. Each agent has certain characteristics (see Section 3.2.1 for
+properties are carefully chosen to model humans realistically, and                    details), and some agents change states based on infections and re-
+agent behaviors are programmed keeping real behaviors in mind.                        covery. Our model allows us to understand the difference between
+With ABMs, it becomes feasible to study the complex system-level                      a black-box view of the epidemic and a glass-box view (Section 3.1).
+properties which arise from the interactions of individuals.                          It also allows us to control agent parameters to accord with the
+                                                                                      characteristics of different people in a large human population
+The code and documentation for this work can be accessed from https://github.com/     (Section 3.2), and to change the characteristics of the system to
+ABM-for-Covid/ABM-for-Covid-19. We have also created an interactive application       model the effects of different policies and public-health practices
 (https://abmforcovid.org) for anyone to run experiments and test with their own
 strategies.
-                                                                                    (Section 3.2.2).
+                                                                                      (Section 3.2.2).
+            NOTE: This preprint reports new research that has not been certified by peer review and should not be used to guide clinical practice.
 
-
-
-
-          NOTE: This preprint reports new research that has not been certified by peer review and should not be used to guide clinical practice.
-
 medRxiv preprint doi: https://doi.org/10.1101/2020.09.16.20195826.this version posted October 16, 2020. The copyright holder for this preprint
-  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
-                                      It is made available under a CC-BY-NC-ND 4.0 International license .
-
-
-
-
-   Our results are in line with expectations; e.g., it is suggested by       We modify the usual SEIR model to also include multiple infec-
-Schueller et al. [42] that lockdowns slow down the spread of COVID-       tious states, and to also show when someone is deceased.
+     (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                        It is made available under a CC-BY-NC-ND 4.0 International license .
+    Our results are in line with expectations; e.g., it is suggested by         We modify the usual SEIR model to also include multiple infec-
+Schueller et al. [42] that lockdowns slow down the spread of COVID-         tious states, and to also show when someone is deceased.
 19 and reduce the peak of infections. Silva et al. [44] propose an
-agent-based model that allows the simulation of social distancing         2.1 Modified SEIR
-and the use of masks (as a specific measure of personal hygiene), and     The primary motivation for this modification is the observation
-study their effects in certain scenarios, with similar but incomplete     that in COVID-19 (but also in other diseases) the infectious state is
-results.                                                                  not truly a single state describing all infected individuals. Rather,
-   The following are some of the findings of our work:                    there are multiple types of infectious states:
-   (1) Social distancing matters more than personal hygiene (Sec-             𝐼 0 This is the infectious asymptomatic state, where an individual
-       tion 4.3).                                                                 does not show signs of the disease at all, but can transmit
-   (2) Social distancing and hygiene together matter more than                    it to others. It is presently believed that a large number of
-       lockdowns, for controlling the spread of disease (Section 4.4).            infected people recover directly from this state, and that
-       In fact, in their absence a lockdown can hurt more than help—              coming into proximity with such asymptomatic individuals
-       without social distancing and hygiene, a post-lockdown peak                is responsible for a large fraction of the COVID-19 spread [6].
-       of cases can be higher than without lockdown, with a similar           𝐼 1 This is the infectious symptomatic state where an individual
-       effect being also seen with more stringent lockdowns as                    shows signs of the disease, but is not (yet) hospitalized, ei-
-       compared to more relaxed ones (Figure 7).                                  ther because the symptoms are considered mild enough, or
-   (3) When the fraction of the population that is immune to the                  because hospital care is unavailable.
-       disease (either by vaccination or by previous exposure or              𝐼 2 This is the infectious hospitalized state, where an individual
-       recovery) is small, say 20%, the peak of infectious cases can              shows signs of the disease and receives hospital care.
-       be nearly as high, in the absence of social distancing and             𝐼 3 This is the infectious critical care state, where the individual
-       personal hygiene, as when there is no immunity at all in the               is severely afflicted and receives critical care in an ICU or
-       population (Section 4.5). Even in case some 40% of the popu-               similar, including with specialized devices such as ventila-
-       lation is immune, there can be a large number of infections                tors.
-       in the absence of social distancing and hygiene (Figure 12b).          In addition to this, we add a distinguished state 𝐷 to the model,
-   (4) Proper herd immunity in the classical sense is said to oc-         showing when a sick individual is deceased as a consequence of
-       cur (in the total absence of social distancing and hygiene)        the illness. The modified SEIR model is shown in Figure 1.
-       only when some large fraction of the population becomes                This model is slightly similar to the one proposed by Arino et
-       immune [38]. However, when a smaller fraction of 40% of the        al. [4] which also considers multiple types of infectious states, but
-       population is immune (which we describe by saying the frac-        that model is based on differential equations and thus not directly
-       tional immunity of the population is 0.4), this can be achieved    applicable in an ABM context.
-       with some observance of social distancing and hygiene; the
-       same effect is also possible with an even smaller fraction
-       of 20% of the population being immune, with a rigorous
-       observance of social distancing and hygiene (Section 4.5).
-   (5) Surges in hospital capacity (including critical care capacity)
-       help reduce the number of severely ill people dying due to
-       lack of access to medical care, but do not directly affect the
-       overall number of cases to a significant extent (Section 4.6).
-
+agent-based model that allows the simulation of social distancing           2.1 Modified SEIR
+and the use of masks (as a specific measure of personal hygiene), and       The primary motivation for this modification is the observation
+study their effects in certain scenarios, with similar but incomplete       that in COVID-19 (but also in other diseases) the infectious state is
+results.                                                                    not truly a single state describing all infected individuals. Rather,
+    The following are some of the findings of our work:                     there are multiple types of infectious states:
+    (1) Social distancing matters more than personal hygiene (Sec-               𝐼 0 This is the infectious asymptomatic state, where an individual
+        tion 4.3).                                                                   does not show signs of the disease at all, but can transmit
+    (2) Social distancing and hygiene together matter more than                      it to others. It is presently believed that a large number of
+        lockdowns, for controlling the spread of disease (Section 4.4).              infected people recover directly from this state, and that
+        In fact, in their absence a lockdown can hurt more than help—                coming into proximity with such asymptomatic individuals
+        without social distancing and hygiene, a post-lockdown peak                  is responsible for a large fraction of the COVID-19 spread [6].
+        of cases can be higher than without lockdown, with a similar             𝐼 1 This is the infectious symptomatic state where an individual
+        effect being also seen with more stringent lockdowns as                      shows signs of the disease, but is not (yet) hospitalized, ei-
+        compared to more relaxed ones (Figure 7).                                    ther because the symptoms are considered mild enough, or
+    (3) When the fraction of the population that is immune to the                    because hospital care is unavailable.
+        disease (either by vaccination or by previous exposure or                𝐼 2 This is the infectious hospitalized state, where an individual
+        recovery) is small, say 20%, the peak of infectious cases can                shows signs of the disease and receives hospital care.
+        be nearly as high, in the absence of social distancing and               𝐼 3 This is the infectious critical care state, where the individual
+        personal hygiene, as when there is no immunity at all in the                 is severely afflicted and receives critical care in an ICU or
+        population (Section 4.5). Even in case some 40% of the popu-                 similar, including with specialized devices such as ventila-
+        lation is immune, there can be a large number of infections                  tors.
+        in the absence of social distancing and hygiene (Figure 12b).           In addition to this, we add a distinguished state 𝐷 to the model,
+    (4) Proper herd immunity in the classical sense is said to oc-          showing when a sick individual is deceased as a consequence of
+        cur (in the total absence of social distancing and hygiene)         the illness. The modified SEIR model is shown in Figure 1.
+        only when some large fraction of the population becomes                 This model is slightly similar to the one proposed by Arino et
+        immune [38]. However, when a smaller fraction of 40% of the         al. [4] which also considers multiple types of infectious states, but
+        population is immune (which we describe by saying the frac-         that model is based on differential equations and thus not directly
+        tional immunity of the population is 0.4), this can be achieved     applicable in an ABM context.
+        with some observance of social distancing and hygiene; the
+        same effect is also possible with an even smaller fraction
+        of 20% of the population being immune, with a rigorous
+        observance of social distancing and hygiene (Section 4.5).
+    (5) Surges in hospital capacity (including critical care capacity)
+        help reduce the number of severely ill people dying due to
+        lack of access to medical care, but do not directly affect the
+        overall number of cases to a significant extent (Section 4.6).
 2 DISEASE MODEL
 A common way of modeling the spread of infectious diseases is
 using the SIR (susceptible-infectious-recovered) model [49], which
@@ -125,55 +111,49 @@ three classes. The susceptible state consists of individuals who may
 become infected; the infectious individuals are those currently af-
 flicted with the disease; and recovered individuals are ones who
 have overcome the disease.
-    An extension of this is the SEIR model [49] that also allows for      Figure 1: Modified SEIR model for COVID-19, with multiple
-an exposed state where an individual has received a load of the           infectious states.
+    An extension of this is the SEIR model [49] that also allows for        Figure 1: Modified SEIR model for COVID-19, with multiple
+an exposed state where an individual has received a load of the             infectious states.
 pathogen, but is not yet infectious or symptomatic. In the SEIR
 model it is generally assumed that recovered individuals have life-
 long immunity.
-    Both the SIR and SEIR models are generally based on differential      2.2 State Transitions
-equations, and allow for various types of qualitative analyses [14,       The state transitions between different states for an individual are
-46].                                                                      also as indicated in Figure 1.These are as follows.
-
+    Both the SIR and SEIR models are generally based on differential        2.2 State Transitions
+equations, and allow for various types of qualitative analyses [14,         The state transitions between different states for an individual are
+46].                                                                        also as indicated in Figure 1.These are as follows.
+
 medRxiv preprint doi: https://doi.org/10.1101/2020.09.16.20195826.this version posted October 16, 2020. The copyright holder for this preprint
-  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
-                                      It is made available under a CC-BY-NC-ND 4.0 International license .
-
-
-
-
-    𝑆 → 𝐸 The state transition from susceptible to exposed happens               The glass-box view of the epidemic is the idealized condition
-        when a susceptible individual comes into close contact with          where there is perfect knowledge of the extent of the epidemic,
-        an infectious individual (someone in any of the states 𝐼 0 , 𝐼 1 ,   both in terms of what agents are infected, and the exact state that
-        𝐼 2 , or 𝐼 3 ). Each infectious individual has an infection range,   each agent is in. This too is not the same as the standard white box
-        and if another individual comes within their infection range,        epidemiology, such as for example seen in the putative correlation
-        they are said to be in close contact. The state transition from      between night-shift work and an increased risk of cancer [13].
-        𝑆 to 𝐸 is considered instantaneous (see Section 3.3.1).                  As may be expected, in general far fewer agents are known to
-    𝐸 → 𝐼 0 The state transition from exposed to infectious asymp-           be infected in the black-box view, as asymptomatic infections are
-        tomatic happens upon the completion of the latent period             unseen. This leads to the situation depicted in Figure 2, where
-        of the disease, starting from the instant of exposure (see           Figure 2a shows the black-box view, the limited perspective with
-        Section 3.3.2).                                                      relatively few agents showing symptoms, and Figure 2b shows the
-    𝐼 0 → 𝐼 1 The state transition from infectious asymptomatic to           glass-box view, the real situation with many infected and exposed
-        symptomatic happens upon the completion of the incubation            agents in the population.
-        period of the disease, starting from the instant of exposure.            Another aspect of the difference between the black-box and glass-
-        In many individuals, this transition may not happen at all,          box views may be seen from Figure 3 which shows the apparent
-        and the individual may instead transition to 𝑅 (recovered)           progress of the epidemic over time. The higher line corresponds to
-        directly (see Section 3.3.2).                                        the glass-box view, where a much larger fraction of the population
-    𝐼 1 → 𝐼 2 The state transition from infectious symptomatic to            is seen to get the infection. The lower line corresponds to the black-
-        hospitalized happens in some infected individuals when the           box view, where a much smaller fraction of the population develops
-        symptoms worsen to the point of requiring hospital care (see         symptoms and is known to be infected.
-        Section 3.3.3).                                                          The distinction between the black-box and glass-box views is
-    𝐼 2 → 𝐼 3 The state transition from hospitalized to critical care        made possible by the extended SEIR model depicted in Figure 1,
-        happens in some individuals whose aggravated conditions              which shows that the states 𝑆, 𝐸, 𝐼 0 , and 𝑅 are all asymptomatic, and
-        require ICU and similar critical care (see Section 3.3.4).           thus agents in these states appear not to be infected. An agent that is
-    𝐼 ∗ → 𝐷 The state transitions from 𝐼 1 , 𝐼 2 , and 𝐼 3 to 𝐷 (deceased)   in state 𝐼 0 is counted as infected in the glass-box view, but not in the
-        happen in some individuals. Individuals who are in 𝐼 1 and           black-box view. Agents that undergo the transition 𝑆 → 𝐸 → 𝐼 0 →
-        𝐼 2 in need of more advanced care (in 𝐼 2 and 𝐼 3 respectively)      𝑅, i.e., are exposed, infected, and subsequently recover without
-        are at increased risk of transition to 𝐷 when such care is           showing symptoms, and are not known to have been infected at all.
-        unavailable. Individuals in 𝐼 3 are at increased risk of tran-
-        sitioning to 𝐷 with increasing time spent in that state (see
-        Section 3.3.5).
-
-
+    (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                            It is made available under a CC-BY-NC-ND 4.0 International license .
+     𝑆 → 𝐸 The state transition from susceptible to exposed happens                 The glass-box view of the epidemic is the idealized condition
+         when a susceptible individual comes into close contact with            where there is perfect knowledge of the extent of the epidemic,
+         an infectious individual (someone in any of the states 𝐼 0 , 𝐼 1 ,     both in terms of what agents are infected, and the exact state that
+         𝐼 2 , or 𝐼 3 ). Each infectious individual has an infection range,     each agent is in. This too is not the same as the standard white box
+         and if another individual comes within their infection range,          epidemiology, such as for example seen in the putative correlation
+         they are said to be in close contact. The state transition from        between night-shift work and an increased risk of cancer [13].
+         𝑆 to 𝐸 is considered instantaneous (see Section 3.3.1).                    As may be expected, in general far fewer agents are known to
+     𝐸 → 𝐼 0 The state transition from exposed to infectious asymp-             be infected in the black-box view, as asymptomatic infections are
+         tomatic happens upon the completion of the latent period               unseen. This leads to the situation depicted in Figure 2, where
+         of the disease, starting from the instant of exposure (see             Figure 2a shows the black-box view, the limited perspective with
+         Section 3.3.2).                                                        relatively few agents showing symptoms, and Figure 2b shows the
+     𝐼 0 → 𝐼 1 The state transition from infectious asymptomatic to             glass-box view, the real situation with many infected and exposed
+         symptomatic happens upon the completion of the incubation              agents in the population.
+         period of the disease, starting from the instant of exposure.              Another aspect of the difference between the black-box and glass-
+         In many individuals, this transition may not happen at all,            box views may be seen from Figure 3 which shows the apparent
+         and the individual may instead transition to 𝑅 (recovered)             progress of the epidemic over time. The higher line corresponds to
+         directly (see Section 3.3.2).                                          the glass-box view, where a much larger fraction of the population
+     𝐼 1 → 𝐼 2 The state transition from infectious symptomatic to              is seen to get the infection. The lower line corresponds to the black-
+         hospitalized happens in some infected individuals when the             box view, where a much smaller fraction of the population develops
+         symptoms worsen to the point of requiring hospital care (see           symptoms and is known to be infected.
+         Section 3.3.3).                                                            The distinction between the black-box and glass-box views is
+     𝐼 2 → 𝐼 3 The state transition from hospitalized to critical care          made possible by the extended SEIR model depicted in Figure 1,
+         happens in some individuals whose aggravated conditions                which shows that the states 𝑆, 𝐸, 𝐼 0 , and 𝑅 are all asymptomatic, and
+         require ICU and similar critical care (see Section 3.3.4).             thus agents in these states appear not to be infected. An agent that is
+     𝐼 ∗ → 𝐷 The state transitions from 𝐼 1 , 𝐼 2 , and 𝐼 3 to 𝐷 (deceased)     in state 𝐼 0 is counted as infected in the glass-box view, but not in the
+         happen in some individuals. Individuals who are in 𝐼 1 and             black-box view. Agents that undergo the transition 𝑆 → 𝐸 → 𝐼 0 →
+         𝐼 2 in need of more advanced care (in 𝐼 2 and 𝐼 3 respectively)        𝑅, i.e., are exposed, infected, and subsequently recover without
+         are at increased risk of transition to 𝐷 when such care is             showing symptoms, and are not known to have been infected at all.
+         unavailable. Individuals in 𝐼 3 are at increased risk of tran-
+         sitioning to 𝐷 with increasing time spent in that state (see
+         Section 3.3.5).
 3 AGENT MODEL
 In this section, we describe our agent model and its workings.
 In Section 3.1, we first encapsulate the difference between black-
@@ -182,39 +162,30 @@ important to understanding why this pandemic has proven so hard
 to tackle. Section 3.2 describes the primary characteristics of the
 agents as well as the system in which they are placed. Section 3.3
 describes the state transitions of agents.
-                                                                                   (a) Black-box view.                    (b) Glass-box view.
-
-3.1 Black-Box and Glass-Box Views                                                Figure 2: Two views of an epidemic at an early stage.
+                                                                                        (a) Black-box view.                    (b) Glass-box view.
+3.1 Black-Box and Glass-Box Views                                                    Figure 2: Two views of an epidemic at an early stage.
 In terms of modeling the occurrence of COVID-19 or any similar
 disease in a population, we find it useful to bring in the distinction
 between black-box and glass-box views of the epidemic.
-                                                                             3.2 Individual and Social Attributes
+                                                                                3.2 Individual and Social Attributes
    The black-box view of the epidemic corresponds to what is ob-
-served about the incidence and spread of the disease in an affected          We model humans in a society as a collection of agents, where each
-population without widespread testing and tracing—agents just be-            agent is a computational structure that captures some essential as-
-come ill with disease symptoms, and some need to be hospitalized,            pects of humans that are relevant to disease progression and spread.
-while others apparently stay healthy. Except in case of sympto-              Some attributes are at an agent level, such as age, health, etc., while
-matic cases, it is not known who all may carry the infection. This is        others are at a social level, such as the lockdown efficacy, social
-related to, but not the same as, the standard definition of black box        distancing, etc. We discuss the agent characteristics in Section 3.2.1
-epidemiology: “the use of observational epidemiological methods              and the system parameters in Section 3.2.2.
-and inference to arrive at conclusions about cause-effect relations             3.2.1 Agent Characteristics. An agent Υ is formally defined as a
-between risk factors and disease” [28].                                      five-tuple as follows:
-
+served about the incidence and spread of the disease in an affected             We model humans in a society as a collection of agents, where each
+population without widespread testing and tracing—agents just be-               agent is a computational structure that captures some essential as-
+come ill with disease symptoms, and some need to be hospitalized,               pects of humans that are relevant to disease progression and spread.
+while others apparently stay healthy. Except in case of sympto-                 Some attributes are at an agent level, such as age, health, etc., while
+matic cases, it is not known who all may carry the infection. This is           others are at a social level, such as the lockdown efficacy, social
+related to, but not the same as, the standard definition of black box           distancing, etc. We discuss the agent characteristics in Section 3.2.1
+epidemiology: “the use of observational epidemiological methods                 and the system parameters in Section 3.2.2.
+and inference to arrive at conclusions about cause-effect relations                 3.2.1 Agent Characteristics. An agent Υ is formally defined as a
+between risk factors and disease” [28].                                         five-tuple as follows:
+
 medRxiv preprint doi: https://doi.org/10.1101/2020.09.16.20195826.this version posted October 16, 2020. The copyright holder for this preprint
   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
                                       It is made available under a CC-BY-NC-ND 4.0 International license .
-
-
-
-
                                25                                                        chances of recovery of an infected agent. Unlike all the other at-
                                                                         Blackbox         tributes, age has a very long range and therefore becomes difficult
                                                                         Glassbox
    Percentage of population
-
-
-
-
                                20                                                        to combine with other attributes. Hence, age has to be transformed
                                                                                          to a similar small range as the other attributes.
                                                                                             The effect of age on susceptibility to infection is quite complex [5,
@@ -283,163 +254,151 @@ corresponding to an immunosupressed agent, and 1 corresponding                  
 to an agent with strong immune response.                                                 observe lockdown and some continue to move around, and this
    We introduce recovery score (𝑟 ) as an integrated metric that                         is modeled through a lockdown efficacy parameter (𝜅). Another
 aggregates all these agent attributes, and directly correlates to the                    parameter of a lockdown is the duration, denoted by 𝐿. For example,
-
+
 medRxiv preprint doi: https://doi.org/10.1101/2020.09.16.20195826.this version posted October 16, 2020. The copyright holder for this preprint
-  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
-                                      It is made available under a CC-BY-NC-ND 4.0 International license .
-
-
-
-
-         Variable                   Symbol     Range                          A susceptible agent 𝐴 in state 𝑆 can get exposed to the virus
-                                                                           through an interaction with another infectious agent 𝐵. If social
-         Hygiene                    𝛽          [0,1]
-                                                                           distancing is followed in this interaction, then agent 𝐴 is not ex-
-         Hygiene popn. mean         𝛽¯         [0,1]
-                                                                           posed, and continues to remain in 𝑆 state even after the interaction.
-         Age                        𝑎          [0,90]
-                                                                           However, if social distancing is not practiced, then the chances of
-         Health                     ℎ          {0,1,2,3}
-                                                                           transmission depend on the levels of hygiene (𝛽) of both agents.
-         Comorbidity                𝑐          {-2,-1,0}
-                                                                           The levels of hygiene of 𝐴 and 𝐵 may be denoted by 𝛽𝐴 and 𝛽𝐵
-         Immunity                   𝜔          {0,1}
-                                                                           respectively. The probability of infection, denoted by 𝑝 (𝐴, 𝐵) is
-         Social Distancing          𝛼          [0,1]
-                                                                           given by:
-         Fractional Immunity        Π          [0,1]
-         Lockdown efficacy          𝜅          [0,1]                                           𝑝 (𝐴, 𝐵) = 𝜌 (1 − 𝛽𝐴 )(1 − 𝛽𝐵 )                    (3)
-         Transmission constant      𝜌          0.25
-         Incubation period          𝜆          [1,14]                         where 0 < 𝜌 ≤ 1 is a scaling constant. If either agent practices
-         Latent period              Φ          [1,14]                      perfect hygiene, transmission would not occur, and this holds in
-         Recovery score             𝑟          {0, 1, 2, . . . , 8}        our model as well by (3). Otherwise, the agent 𝐴 now transitions
-         Bed capacity               b          0 ≤ 𝑏 ≤ 1000                from 𝑆 to 𝐸 with a probability of 𝑝 (𝐴, 𝐵) due to the said interaction.
-         Duration in 𝐼 ∗            𝑑𝐼∗        —                               3.3.2 Transitions from 𝐸, the Exposed State, and 𝐼 0 , the Asymp-
-         Scaling constants          𝑘∗         —                           tomatic State. The duration between an agent first reaching states
-Table 1: Notation. The presence of a dash indicates that there             𝐸 and 𝐼 1 is termed as the incubation period (𝜆). The latent period
-is no pre-set range for that parameter.                                    (Φ) refers to the duration between states 𝐸 and 𝐼 0 . In the case of
-                                                                           COVID-19, the latent period is known to be smaller than or equal
-                                                                           to the incubation period [30]. Accordingly, we fix the latent period
-                                                                           is fixed such that 1 ≤ Φ ≤ 𝜆.
-                                                                               The incubation period depends on a number of factors including
-a lockdown with 𝐿 = 30 and 𝜅 = 0.8 implies there is a 30 day lock-         host immunity (𝜔) and age (𝑎) [19, 48]. The minimum, maximum
-down with 20% of agents still mobile, but the other 80% of agents          and average values are denoted by 𝜆𝑚𝑖𝑛 , 𝜆𝑚𝑎𝑥 , and 𝜆¯ respectively.
-are completely static.                                                     Current studies on COVID-19 indicate that the incubation period
-   To consider cases where a fraction of the population is immune          is between 2 and 14 days [9] with a mean of 5 days [29].
-to the disease, either from previous exposure and recovery, or by              To calculate the transition probability for a weak immune agent
-immunization or natural immunity, we define a parameter called             with 𝜔 = 0, we use the following expressions. We sample a number
-fractional immunity, denoted Π, which gives the fraction of the            𝑥 from a uniform distribution between 0 and 1. The agent transitions
-agent population that is immune at the outset of a simulation. This        to 𝐼 1 directly from 𝐸 if the below condition is met:
+    (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                        It is made available under a CC-BY-NC-ND 4.0 International license .
+         Variable                    Symbol      Range                            A susceptible agent 𝐴 in state 𝑆 can get exposed to the virus
+                                                                            through an interaction with another infectious agent 𝐵. If social
+         Hygiene                     𝛽           [0,1]
+                                                                            distancing is followed in this interaction, then agent 𝐴 is not ex-
+         Hygiene popn. mean          𝛽¯          [0,1]
+                                                                            posed, and continues to remain in 𝑆 state even after the interaction.
+         Age                         𝑎           [0,90]
+                                                                            However, if social distancing is not practiced, then the chances of
+         Health                      ℎ           {0,1,2,3}
+                                                                            transmission depend on the levels of hygiene (𝛽) of both agents.
+         Comorbidity                 𝑐           {-2,-1,0}
+                                                                            The levels of hygiene of 𝐴 and 𝐵 may be denoted by 𝛽𝐴 and 𝛽𝐵
+         Immunity                    𝜔           {0,1}
+                                                                            respectively. The probability of infection, denoted by 𝑝 (𝐴, 𝐵) is
+         Social Distancing           𝛼           [0,1]
+                                                                            given by:
+         Fractional Immunity         Π           [0,1]
+         Lockdown efficacy           𝜅           [0,1]                                              𝑝 (𝐴, 𝐵) = 𝜌 (1 − 𝛽𝐴 )(1 − 𝛽𝐵 )                (3)
+         Transmission constant       𝜌           0.25
+         Incubation period           𝜆           [1,14]                           where 0 < 𝜌 ≤ 1 is a scaling constant. If either agent practices
+         Latent period               Φ           [1,14]                     perfect hygiene, transmission would not occur, and this holds in
+         Recovery score              𝑟           {0, 1, 2, . . . , 8}       our model as well by (3). Otherwise, the agent 𝐴 now transitions
+         Bed capacity                b           0 ≤ 𝑏 ≤ 1000               from 𝑆 to 𝐸 with a probability of 𝑝 (𝐴, 𝐵) due to the said interaction.
+         Duration in 𝐼 ∗             𝑑𝐼∗         —                                3.3.2 Transitions from 𝐸, the Exposed State, and 𝐼 0 , the Asymp-
+         Scaling constants           𝑘∗          —                          tomatic State. The duration between an agent first reaching states
+Table 1: Notation. The presence of a dash indicates that there              𝐸 and 𝐼 1 is termed as the incubation period (𝜆). The latent period
+is no pre-set range for that parameter.                                     (Φ) refers to the duration between states 𝐸 and 𝐼 0 . In the case of
+                                                                            COVID-19, the latent period is known to be smaller than or equal
+                                                                            to the incubation period [30]. Accordingly, we fix the latent period
+                                                                            is fixed such that 1 ≤ Φ ≤ 𝜆.
+                                                                                  The incubation period depends on a number of factors including
+a lockdown with 𝐿 = 30 and 𝜅 = 0.8 implies there is a 30 day lock-          host immunity (𝜔) and age (𝑎) [19, 48]. The minimum, maximum
+down with 20% of agents still mobile, but the other 80% of agents           and average values are denoted by 𝜆𝑚𝑖𝑛 , 𝜆𝑚𝑎𝑥 , and 𝜆¯ respectively.
+are completely static.                                                      Current studies on COVID-19 indicate that the incubation period
+   To consider cases where a fraction of the population is immune           is between 2 and 14 days [9] with a mean of 5 days [29].
+to the disease, either from previous exposure and recovery, or by                 To calculate the transition probability for a weak immune agent
+immunization or natural immunity, we define a parameter called              with 𝜔 = 0, we use the following expressions. We sample a number
+fractional immunity, denoted Π, which gives the fraction of the             𝑥 from a uniform distribution between 0 and 1. The agent transitions
+agent population that is immune at the outset of a simulation. This         to 𝐼 1 directly from 𝐸 if the below condition is met:
 notion of fractional immunity is similar to that seen in studies that
-seek to model the effect of a pre-existing or acquired immunity                                       1           1
-                                                                                                         ≤𝑥 ≤                                     (4)
-already present in a significant fraction of the population [17, 37].                                 𝜆¯      1 + 𝑓 (𝑎)
+seek to model the effect of a pre-existing or acquired immunity                                            1             1
+                                                                                                               ≤𝑥 ≤                                (4)
+already present in a significant fraction of the population [17, 37].                                      𝜆¯        1 + 𝑓 (𝑎)
    Hospitals are considered to have two types of resources—normal
-beds and ICU beds. The normal beds are for agents in 𝐼 2 , and the         This creates a higher probability of transition to the 𝐼 1 state if the
-ICU beds are for those in the more critical 𝐼 3 . The bed capacity of      age score 𝑓 (𝑎) is lower, since the range in which 𝑥 is allowed to
-the system, denoted by 𝑏, is the number of beds per 1000 agents in         fall now has larger window based on the age score.
-the system.                                                                   If an agent has strong immunity (𝜔 = 1), it has a lower chance
-                                                                           of directly transitioning into the state 𝐼 1 , as given by the following:
-3.3 State Transitions                                                                                               1
-                                                                                                     0≤𝑥 ≤                                        (5)
-The state transitions are as defined in Section 2.2 and their transition                                       𝑘 1 × 𝜆𝑚𝑎𝑥
+beds and ICU beds. The normal beds are for agents in 𝐼 2 , and the          This creates a higher probability of transition to the 𝐼 1 state if the
+ICU beds are for those in the more critical 𝐼 3 . The bed capacity of       age score 𝑓 (𝑎) is lower, since the range in which 𝑥 is allowed to
+the system, denoted by 𝑏, is the number of beds per 1000 agents in          fall now has larger window based on the age score.
+the system.                                                                       If an agent has strong immunity (𝜔 = 1), it has a lower chance
+                                                                            of directly transitioning into the state 𝐼 1 , as given by the following:
+3.3 State Transitions                                                                                                   1
+                                                                                                         0≤𝑥 ≤                                     (5)
+The state transitions are as defined in Section 2.2 and their transition                                           𝑘 1 × 𝜆𝑚𝑎𝑥
 probabilities are described here. The probability of state transition
-                                                                                 If the agent is in the 𝐸 state, there is a chance of moving to state
+                                                                                  If the agent is in the 𝐸 state, there is a chance of moving to state
 from 𝑆 to 𝐸 is computed once for every interaction with an infec-
-                                                                           𝐼 0 . For both weak and high immune agents, we use the following
+                                                                            𝐼 0 . For both weak and high immune agents, we use the following
 tious agent as described in Section 3.3.1. However, the rest of the
-                                                                           expression. We sample another number 𝑦 from the same uniform
+                                                                            expression. We sample another number 𝑦 from the same uniform
 transition probabilities, given by (4)–(13), are all computed on a
-                                                                           distribution, and calculate the transition for 𝐼 0 by:
+                                                                            distribution, and calculate the transition for 𝐼 0 by:
 daily basis, and if none of the possible transitions occur on any
-given day, then the agent continues in the same state.                                                  1           1
-                                                                                                            ≤𝑦 ≤                                  (6)
-                                                                                                     𝜆¯ − 2      𝜆¯ − 3
+given day, then the agent continues in the same state.                                                        1             1
+                                                                                                                 ≤𝑦 ≤                              (6)
+                                                                                                          𝜆¯ − 2         𝜆¯ − 3
    3.3.1 Transition from 𝑆, the Susceptible State. Conventional
-methods of estimating disease transmission probability use differ-            Sakurai et al. [40] indicate that the duration to resolution of
-ential equations and such tools, and work with populations rather          infection for asymptomatic individuals is in the range of 3 to 21, and
-than considering individual interactions [27, 45]. However, in an          indicate that a considerable portion of asymptomatic individuals
-agent-based model, the probability of transmission cannot be con-          recover within 15 days. In our model, if an agent in 𝐼 0 does not
-stant and uniform across all interactions, and should be based on          transition to 𝐼 1 within 12 days, then it is considered recovered and
-the interacting agents’ attributes.                                        moves to 𝑅.
-
+methods of estimating disease transmission probability use differ-                Sakurai et al. [40] indicate that the duration to resolution of
+ential equations and such tools, and work with populations rather           infection for asymptomatic individuals is in the range of 3 to 21, and
+than considering individual interactions [27, 45]. However, in an           indicate that a considerable portion of asymptomatic individuals
+agent-based model, the probability of transmission cannot be con-           recover within 15 days. In our model, if an agent in 𝐼 0 does not
+stant and uniform across all interactions, and should be based on           transition to 𝐼 1 within 12 days, then it is considered recovered and
+the interacting agents’ attributes.                                         moves to 𝑅.
+
 medRxiv preprint doi: https://doi.org/10.1101/2020.09.16.20195826.this version posted October 16, 2020. The copyright holder for this preprint
-  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
-                                      It is made available under a CC-BY-NC-ND 4.0 International license .
-
-
-
-
-   3.3.3 Transitions from 𝐼 1 , the Symptomatic State. A symptomatic               This is similar to the worse transitions from 𝐼 1 and 𝐼 2 and the
-infectious agent in 𝐼 1 can transition to 𝐼 2 , 𝐷, or 𝑅, as seen in Figure 1.   same scaling factors are used here as well.
-Multiple factors such as the recovery score (𝑟 ) given by (2), the                 The daily probability of progressing and moving back to 𝐼 2 is
-number of days spent in 𝐼 1 (𝑑𝐼1 ), and the availability of hospital            given by:
-care, determine the next transition.                                                                                        𝑟
-   If hospital beds are available, the agent transitions from 𝐼 1 to 𝐼 2                                 𝑝 (𝐼 3, 𝐼 2 ) =                        (13)
-                                                                                                                         8 × 𝑑𝐼3
+     (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                                 It is made available under a CC-BY-NC-ND 4.0 International license .
+    3.3.3 Transitions from 𝐼 1 , the Symptomatic State. A symptomatic                   This is similar to the worse transitions from 𝐼 1 and 𝐼 2 and the
+infectious agent in 𝐼 1 can transition to 𝐼 2 , 𝐷, or 𝑅, as seen in Figure 1.        same scaling factors are used here as well.
+Multiple factors such as the recovery score (𝑟 ) given by (2), the                      The daily probability of progressing and moving back to 𝐼 2 is
+number of days spent in 𝐼 1 (𝑑𝐼1 ), and the availability of hospital                 given by:
+care, determine the next transition.                                                                                                𝑟
+    If hospital beds are available, the agent transitions from 𝐼 1 to 𝐼 2                                        𝑝 (𝐼 3, 𝐼 2 ) =                          (13)
+                                                                                                                                 8 × 𝑑𝐼3
 with a probability given by:
-                                    𝑟 − (𝑘 2 × 𝑑𝐼1 ) + 2                           Agents with higher recovery score have better chances of recov-
-                   𝑝 (𝐼 1, 𝐼 2 ) = 1 −                                  (7)     ering, and hence 𝑝 (𝐼 3, 𝐼 2 ) is proportional to 𝑟 as seen in (13).
-                                              10
-   The probability of transition from 𝐼 1 to 𝐼 2 depends on the recov-
-ery score (𝑟 ) and time spent in state 𝐼 1 (𝑑𝐼1 ). If 𝑟 is high, it is less     4 EXPERIMENTS AND RESULTS
-likely for the agent to move to state 𝐼 2 . If an agent spends more time        In this section we discuss the experiments we have performed with
-in 𝐼 1 , then the probability of transitioning to 𝐼 2 is greater. So, we        agents and the disease model we have described previously.
+                                             𝑟 − (𝑘 2 × 𝑑𝐼1 ) + 2                       Agents with higher recovery score have better chances of recov-
+                    𝑝 (𝐼 1, 𝐼 2 ) = 1 −                                       (7)    ering, and hence 𝑝 (𝐼 3, 𝐼 2 ) is proportional to 𝑟 as seen in (13).
+                                                      10
+    The probability of transition from 𝐼 1 to 𝐼 2 depends on the recov-
+ery score (𝑟 ) and time spent in state 𝐼 1 (𝑑𝐼1 ). If 𝑟 is high, it is less          4 EXPERIMENTS AND RESULTS
+likely for the agent to move to state 𝐼 2 . If an agent spends more time             In this section we discuss the experiments we have performed with
+in 𝐼 1 , then the probability of transitioning to 𝐼 2 is greater. So, we             agents and the disease model we have described previously.
 use both parameters to calculate the probability 𝑝 (𝐼 1, 𝐼 2 ). We use
-a multiplicative constant 𝑘 2 to rescale 𝑑𝐼1 to be in the same range            4.1 Simulation Environment
-as 𝑟 . As this is a probability, and hence should be between 0 and 1,           Our simulation experiments are performed by circular agents in a
-the expression is scaled and offset appropriately.                              2-D enclosed planar environment. The environment scales based
-   However, if a hospital bed is not available, then the agent proba-           on the number of agents. We have performed all our simulation
-bilistically transitions to death, 𝐷, as given by:                              with 20,000 agents. Our simulations run for 160 simulated days,
-                        𝑝 (𝐼 1, 𝐷) = 𝑘 3 × 𝑝 (𝐼 1, 𝐼 2 )                 (8)    where 500 simulation cycles corresponds to 1 simulated day, and
-   Also, if the agent remains in 𝐼 1 for more than 12 days, then it             thus makes for a total 80,000 cycles for one experiment.
-recovers and transitions to 𝑅. This is with a small margin over the                The initial range of values of each agent attribute is presented
-10 days of infectivity indicated by the CDC [8].                                in Table 1. It is of course not possible to claim that these (or any
-                                                                                other) simulation settings precisely describe all real scenarios, but
-   3.3.4 Transitions from 𝐼 2 , the Hospitalized State. An agent in 𝐼 2         wherever possible, we have calibrated the model to be close enough
-can transition to 𝐼 3 , 𝐼 1 , or 𝐷. These transitions also depend on the        to real parameters as known from prior sources [11, 19, 41, 50].
-recovery score (𝑟 ), duration in 𝐼 2 (𝑑𝐼2 ), and the availability of ICU if        For every experiment a population of agents is initiated and
-needed. If ICU care is available, then the agent transitions from 𝐼 2           unique properties are assigned based on the range and distributions
-to 𝐼 3 with a daily probability given by:                                       described in Table 1. Most agents are in the susceptible state (𝑆) ini-
-                                   𝑟 − (𝑘 2 × 𝑑𝐼2 ) + 2                         tially, but a small fraction of agents are in 𝐼 0 and begin propagating
-                   𝑝 (𝐼 2, 𝐼 3 ) = 1 −                             (9)          the disease (see Section 4.2).
-                                            10
-   This equation is very similar to (7), and the scaling is done simi-             Each agent has attributes as described in Section 3.2.1 and the
-larly as well.                                                                  age score and recovery score are calculated using (1) and (2) respec-
-   If ICU care is not available, then the agent transitions to 𝐷 with           tively.
-a probability given by:                                                            In each simulation cycle, every agent is triggered and follows
-                                                                                Brownian motion (as used to model human crowd movement [23,
-                        𝑝 (𝐼 2, 𝐷) = 𝑘 3 × 𝑝 (𝐼 2, 𝐼 3 )                (10)    39]) and updates its location in the environment. Each agent has an
-   The daily probability that the agent transitions to 𝐼 1 and becomes          identical infection range around it. Because of random motion, if
-better is given by:                                                             any susceptible agent comes within this range of an infectious agent,
-                         𝑝 (𝐼 2, 𝐼 1 ) =
-                                            𝑟
-                                                                   (11)         there is a chance that infection can be transferred to the susceptible
-                                         8 × 𝑑𝐼2                                agent. This chance depends upon the level of personal hygiene 𝛽
-   “Prolonged Length-of-stay (PLOS) [in hospital] is associated                 for both agents, as calculated by equation (3). Similarly at every
-with increased mortality and other poor outcomes” [32]. In line                 trigger, each agent’s state transition probabilities are calculated and
-with this, the probability of an agent in 𝐼 2 going back to 𝐼 1 should          updated as described in Section 3.3.
-be inversely proportional to the hospitalized duration (𝑑𝐼2 ), as seen             Given some policies applied in a given day, some of the agent
-in (11).                                                                        behaviors are controlled by said policies. For example, during a
-                                                                                lockdown, the location of the agents is not updated; when social
-    3.3.5 Transitions from 𝐼 3 , the Critical State. An agent in 𝐼 3 can        distancing is observed, an agent’s location is not permitted to be
-either transition to 𝐷 or 𝐼 2 , and this depends on the recovery score          within the infection range of other agents.
-(𝑟 ) and the duration in ICU (𝑑𝐼3 ).                                               To simulate isolation during quarantine we remove agents from
-    The agent transitions to death with an increased probability as             the environment and keep them in a different quarantine environ-
-the time spent in ICU increases; a lower value of recovery score                ment for 14 days. Once they are recovered or upon completion of
-also implies a higher risk of death. Therefore, the daily probability           this duration, they are again sent back to the main environment.
-of dying is given by:                                                           Deceased agents are removed from the environment completely.
-                                         𝑟 − (𝑘 2 × 𝑑𝐼3 ) + 2                   All our simulations not only produce output data, but also can be
-                   𝑝 (𝐼 3, 𝐷) = 1 −                                     (12)    visualized as seen in the Figures 2a, 2b.
-                                                  10
-
+a multiplicative constant 𝑘 2 to rescale 𝑑𝐼1 to be in the same range                 4.1 Simulation Environment
+as 𝑟 . As this is a probability, and hence should be between 0 and 1,                Our simulation experiments are performed by circular agents in a
+the expression is scaled and offset appropriately.                                   2-D enclosed planar environment. The environment scales based
+    However, if a hospital bed is not available, then the agent proba-               on the number of agents. We have performed all our simulation
+bilistically transitions to death, 𝐷, as given by:                                   with 20,000 agents. Our simulations run for 160 simulated days,
+                          𝑝 (𝐼 1, 𝐷) = 𝑘 3 × 𝑝 (𝐼 1, 𝐼 2 )                    (8)    where 500 simulation cycles corresponds to 1 simulated day, and
+    Also, if the agent remains in 𝐼 1 for more than 12 days, then it                 thus makes for a total 80,000 cycles for one experiment.
+recovers and transitions to 𝑅. This is with a small margin over the                     The initial range of values of each agent attribute is presented
+10 days of infectivity indicated by the CDC [8].                                     in Table 1. It is of course not possible to claim that these (or any
+                                                                                     other) simulation settings precisely describe all real scenarios, but
+    3.3.4 Transitions from 𝐼 2 , the Hospitalized State. An agent in 𝐼 2             wherever possible, we have calibrated the model to be close enough
+can transition to 𝐼 3 , 𝐼 1 , or 𝐷. These transitions also depend on the             to real parameters as known from prior sources [11, 19, 41, 50].
+recovery score (𝑟 ), duration in 𝐼 2 (𝑑𝐼2 ), and the availability of ICU if             For every experiment a population of agents is initiated and
+needed. If ICU care is available, then the agent transitions from 𝐼 2                unique properties are assigned based on the range and distributions
+to 𝐼 3 with a daily probability given by:                                            described in Table 1. Most agents are in the susceptible state (𝑆) ini-
+                                             𝑟 − (𝑘 2 × 𝑑𝐼2 ) + 2                    tially, but a small fraction of agents are in 𝐼 0 and begin propagating
+                    𝑝 (𝐼 2, 𝐼 3 ) = 1 −                                       (9)    the disease (see Section 4.2).
+                                                      10
+    This equation is very similar to (7), and the scaling is done simi-                 Each agent has attributes as described in Section 3.2.1 and the
+larly as well.                                                                       age score and recovery score are calculated using (1) and (2) respec-
+    If ICU care is not available, then the agent transitions to 𝐷 with               tively.
+a probability given by:                                                                 In each simulation cycle, every agent is triggered and follows
+                                                                                     Brownian motion (as used to model human crowd movement [23,
+                          𝑝 (𝐼 2, 𝐷) = 𝑘 3 × 𝑝 (𝐼 2, 𝐼 3 )                   (10)    39]) and updates its location in the environment. Each agent has an
+    The daily probability that the agent transitions to 𝐼 1 and becomes              identical infection range around it. Because of random motion, if
+better is given by:                                                                  any susceptible agent comes within this range of an infectious agent,
+                                𝑝 (𝐼 2, 𝐼 1 ) =
+                                                    𝑟
+                                                                             (11)    there is a chance that infection can be transferred to the susceptible
+                                                8 × 𝑑𝐼2                              agent. This chance depends upon the level of personal hygiene 𝛽
+    “Prolonged Length-of-stay (PLOS) [in hospital] is associated                     for both agents, as calculated by equation (3). Similarly at every
+with increased mortality and other poor outcomes” [32]. In line                      trigger, each agent’s state transition probabilities are calculated and
+with this, the probability of an agent in 𝐼 2 going back to 𝐼 1 should               updated as described in Section 3.3.
+be inversely proportional to the hospitalized duration (𝑑𝐼2 ), as seen                  Given some policies applied in a given day, some of the agent
+in (11).                                                                             behaviors are controlled by said policies. For example, during a
+                                                                                     lockdown, the location of the agents is not updated; when social
+    3.3.5 Transitions from 𝐼 3 , the Critical State. An agent in 𝐼 3 can             distancing is observed, an agent’s location is not permitted to be
+either transition to 𝐷 or 𝐼 2 , and this depends on the recovery score               within the infection range of other agents.
+(𝑟 ) and the duration in ICU (𝑑𝐼3 ).                                                    To simulate isolation during quarantine we remove agents from
+    The agent transitions to death with an increased probability as                  the environment and keep them in a different quarantine environ-
+the time spent in ICU increases; a lower value of recovery score                     ment for 14 days. Once they are recovered or upon completion of
+also implies a higher risk of death. Therefore, the daily probability                this duration, they are again sent back to the main environment.
+of dying is given by:                                                                Deceased agents are removed from the environment completely.
+                                             𝑟 − (𝑘 2 × 𝑑𝐼3 ) + 2                    All our simulations not only produce output data, but also can be
+                    𝑝 (𝐼 3, 𝐷) = 1 −                                         (12)    visualized as seen in the Figures 2a, 2b.
+                                                      10
+
 medRxiv preprint doi: https://doi.org/10.1101/2020.09.16.20195826.this version posted October 16, 2020. The copyright holder for this preprint
   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
                                       It is made available under a CC-BY-NC-ND 4.0 International license .
-
-
-
-
    We use the MASON [31] simulation library, a Java simulation                 infected at one time or another. This shows that most agents ( 70%)
 toolkit that scales well with a large number of agents and also helps          progress to the 𝐼 0 (asymptomatic) state but no further, as seen in
 in generating visuals of environment and agents. We used AWS C3                reality as well [36].
@@ -447,10 +406,6 @@ in generating visuals of environment and agents. We used AWS C3                r
                                                                                                              100
 4.2 The Base Case                                                                                                             Infected
                                                                                                               90          Symptomatic
-
-
-
-
                                                                                   Percentage of population
 This corresponds to the unrestricted spread of a contagion through                                                          Recovered
                                                                                                               80            Deceased
@@ -467,10 +422,6 @@ and no lockdowns.                                                               
                                                                   I0
                                                                   I1                                           0
    Percentage of population
-
-
-
-
                               10                                  I2                                                  0    20    40      60    80 100 120 140 160
                                                                   I3
                                                                                                                                          Time (in days)
@@ -479,7 +430,6 @@ and no lockdowns.                                                               
                                6
                                                                                death
                                4
-
                                2                                               4.3 Hygiene and Social Distancing
                                                                                It has been repeatedly said that maintaining personal hygiene and
                                0                                               social distancing are the key to slow down the spread of COVID-19.
@@ -501,10 +451,6 @@ of the population is assigned weak immunity in line with a study
 conducted in the US [18]. To start the onset of infection, we begin                                                                                     Baseline
                                                                                                              14
                                                                                   Percentage of population
-
-
-
-
 with .005% of infected agents already in the system. The incubation                                                                                β- =0.9;α=0.7
 period is kept to a maximum of 14 days.                                                                      12                                    β- =0.7;α=0.9
    In the baseline as well as in other cases, the default hospital
@@ -526,14 +472,10 @@ or other measures, the disease spreads fast, and nearly every agent            i
 in the population is eventually infected, and most subsequently
 recover by day 160. It can also be seen that only about 30% of the                Varying both mean personal hygiene and social distancing ef-
 agents show symptoms even though the entire population was                     ficacy in the range of 0.4 to 0.9, we ran 10 simulations for each
-
+
 medRxiv preprint doi: https://doi.org/10.1101/2020.09.16.20195826.this version posted October 16, 2020. The copyright holder for this preprint
   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
                                       It is made available under a CC-BY-NC-ND 4.0 International license .
-
-
-
-
 pair to understand the peak values and when they occurred. The               It also becomes apparent that once the lockdown is lifted, without
 average peak values and the median of days on which these peaks           any other policy such as increased hygiene level or social distancing,
 occur are shown in Table 2. With increasing mean hygiene 𝛽,      ¯ the    we get a worse peak than the baseline. This implies that a lockdown
@@ -562,7 +504,9 @@ distancing is more important than personal hygiene.                       high l
                                                                                                         25
    0.60   0.40   2.60    0.88   0.21     83   157    146     0.46                                                               Lockdown period
                                                                                                                                        Baseline
-   0.60   0.60   1.14    0.41   0.10    135   158    148     0.13            Percentage of population   20                               κ=0.9
+                                                                             Percentage of population
+   0.60   0.60   1.14    0.41   0.10    135   158    148     0.13                                                                        κ=0.9
+                                                                                                        20
    0.60   0.80   0.02    0.01   0.00     20    18      –     0.00                                                                        κ=0.7
    0.60   0.90   0.01    0.00   0.00     14     –      –     0.00
                                                                                                         15
@@ -580,16 +524,10 @@ distancing is more important than personal hygiene.                       high l
                                                                                                                            Time (in days)
 Table 2: Peak values and deaths for different values of hy-
 giene and social distancing.                                                                            Figure 7: Effects of varying lockdown efficacy
-
-
                                                                                                         10
                                                                                                                                 Lockdown period
 4.4 Lockdowns
                                                                              Percentage of population
-
-
-
-
                                                                                                                                          β- =0.6
 Lockdown is another strategy that has been used in some form                                             8
                                                                                                                                          β- =0.8
@@ -610,28 +548,18 @@ on the infection spread.                                                        
 day 10, with varying efficacy. In Figure 7 we can see that during         Figure 8: Effects of different levels of hygiene during and
 a 30-day lockdown period the infection rises faster with 𝜅 = 0.7          after lockdown with 𝜅 = 0.8; 𝛼 = 0.7.
 compared to tighter and strict lockdown with efficacy 0.9.
-
+
 medRxiv preprint doi: https://doi.org/10.1101/2020.09.16.20195826.this version posted October 16, 2020. The copyright holder for this preprint
   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
                                       It is made available under a CC-BY-NC-ND 4.0 International license .
-
-
-
-
                               10                                                                            7
                                                    Lockdown period                                                  α=0.4
-   Percentage of population
-
-
-
-
-                                                                                 Percentage of population
+   Percentage of population                                                      Percentage of population
                                                    α=0.6                                                            α=0.5
                                                    α=0.8                                                    6       α=0.6
                                8
                                                                                                             5
                                6                                                                            4
-
                                4                                                                            3
                                                                                                             2
                                2
@@ -643,10 +571,6 @@ medRxiv preprint doi: https://doi.org/10.1101/2020.09.16.20195826.this version p
 Figure 9: Effects of different levels of social distancing dur-
 ing and after lockdown with 𝜅 = 0.8; 𝛽¯ = 0.6.                                                              2.5
                                                                                                                         α=0.4
-
-
-
-
                                                                                  Percentage of population
                                                                                                                         α=0.5
                                                                                                                         α=0.6
@@ -661,10 +585,6 @@ We describe this as fractional immunity in certain population.
                                                              Baseline
                               16                               Π=0.2                                            0
    Percentage of population
-
-
-
-
                                                                Π=0.4                                                0     20     40     60    80 100 120 140 160
                               14                               Π=0.6
                                                                Π=0.8                                                                   Time (in days)
@@ -697,26 +617,15 @@ when there are 80% immune agents that we really see an effective              to
 control on the spread of infection.                                           pacity.
    We experimented with varying levels hygiene and social distanc-               Figure 13 shows the percentage of deceased agents. We can see
 ing with 20% and 40% of population being immune.                              that a surge does reduce the number of deceased agents, but not
-
+
 medRxiv preprint doi: https://doi.org/10.1101/2020.09.16.20195826.this version posted October 16, 2020. The copyright holder for this preprint
   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
                                       It is made available under a CC-BY-NC-ND 4.0 International license .
-
-
-
-
                               2.5                                                                                           1.2
-
-
-
-
                                                                                             Percentage of deceased agents
                                         β- =0.4                                                                                          Baseline
                                                                                                                                        50% surge
    Percentage of population
-
-
-
                                         β- =0.6                                                                              1        100% surge
                                2
                                         β- =0.8
@@ -726,7 +635,6 @@ medRxiv preprint doi: https://doi.org/10.1101/2020.09.16.20195826.this version p
                                1
                                                                                                                             0.4
                               0.5                                                                                           0.2
-
                                0                                                                                             0
                                     0         20      40    60     80 100 120 140 160                                             0    20    40     60    80 100 120 140 160
                                                             Time (in days)                                                                          Time (in days)
@@ -736,15 +644,10 @@ medRxiv preprint doi: https://doi.org/10.1101/2020.09.16.20195826.this version p
                                             β- =0.4
                                                                                          100 % surge (𝑏 = 4)
    Percentage of population
-
-
-
-
                                              -
                                             β=0.6
                                0.2           -
                                             β=0.8
-
                               0.15
                                                                                          to capture the unpredictable interactions between members of a so-
                                                                                          ciety, and understand the manner in which COVID-19 may spread
@@ -790,101 +693,92 @@ form [20].                                                                      
 ment of the COVID-19 pandemic in an enclosed population where                                 Society Interface 3 (Feb. 2006), 453–457. https://doi.org/10.1098/rsif.2006.0112
                                                                                           [4] Julien Arino and Stéphanie Portet. 2020. A simple model of COVID-19. Infectious
 agents represent humans. This model is thus a bottom-up approach                              Disease Modelling 5 (2020), 309–315. https://doi.org/10.1016/j.idm.2020.04.002
-
+
 medRxiv preprint doi: https://doi.org/10.1101/2020.09.16.20195826.this version posted October 16, 2020. The copyright holder for this preprint
-  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
-                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+    (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                                It is made available under a CC-BY-NC-ND 4.0 International license .
+ [5] Ben Ashby and Emily Bruns. 2018. The evolution of juvenile susceptibility to               Joseph T. Wu, George F. Gao, Benjamin J. Cowling, Bo Yang, Gabriel M. Leung,
+     infectious disease. Proc. R. Soc. B. 285, 20180844 (June 2018). https://doi.org/10.        and Zijian Feng. 2020. Early Transmission Dynamics in Wuhan, China, of Novel
+     1098/rspb.2018.0844                                                                        Coronavirus–Infected Pneumonia. New England Journal of Medicine 382, 13
+ [6] Yan Bai, Lingsheng Yao, Tao Wei, Fei Tian, Dong-Yan Jin, Lijuan Chen, and Meiyun           (2020), 1199–1207. https://doi.org/10.1056/NEJMoa2001316 PMID: 31995857.
+     Wang. 2020. Presumed Asymptomatic Carrier Transmission of COVID-19. JAMA              [30] Ying Liu, Albert A Gayle, Annelies Wilder-Smith, and Joacim Rocklöv. 2020. The
+     323, 14 (04 2020), 1406–1407. https://doi.org/10.1001/jama.2020.2565                       reproductive number of COVID-19 is higher compared to SARS coronavirus.
+ [7] Fred Brauer, Carlos Castillo-Chavez, and Zhilan Feng. 2019. Mathematical Models            Journal of travel medicine (2020).
+     in Epidemiology. Springer.                                                            [31] Sean Luke, Claudio Cioffi-Revilla, Liviu Panait, Keith Sullivan, and Gabriel Balan.
+ [8] CDC. 2020. Duration of Isolation and Precautions for Adults with COVID-19.                 2005. MASON: A Multiagent Simulation Environment. Simulation 81, 7 (2005),
+     (2020). https://www.cdc.gov/coronavirus/2019-ncov/hcp/duration-isolation.                  517–527.
+     html.                                                                                 [32] Braulio A. Marfil-Garza, Pablo F. Belaunzarán-Zamudio, Alfonso Gulias-Herrero,
+ [9] CDC. 2020. Symptoms of Coronavirus. (2020). https://www.cdc.gov/coronavirus/               Antonio Camiro Zuñiga, Yanink Caro-Vega, David Kershenobich-Stalnikowitz,
+     2019-ncov/symptoms-testing/symptoms.html.                                                  and José Sifuentes-Osornio. 2018. Risk factors associated with prolonged hos-
+[10] Erik Cuevas. 2020. An agent-based model to evaluate the COVID-19 transmission              pital length-of-stay: 18-year retrospective study of hospitalizations in a ter-
+     risks in facilities. Computers in Biology and Medicine 121 (2020), 103827. https:          tiary healthcare center in Mexico. PLOS ONE 13, 11 (11 2018), 1–14. https:
+     //doi.org/10.1016/j.compbiomed.2020.103827                                                 //doi.org/10.1371/journal.pone.0207203
+[11] Nicholas G. Davies, Petra Klepac, Yang Liu, Kiesha Prem, Mark Jit, CMMID              [33] Florian Miksch, Christoph Urach, Patrick Einzinger, and Günther Zauner. 2014. A
+     COVID-19 Working Group, and Rosalind M. Eggo. 2020. Age-dependent effects                  Flexible Agent-Based Framework for Infectious Disease Modeling. In Information
+     in the transmission and control of COVID-19 epidemics. Nature Medicine (June               and Communication Technology–EurAsia Conference (ICT-EurAsia 2014), Linawati,
+     2020). https://doi.org/10.1038/s41591-020-0962-9                                           Made Sudiana Mahendra, Erich J. Neuhold, A. Min Tjoa, and Ilsun You (Eds.).
+[12] Carlos del Rio and Preeti N. Malani. 2020. COVID-19—New Insights on a Rapidly              Springer, Berlin, Heidelberg, 36–45. https://doi.org/10.1007/978-3-642-55032-4_4
+     Changing Epidemic. JAMA 323, 14 (04 2020), 1339–1340. https://doi.org/10.1001/        [34] New America. 2020. Pandemic Response Repository. (2020).                        https://
+     jama.2020.3072                                                                             newamericafoundation.github.io/pandemic-response-repository/.
+[13] Thomas C. Erren. 2010. Shift work, cancer and “white-box” epidemiology: Asso-         [35] Liliana Perez and Suzana Dragicevic. 2009. An agent-based approach for mod-
+     ciation and causation. Epidemiologic Perspectives & Innovations 7, 11 (Nov. 2010).         eling dynamics of contagious disease spread. International Journal of Health
+     https://doi.org/10.1186/1742-5573-7-11                                                     Geographics 8 (2009). https://doi.org/10.1186/1476-072X-8-50
+[14] Zhilan Feng. 2007. Final and peak epidemic sizes for SEIR models with quarantine      [36] Piero Poletti, Marcello Tirani, Danilo Cereda, Filippo Trentini, Giorgio Guzzetta,
+     and isolation. Mathematical Biosciences and Engineering 4 (2007), 675–686. https:          Giuliana Sabatino, Valentina Marziano, Ambra Castrofino, Francesca Grosso,
+     //doi.org/10.3934/mbe.2007.4.675                                                           Gabriele Del Castillo, et al. 2020. Probability of symptoms and critical disease
+[15] Ian D. Gardner. 1980. The Effect of Aging on Susceptibility to Infection. Reviews of       after SARS-CoV-2 infection. arXiv preprint arXiv:2006.08471 (2020).
+     Infectious Diseases 2, 5 (09 1980), 801–810. https://doi.org/10.1093/clinids/2.5.801  [37] B. Aditya Prakash, Lada Adamic, Theodore Iwashyna, Hanghang Tong, and Chris-
+[16] Youyang Gu. 2020. COVID-19 Projections Using Machine Learning. (2020).                     tos Faloutsos. 2013. Fractional immunization in networks. In SIAM International
+     https://covid19-projections.com/.                                                          Conference on Data Mining 2013 (SMD 2013). Society for Industrial and Applied
+[17] Brian Hanley. 2006. An object simulation model for modeling hypothetical                   Mathematics Publications, 659–667. https://doi.org/10.1137/1.9781611972832.73
+     disease epidemics—EpiFlex. Theoretical Biology and Medical Modelling 3 (Aug.          [38] Haley E. Randolph and Luis B. Barreiro. 2020. Herd Immunity: Understanding
+     2006). https://doi.org/10.1186/1742-4682-3-32                                              COVID-19. Immunity 52, 5 (2020), 737–741. https://doi.org/10.1016/j.immuni.
+[18] Rafael Harpaz, Rebecca M. Dahl, and Kathleen L. Dooling. 2016. Prevalence of               2020.04.012
+     Immunosuppression Among US Adults, 2013. JAMA 316, 23 (12 2016), 2547–2548.           [39] Pawel Romanczuk, Iain D. Couzin, and Lutz Schimansky-Geier. 2009. Collective
+     https://doi.org/10.1001/jama.2016.16477                                                    motion due to individual escape and pursuit response. Physical Review Letters
+[19] Tamar Hermesh, Bruno Moltedo, Carolina B. López, and Thomas M. Moran.                      102, 1 (2009), 010602. https://doi.org/10.1103/PhysRevLett.102.010602
+     2010. Buying time—the immune system determinants of the incubation period             [40] Aki Sakurai, Toshiharu Sasaki, Shigeo Kato, Masamichi Hayashi, Sei-ichiro
+     to respiratory viruses. Viruses 2, 11 (Nov. 2010), 2541–2558. https://doi.org/10.          Tsuzuki, Takuma Ishihara, Mitsunaga Iwata, Zenichi Morise, and Yohei Doi.
+     3390/v2112541                                                                              2020. Natural History of Asymptomatic SARS-CoV-2 Infection. New England
+[20] Elizabeth Hunter, Brian Mac Namee, and John Kelleher. 2018. A Comparison of                Journal of Medicine (2020). https://doi.org/10.1056/NEJMc2013020
+     Agent-Based Models and Equation Based Models for Infectious Disease Epidemi-          [41] Adekunle Sanyaolu, Chuku Okorie, Aleksandra Marinkovic, Risha Patidar, Kokab
+     ology. In 26th AIAI Irish Conference on Artificial Intelligence and Cognitive Science      Younis, Priyank Desai, Zaheeda Hosein, Inderbir Padda, Jasmine Mangat, and
+     (AICS 2018). 33–44. http://ceur-ws.org/Vol-2259/aics_5.pdf.                                Mohsin Altaf. 2020. Comorbidity and its Impact on Patients with COVID-
+[21] Elizabeth Hunter, Brian Mac Namee, and John Kelleher. 2018. An open-data-                  19. SN Comprehensive Clinical Medicine (25 Jun 2020). https://doi.org/10.1007/
+     driven agent-based model to simulate infectious disease outbreaks. PLoS ONE                s42399-020-00363-4
+     (Dec. 2018). https://doi.org/10.1371/journal.pone.0208775                             [42] Emily Schueller, Eili Klein, Katie Tseng, Geetanjali Kapoor, Jyoti Joshi, Aditi
+[22] Akshay Jindal and Shrisha Rao. 2017. Agent-Based Modeling and Simulation                   Sriram, Arindam Nandi, and Ramanan Laxminarayan. 2020. COVID-19 in India:
+     of Mosquito-Borne Disease Transmission. In Sixteenth International Conference              Potential Impact of the Lockdown and Other Longer-Term Policies. (2020).
+     on Autonomous Agents and Multiagent Systems (AAMAS 2017). São Paulo, Brazil,               https://bit.ly/3jMJfGR.
+     426–435.                                                                              [43] Alexander F. Siegenfeld, Nassim N. Taleb, and Yaneer Bar-Yam. 2020. Opinion:
+[23] Anders Johansson, Dirk Helbing, Habib Z. Al-Abideen, and Salim Al-Bosta. 2008.             What models can and cannot tell us about COVID-19. Proceedings of the National
+     From crowd dynamics to crowd safety: a video-based analysis. Advances in Com-              Academy of Sciences (2020). https://doi.org/10.1073/pnas.2011542117
+     plex Systems 11, 04 (2008), 497–527. https://doi.org/10.1142/S0219525908001854        [44] Petrônio C. L. Silva, Paulo V. C. Batista, Hélder S. Lima, Marcos A. Alves, Fred-
+[24] Matt J. Keeling and Pejman Rohani. 2007. Modeling Infectious Diseases in Humans            erico G. Guimarāes, and Rodrigo C. P. Silva. 2020. COVID-ABS: An Agent-
+     and Animals. Princeton University Press.                                                   Based Model of COVID-19 Epidemic to Simulate Health and Economic Effects
+[25] Khaled M. Khalil, M. Abdel-Aziz, Taymour T. Nazmy, and Abdel-Badeeh M.                     of Social Distancing Interventions. Chaos, Solitons & Fractals 139 (Oct. 2020).
+     Salem. 2010. An agent-based modeling for pandemic influenza in Egypt. In The               https://doi.org/10.1016/j.chaos.2020.110088
+     7th International Conference on Informatics and Systems (INFOS 2010). Cairo, Egypt.   [45] Juliette Stehlé, Nicolas Voirin, Alain Barrat, Ciro Cattuto, Vittoria Colizza, Lorenzo
+     https://doi.org/10.1007/978-3-642-25755-1_11                                               Isella, Corinne Régis, Jean-Francois Pinton, Nagham Khanafer, Wouter Van den
+[26] Soyoung Kim, Jonggul Lee, and Eunok Jung. 2017. Mathematical model of                      Broeck, and Philippe Vanhems. 2011. Simulation of an SEIR infectious disease
+     transmission dynamics and optimal control strategies for 2009 A/H1N1 influenza             model on the dynamic contact network of conference attendees. BMC Medicine
+     in the Republic of Korea. Journal of Theoretical Biology 412 (2017), 74–85. https:         9 (2011), 87. https://doi.org/10.1186/1741-7015-9-8
+     //doi.org/10.1016/j.jtbi.2016.09.025                                                  [46] Chengjun Sun and Ying-Hen Hsieh. 2010. Global analysis of an SEIR model with
+[27] Carsten Kirkeby, Tariq Halasa, Maya Gussmann, Nils Toft, and Kaare Græsbøll.               varying population size and vaccination. Applied Mathematical Modelling 34, 10
+     2017. Methods for estimating disease transmission rates: Evaluating the precision          (2010), 2685–2697. https://doi.org/10.1016/j.apm.2009.12.005
+     of Poisson regression and two novel methods. Scientific Reports 7 (Aug. 2017).        [47] Melissa Tracy, Magdalena Cerdá, and Katherine M. Keyes. 2018. Agent-Based
+     https://doi.org/10.1038/s41598-017-09209-x                                                 Modeling in Public Health: Current Applications and Future Directions. An-
+[28] John M. Last (Ed.). 2007. A Dictionary of Public Heath. Oxford University Press.           nual Review of Public Health 39, 1 (2018), 77–94. https://doi.org/10.1146/
+[29] Qun Li, Xuhua Guan, Peng Wu, Xiaoye Wang, Lei Zhou, Yeqing Tong, Ruiqi Ren,                annurev-publhealth-040617-014317 PMID:29328870.
+     Kathy S.M. Leung, Eric H.Y. Lau, Jessica Y. Wong, Xuesen Xing, Nijuan Xiang,          [48] Victor Virlogeux, Vicky J. Fang, Joseph T. Wu, Lai-Ming Ho, J. S. Malik
+     Yang Wu, Chao Li, Qi Chen, Dan Li, Tian Liu, Jing Zhao, Man Liu, Wenxiao Tu,               Peiris, Gabriel M. Leung, and Benjamin J. Cowling. 2015. Brief Report:
+     Chuding Chen, Lianmei Jin, Rui Yang, Qi Wang, Suhua Zhou, Rui Wang, Hui                    Incubation Period Duration and Severity of Clinical Disease Following Se-
+     Liu, Yinbo Luo, Yuan Liu, Ge Shao, Huan Li, Zhongfa Tao, Yang Yang, Zhiqiang               vere Acute Respiratory Syndrome Coronavirus Infection. Epidemiology 26,
+     Deng, Boxi Liu, Zhitao Ma, Yanping Zhang, Guoqing Shi, Tommy T.Y. Lam,                     5 (2015). https://journals.lww.com/epidem/Fulltext/2015/09000/Brief_Report_
 
-
-
-
- [5] Ben Ashby and Emily Bruns. 2018. The evolution of juvenile susceptibility to                   Joseph T. Wu, George F. Gao, Benjamin J. Cowling, Bo Yang, Gabriel M. Leung,
-     infectious disease. Proc. R. Soc. B. 285, 20180844 (June 2018). https://doi.org/10.            and Zijian Feng. 2020. Early Transmission Dynamics in Wuhan, China, of Novel
-     1098/rspb.2018.0844                                                                            Coronavirus–Infected Pneumonia. New England Journal of Medicine 382, 13
- [6] Yan Bai, Lingsheng Yao, Tao Wei, Fei Tian, Dong-Yan Jin, Lijuan Chen, and Meiyun               (2020), 1199–1207. https://doi.org/10.1056/NEJMoa2001316 PMID: 31995857.
-     Wang. 2020. Presumed Asymptomatic Carrier Transmission of COVID-19. JAMA                [30]   Ying Liu, Albert A Gayle, Annelies Wilder-Smith, and Joacim Rocklöv. 2020. The
-     323, 14 (04 2020), 1406–1407. https://doi.org/10.1001/jama.2020.2565                           reproductive number of COVID-19 is higher compared to SARS coronavirus.
- [7] Fred Brauer, Carlos Castillo-Chavez, and Zhilan Feng. 2019. Mathematical Models                Journal of travel medicine (2020).
-     in Epidemiology. Springer.                                                              [31]   Sean Luke, Claudio Cioffi-Revilla, Liviu Panait, Keith Sullivan, and Gabriel Balan.
- [8] CDC. 2020. Duration of Isolation and Precautions for Adults with COVID-19.                     2005. MASON: A Multiagent Simulation Environment. Simulation 81, 7 (2005),
-     (2020). https://www.cdc.gov/coronavirus/2019-ncov/hcp/duration-isolation.                      517–527.
-     html.                                                                                   [32]   Braulio A. Marfil-Garza, Pablo F. Belaunzarán-Zamudio, Alfonso Gulias-Herrero,
- [9] CDC. 2020. Symptoms of Coronavirus. (2020). https://www.cdc.gov/coronavirus/                   Antonio Camiro Zuñiga, Yanink Caro-Vega, David Kershenobich-Stalnikowitz,
-     2019-ncov/symptoms-testing/symptoms.html.                                                      and José Sifuentes-Osornio. 2018. Risk factors associated with prolonged hos-
-[10] Erik Cuevas. 2020. An agent-based model to evaluate the COVID-19 transmission                  pital length-of-stay: 18-year retrospective study of hospitalizations in a ter-
-     risks in facilities. Computers in Biology and Medicine 121 (2020), 103827. https:              tiary healthcare center in Mexico. PLOS ONE 13, 11 (11 2018), 1–14. https:
-     //doi.org/10.1016/j.compbiomed.2020.103827                                                     //doi.org/10.1371/journal.pone.0207203
-[11] Nicholas G. Davies, Petra Klepac, Yang Liu, Kiesha Prem, Mark Jit, CMMID                [33]   Florian Miksch, Christoph Urach, Patrick Einzinger, and Günther Zauner. 2014. A
-     COVID-19 Working Group, and Rosalind M. Eggo. 2020. Age-dependent effects                      Flexible Agent-Based Framework for Infectious Disease Modeling. In Information
-     in the transmission and control of COVID-19 epidemics. Nature Medicine (June                   and Communication Technology–EurAsia Conference (ICT-EurAsia 2014), Linawati,
-     2020). https://doi.org/10.1038/s41591-020-0962-9                                               Made Sudiana Mahendra, Erich J. Neuhold, A. Min Tjoa, and Ilsun You (Eds.).
-[12] Carlos del Rio and Preeti N. Malani. 2020. COVID-19—New Insights on a Rapidly                  Springer, Berlin, Heidelberg, 36–45. https://doi.org/10.1007/978-3-642-55032-4_4
-     Changing Epidemic. JAMA 323, 14 (04 2020), 1339–1340. https://doi.org/10.1001/          [34]   New America. 2020. Pandemic Response Repository. (2020).                        https://
-     jama.2020.3072                                                                                 newamericafoundation.github.io/pandemic-response-repository/.
-[13] Thomas C. Erren. 2010. Shift work, cancer and “white-box” epidemiology: Asso-           [35]   Liliana Perez and Suzana Dragicevic. 2009. An agent-based approach for mod-
-     ciation and causation. Epidemiologic Perspectives & Innovations 7, 11 (Nov. 2010).             eling dynamics of contagious disease spread. International Journal of Health
-     https://doi.org/10.1186/1742-5573-7-11                                                         Geographics 8 (2009). https://doi.org/10.1186/1476-072X-8-50
-[14] Zhilan Feng. 2007. Final and peak epidemic sizes for SEIR models with quarantine        [36]   Piero Poletti, Marcello Tirani, Danilo Cereda, Filippo Trentini, Giorgio Guzzetta,
-     and isolation. Mathematical Biosciences and Engineering 4 (2007), 675–686. https:              Giuliana Sabatino, Valentina Marziano, Ambra Castrofino, Francesca Grosso,
-     //doi.org/10.3934/mbe.2007.4.675                                                               Gabriele Del Castillo, et al. 2020. Probability of symptoms and critical disease
-[15] Ian D. Gardner. 1980. The Effect of Aging on Susceptibility to Infection. Reviews of           after SARS-CoV-2 infection. arXiv preprint arXiv:2006.08471 (2020).
-     Infectious Diseases 2, 5 (09 1980), 801–810. https://doi.org/10.1093/clinids/2.5.801    [37]   B. Aditya Prakash, Lada Adamic, Theodore Iwashyna, Hanghang Tong, and Chris-
-[16] Youyang Gu. 2020. COVID-19 Projections Using Machine Learning. (2020).                         tos Faloutsos. 2013. Fractional immunization in networks. In SIAM International
-     https://covid19-projections.com/.                                                              Conference on Data Mining 2013 (SMD 2013). Society for Industrial and Applied
-[17] Brian Hanley. 2006. An object simulation model for modeling hypothetical                       Mathematics Publications, 659–667. https://doi.org/10.1137/1.9781611972832.73
-     disease epidemics—EpiFlex. Theoretical Biology and Medical Modelling 3 (Aug.            [38]   Haley E. Randolph and Luis B. Barreiro. 2020. Herd Immunity: Understanding
-     2006). https://doi.org/10.1186/1742-4682-3-32                                                  COVID-19. Immunity 52, 5 (2020), 737–741. https://doi.org/10.1016/j.immuni.
-[18] Rafael Harpaz, Rebecca M. Dahl, and Kathleen L. Dooling. 2016. Prevalence of                   2020.04.012
-     Immunosuppression Among US Adults, 2013. JAMA 316, 23 (12 2016), 2547–2548.             [39]   Pawel Romanczuk, Iain D. Couzin, and Lutz Schimansky-Geier. 2009. Collective
-     https://doi.org/10.1001/jama.2016.16477                                                        motion due to individual escape and pursuit response. Physical Review Letters
-[19] Tamar Hermesh, Bruno Moltedo, Carolina B. López, and Thomas M. Moran.                          102, 1 (2009), 010602. https://doi.org/10.1103/PhysRevLett.102.010602
-     2010. Buying time—the immune system determinants of the incubation period               [40]   Aki Sakurai, Toshiharu Sasaki, Shigeo Kato, Masamichi Hayashi, Sei-ichiro
-     to respiratory viruses. Viruses 2, 11 (Nov. 2010), 2541–2558. https://doi.org/10.              Tsuzuki, Takuma Ishihara, Mitsunaga Iwata, Zenichi Morise, and Yohei Doi.
-     3390/v2112541                                                                                  2020. Natural History of Asymptomatic SARS-CoV-2 Infection. New England
-[20] Elizabeth Hunter, Brian Mac Namee, and John Kelleher. 2018. A Comparison of                    Journal of Medicine (2020). https://doi.org/10.1056/NEJMc2013020
-     Agent-Based Models and Equation Based Models for Infectious Disease Epidemi-            [41]   Adekunle Sanyaolu, Chuku Okorie, Aleksandra Marinkovic, Risha Patidar, Kokab
-     ology. In 26th AIAI Irish Conference on Artificial Intelligence and Cognitive Science          Younis, Priyank Desai, Zaheeda Hosein, Inderbir Padda, Jasmine Mangat, and
-     (AICS 2018). 33–44. http://ceur-ws.org/Vol-2259/aics_5.pdf.                                    Mohsin Altaf. 2020. Comorbidity and its Impact on Patients with COVID-
-[21] Elizabeth Hunter, Brian Mac Namee, and John Kelleher. 2018. An open-data-                      19. SN Comprehensive Clinical Medicine (25 Jun 2020). https://doi.org/10.1007/
-     driven agent-based model to simulate infectious disease outbreaks. PLoS ONE                    s42399-020-00363-4
-     (Dec. 2018). https://doi.org/10.1371/journal.pone.0208775                               [42]   Emily Schueller, Eili Klein, Katie Tseng, Geetanjali Kapoor, Jyoti Joshi, Aditi
-[22] Akshay Jindal and Shrisha Rao. 2017. Agent-Based Modeling and Simulation                       Sriram, Arindam Nandi, and Ramanan Laxminarayan. 2020. COVID-19 in India:
-     of Mosquito-Borne Disease Transmission. In Sixteenth International Conference                  Potential Impact of the Lockdown and Other Longer-Term Policies. (2020).
-     on Autonomous Agents and Multiagent Systems (AAMAS 2017). São Paulo, Brazil,                   https://bit.ly/3jMJfGR.
-     426–435.                                                                                [43]   Alexander F. Siegenfeld, Nassim N. Taleb, and Yaneer Bar-Yam. 2020. Opinion:
-[23] Anders Johansson, Dirk Helbing, Habib Z. Al-Abideen, and Salim Al-Bosta. 2008.                 What models can and cannot tell us about COVID-19. Proceedings of the National
-     From crowd dynamics to crowd safety: a video-based analysis. Advances in Com-                  Academy of Sciences (2020). https://doi.org/10.1073/pnas.2011542117
-     plex Systems 11, 04 (2008), 497–527. https://doi.org/10.1142/S0219525908001854          [44]   Petrônio C. L. Silva, Paulo V. C. Batista, Hélder S. Lima, Marcos A. Alves, Fred-
-[24] Matt J. Keeling and Pejman Rohani. 2007. Modeling Infectious Diseases in Humans                erico G. Guimarāes, and Rodrigo C. P. Silva. 2020. COVID-ABS: An Agent-
-     and Animals. Princeton University Press.                                                       Based Model of COVID-19 Epidemic to Simulate Health and Economic Effects
-[25] Khaled M. Khalil, M. Abdel-Aziz, Taymour T. Nazmy, and Abdel-Badeeh M.                         of Social Distancing Interventions. Chaos, Solitons & Fractals 139 (Oct. 2020).
-     Salem. 2010. An agent-based modeling for pandemic influenza in Egypt. In The                   https://doi.org/10.1016/j.chaos.2020.110088
-     7th International Conference on Informatics and Systems (INFOS 2010). Cairo, Egypt.     [45]   Juliette Stehlé, Nicolas Voirin, Alain Barrat, Ciro Cattuto, Vittoria Colizza, Lorenzo
-     https://doi.org/10.1007/978-3-642-25755-1_11                                                   Isella, Corinne Régis, Jean-Francois Pinton, Nagham Khanafer, Wouter Van den
-[26] Soyoung Kim, Jonggul Lee, and Eunok Jung. 2017. Mathematical model of                          Broeck, and Philippe Vanhems. 2011. Simulation of an SEIR infectious disease
-     transmission dynamics and optimal control strategies for 2009 A/H1N1 influenza                 model on the dynamic contact network of conference attendees. BMC Medicine
-     in the Republic of Korea. Journal of Theoretical Biology 412 (2017), 74–85. https:             9 (2011), 87. https://doi.org/10.1186/1741-7015-9-8
-     //doi.org/10.1016/j.jtbi.2016.09.025                                                    [46]   Chengjun Sun and Ying-Hen Hsieh. 2010. Global analysis of an SEIR model with
-[27] Carsten Kirkeby, Tariq Halasa, Maya Gussmann, Nils Toft, and Kaare Græsbøll.                   varying population size and vaccination. Applied Mathematical Modelling 34, 10
-     2017. Methods for estimating disease transmission rates: Evaluating the precision              (2010), 2685–2697. https://doi.org/10.1016/j.apm.2009.12.005
-     of Poisson regression and two novel methods. Scientific Reports 7 (Aug. 2017).          [47]   Melissa Tracy, Magdalena Cerdá, and Katherine M. Keyes. 2018. Agent-Based
-     https://doi.org/10.1038/s41598-017-09209-x                                                     Modeling in Public Health: Current Applications and Future Directions. An-
-[28] John M. Last (Ed.). 2007. A Dictionary of Public Heath. Oxford University Press.               nual Review of Public Health 39, 1 (2018), 77–94. https://doi.org/10.1146/
-[29] Qun Li, Xuhua Guan, Peng Wu, Xiaoye Wang, Lei Zhou, Yeqing Tong, Ruiqi Ren,                    annurev-publhealth-040617-014317 PMID:29328870.
-     Kathy S.M. Leung, Eric H.Y. Lau, Jessica Y. Wong, Xuesen Xing, Nijuan Xiang,            [48]   Victor Virlogeux, Vicky J. Fang, Joseph T. Wu, Lai-Ming Ho, J. S. Malik
-     Yang Wu, Chao Li, Qi Chen, Dan Li, Tian Liu, Jing Zhao, Man Liu, Wenxiao Tu,                   Peiris, Gabriel M. Leung, and Benjamin J. Cowling. 2015. Brief Report:
-     Chuding Chen, Lianmei Jin, Rui Yang, Qi Wang, Suhua Zhou, Rui Wang, Hui                        Incubation Period Duration and Severity of Clinical Disease Following Se-
-     Liu, Yinbo Luo, Yuan Liu, Ge Shao, Huan Li, Zhongfa Tao, Yang Yang, Zhiqiang                   vere Acute Respiratory Syndrome Coronavirus Infection. Epidemiology 26,
-     Deng, Boxi Liu, Zhitao Ma, Yanping Zhang, Guoqing Shi, Tommy T.Y. Lam,                         5 (2015). https://journals.lww.com/epidem/Fulltext/2015/09000/Brief_Report_
-
 medRxiv preprint doi: https://doi.org/10.1101/2020.09.16.20195826.this version posted October 16, 2020. The copyright holder for this preprint
-  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
-                                      It is made available under a CC-BY-NC-ND 4.0 International license .
-
-
-
-
-     _Incubation_Period_Duration_and.7.aspx                                           [50] WHO. 2020. European Health Information Gateway. (2020). https://gateway.euro.
-[49] Emilia Vynnycky and Richard White. 2010. An Introduction to Infectious Disease        who.int/en/indicators/hfa_478-5060-acute-care-hospital-beds-per-100-000/.
+    (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                            It is made available under a CC-BY-NC-ND 4.0 International license .
+     _Incubation_Period_Duration_and.7.aspx                                         [50] WHO. 2020. European Health Information Gateway. (2020). https://gateway.euro.
+[49] Emilia Vynnycky and Richard White. 2010. An Introduction to Infectious Disease      who.int/en/indicators/hfa_478-5060-acute-care-hospital-beds-per-100-000/.
      Modelling. Oxford University Press, USA.
-

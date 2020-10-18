@@ -2,64 +2,36 @@ medRxiv preprint doi: https://doi.org/10.1101/2020.10.14.20212381.this version p
 preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
                                                                perpetuity.
                                   It is made available under a CC-BY-NC-ND 4.0 International license .
-
-
-
-
         shinyCurves, a shiny web application to analyse multisource
         qPCR amplification data: a COVID 19 case study
-
         Olaechea-Lázaro S.1, García-Santisteban I.1,2, Pineda JR.3,4, Badiola I.4, Alonso S.1,
         Bilbao JR.*1,2, Fernandez-Jimenez N.*1,2
         *equally contributed
-
-
         1
-        Department of Genetics, Physical Anthropology and Animal Physiology, University of the
+          Department of Genetics, Physical Anthropology and Animal Physiology, University of the
         Basque Country, Barrio Sarriena s/n 48940 Leioa, Spain
         2
-            Biocruces-Bizkaia Health Research Institute, Plaza de Cruces, 48903 Barakaldo, Spain
+          Biocruces-Bizkaia Health Research Institute, Plaza de Cruces, 48903 Barakaldo, Spain
         3
-            Achucarro Basque Center for Neuroscience, Barrio Sarriena s/n 48940 Leioa, Spain
+          Achucarro Basque Center for Neuroscience, Barrio Sarriena s/n 48940 Leioa, Spain
         4
-        Department of Cell Biology and Histology, University of the Basque Country, Barrio
+          Department of Cell Biology and Histology, University of the Basque Country, Barrio
         Sarriena s/n 48940 Leioa, Spain
-
-
-
-
         Correspondence should be addressed to:
-
         Nora Fernandez-Jimenez, PhD
-
         nora.fernandez@ehu.eus
-
         Jose Ramon Bilbao, PhD
-
         joseramon.bilabo@ehu.eus
-
-
         University of the Basque Country - UPV/EHU
-
         Faculty of Medicine and Nursing
-
         Barrio Sarriena s/n 48940 Leioa, Spain
-
-
         tel.: (+34) 94 601 2909
+   NOTE: This preprint reports new research that has not been certified by peer review and should not be used to guide clinical practice.
 
-
-
-    NOTE: This preprint reports new research that has not been certified by peer review and should not be used to guide clinical practice.
-
 medRxiv preprint doi: https://doi.org/10.1101/2020.10.14.20212381.this version posted October 16, 2020. The copyright holder for this
 preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
                                                                perpetuity.
                                   It is made available under a CC-BY-NC-ND 4.0 International license .
-
-
-
-
         Abstract
         Summary: Quantitative, reverse transcription polymerase chain reaction (qRT-PCR) has
         been the gold-standard tool for viral detection during the SARS-CoV-2 pandemic.
@@ -70,19 +42,14 @@ preprint (which was not certified by peer review) is the author/funder, who has 
         format. Furthermore, our automated system allows the classification of the results as well
         as the plot of both amplification and melting curves. Altogether, our web application is an
         automated qPCR analysis resource available to the research community.
-
-        Availability:      The     shinyCurves        web      application      to   analyze      multisource       qPCR
+        Availability:        The       shinyCurves       web     application    to   analyze       multisource     qPCR
         amplification data is publicly available under CC license ( CC BY-NC-SA 4.0) at
         https://biosol.shinyapps.io/shinycurves/ and https://github.com/biosol/shinyCurves.
-
+
 medRxiv preprint doi: https://doi.org/10.1101/2020.10.14.20212381.this version posted October 16, 2020. The copyright holder for this
 preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
                                                                perpetuity.
                                   It is made available under a CC-BY-NC-ND 4.0 International license .
-
-
-
-
         1. Introduction
         Quantitative, reverse transcription polymerase chain reaction (qRT-PCR) is a widely used
         technique for the detection and quantification of mRNA. Currently, with the spread of
@@ -92,7 +59,6 @@ preprint (which was not certified by peer review) is the author/funder, who has 
         healthcare providers rely on automatized detection procedures like the COBAS 6800
         system (Hoffmann-La Roche) that makes use of a proprietary software and offers limited
         parameter setting-up (or control).
-
         In this context, following WHO recommendations, research laboratories world-wide are
         developing alternative diagnostic protocols that do not depend on commercial kits and
         their accompanying software. Thus, researchers need to choose from a wide variety of
@@ -103,7 +69,6 @@ preprint (which was not certified by peer review) is the author/funder, who has 
         irrespective of the protocol or equipment used. Additionally , in order to discard samples
         with unspecific amplification products, a software for accurate qRT-PCR analysis should
         allow the inspection of amplification and melting curves.
-
         Herein we present shinyCurves, a Shiny-based, user-friendly application that is able to
         process qRT-PCR amplification raw data obtained with either fluorescent probes or
         intercalating dyes in different qRT-PCR systems. Specifically, when attempting to detect
@@ -114,39 +79,28 @@ preprint (which was not certified by peer review) is the author/funder, who has 
         With the hope that our application can be useful for many laboratories in the current
         pandemic, we provide shinyCurves as a free resource applicable to the detection of viral
         infections. A Covid-19 toy dataset is also provided as a practical example.
-
         2. Implementation
-
         shinyCurves is designed for users with limited or no programming experience who wish
         to analyse qRT-PCR data in a simple and efficient manner. The application was
         completely written using R (R Core Team, 2020) in combination with the ‘shiny’ package
         (Chang et al., 2020), and can be found in the shinyapps.io repository as a web
         application (https://biosol.shinyapps.io/shinycurves/). The source code can be freely
         downloaded from the GitHub repository https://github.com/biosol/shinyCurves. Analysis
-
+
 medRxiv preprint doi: https://doi.org/10.1101/2020.10.14.20212381.this version posted October 16, 2020. The copyright holder for this
 preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
                                                                perpetuity.
                                   It is made available under a CC-BY-NC-ND 4.0 International license .
-
-
-
-
         tables are processed by ‘data.table’ (Dowle and Srinivasan, 2018) and ‘dplyr’ (Wickham
         et al., 2020) due to their high efficiency, and plots are generated using ‘ggplot2’
         (Wickham, 2016) and ‘plotly‘ (Sievert, 2020). Specifically, to plot melting curves the
         ‘qpcR’ R package (Spiess, 2018) is invoked.
-
         Raw data can be uploaded directly in different file formats: csv, xlsx or xls generated in
         two widely used qPCR systems, in particular the BioRad and Applied Biosystems
         platforms (Figure 1). shinyCurves allows for the use of sample duplicates and is also
         independent of the plate format, i.e. 96- or 364-well plates. The inclusion of experimental
         controls and serial dilutions of viral DNA is optional, but if included, it must follow a
         specific format (see Manual).
-
-
-
-
         Figure 1. An example overview of two shinyCurves analyses (intercalating dye and
         fluorescent probe, in green and pink, respectively). Both analyses can be performed
         using qRT-PCR results from Biorad CFX or Applied Biosystems Quant Studio platforms,
@@ -154,28 +108,21 @@ preprint (which was not certified by peer review) is the author/funder, who has 
         boxes. In brown, the calling analysis, which follows an initial melting curve analysis in
         intercalating dye experiments, or is followed by an amplification curve analysis in case
         fluorescent probes have been used.
-
+
 medRxiv preprint doi: https://doi.org/10.1101/2020.10.14.20212381.this version posted October 16, 2020. The copyright holder for this
 preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
                                                                perpetuity.
                                   It is made available under a CC-BY-NC-ND 4.0 International license .
-
-
-
-
         3. Results
-
         To illustrate the shinyCurves pipeline, data sets generated in the COVID-19 Basque
         Inter-Institutional Group (coBIG) coming both from fluorescent probes and intercalating
         dye experiments run on BioRad CFX and Applied Biosystems Quant Studio systems are
         provided (Guruceaga et al., 2020). Genes chosen in these analyses are N1, RdRp and
         RNAseP (endogenous control) in the probe assay and N, S, RdRp and H30 (endogenous
         control) in the dye assay. These genes are included in the Covid-19 diagnostic panel
-        described       by    the    US     Centers       for   Disease       Control      and     Prevention       (CDC,
+        described        by     the      US    Centers       for   Disease    Control      and      Prevention     (CDC,
         https://www.cdc.gov/).
-
         3.1 Melting curves (in intercalating dye analysis)
-
         In the dye experiments, shinyCurves allows users to plot melting curves with the aim of
         excluding from the final calling those samples that do not show reliable and unique
         melting temperature (Tm) peaks. These plots are generated using the meltcurve function
@@ -183,9 +130,7 @@ preprint (which was not certified by peer review) is the author/funder, who has 
         including only those plate wells that contain samples with unique Tm peaks that meet the
         established criteria, together with the Tm value and plot assigned to each well. This table
         must be included in the calling analysis as a prior filtering step (ID_well file).
-
         3.2 Calling analysis
-
         After uploading the input data, users are allowed to fine-tune a series of parameters that
         will be used to call a sample as “Positive”, “Negative” or “Undetermined”. In general, two
         types of calling criteria are allowed, namely, the Ct value of the analyzed viral gene(s)
@@ -195,26 +140,19 @@ preprint (which was not certified by peer review) is the author/funder, who has 
         duplicates (yes/no) and number of “Positive” viral genes to consider a sample “Positive”.
         Calling results are presented in a downloadable table. For more details on the calling
         criteria, see Supplementary Figure 1.
-
         3.3 Amplification curves (in fluorescent probe analysis)
-
         After performing the calling analysis in probe experiments, shinyCurves allows to plot
         General Amplification Curves that include all samples and individual Amplification Curves
         of “Undetermined” samples. Each “Undetermined” sample is plotted independently,
         together with those with a final calling. Upon visual inspection of “Undetermined” sample
         curves, the user can decide whether these fit a sigmoidal distribution, i.e, the result of a
         specific amplification, or not.
-
+
 medRxiv preprint doi: https://doi.org/10.1101/2020.10.14.20212381.this version posted October 16, 2020. The copyright holder for this
 preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
                                                                perpetuity.
                                   It is made available under a CC-BY-NC-ND 4.0 International license .
-
-
-
-
         4. Discussion
-
         shinyCurves is a user-friendly application that analyses and allows the visualization of
         qRT-PCR data coming from different amplification methods and platforms. It is easily
         accessible for any user profile, as no programming skills are required. shinyCurves is set
@@ -225,73 +163,44 @@ preprint (which was not certified by peer review) is the author/funder, who has 
         user’s requirements and experimental settings. shinyCurves allows a significant
         improvement in analytical capacity, speed and reproducibility, which are always key
         factors in pathogen detection analyses, especially in Covid-19 times.
-
+
 medRxiv preprint doi: https://doi.org/10.1101/2020.10.14.20212381.this version posted October 16, 2020. The copyright holder for this
 preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
                                                                perpetuity.
                                   It is made available under a CC-BY-NC-ND 4.0 International license .
-
-
-
-
         Acknowledgments
-
         We would like to thank coBIG & “Acción especial COVID-19” participating scientists and
         voluntaries for the COVID-19 samples and material. This work was supported by
         CONV20/05 program.
-
         Supplementary figure legend
-
         Supplementary Figure 1. Result assignment criteria in the Calling Analysis. In the upper
         section, samples are assigned a result based on their viral gene Ct values (compulsory).
         In the blue section, samples are assigned a result based on their estimated viral DNA
         copy number (optional). This second analysis is run only for those samples called as
         “Check copy number” in the Ct Check Analysis.
-
+
 medRxiv preprint doi: https://doi.org/10.1101/2020.10.14.20212381.this version posted October 16, 2020. The copyright holder for this
 preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
                                                                perpetuity.
                                   It is made available under a CC-BY-NC-ND 4.0 International license .
-
-
-
-
         References
-
         Chang, W. et al. (2020). shiny: Web Application Framework for R.
         R package version 1.4.0.2. https://CRAN.R-project.org/package=shiny
-
-
         Dowle M. and Srinivasan A. (2019). data.table: Extension of `data.frame`. R package
         version 1.12.8. https://CRAN.R-project.org/package=data.table
-
-
         Guruceaga, X. et al. (2020) Fast SARS-CoV-2 detection protocol based on RNA
         precipitation and RT-qPCR in nasopharyngeal swab samples, MedRxiv 2020
         (https://doi.org/10.1101/2020.04.26.20081307).
-
-
-
         R Core Team (2020). R: A language and environment for statistical computing. R
         Foundation for Statistical Computing, Vienna, Austria. https://www.R-project.org/
-
-
         Sievert C. (2020) Interactive Web-Based Data Visualization with R, plotly, and shiny.
         Chapman and Hall/CRC Florida.
-
-
         Spiess, Andrej-Nikolai (2018). qpcR: Modelling and Analysis of Real-Time PCR Data.
         R package version 1.4-1. https://CRAN.R-project.org/package=qpcR
-
-
         Wickham H, François R, Henry L and Müller K (2020). dplyr: A Grammar of Data
         Manipulation R package version 1.0.0. https://CRAN.R-project.org/package=dplyr
-
-
         Wickham H. (2016) ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New
         York.
-
         World Health Organization. (2020) Diagnostic testing for SARS-CoV-2: interim guidance,
-        11             September                 2020.             World               Health              Organization.
+        11             September                    2020.             World            Health             Organization.
         https://apps.who.int/iris/handle/10665/334254. License: CC BY-NC-SA 3.0 IGO
-

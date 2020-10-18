@@ -1,0 +1,1531 @@
+   medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+     (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                         It is made available under a CC-BY-NC-ND 4.0 International license .
+ 1              Two modes of inhibitory neuronal shutdown distinctly amplify
+ 2                                                        seizures in humans
+ 3
+ 4
+ 5
+ 6     AUTHORS
+ 7     Omar J. Ahmed1,2,3,4,5,14,15,#, Tibin T. John1,2,15, Shyam K. Sudhakar1, Ellen K.W. Brennan1,2,
+ 8     Alcides Lorenzo Gonzalez1,2, Jason S. Naftulin8, Emad Eskandar9, Joseph R. Madsen10, G.
+ 9     Rees Cosgrove11, Andrew S. Blum12, N. Stevenson Potter12, George A. Mashour6,7, Leigh R.
+10     Hochberg8,13, Sydney S. Cash8,14
+11
+12
+13     AFFILIATIONS
+14     1
+        Dept. of Psychology,
+15     2
+        Neuroscience Graduate Program,
+16     3
+        Michigan Center for Integrative Research in Critical Care,
+17     4
+        Kresge Hearing Research Institute,
+18     5
+        Dept. of Biomedical Engineering,
+19     6
+        Dept. of Anesthesiology,
+20     7
+        Dept. of Neurosurgery,
+21     University of Michigan, Ann Arbor, MI 48109.
+22
+23     8
+        Dept. of Neurology,
+24     9
+        Dept. of Neurosurgery,
+25     Harvard Medical School and Massachusetts General Hospital, Boston, MA 02114
+26
+27     10
+         Dept. of Neurosurgery,
+28     Boston Children’s Hospital, Boston, MA 02115
+29
+30     11
+         Dept. of Neurosurgery,
+31     Harvard Medical School and Brigham and Women’s Hospital, Boston, MA 02115
+32
+33     12
+         Dept. of Neurology,
+34     Rhode Island Hospital, Providence, RI 02903
+35
+36     13
+         School of Engineering, Brown University, Providence, RI 02912
+37
+38     14
+         Co-senior authors
+39     15
+         Co-first authors
+40
+41
+42
+43     #LEAD       CONTACT & CORRESPONDING AUTHOR
+44     Omar J. Ahmed
+45     Mail: Department of Psychology, 530 Church St. University of Michigan, Ann Arbor, MI 48109
+46     Email: ojahmed@umich.edu
+47
+48
+49
+50
+51
+52     KEYWORDS: inhibition, excitation, epilepsy, temporal lobe, mesial temporal sclerosis,
+53     neocortical dysplasia, neocortex, local field potential, human, depolarization block, spike and
+54     wave, secondary generalization, subthreshold dynamics
+55
+56
+                                                                       Page 1
+          NOTE: This preprint reports new research that has not been certified by peer review and should not be used to guide clinical practice.
+
+   medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+     (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                         It is made available under a CC-BY-NC-ND 4.0 International license .
+57     ABSTRACT
+58     Inhibitory neurons are critical for normal brain function but dysregulated in disorders
+59     such as epilepsy. At least two theories exist for how inhibition may acutely decrease
+60     during a seizure: hyperpolarization of fast-spiking (FS) inhibitory neurons by other
+61     inhibitory neurons, or depolarization block (DB) of FS neurons resulting in an inability to
+62     fire action potentials. Firing rate alone is unable to disambiguate these alternatives.
+63     Here, we show that human FS neurons can stop firing due to both hyperpolarization and
+64     DB within the same seizure. However, only DB of FS cells is associated with dramatic
+65     increases in local seizure amplitude, unobstructed traveling waves, and transient
+66     increases in excitatory neuronal firing. This result is independent of seizure etiology or
+67     focus. Computational models of DB reproduce the in vivo human biophysics. These
+68     methods enable intracellular decoding using only extracellular recordings in humans
+69     and explain the otherwise ambiguous inhibitory neuronal control of human seizures.
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+                                                                       Page 2
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+ 88     INTRODUCTION
+ 89
+ 90     Epilepsy is a debilitating disease affecting some 50 million people worldwide1,2. Epileptic
+ 91     seizures are thought to result from an imbalance between excitatory and inhibitory
+ 92     neuronal activity3. However, electrographically similar seizures on the macroscopic
+ 93     scale can be driven by mechanistically distinct processes on the cellular and cell-type
+ 94     population scale4. Thus, the relative roles of local inhibitory and excitatory networks in
+ 95     driving seizure progression must be elucidated to guide the development of novel
+ 96     treatments for intractable epilepsies and our understanding of their associated seizures.
+ 97     Due to the tremendous technical challenges of recording from individual human neurons
+ 98     and the relative sparsity of inhibitory neurons, the activity of well isolated inhibitory
+ 99     interneurons during seizures is only rarely examined5,6.
+100
+101     There are several theories, based on slice and whole animal experiments, proposing
+102     both insufficient7–15 and excessive16–20 inhibition as possible facilitators of epileptic
+103     activity, with at least two hypotheses for how inhibition may acutely decrease during a
+104     seizure: (1) hyperpolarization of fast-spiking (FS) inhibitory neurons by other inhibitory
+105     neurons21–24, or (2) excessive depolarization of FS neurons that precludes subsequent
+106     action potentials due to blockade of voltage-dependent sodium channels12,14,25,56.
+107     Resolving these two theories necessitates whole cell recordings26, but it is practically
+108     impossible to record the intracellular membrane potential of neurons during human
+109     seizures in vivo. In this study, we address these challenges by combining (1) large-
+110     scale extracellular recordings of human neocortical inhibitory and excitatory neurons
+111     during focal seizures with secondary generalization and (2) a novel method of decoding
+                                                                        Page 3
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+112     membrane potential trajectory from extracellular action potentials. We show the
+113     remarkable ability of active fast-spiking inhibitory neurons to block epileptic traveling
+114     waves in human neocortex, and reveal the dynamical control of human seizures by the
+115     subthreshold trajectory of inhibitory neurons.
+116
+117
+                                                                        Page 4
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+118     RESULTS
+119     Patients were implanted with intracranial grid electrodes as part of the clinical process
+120     of identifying the precise site of origin of their drug-resistant focal epilepsy (see
+121     Materials and Methods). A 4x4 mm NeuroPort microarray (Blackrock Microsystems)
+122     was also placed in a region of the neocortex that was expected to be in the resection
+123     site (Figure 1a; Extended Data Fig. 1a). Histology of the resected tissue confirmed that
+124     the electrodes consistently targeted layers 2/3 of the neocortex (Extended Data Fig. 1b).
+125     We used these arrays to simultaneously record the activity of dozens of individual
+126     neocortical neurons during both ictal and interictal activity. We then classified the
+127     neurons as either fast-spiking (FS) inhibitory interneurons or regular-spiking (RS)
+128     excitatory cells using well-established criteria27,28, including action potential shape
+129     (Extended Data Fig. 1c-f). FS cells correspond to the class of parvalbumin-expressing
+130     interneurons and represent the largest source of inhibition in the neocortex29. The
+131     resulting information thus allowed us to differentiate between putative inhibitory and
+132     excitatory unit activity patterns during seizure progression in humans.
+133
+134     A total of 37 FS cells and 539 RS cells were recorded across 4 patients with NeuroPort
+135     arrays implanted in the temporal neocortex (see Supplementary Methods for details
+136     about each patient). As secondarily generalized seizures first reached the arrays, both
+137     FS and RS cells increased their rate of action potentials (Figs. 1, 2, and Extended Data
+138     Figs. 2-4). This finding is consistent with what is known about the feedforward
+139     recruitment of both inhibition and excitation25,30. At the population level, the FS firing
+140     rate was significantly higher than RS cells (100,000 bootstrap iterations of label-shuffled
+                                                                        Page 5
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+141     peak rate differences; p=0.036). Within 40 seconds of seizure onset, the mean FS firing
+142     rate fell rapidly to 0-2 Hz at the same time as local field potential intensity increased
+143     dramatically to its highest levels (Figs. 1, 2, and Extended Data Figs. 2-4). Consistently,
+144     among the best isolated FS units during the seizure (isolation quality discussed in more
+145     detail below and see Methods), 10 out of 15 had at least one nearby RS cell that
+146     exhibited the peak of its overall activity several seconds after the dramatic fall in local
+147     FS activity and accompanying elevation in local field potential intensity (Figs. 1, 2, and
+148     Extended Data Figs. 2-4). Thus, at the population level, FS cells show a cessation of
+149     activity near the middle of secondarily generalized seizures accompanied by a dramatic
+150     increase in the amplitude of seizure activity. This FS cessation is followed by a transient
+151     increase in RS cell firing, presumably because these RS cells are now less inhibited
+152     due to the loss of FS firing. The RS population rate eventually also fell to an average of
+153     0-3 Hz but with a delay of several seconds following FS cells. At the population level,
+154     FS cells (N=37) exhibited significantly earlier cessation times than RS cells (N=539)
+155     (Fig. 2g-j, FS cell average cessation occurred 4.6 seconds earlier than RS average
+156     cessation; 100,000 bootstrap iterations of label-shuffled time differences; p<0.0001).
+157
+158     We next compared activity patterns among individual FS cells. Many individual FS cells
+159     did not start firing until ~10 seconds into the seizure, often starting to fire robustly only
+160     after the RS rate had already increased (Figs. 1, 2, and Extended Data Figs. 2-4). As
+161     seen with the population means (Fig. 2g), each individual FS cell dramatically reduced
+162     its firing roughly half-way through the seizure (Figs. 1, 2, and Extended Data Figs. 2-4).
+163     However, even simultaneously recorded FS cells during a single seizure did not
+                                                                        Page 6
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+164     necessarily cease firing at the same time, just as they did not start firing at the same
+165     time. Figure 1 shows the activity of two simultaneously recorded FS cells that were
+166     separated by a distance of 2.04 mm. FS Cell 1 (Fig. 1a) approached cessation ~35
+167     seconds into the seizure, and at ~35 seconds, the amplitude of the LFP next to FS Cell
+168     1 increased dramatically, as did the firing rate of nearby RS cells. FS Cell 2 (Fig. 1b)
+169     approached cessation ~24 seconds into the seizure, and the LFP amplitude next to FS
+170     Cell 2 also increased at ~24 seconds, along with the firing rate of nearby RS cells.
+171     Furthermore, when sorting all simultaneously recorded channels during a seizure by the
+172     timing of transition to the large amplitude spike-and-wave event phase, a raster plot of
+173     all spikes with units sorted in the same order produced a similar sequence of mid-
+174     seizure firing time cessations (Fig. 1c&d). Thus, FS cell cessation is correlated with a
+175     dramatic increase in the very local intensity of seizures.
+176
+177     Given changing waveform shapes and noise characteristics during seizures31, an
+178     important methodological question arises of how separable clusters in waveform feature
+179     space are from each other and from noise to allow valid unit assignments during this
+180     period. To quantitatively assess this isolation quality of feature space clusters over the
+181     course of seizures, we employed a modified version of the Lratio metric of cluster
+182     separation introduced and validated by Schmitzer-Torbert et al. (2005)58 (see Methods).
+183     Cluster divisions with Lratio less than 0.1 are considered to have a significantly low level
+184     of false negative contamination, indicating that drops in firing rate are not caused by
+185     over-assigning candidate spikes to noise or other clusters due to changing waveform
+186     shapes in these divisions. We consider units whose average contamination level across
+                                                                        Page 7
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+187     seizure divisions (dynamic Lratio) is less than 0.1 to be a best-isolated subset58. Figure 2
+188     shows an example of an FS unit whose waveform shape could be well isolated from
+189     noise across the entire seizure despite showing a monotonic decrease in spike
+190     amplitude (Fig. 2a-c). The isolation quality of this unit throughout the seizure is
+191     demonstrated visually by 2D voltage histograms of these waveforms (Fig. 2d) and is
+192     quantitatively captured by its dynamic Lratio being far below threshold in all seizure
+193     divisions in which it was active (Fig. 2b). This isolation quality was similarly sustainable
+194     throughout the seizure for many RS units (e.g. Extended Data Fig. 5), although at a
+195     lower proportion than FS units, with 48.6% of FS units meeting this criterion but only
+196     19.8% of RS units. This pattern sustained throughout seizures, with the proportion of
+197     well-isolated FS units remaining between 30% and 48% across all 8 seizure divisions
+198     and that of RS units remaining between 13% and 19% (Extended Data Fig. 6). The
+199     apparent difference in sortability by cell type may be because the frequency content of
+200     noise is such that random threshold crossings are more similar in shape and amplitude
+201     to the wider waveforms of RS units than to the sharper waveforms of FS units. This
+202     suggests that FS cell spikes are inherently more distinguishable from noise in human
+203     neocortical recordings even during seizures. We considered the best-isolated subset of
+204     units following this quantitative criterion in parallel with all-inclusive analyses of firing
+205     rate dynamics in various time divisions of seizures with similar results. In particular,
+206     similar temporal profiles by cell type were observed throughout seizures when
+207     considering all units or only best-sorted units with an average Lratio < 0.1 across all
+208     divisions for Patient C (Fig. 2e&f), as well as when comparing average firing rate time
+209     courses by cell type across all patients (Fig. 2g&h). Furthermore, the observed time
+                                                                        Page 8
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+210     difference between mean RS activity cessation timing and mean FS activity cessation
+211     timing remained significantly larger than that expected by random cell-type label
+212     reshuffling when considering all units (p<0.0001; Fig. 2i), as well as only best-isolated
+213     units with maximum Lratio < 0.1 (p<0.005; Fig. 2j). Thus, FS cell cessation occurs several
+214     seconds before RS cell cessation across the population as well as for the very best
+215     isolated units.
+216
+217     The firing profile of individual FS cells and the accompanying changes in the seizure
+218     LFP amplitude were remarkably consistent across all secondary generalized focal
+219     seizures examined, independent of etiology or focus (Figs. 1, 2, and Extended Data
+220     Figs. 2-4). In patients with an etiology of mesial temporal sclerosis, where the seizure
+221     started focally in the hippocampus or surrounding medial temporal regions, FS cells in
+222     the temporal neocortex consistently stopped firing after the seizure secondarily
+223     generalized and spread to the neocortex, leading to accompanying increases in seizure
+224     LFP amplitude (Fig. 1a&b). Similarly, in a patient with an etiology of neocortical
+225     dysplasia (Patient C) where the seizure originated in the temporal neocortex, several
+226     cm from the implanted electrode array, FS cells near the array stopped firing within the
+227     first 40 seconds of the seizure spreading to that location (Fig. 2a&b). Again, this
+228     coincided with a transition to even larger amplitude spike-wave LFP events.
+229
+230     The variability in FS cessation times raises the question of how seizure waves travel
+231     across the neocortex: is there a wave that slowly moves across the cortex32 or a series
+232     of faster waves that are perhaps altered by the local activity of FS cells11,30,33? We found
+                                                                        Page 9
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+233     fast traveling LFP waves in all patients that swept across the 4x4 mm microelectrode
+234     array within 40 ms, at a speed of ~0.1 m/s, consistent with estimates from slice and
+235     computational studies30,34–36. There was a dramatic effect of individual FS cell activity:
+236     when an FS cell was still firing, it was able to impede and alter epileptic traveling waves
+237     (Fig. 3a), preventing the wave from increasing the seizure’s LFP amplitude in the vicinity
+238     of the FS cell. Once the FS cell activity ceased, traveling waves swept through the
+239     entire array, successfully recruiting the area around the now-silent FS cell (Figure 3B).
+240     Indeed, once all FS cells had switched off, the path of epileptic traveling waves became
+241     far more regular and stereotyped. Thus, human FS inhibitory cells possess a
+242     remarkable capability to obstruct and alter the path of epileptic traveling waves. This
+243     again points to the importance of FS activity in controlling local neuronal activity and
+244     LFP dynamics during local seizure propagation but leaves open the question of what is
+245     causing them to stop firing during the seizure.
+246
+247     There are two ways in which FS cells can stop firing during a seizure: 1) they could be
+248     hyperpolarized by inhibition from other inhibitory neurons22, also known as the
+249     disinhibition hypothesis23; or 2) they could enter depolarization block and thus become
+250     incapable of firing additional action potentials, despite receiving strong excitatory
+251     synaptic input12,14,25,56. These two scenarios produce very different predictions for how
+252     the action potential (AP) amplitude of an FS cell should change during a seizure. In the
+253     case of hyperpolarization, the AP amplitude should increase as the firing rate is
+254     decreasing. In the case of depolarization block, AP amplitude should decrease before
+255     the cell stops firing while its firing rate is also decreasing. To monitor the relative
+                                                                        Page 10
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+256     contributions of hyperpolarization and excessive depolarization throughout the seizure
+257     in each recorded unit, we therefore devised a novel method that decodes the
+258     membrane potential regime of neurons from extracellular spike amplitude data by
+259     computing the sign of the correlation between AP amplitude and firing rate in each
+260     second of the seizure (Fig. 4a-c; see Methods). Some units first paused their firing due
+261     to transient inhibition from other cells, as suggested by strongly negative correlations
+262     between AP amplitude and firing rate as firing rate initially decreased (Fig. 4b&h;
+263     Extended Data Figs. 7&8). This period corresponded precisely to the time period of
+264     increased firing in neighboring FS units (Fig. 4d&j). However, these apparently
+265     hyperpolarized units resumed their firing after this pause. Cessation of firing
+266     subsequently occurred presumably due to massive depolarization of their membrane
+267     potential, as demonstrated by strongly positive correlations of AP amplitude and firing
+268     rate as these units stopped firing spikes (Fig. 4b&h). The regimes of negative
+269     correlation correspond to a dynamic inhibitory control of local firing rates during the
+270     seizure, followed by a regime of positive correlation with decreasing AP amplitudes
+271     during the final descent in firing rate, a pattern consistent with what is seen during
+272     depolarization block.
+273
+274     This pattern was also seen on the population level in spiking event-triggered averages
+275     of the time course of our predicted membrane potential measure (Fig. 4e). Aligning
+276     inferred membrane potential time courses around the time of firing rate pauses
+277     (dropping below 30% of peak rate) revealed a large negative deflection for FS cells,
+278     indicative of these units being inhibited via hyperpolarization to reduce firing rate at this
+                                                                        Page 11
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+279     time (Fig. 4e; n=12; Rmean,pause=-0.44±0.19 [sem]; less than 0 with p<10-7 by bootstrap
+280     mean resampling test, nsample=10, Nbootstrap=50,000). Furthermore, the inferred
+281     membrane potential amongst the FS cell population showed that this shift was also
+282     widespread (Fig. 4f), with 9 out of 12 (75%) FS units pausing during the negative,
+283     hyperpolarized regime during this rate-based event. Aligning inferred membrane
+284     potential time courses around the later time of firing rate cessation in units (defined by
+285     rate falling below 30% of peak rate for the final time) revealed a large positive deflection
+286     for FS cells, indicative of these units entering a regime depolarization block (Fig. 4e;
+287     n=26; Rmean,cess=+0.45±0.12 [sem]; greater than 0 with p<10-7 by bootstrap mean
+288     resampling test, nsample=20, Nbootstrap=50,000). Again, the inferred membrane potential
+289     amongst the FS cell population showed that this shift was also widespread across units
+290     (Fig. 4f), with 20 out of 26 (77%) FS units landing in the positive, over-excited regime.
+291     When comparing these values only in units that showed both a pause and cessation to
+292     control of heterogeneity amongst different units, the inferred membrane potential was
+293     still significantly higher as the unit ceased firing compared to as the unit paused its firing
+294     (right-sided Wilcoxon signed rank test; n=12, p=0.0049). Finally, these firing rate
+295     descents in FS cell activity were associated with distinct changes in LFP amplitude
+296     despite being of the same magnitude (at 30% of peak firing rate) as shown by event-
+297     triggered averages in LFP amplitude (Fig. 4e). FS cessation was associated with a
+298     larger LFP amplitude than that associated with pausing even amongst cells exhibiting
+299     both events (right-sided Wilcoxon signed rank test; n=12, p<10-4). Similar results were
+300     obtained indicative of significant and widespread overexcitation underlying the cessation
+301     of activity in RS units, with 225 out of 331 (68%) RS units with sufficient rate at the time
+                                                                        Page 12
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+302     of cessation exhibiting a positive value (Extended Data Fig. 7e; n=331;
+303     Rmean,cess=0.30±0.03 [sem]; greater than 0 with p<10-7 by bootstrap mean resampling
+304     test, nsample=20, Nbootstrap=50,000). However, amongst RS cells exhibiting a pause in
+305     activity, membrane potential appeared much more heterogenous despite controlling for
+306     firing rate at this time, appearing in a bimodal distribution amongst both inhibition and
+307     depolarization block that was not significantly different from 0 (Extended Data Fig. 7e&f;
+308     n=130; Rmean,cess=-0.08±0.06 [sem]; greater than 0 with p=0.3782, nsample=10,
+309     Nbootstrap=50,000). This may be because RS cells receive a greater diversity of input
+310     magnitudes during seizure progression than do FS cells but succumb to the same, more
+311     uniform mechanism underlying depolarization block at firing rate cessation and seizure
+312     transition, which we hypothesize is due to increasing potassium concentrations in the
+313     extracellular environment shared by all of these cells.
+314
+315     This sequence of significant hyperpolarization in FS cells followed by large and
+316     widespread overexcitation in all cells suggests a consistent membrane potential-based
+317     mechanism by which local cortical circuits fight but ultimately succumb to seizure
+318     progression. The dynamics in firing rate and action potential amplitude that characterize
+319     this mechanism were accurately reproduced in a computational model of the cell
+320     membrane incorporating voltage-dependent sodium and potassium conductances
+321     (Hodgkin-Huxley formalism) with stochastic background synaptic input. The model
+322     reproduced all of the observed mutual dynamics between action potential rate and
+323     amplitude during inhibitory (hyperpolarizing) pauses versus depolarization-induced
+                                                                        Page 13
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+324     cessation (Fig. 5), confirming the plausibility of this mechanistic sequence driving unit
+325     activity patterns during seizure progression.
+326
+327
+                                                                        Page 14
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+328     DISCUSSION
+329     We have shown that both FS and RS cells are strongly activated during the initial
+330     spread of secondarily generalized seizures. The immediate increase in RS rate at
+331     seizure onset, in particular, clearly indicates spread of the seizure, and not a failed
+332     seizure in what has been called an ictal penumbra, where no initial increases in RS rate
+333     appear32. Importantly, we have shown that both FS and RS cells can sometimes pause
+334     their activity due to hyperpolarization (likely due to inhibition-mediated hyperpolarization
+335     from other nearby inhibitory neurons) but stop firing midway through secondarily
+336     generalized seizures due to depolarization block. This result is independent of seizure
+337     etiology (cortical dysplasia vs. mesial temporal sclerosis) or site of origin (hippocampus
+338     vs. neocortex). This suggests that there is an almost complete lack of FS-mediated
+339     inhibition towards the end of a human seizure, in contrast to some animal models
+340     without loss of inhibition18. FS cells are active near the beginning and middle of the
+341     seizure, in contrast to computational models placing the loss of inhibitory restraint at
+342     seizure onset37. Strikingly, this absence of FS inhibitory activity is accompanied by large
+343     increases in the amplitude of the seizure’s LFP and unimpeded fast traveling waves, as
+344     well as a short-lasting increase in RS firing. Thus, these results suggest a more
+345     complicated set of dynamics than a monotonic increase or decrease of inhibition and
+346     provide further insight into the associated biophysical mechanisms.
+347
+348     The main difference between RS and FS cell firing during the seizures observed here
+349     was the significantly earlier cessation of spiking by FS cells, which is consistent with
+350     previous results from in vitro models of seizure-like events showing increased
+                                                                        Page 15
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+351     propensity of FS cells to enter depolarization block compared to pyramidal cells12,14,25.
+352     The reason for this difference in propensity to enter depolarization block has not been
+353     established, but these results suggest this difference could represent a primary source
+354     of imbalance between excitatory and inhibitory cell activities that allows seizures to
+355     propagate and transition to a large amplitude phase in human neocortex. One
+356     hypothesis accounting for this difference is that of the differential expression of voltage-
+357     gated potassium channel units in FS as opposed to RS cells38–40 in combination with the
+358     elevated extracellular potassium ion levels known to occur in the context of
+359     seizures41,42. However, there are several intrinsic and network-based properties that are
+360     known to differ between FS cells and pyramidal cells and could contribute to this
+361     difference, such as intrinsic excitability and the relative strength of feedforward drive43–
+        46
+362        . The results here suggest that properties responsible for increasing the propensity of
+363     FS cells to enter depolarization block relative to RS cells are also those that allow the
+364     propagation and exacerbation of seizures in human neocortex. Beyond seizure
+365     progression, it is also possible that the lack of FS activity sets in motion a critical
+366     network-level transition that leads to seizure termination47–49. This transition may include
+367     the activation of inhibitory cell types other than FS cells22,59.
+368
+369     In summary, FS cells are the largest source of inhibition in the neocortex, and human
+370     FS cells approach cessation less than halfway through a seizure, most likely due to
+371     depolarization block. This is associated with a dramatic increase of the seizure’s local
+372     field potential amplitude and a transition to clear spike-and-wave events at a frequency
+373     of ~3 Hz. Rhythmic spike-and-wave discharges, when they occur in the motor cortex,
+                                                                        Page 16
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+374     are responsible for the rhythmic ~3 Hz movements seen during the clonic phase of
+375     tonic-clonic seizures50. Importantly, this suggests a novel, FS-dependent, mechanistic
+376     explanation for the two behaviorally defined phases of secondarily generalized tonic-
+377     clonic seizures: the high-FS-rate, low-LFP-amplitude phase of the seizure corresponds
+378     to the tonic phase, whereas the post-FS-cessation phase with periodic spike-wave
+379     bursts corresponds to a longer lasting clonic phase. Thus, in addition to existing
+380     approaches51–55, novel therapies that prevent FS cells from entering depolarization
+381     block may prevent - or at least limit the severity of - seizures, representing a novel and
+382     potentially powerful avenue for treating seizures with many different etiologies.
+383
+384
+                                                                        Page 17
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+385     METHODS
+386     Patients & Clinical/Research Electrode Placement
+387     Approval for all experiments was granted by the Institutional Review Boards of
+388     Massachusetts General Hospital / Brigham & Women’s Hospital and Rhode Island
+389     Hospital. The decision to implant intracranial electrodes in an epilepsy patient as well
+390     the positioning of those electrodes in a patient was made solely on clinical factors by
+391     clinical staff. The explicit goal of this study was to examine the single neuron correlates
+392     of tonic-clonic seizures42 with focal onsets (also referred to as focal seizures with
+393     secondary generalization), one of the most common kind of epilepsies56. These focal
+394     seizures have a localized onset zone, either in the mesial temporal lobe or neocortex,
+395     but secondarily generalize, spreading to both hemispheres and almost always leading
+396     to impaired consciousness. Here, we studied data from 4 patients (Patients A,B,C,D)
+397     with clear focal seizures with secondary generalization, with each of these clinical
+398     seizures showing clear spike-and-wave patterns. Two additional patients with temporal-
+399     lobe epilepsy were implanted with NeuroPort Arrays but not studied here because one
+400     of them did not have any seizures while implanted (Patient E), and the NeuroPort Array
+401     in the other patient did not sample any typical spike-and-wave seizures (Patient F). A
+402     total of 10 secondarily generalized seizures with spike-and-wave discharges from the 4
+403     patients were analyzed (3 each from Patients A and D; 2 each from Patients B and C).
+404     A detailed clinical description of each of these 4 patients follows:
+405     Patient A. Patient A was a left-handed man in his 30s at the time of his surgery. He had
+406     suffered from pharmacologically intractable partial complex seizures for almost two
+407     decades. His seizures lasted 1-2 minutes and were characterized by a sudden onset of
+                                                                        Page 18
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+408     slurred and nonsensical speech. This was followed by a staring spell, lack of
+409     responsiveness, and head turning to the right. He also displayed automatisms and
+410     posturing that involved his right arm and hand more than his left. MRI suggested left
+411     (dominant) temporal polymicrogyria. He underwent placement of grids and strips for ~2
+412     weeks to delineate the seizure focus with respect to this area of abnormal sulcation. A
+413     4x4 mm NeuroPort array with 1.5 mm long contacts was placed in the left superior
+414     temporal gyrus. Seizures were found to emanate from the mesial temporal structures,
+415     but during secondary generalization, the seizures spread to the location of the array in
+416     the superior temporal gyrus and beyond. The patient underwent a left temporal
+417     lobectomy, and histology confirmed that the microarray targeted layer 3. Pathology was
+418     consistent with mesial temporal sclerosis.
+419
+420     Patient B. Patient B was a right-handed man in his 40s at the time of his surgery, with a
+421     history of medically refractory epilepsy. His seizures lasted 1-2 minutes. Clinically, the
+422     seizures started with arousal and bilateral arm and leg extension. This was followed by
+423     leftward head deviation, left arm flexion, and generalized tonic-clonic activity. He
+424     underwent placement of grids, strips, and depths in his right hemisphere. A 4x4 mm
+425     NeuroPort array (with 1.5 mm deep contacts) was placed in the right middle temporal
+426     gyrus. During secondary generalization, the seizures spread to the location of the
+427     NeuroPort array in the middle temporal gyrus and beyond. The patient underwent a
+428     right temporal lobectomy. Histology on the resected tissue confirmed that the microarray
+429     targeted layer 3.
+430
+                                                                        Page 19
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+431     Patient C. Patient C was a left-handed woman in her 20s at the time of her surgery.
+432     She started to have complex partial seizures at least 10 years prior to surgery. These
+433     seizures included an aura of nausea and a ‘tunneling’ sensation, then a flattening of
+434     affect, slowed responsiveness, automatisms, and associated amnesia. Such seizures
+435     occurred 3-4 times per month and were persistent despite being on a three-drug
+436     anticonvulsant regimen. MRI revealed an extensive nodular gray matter heterotopia in
+437     the right hemisphere. Video-EEG monitoring had found right hemispheric onset
+438     seizures, and fMRI had shown normal left sided language activation patterns and
+439     normal motor activation patterns. Wada testing confirmed left hemispheric language
+440     dominance and suggested her left hemisphere could adequately support memory
+441     function subsequent to a right temporal lobectomy. Based on these data, she was
+442     implanted with a combination of subdural grid and strip electrodes over the right
+443     hemisphere and 3 depth electrodes into the right temporal lobe. The NeuroPort array
+444     (with 1.5 mm deep contacts) was placed in the right middle temporal gyrus. Her
+445     seizures lasted between 1-2.5 minutes. These showed very consistent patterns of
+446     seizure onset and propagation on ECoG; all began in the right middle and upper gyri of
+447     the posterior temporal cortex. Low amplitude and fast activity were recorded from these
+448     grid sites at the onset, followed by a buildup of 11-13 Hz activities from these leads
+449     which then spread anteriorly and inferiorly along the grid. Rhythmic spike-wave
+450     discharges were also detected soon after seizure onset spreading to several locations,
+451     including the location of the NeuroPort array in the right middle temporal gyrus. The
+452     patient underwent an extensive right temporal resection with extension posteriorly
+453     toward the right temporo-occipital junction but sparing of much of the mesial temporal
+                                                                        Page 20
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+454     structures (including the hippocampus). Histology confirmed that the array targeted
+455     layers 2/3. Pathology revealed subtle neuronal dysgenesis and focal superficial gliosis
+456     and encephalomalacia in the posterior temporal neocortex, including the recorded
+457     seizure-onset zone. Anterior temporal cortex showed mild gliosis.
+458
+459     Patient D. Patient D was a right-handed man in his 20s whose seizures began when he
+460     was a teenager. His seizures were characterized by a blank stare and oral automatisms
+461     accompanied by stiffening and posturing of the right hand. His MRI was unremarkable,
+462     but his semiology and phase I EEG recordings suggested a left temporal seizure onset.
+463     Consequently, he was implanted with several strip electrodes covering the left frontal
+464     and temporal regions. The NeuroPort array (1.0 mm deep contacts) was placed in the
+465     middle temporal gyrus about 1–2 cm posterior to the temporal tip. All of the seizures
+466     had similar clinical and electrographic signatures with a left gaze preference at onset
+467     followed by tonic and then clonic movements of the right arm. Electrographically, the
+468     seizures began with a generalized burst of sharp waves followed by sharp wave com-
+469     plexes that were maximal in mesial temporal leads. The participant underwent a left
+470     temporal lobectomy. Histological examination of the tissue revealed mild dysplastic
+471     changes in the lateral temporal neocortex and gliosis and moderate neuronal loss in
+472     regions CA4 and CA3 of the hippocampus.
+473
+474     NeuroPort Recordings, Data Collection & Analysis
+475     A Neuroport array (manufactured by Blackrock Microsystems) is a 10x10 grid of
+476     electrodes with an inter-electrode spacing of 400 um, giving a total size of 4x4 mm. The
+                                                                        Page 21
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+477     depth of the electrodes used in this study was either 1.5 mm (Patients A,B,C) or 1.0 mm
+478     (Patient D). 96 of the 100 electrodes were used to record the activity of individual
+479     neurons as well as the local field potential (LFP). The 0.3-7500 Hz wideband analog
+480     signal from each electrode was referenced to a distant intracranial reference wire and
+481     sampled at 30 kHz. The LFP shown in Figs. 1, 2, and Extended Data Fig. 1 were z-
+482     scored, but not filtered any further. Traveling wave analysis & images (Fig. 3) made use
+483     of these z-scored, unfiltered LFP signals. For single unit analysis, the broadband signal
+484     was high-pass filtered above 250 Hz using a 6-pole Bessel filter and then manually
+485     spike-sorted using Plexon Offline Sorter. We then classified the neurons as either fast-
+486     spiking (FS) inhibitory interneurons or regular-spiking (RS) excitatory cells using well-
+487     established criteria27,28, including action potential shape. Cessation of firing during a
+488     seizure was defined as the bin after which the firing rate never exceeded 30% of the
+489     unit’s peak rate. For action-potential (AP) amplitude analysis (Fig. 4a), the AP amplitude
+490     was defined as the trough-to-peak amplitude of each individual extracellular action
+491     potential.
+492
+493     Cluster isolation quality assessment: Dynamic LRatio
+494     To assess the isolation quality of feature space clusters over the course of seizures, we
+495     employed a modified version of the Lratio metric of cluster separation introduced and
+496     validated by Schmitzer-Torbert et al. (2005)58. This involved first calculating the
+497     Mahalanobis distance of every spike to a given cluster’s center in a 4D feature space
+498     consisting of trough-to-peak amplitude, trough-to-peak width, principal component 1,
+499     and principal component 2. The Mahalanobis distance normalizes the Euclidean
+                                                                        Page 22
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+500     distance by the variance of a given cluster along its major dimensions to correct for
+501     correlations amongst features. Schmitzer-Torbert et al. (2005)58 showed strong error
+502     rate correlation with ground truth extracellular spikes by assuming a multi-dimensional
+503     Gaussian distribution for a given cluster and taking the amount of contamination by
+504     false negative assignments to be the sum of probabilities of each un-clustered spike of
+505     a given Mahalanobis distance to belong to that Gaussian, which was robust to the
+506     particular feature space used. These probabilities are given by the inverse of the
+507     cumulative distribution function of a chi-squared distribution with degrees of freedom
+508     equal to the number of features in the features space, the sum of which is called L.
+509     Because clusters in this space moved over the course of the seizure in a non-monotonic
+510     pattern here, we calculated Mahalanobis distances to a surrogate cluster for multiple
+511     subsets of the whole cluster at 8 equal divisions over the course of the seizure and 3
+512     divisions of the 10 minute period that occurred two minutes after the end of the seizure.
+513     A composite cluster across initial divisions was used to provide a liberal estimate of the
+514     space that a given cluster might occupy despite early waveform shape changes. This
+515     composite reference cluster included all available spikes before the seizure along with
+516     those in the first two divisions of the seizure, which were generally well-sortable. We
+517     calculated the sum of false negative assignment probabilities under a Gaussian model
+518     for this reference cluster, the value L, for each seizure and post-seizure division. We
+519     then dynamically normalized L by the number of spikes assigned to the cluster in each
+520     time division to estimate contamination rates relative to the number of spikes assigned
+521     during that division, which we refer to as the dynamic Lratio.
+522
+                                                                        Page 23
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+523     Membrane potential trajectory analysis
+524     We exploited the biophysical relationship between depolarization, voltage-gated Na+
+525     channel inactivation, and spike waveform shape60 to infer the direction of membrane
+526     potential changes underlying the changes in firing rate exhibited by single units
+527     recorded extracellularly in patients across time. This was done for a given unit by first
+528     computing the local spike rate and average trough-to-peak waveform amplitude in
+529     moving time windows of width 1 second unless otherwise specified, moving with a step
+530     size of 0.1 seconds. Then a linear regression was performed at each point in this series
+531     across a moving time window of 3 seconds, producing a time series of correlation
+532     coefficients for bins with an average spike rate of at least 5 Hz. Strong negative
+533     correlations were taken as evidence of firing rate changes associated with membrane
+534     potential changes near resting membrane potential, while strong positive correlations
+535     were taken as evidence of membrane potential changes closer to firing threshold, near
+536     the regime of depolarization block56.
+537
+538     Computational model
+539     Computer simulations of transmembrane voltage dynamics consistent with the
+540     extracellular observations here were made in MATLAB R2017b to explore plausible
+541     underlying biophysical mechanisms. A 4-dimensional ordinary differential equation
+542     model of a patch of neural membrane following the Hodgkin-Huxley formalism of
+543     passive (gL=0.033 mS/cm2, EL=-60 mV, IL=gL(V-EL)) and voltage-dependent spiking Na+
+544     (gNa=60.0 mS/cm2, ENa=+58 mV, INa=gNam3h(V-ENa)) and K+ (gK=5 mS/cm2, EK=-85
+545     mV, IK=gKn4(V-EK)) conductances was solved using Euler integration with a timestep of
+                                                                        Page 24
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+546     0.005 msec. First order kinetics of gating variables m, h, and n were modeled as in
+547     previously established models of this form57. Slowly changing net synaptic input and
+548     extracellular ion gradient changes were considered to constitute a net external drive
+549     modeled as an injected inward current. This current follows a temporal form
+550     hypothesized to drive human neocortical neurons during secondarily generalized
+551     seizures based on the dynamic membrane potential decoding analysis performed here.
+552     Fast synaptic inputs were modeled as conductances with a maximum conductance
+553     gsyn=0.15 mS/cm2 and an exponential decay time course of 5 milliseconds gated by
+554     input spike times generated by a Poisson process with a linearly increasing rate
+555     parameter from 0.001 to 0.2 Hz representing increasing input firing rates across seizure.
+556     Analysis of the resulting spike trains was completed in the same manner as dynamic
+557     membrane potential trajectory decoding was performed for the observed extracellular
+558     data.
+559
+560     Statistical analyses
+561     In performing hypothesis testing on various metrics describing activity amongst FS and
+562     RS units including peak firing rate difference, mean cessation time difference, and mean
+563     correlation between spike firing rate and action potential amplitude at time of cessation,
+564     we employed bootstrap-based methods to quantify the uncertainty in these metrics. For
+565     peak firing rate and cessation time differences this involved combining all relevant unit
+566     measurements into a single population, randomly reshuffling RS and FS labels amongst
+567     this population, and recomputing the relevant difference metrics Nbootstrap times as
+568     indicated to generate a distribution of the metric for random unit classifications. The
+                                                                        Page 25
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+569     probability of a Type-I (false positive) error, the p-value, was then reported as the area
+570     under the distribution corresponding to values more extreme than the observed value
+571     for the original data. For testing the positivity of the mean correlation between spike
+572     firing rate and action potential amplitude at time of cessation, this involved first removing
+573     correlation coefficients in the time series corresponding to a linear regressions involving
+574     spike rates of less than 5 Hz. Then the coefficients at each unit’s detected cessation
+575     time were resampled with replacement in 20 unit subpopulations 50,000 times (unless
+576     otherwise specified) and averaged to generate a bootstrapped sample mean distribution
+577     characterizing the variability in this mean relative to zero. The probability of a Type-I
+578     (false positive) error that the observed mean coefficient was greater than zero by
+579     chance, the p-value, was then reported as the area under the distribution corresponding
+580     to values equal to or less than zero. To nonparametrically test the significance of
+581     differences in paired measures at cessation and pause times within single units, we
+582     employed the right-sided Wilcoxon signed rank test (RMatlab2017b).
+583
+584     Extended Data / Supplementary Information
+585     9 Extended Data Figures (+ legends) are included.
+586
+587
+588
+                                                                        Page 26
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+589     ACKNOWLEDGEMENTS
+590
+599     We would like to thank the patient volunteers. This work was supported by the American
+600     Epilepsy Society Junior Investigator Research Award, CURE Epilepsy Taking Flight
+601     Award, NINDS F32-NS083208 and University of Michigan Startup Funds (OJA), NIH
+602     R01-NS062092 (SSC) and NSF graduate student fellowships (TTJ & EKWB).
+603
+                                                                        Page 27
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+604     FIGURES AND FIGURE LEGENDS
+                                                                        Page 28
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+605
+                                                                        Page 29
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+606     Figure 1: Human neocortical inhibitory and excitatory neurons have different temporal profiles
+607     relative to secondarily generalized focal seizure progression on local electrodes
+608
+609          a. Upper. Electrocorticogram trace (ECoG, black) from contact closest to source of focal seizure in
+610               hippocampus of Patient A. Note its time of initiation at T = -20 seconds, substantially preceding
+611               the start of the seizure in neocortex. Lower. The firing rate of a single FS cell (blue), the firing
+612               rate of a single RS cell recorded from the same electrode (green) and the local field potential
+613               (LFP, gray, recorded from the same electrode as the FS cell) during a seizure recorded from
+614               Patient A. Note the decrease in LFP amplitude as the FS cell starts firing, followed by a dramatic
+615               increase in LFP seizure amplitude after the FS cell decreases its rate at T=35 seconds. RS cell
+616               quickly increases its firing rate as the seizure first spreads to the NeuroPort array (T=0 seconds),
+617               then decreases in rate slightly as the FS cell switches on, and finally settles into a lower firing rate
+618               regime during the large spike-and-wave events that dominates the remainder of the seizure after
+619               FS cell cessation. Inset shows the mean normalized extracellular action potential waveforms (with
+620               99% confidence intervals in lighter shading) of FS Cell 1 (blue) and the neighboring RS cell
+621               (green). Inset 1: the mean normalized extracellular action potential waveforms (with 99%
+622               confidence intervals in lighter shading) of FS Cell 1 (blue) and the neighboring RS cell (green).
+623               Inset 2: The implanted microelectrode array (Top) with overlaid clinical grid electrodes (Bottom);
+624               Scale bar: 1 cm. Top left corner shows the array before implantation. Scale bar: 200 µm. Inset 3:
+625               Histology of resected tissue showing the NeuN-stained neurons in the full neocortical column and
+626               electrode tracts and an enlarged image (Right) showing that the array targeted layer 3 of the
+627               neocortex. Scale bars: 400 µm.
+628
+629          b. The inset shows a schematic of the array and the location of two simultaneously recorded FS
+630               cells separated by ~2 mm: FS Cell 1 (blue, firing rate shown in Fig. 1c) and FS Cell 2 (purple). FS
+631               Cell 2 approached cessation at T=24 seconds, well before FS Cell 1. The LFP (grayish-purple)
+632               recorded at the same location as FS Cell 2 dramatically increases at the same time as FS Cell 2
+633               decreases firing, well before the increase seen in the LFP recorded next to FS Cell 1. These
+634               suggest the activity of FS cells during human seizures is strongly correlated to the local intensity
+635               of seizure waves. FS Cell 2 activity cessation again precedes a sharp increase in local RS cell
+636               activity (gold), further suggesting an important role of FS cells in controlling local activity during
+637               seizure progression.
+638
+639          c. Heatmap shows local LFP amplitude (absolute value) over time on each electrode in NeuroPort
+640               array exhibiting classifiable units as each row, sorted by time of start of spike-and-wave event
+641               and with brighter colors indicating larger amplitudes. Note the increasing delay to start of spike-
+642               and-wave event suggesting different dynamics to seizure spread across the array over the
+643               timecourse of approximately 20 seconds.
+644
+645          d. Raster plot showing spike times of all cells on NeuroPort array in Patient A that could be
+646               classified into FS (blue) or RS (green) categories with rows sorted by the same order as in (C).
+647               Note the increasing delay to reduction in spike density corresponding to LFP transition to spike-
+648               and-wave events suggesting control of local seizure progression by local cellular spiking activity.
+649
+650
+                                                                        Page 30
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+651
+                                                                        Page 31
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+652     Figure 2: Analyzing unit subpopulations by isolation quality demonstrates consistent cell-type
+653     specific activity profiles and cessation order despite changing unit amplitude and noise structure.
+654
+655          a. LFP in Patient C indicating seizure as split into 8 equal time divisions for analysis of unit isolation
+656               quality across duration of seizure.
+657
+658          b. Bar graph shows firing rate in 1 second bins of best-isolated example FS unit (blue) in Patient C.
+659               Dotted red line indicates threshold used to determine best-isolated units using the dynamic Lratio
+660               measure (see Methods) in each time division of seizure. Line plot indicates dynamic Lratio in each
+661               division (red) and shows large separation of example FS unit from noise in feature space used for
+662               clustering throughout the seizure (note log scale).
+663
+664          c. Line plot showing average spike amplitude (dark blue) and individual spike amplitudes (light blue)
+665               of example FS unit over course of seizure in Patient C. Note that even as amplitude decreases
+666               the unit remains well-isolated from noise as quantified by dynamic Lratio across seizure.
+667
+668          d. Time-voltage histogram of all threshold crossings assigned to this example FS unit (blue, Upper)
+669               and to noise (red, Lower) in eight divisions of seizure in Patient C. Shows unit waveforms are
+670               visually distinguishable from threshold crossings assigned as noise across seizure.
+671
+672          e. Average firing rate traces across seizures for each cell type group in Patient C, with y-axis
+673               normalized to firing rate peak and x-axis normalized to total seizure duration before averaging.
+674               Note right-shifted rate profile of RS units over course of seizure as compared to FS units.
+675
+676          f.   Average firing rate traces across seizures for each cell type group using only best-isolated units
+677               (see Methods) in Patient C, with y-axis normalized to firing rate peak and x-axis normalized to
+678               total seizure duration before averaging. Note right-shifted rate profile of best-isolated RS units
+679               over course of seizure as compared to best-isolated FS units.
+680
+681          g. Average firing rate traces across seizures for each cell type group across all patients, with y-axis
+682               normalized to firing rate peak and x-axis normalized to total seizure duration before averaging.
+683               Note right-shifted rate profile of RS units over course of seizure as compared to FS units.
+684
+685          h. Average firing rate traces across seizures for each cell type group using only best-isolated units
+686               (see Methods) across all patients, with y-axis normalized to firing rate peak and x-axis normalized
+687               to total seizure duration before averaging. Note right-shifted rate profile of best-isolated RS-
+688               classified units over course of seizure as compared to best-isolated FS-classified units.
+689
+690          i.   Observed time difference (solid red line) between mean RS activity cessation timing (n=399) and
+691               mean FS activity cessation timing (n=37) in relation to probability distribution of this timing
+692               difference across random label reshufflings of unit cell type labels (Nshuffles=100,000; solid black
+693               line). P-value indicates probability of observing a value equal to or more extreme than the
+694               observed value simply by random assignment of cell type to each unit. Values on the right half
+695               correspond to a positive difference between RS and FS cessation, with larger values associated
+696               with increasing certainty that FS cells stop firing before RS cells. Values on the left half
+697               correspond to a negative difference between RS and FS cessation times, with larger values
+698               associated with increasing certainty that RS cells stop firing before FS cells.
+699
+700          j.   Observed time difference (solid red line) between mean best-isolated RS activity cessation timing
+701               (n=83; Lratio < 0.1 during middle 3 seizure divisions) and mean best-isolated FS activity
+702               cessation timing (n=17; Lratio < 0.1 during middle 3 seizure divisions) in relation to probability
+703               distribution of this timing difference across random label reshufflings of unit cell type labels
+704               (Nshuffles=100,000; solid black line). P-value indicates probability of observing a value equal to or
+705               more extreme than the observed value simply by random assignment of cell type to each unit.
+706               Values on the right half correspond to a positive difference between best-isolated RS and best-
+707               isolated FS cessation times, with larger values associated with increasing certainty that best-
+                                                                        Page 32
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+708               isolated FS cells stop firing before best-isolated RS cells. Values on the left half correspond to a
+709               negative difference between best-isolated RS and best-isolated FS cessation, with larger values
+710               associated with increasing certainty that best-isolated RS cells stop firing before best-isolated FS
+711               cells.
+712
+713
+                                                                        Page 33
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+714
+715
+716     Figure 3: Fast-spiking inhibitory neurons, when still firing, impede the spread of epileptic traveling
+717     waves.
+718
+                                                                        Page 34
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+719          a. An example of a traveling wave recorded 30 seconds after the start of a seizure in Patient A. The
+720               FS cell located at the position marked “FS” was firing at high rates at this time. The 8 snapshots
+721               (1-8) are taken over a 35 ms interval as the traveling LFP wave starts in the top-right corner of the
+722               array and travels across the array. The traveling wave does not fully invade the region of
+723               neocortex containing the active FS cell, resulting in lower amplitude LFPs around the FS cell. In
+724               each subfigure, each square denotes a single LFP sensor, and white squares indicate omitted
+725               sensors.
+726
+727          b. An example of a traveling wave recorded 49 seconds after the start of the same seizure. In the
+728               absence of FS cell firing, the epileptic traveling wave moves unimpeded through the array, fully
+729               invading the region around the marked FS cell and resulting in larger amplitude LFPs at all
+730               locations.
+731
+732
+733
+                                                                        Page 35
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+734
+735     Figure 4. Cessation of individual FS unit activity is consistently associated with inferred
+736     membrane potential signatures of depolarization block, despite prior hyperpolarized pauses
+737
+738          a. Firing rate (upper) and trough-to-peak spike amplitude (lower) of example FS unit in Patient A,
+739               color-coded by the local correlation between spike rate and amplitude (in 1 second time bins) as
+740               an extracellular proxy for membrane potential trajectory and subthreshold input history. Dotted
+741               lines indicate starts and ends of two time periods of firing rate suppression characterized by
+742               different membrane potential signatures further characterized in (B), namely a negative
+743               correlation regime corresponding to inhibition followed by a positive correlation regime
+                                                                        Page 36
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+744               corresponding to over-excitation ending in firing rate cessation putatively though depolarization
+745               block.
+746
+747          b. Example of negative correlation (left) between local spike rate and amplitude in first time period
+748               indicated by dotted lines in (A) and example of positive correlation (right) between local spike rate
+749               and amplitude in second time period indicated by dotted lines in (A). Least squares linear fit
+750               indicated in dotted lines following color scheme in (A) with Pearson’s correlation coefficient
+751               indicated above each plot.
+752
+753          c. Trajectory of unit activity over time during seizure in local spike rate vs spike amplitude space,
+754               with increasing time indicated by increasingly lighter copper color. The first time period of firing
+755               rate reduction in dotted lines in (A) is indicated with an arrow as “Pause” and the second time
+756               period of firing rate reduction in dotted lines in (A) is indicated with an arrow as “Cessation.”
+757
+758          d. Firing rate of unit from (A) with neighboring FS unit firing rate overlaid, giving further evidence that
+759               first period of firing rate suppression corresponds to inhibition from local FS units while second
+760               period of firing rate suppression does not correspond to inhibition from local FS units.
+761
+762          e. Unit cessation-triggered population average of the time course of novel membrane potential
+763               regime measure, i.e. the correlation coefficient relating spiking amplitude and rate in a local time
+764               window, around the two significant descents in firing rate (below 30% of peak rate) that occur in
+765               sequence during seizure. These are designated as pause (left panel) and cessation (right panel).
+766               Left panel shows population average firing rate (blue) and inferred membrane potential regime
+767               (black) aligned according to the time of pause in each unit, for all FS units displaying a pause
+768               (n=14), with inset showing average for best-isolated FS units displaying a pause (n=10). Right
+769               panel shows population average firing rate (red) and inferred membrane potential regime (black)
+770               aligned according to the cessation time of each unit, for all FS units (n=37), with inset showing
+771               average for best-isolated FS units (n=24).
+772
+773          f.   Probability distribution of membrane potential regime measure (spike rate-amplitude correlation;
+774               black line) at the time of pause (left panel) for FS unit pausing subpopulation (n=14) with sample
+775               mean distribution (gold line; resampling size n=10, Nbootstrap=50,000) showing the mean
+776               correlation to be significantly below zero, i.e. in the hyperpolarized membrane potential regime
+777               (blue). In combination with its declining firing rate, this is indicative of widespread inhibition across
+778               this subpopulation at the time of pause. The population distribution of inferred membrane
+779               potential regime is also shown at the time of cessation (right panel) for the full FS unit population
+780               (n=37) with sample mean distribution (gold line; resampling size n=10, Nbootstrap=50,000) showing
+781               the mean correlation to be significantly above zero, i.e. in the highly depolarized membrane
+782               potential regime (red). This is indicative of widespread depolarization block occurring across FS
+783               population at the time of cessation.
+784
+785          g. Unit cessation-triggered population average of the time course of same-electrode LFP amplitude
+786               around unit activity pause (left panel) and cessation (right panel). In particular, left panel shows
+787               population average firing rate (blue) and LFP amplitude (black) aligned according to the time of
+788               pause in each unit, for all FS units displaying a pause (n=14). Right panel shows population
+789               average firing rate (red) and LFP amplitude (black) aligned according to the time of cessation in
+790               each unit, for all FS units (n=37), indicative of larger LFP increase associated with second FS
+791               firing rate descent (cessation) than with first (pause) despite comparable local firing rates in the
+792               two conditions.
+                                                                        Page 37
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+793
+794
+795     Figure 5. Mechanistic model of unit dynamics across seizure progression: inhibition followed by
+796     over-excitation in conductance-based neuron model reproduces key features of extracellular unit
+797     behavior during seizures.
+798
+799          a. Simulated membrane potential in conductance-based spiking model color-coded by the local
+800               correlation between spike rate and amplitude and with net excitatory input indicated by dotted
+801               line. Shows what is hypothesized to be happening within cortical cells during seizure progression
+802               as inferred from extracellular spike shape and rate dynamics.
+                                                                        Page 38
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+803          b. Firing rate (upper) and trough-to-peak spike amplitude (lower) of example FS unit in Patient A,
+804               color-coded by the local correlation between spike rate and amplitude as an extracellular proxy
+805               for membrane potential and subthreshold input history. Dotted lines indicate starts and ends of
+806               two time periods of firing rate suppression characterized by different membrane potential
+807               signatures further characterized in (B), namely a negative correlation regime corresponding to
+808               inhibition followed by a positive correlation regime corresponding to over-excitation ending in
+809               firing rate cessation putatively though depolarization block.
+810
+811          c. Example of negative correlation (left) between local spike rate and amplitude during firing pause
+812               in (A) and example of positive correlation (right) between local spike rate and amplitude during
+813               firing cessation. Least squares linear fit indicated in dotted lines following color scheme in (A) with
+814               Pearson’s correlation coefficient indicated above each plot.
+815
+816          d. Trajectory of unit activity over time during seizure in local spike rate vs spike amplitude space,
+817               with increasing time indicated by increasingly lighter copper color. The first time period of firing
+818               rate reduction in (A) is indicated with an arrow as “Pause” and the second time period of firing
+819               rate reduction is indicated with an arrow as “Cessation.”’
+820
+821          e. Summary of observed dynamics in cell-type specific firing rate and inferred membrane
+822               potential trajectories.
+823               Blue box: Following seizure onset, some FS cells can stop firing for brief periods (as observed
+824               on extracellular electrodes, upper panel). This pause in firing is coupled with signs of
+825               hyperpolarization in the inferred membrane potential (lower panel).
+826               Red box: As the seizure starts to transition to a dramatically higher amplitude FS cells stop firing
+827               (as observed on extracellular electrodes, upper panel). This cessation is coupled with signs of
+828               excessive depolarization in the inferred membrane potential (lower panel; resting membrane
+829               potential indicated as dashed line). This is likely due to elevated extracellular potassium ion
+830               concentrations by this point of the seizure or increased synaptic drive.
+831               Green box: The subsequent stage of high amplitude spike-and-wave rhythms corresponds to a
+832               transient increase and then decrease of firing rate amongst RS cells (as observed on extracellular
+833               electrodes, upper panel). This decrease in firing rate is coupled with signs of excessive
+834               depolarization in the inferred membrane potential (lower panel).
+835
+836
+837
+838
+839
+840
+841
+842
+843
+844
+                                                                        Page 39
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+845     SUPPLEMENTARY INFORMATION
+846
+847     Extended Data Figure 1: Human neural activity classification
+848          a. Average waveform of each FS-classified unit, normalized by the value the waveform reaches at
+849               its trough. The overlaid average waveforms show visual consistency amongst all units classified
+850               as FS and as having spike widths narrower than those of RS-classified units.
+851          b. Average waveform of each RS-classified unit, normalized by the value the waveform reaches at
+852               its trough. The overlaid average waveforms show visual consistency amongst all units classified
+853               as RS and as having spike widths wider than those of FS-classified units.
+854          c. All units indicated as points in the average waveform feature space that produced optimal cluster
+855               separation, namely the width of the waveform at the potential corresponding to 15% of the
+856               potential at its trough and the time between the trough and peak of the waveform. Clustering was
+857               automated using a Gaussian Mixture Model where points with posterior probability exceeding
+858               0.95 were assigned to the closest centroid. Black dots indicate units that did not exceed this
+859               threshold for either Gaussian cloud and were thus unclassified and not used in the remainder of
+860               the study.
+861          d. Mahalanobis distance of each unit from both the RS and FS clusters with color indicating its
+862               posterior probability of belonging to the RS cluster. Closeness of points to both axes shows that
+863               the clusters are well-separated when accounting for their different variances along different
+864               directions in feature space.
+865
+                                                                        Page 40
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+866
+                                                                        Page 41
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+867     Extended Data Figure 2: Human neocortical inhibitory and excitatory neuron activities have
+868     distinct temporal profiles relative to secondarily generalized focal seizure progression on local
+869     electrodes, Patient A, Seizure 2
+870          a. The LFP (gray) recorded at the same location as FS Cell 1 (blue) dramatically increases at the
+871               same time as FS Cell 1 decreases firing. FS Cell 1 activity cessation again precedes a sharp
+872               increase in local RS cell activity (green), further suggesting an important role of FS cells in
+873               controlling local activity during seizure progression.
+874          b. Heatmap shows local LFP amplitude (absolute value) over time on each electrode in NeuroPort
+875               array exhibiting classifiable units as each row, sorted by time of start of spike-and-wave event
+876               and with brighter colors indicating larger amplitudes.
+877          c. Raster plot showing spike times of all cells on NeuroPort array in Patient B that could be
+878               classified into FS (blue) or RS (green) categories with rows sorted by the same order as in (B).
+879               Note the increasing delay to reduction in spike density corresponding to LFP transition to spike-
+880               and-wave events suggesting control of local seizure progression by local cellular spiking activity.
+                                                                        Page 42
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+881
+                                                                        Page 43
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+882     Extended Data Figure 3: Human neocortical inhibitory and excitatory neuron activities have
+883     distinct temporal profiles relative to secondarily generalized focal seizure progression on local
+884     electrodes, Patient C, Seizure 2
+885          a. The LFP (gray) recorded at the same location as FS Cell 1 (blue) dramatically increases at the
+886               same time as FS Cell 1 decreases firing. FS Cell 1 activity cessation again precedes a sharp
+887               increase in local RS cell activity (green), further suggesting an important role of FS cells in
+888               controlling local activity during seizure progression.
+889          b. Heatmap shows local LFP amplitude (absolute value) over time on each electrode in NeuroPort
+890               array exhibiting classifiable units as each row, sorted by time of start of spike-and-wave event
+891               and with brighter colors indicating larger amplitudes.
+892          c. Raster plot showing spike times of all cells on NeuroPort array in Patient C that could be
+893               classified into FS (blue) or RS (green) categories with rows sorted by the same order as in (B).
+894               Note the increasing delay to reduction in spike density corresponding to LFP transition to spike-
+895               and-wave events suggesting control of local seizure progression by local cellular spiking activity.
+896
+                                                                        Page 44
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+897
+                                                                        Page 45
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+898     Extended Data Figure 4: Human neocortical inhibitory and excitatory neuron activities have
+899     distinct temporal profiles relative to secondarily generalized focal seizure progression on local
+900     electrodes, Patient B, Seizure 1
+901          a. The LFP (gray) recorded at the same location as FS Cell 1 (blue) dramatically increases at the
+902               same time as FS Cell 1 decreases firing. FS Cell 1 activity cessation again precedes a sharp
+903               increase in local RS cell activity (green), further suggesting an important role of FS cells in
+904               controlling local activity during seizure progression.
+905          b. Heatmap shows local LFP amplitude (absolute value) over time on each electrode in NeuroPort
+906               array exhibiting classifiable units as each row, sorted by time of start of spike-and-wave event
+907               and with brighter colors indicating larger amplitudes.
+908          c. Raster plot showing spike times of all cells on NeuroPort array in Patient C that could be
+909               classified into FS (blue) or RS (green) categories with rows sorted by the same order as in (B).
+910
+                                                                        Page 46
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+911
+912     Extended Data Figure 5: Cluster isolation quality assessment suggests RS units are well-
+913     isolatable across seizure despite changing unit amplitude and noise structure, allowing analysis
+914     of firing rate changes across seizure.
+                                                                        Page 47
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+915          a. LFP in Patient C indicating seizure as split into 8 equal time divisions for analysis of unit isolation
+916               quality across duration of seizure.
+917          b. Bar graph shows firing rate in 1 second bins of best-isolated example RS unit (green) in Patient
+918               C. Dotted red line indicates threshold used to determine best-isolated units using the dynamic
+919               Lratio measure (see Methods) in each time division of seizure. Line plot indicates dynamic Lratio in
+920               each division and shows large separation of example FS unit from noise in feature space used for
+921               clustering throughout the seizure (note log scale).
+922          c. Line plot showing average spike amplitude (dark green) and individual spike amplitudes (light
+923               green) of example RS unit over course of seizure in Patient C. Note that even as amplitude
+924               decreases the unit remains well-isolated from noise as quantified by dynamic Lratio across seizure.
+925          d. Time-voltage histogram of all threshold crossings assigned to this example RS unit (green,
+926               Upper) and to noise (red, Lower) in eight divisions of seizure in Patient C. Shows unit waveforms
+927               are visually distinguishable from threshold crossings assigned as noise across seizure.
+928
+929
+930
+931
+932
+933
+934
+                                                                        Page 48
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+935
+                                                                        Page 49
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+936     Extended Data Figure 6: Cluster isolation quality assessment suggests RS and FS units on same
+937     channel are well-isolatable across seizure despite changing unit amplitude and noise structure,
+938     allowing analysis of firing rate changes across seizure for multiple patients.
+939          a. LFP in Patient B indicating seizure as split into 8 equal time divisions for analysis of unit isolation
+940               quality across duration of seizure.
+941          b. Bar graph shows firing rate in 1 second bins of best-isolated example FS unit (blue) in Patient B.
+942               Dotted red line indicates threshold used to determine best-isolated units using the dynamic Lratio
+943               measure (see Methods) in each time division of seizure. Line plot indicates dynamic Lratio in each
+944               division and shows large separation of example FS unit from noise in feature space used for
+945               clustering throughout the seizure (note log scale).
+946          c. Line plot showing average spike amplitude (dark blue) and individual spike amplitudes (light blue)
+947               of example FS unit over course of seizure in Patient B. Note that even as amplitude decreases
+948               the unit remains well-isolated from noise as quantified by dynamic Lratio across seizure.
+949          d. Time-voltage histogram of all threshold crossings assigned to example FS unit (blue, Middle), RS
+950               unit on same channel (green, Upper), and to noise (red, Lower) in eight divisions of seizure in
+951               Patient B. Shows unit waveforms are visually distinguishable from threshold crossings assigned
+952               as noise and as other units across seizure.
+953
+                                                                        Page 50
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                          It is made available under a CC-BY-NC-ND 4.0 International license .
+954
+955     Extended Data Figure 7: Cessation of individual RS unit activity is consistently associated with
+956     inferred membrane potential signatures of depolarization block, despite prior pauses
+957          a. Firing rate (upper) and trough-to-peak spike amplitude (lower) of example RS unit in Patient A,
+958               color-coded by the local correlation between spike rate and amplitude (in 1 second time bins) as
+959               an extracellular proxy for membrane potential trajectory and subthreshold input history. Dotted
+960               lines indicate starts and ends of two time periods of firing rate suppression characterized by
+961               different membrane potential signatures further characterized in (B), namely a negative
+962               correlation regime corresponding to inhibition followed by a positive correlation regime
+                                                                        Page 51
+
+     medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                           It is made available under a CC-BY-NC-ND 4.0 International license .
+ 963               corresponding to over-excitation ending in firing rate cessation putatively though depolarization
+ 964               block.
+ 965          b.   Example of negative correlation (left) between local spike rate and amplitude in first time period
+ 966               indicated by dotted lines in (A) and example of positive correlation (right) between local spike rate
+ 967               and amplitude in second time period indicated by dotted lines in (A). Least squares linear fit
+ 968               indicated in dotted lines following color scheme in (A) with Pearson’s correlation coefficient
+ 969               indicated above each plot.
+ 970          c.   Trajectory of unit activity over time during seizure in local spike rate vs spike amplitude space,
+ 971               with increasing time indicated by increasingly lighter copper color. The first time period of firing
+ 972               rate reduction in dotted lines in (A) is indicated with an arrow as “Pause” and the second time
+ 973               period of firing rate reduction in dotted lines in (A) is indicated with an arrow as “Cessation.”
+ 974          d.   Firing rate of unit from (A) with neighboring FS unit firing rate overlaid, giving further evidence that
+ 975               first period of firing rate suppression corresponds to inhibition from local FS units while second
+ 976               period of firing rate suppression does not correspond to inhibition from local FS units.
+ 977          e.   Unit cessation-triggered population average of the time course of novel membrane potential
+ 978               regime measure, i.e. the correlation coefficient relating spiking amplitude and rate in a local time
+ 979               window, around the two significant descents in firing rate (below 30% of peak rate) that occur in
+ 980               sequence during seizure. These are designated as pause (left panel) and cessation (right panel).
+ 981               Left panel shows population average firing rate (blue) and inferred membrane potential regime
+ 982               (black) aligned according to the time of pause in each unit, for all RS units displaying a pause
+ 983               (n=176), with inset showing average for best-isolated RS units displaying a pause (n=41). Right
+ 984               panel shows population average firing rate (red) and inferred membrane potential regime (black)
+ 985               aligned according to the cessation time of each unit, for all RS units meeting cessation criteria
+ 986               (n=379), with inset showing average for best-isolated RS units (n=111).
+ 987          f.   Probability distribution of membrane potential regime measure (spike rate-amplitude correlation;
+ 988               black line) at the time of pause (left panel) for RS unit pausing subpopulation (n=176) with sample
+ 989               mean distribution (gold line; resampling size n=10, Nbootstrap=50,000) showing a bimodal
+ 990               distribution of correlation coefficients near +1 and -1 , i.e. in the hyperpolarized membrane
+ 991               potential regime (blue) or in the highly depolarized regime (red). The population distribution of
+ 992               inferred membrane potential regime is also shown at the time of cessation (right panel) for the RS
+ 993               unit population meeting cessation criteria (n=379) with sample mean distribution (gold line;
+ 994               resampling size n=10, Nbootstrap=50,000) showing the mean correlation to be significantly above
+ 995               zero, i.e. in the highly depolarized membrane potential regime (red). This is indicative of
+ 996               widespread depolarization block occurring across RS population at the time of cessation.
+ 997          g.   Unit cessation-triggered population average of the time course of same-electrode LFP amplitude
+ 998               around unit activity pause (left panel) and cessation (right panel). In particular, left panel shows
+ 999               population average firing rate (blue) and LFP amplitude (black) aligned according to the time of
+1000               pause in each unit, for all RS units displaying a pause (n=176). Right panel shows population
+1001               average firing rate (red) and LFP amplitude (black) aligned according to the time of cessation in
+1002               each unit, for all RS units (n=379).
+1003
+                                                                         Page 52
+
+     medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                           It is made available under a CC-BY-NC-ND 4.0 International license .
+1004
+                                                                         Page 53
+
+     medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                           It is made available under a CC-BY-NC-ND 4.0 International license .
+1005     Extended Data Figure 8: Seizure progression is consistently associated with extracellular signs of
+1006     depolarization block preceded by inhibition in single units.
+1007          a. Firing rate (upper) and trough-to-peak spike amplitude (lower) of another example FS unit in
+1008               Patient A, color-coded by the local correlation between spike rate and amplitude (in 1 second
+1009               time bins) as an extracellular proxy for membrane potential and subthreshold input history.
+1010               Dotted lines indicate starts and ends of two time periods of firing rate suppression characterized
+1011               by different membrane potential signatures further characterized in (B), namely a negative
+1012               correlation regime corresponding to inhibition followed by a positive correlation regime
+1013               corresponding to over-excitation ending in firing rate cessation putatively though depolarization
+1014               block.
+1015          b. Example of negative correlation (left) between local spike rate and amplitude in first time period
+1016               indicated by dotted lines in (A) and example of positive correlation (right) between local spike rate
+1017               and amplitude in second time period indicated by dotted lines in (A). Least squares linear fit
+1018               indicated in dotted lines following color scheme in (A) with Pearson’s correlation coefficient
+1019               indicated above each plot.
+1020          c. Trajectory of unit activity over time during seizure in local spike rate vs spike amplitude space,
+1021               with increasing time indicated by increasingly lighter copper color. The first time period of firing
+1022               rate reduction in dotted lines in (A) is indicated with an arrow as “Pause” and the second time
+1023               period of firing rate reduction in dotted lines in (A) is indicated with an arrow as “Cessation.”
+1024
+                                                                         Page 54
+
+     medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                           It is made available under a CC-BY-NC-ND 4.0 International license .
+1025
+                                                                         Page 55
+
+     medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                           It is made available under a CC-BY-NC-ND 4.0 International license .
+1026     Extended Data Figure 9: Seizure progression is consistently associated with extracellular signs of
+1027     depolarization block preceded by inhibition in single units.
+1028          a. Firing rate (upper) and trough-to-peak spike amplitude (lower) of another example RS unit in
+1029               Patient A, color-coded by the local correlation between spike rate and amplitude (in 1 second
+1030               time bins) as an extracellular proxy for membrane potential and subthreshold input history. Firing
+1031               rate of local FS unit is overlaid as purple histogram. Dotted lines indicate start and end times of
+1032               two time periods of firing rate suppression characterized by different membrane potential
+1033               signatures further characterized in (B), namely a negative correlation regime corresponding to
+1034               inhibition followed by a positive correlation regime corresponding to over-excitation ending in
+1035               firing rate cessation putatively though depolarization block.
+1036          b. Example of negative correlation (left) between local spike rate and amplitude in first time period
+1037               indicated by dotted lines in (A) and example of positive correlation (right) between local spike rate
+1038               and amplitude in second time period indicated by dotted lines in (A). Least squares linear fit
+1039               indicated in dotted lines following color scheme in (A) with Pearson’s correlation coefficient
+1040               indicated above each plot.
+1041          c. Trajectory of unit activity over time during seizure in local spike rate vs spike amplitude space,
+1042               with increasing time indicated by increasingly lighter copper color. RS unit is released from
+1043               inhibition shortly following the cessation of activity in local FS unit as indicated by increasing firing
+1044               rate with decreasing amplitude but then enters regime of over-excitation indicated by decreasing
+1045               firing rate with decreasing amplitude at trajectory “corner” corresponding to a spiking rate of 40
+1046               Hz, until the unit ceases to fire likely due to depolarization block given these indicators of
+1047               membrane potential history.
+1048
+1049
+1050
+1051
+1052
+1053
+1054
+1055
+1056
+1057
+1058
+1059
+1060
+1061
+                                                                         Page 56
+
+     medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                           It is made available under a CC-BY-NC-ND 4.0 International license .
+1062
+1063     REFERENCES
+1064
+1065     1.      Annegers, J. F. The Treatment of Epilepsy: Principles and Practice. (Third
+1066             Edition). in The Treatment of Epilepsy: Principles and PRac (ed. Wyllie, E.) 131–
+1067             138 (Wiley, 2001). doi:10.1002/hup.372
+1068     2.      Thurman, D. J. et al. Standards for epidemiologic studies and surveillance of
+1069             epilepsy. Epilepsia 52, 2–26 (2011).
+1070     3.      Žiburkus, J., Cressman, J. R. & Schiff, S. J. Seizures as imbalanced up states:
+1071             excitatory and inhibitory conductances during seizure-like events. J. Neurophysiol.
+1072             109, 1296–1306 (2013).
+1073     4.      Farrell, J. S., Nguyen, Q.-A. & Soltesz, I. Review Resolving the Micro-Macro
+1074             Disconnect to Address Core Features of Seizure Networks. Neuron 101, 1016–
+1075             1028 (2019).
+1076     5.      Elahian, B. et al. Low-voltage fast seizures in humans begin with increased
+1077             interneuron firing. Ann. Neurol. 84, 588–600 (2018).
+1078     6.      Weiss, S. A. et al. Ictal onset patterns of local field potentials, high frequency
+1079             oscillations, and unit activity in human mesial temporal lobe epilepsy. Epilepsia
+1080             57, 111–121 (2016).
+1081     7.      Schwartzkroin, P. A. & Prince, D. A. Changes in excitatory and inhibitory synaptic
+1082             potentials leading to epileptogenic activity. Brain Res. 183, 61–77 (1980).
+1083     8.      Gutnick, M. J., Connors, B. W. & Prince, D. A. Mechanisms of neocortical
+1084             epileptogenesis in vitro. J. Neurophysiol. 48, 1321–1335 (1982).
+1085     9.      Prince, D. A. & Connors, B. W. Mechanisms of epileptogenesis in cortical
+1086             structures. Ann. Neurol. 16, S59–S64 (1984).
+1087     10.     McCormick, D. A., Connors, B. W., Lighthall, J. W. & Prince, D. A. Comparative
+1088             electrophysiology of pyramidal and sparsely spiny stellate neurons of the
+1089             neocortex. J. Neurophysiol. 54, 782–806 (1985).
+1090     11.     Chagnac-Amitai, Y. & Connors, B. W. Horizontal spread of synchronized activity
+1091             in neocortex and its control by GABA-mediated inhibition. J. Neurophysiol. 61,
+1092             747–758 (1989).
+1093     12.     Ziburkus, J., Cressman, J. R., Barreto, E. & Schiff, S. J. Interneuron and
+1094             pyramidal cell interplay during in vitro seizure-like events. J. Neurophysiol. 95,
+1095             3948–3954 (2006).
+1096     13.     Trevelyan, A. J. & Schevon, C. A. How inhibition influences seizure propagation.
+1097             Neuropharmacology 69, 45–54 (2013).
+1098     14.     Karlócai, M. R. et al. Physiological sharp wave-ripples and interictal events in
+1099             vitro: what’s the difference? Brain 137, 463–85 (2014).
+1100     15.     Pavlov, I. & Walker, M. C. Tonic GABAA receptor-mediated signalling in temporal
+1101             lobe epilepsy. Neuropharmacology 69, 55–61 (2013).
+1102     16.     Avoli, M. & de Curtis, M. GABAergic synchronization in the limbic system and its
+1103             role in the generation of epileptiform activity. Progress in Neurobiology 95, 104–
+1104             132 (2011).
+1105     17.     Cope, D. W. et al. Enhanced tonic GABA A inhibition in typical absence epilepsy.
+1106             Nat. Med. 15, 1392–1398 (2009).
+                                                                         Page 57
+
+     medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                           It is made available under a CC-BY-NC-ND 4.0 International license .
+1107     18.     Neumann, A. R. et al. Involvement of fast-spiking cells in ictal sequences during
+1108             spontaneous seizures in rats with chronic temporal lobe epilepsy. Brain 140,
+1109             2355–2369 (2017).
+1110     19.     Sessolo, M. et al. Parvalbumin-positive inhibitory interneurons oppose
+1111             propagation but favor generation of focal epileptiform activity. J. Neurosci. 35,
+1112             9544–9557 (2015).
+1113     20.     Lévesque, M., Herrington, R., Hamidi, S. & Avoli, M. Interneurons spark seizure-
+1114             like activity in the entorhinal cortex. Neurobiol. Dis. 87, 91–101 (2016).
+1115     21.     Khoshkhoo, S., Vogt, D. & Sohal, V. S. Dynamic, Cell-Type-Specific Roles for
+1116             GABAergic Interneurons in a Mouse Model of Optogenetically Inducible Seizures.
+1117             Neuron 93, 291–298 (2017).
+1118     22.     Xu, H., Jeong, H. Y., Tremblay, R. & Rudy, B. Neocortical Somatostatin-
+1119             Expressing GABAergic Interneurons Disinhibit the Thalamorecipient Layer 4.
+1120             Neuron 77, 155–167 (2013).
+1121     23.     Buckmaster, P. S., Jongen-Rêlo, A. L., Davari, S. B. & Wong, E. H. Testing the
+1122             disinhibition hypothesis of epileptogenesis in vivo and during spontaneous
+1123             seizures. J. Neurosci. 20, 6232–40 (2000).
+1124     24.     Miri, M. L., Vinck, M., Pant, R. & Cardin, J. A. Altered hippocampal interneuron
+1125             activity precedes ictal onset. Elife 7, (2018).
+1126     25.     Cammarota, M., Losi, G., Chiavegato, A., Zonta, M. & Carmignoto, G. Fast
+1127             spiking interneuron control of seizure propagation in a cortical slice model of focal
+1128             epilepsy. J. Physiol. 591, 807–822 (2013).
+1129     26.     Petersen, C. C. H. Whole-Cell Recording of Neuronal Membrane Potential during
+1130             Behavior. Neuron 95, 1266–1281 (2017).
+1131     27.     Nowak, L. G., Azouz, R., Sanchez-Vives, M. V., Gray, C. M. & McCormick, D. A.
+1132             Electrophysiological classes of cat primary visual cortical neurons in vivo as
+1133             revealed by quantitative analyses. J. Neurophysiol. 89, 1541–1566 (2003).
+1134     28.     Cardin, J. A. et al. Driving fast-spiking cells induces gamma rhythm and controls
+1135             sensory responses. Nature 459, 663–667 (2009).
+1136     29.     Rudy, B., Fishell, G., Lee, S. H. & Hjerling-Leffler, J. Three groups of interneurons
+1137             account for nearly 100% of neocortical GABAergic neurons. Dev. Neurobiol. 71,
+1138             45–61 (2011).
+1139     30.     Connors, B. W., Pinto, D. J. & Telfeian, A. E. Local pathways of seizure
+1140             propagation in neocortex. Int. Rev. Neurobiol. 45, 527–46 (2001).
+1141     31.     Merricks, E. M. et al. Single unit action potentials in humans and the effect of
+1142             seizure activity. Brain 138, 2891–906 (2015).
+1143     32.     Schevon, C. A. et al. Evidence of an inhibitory restraint of seizure activity in
+1144             humans. Nat. Commun. 3, 1060 (2012).
+1145     33.     Sabolek, H. R. et al. A candidate mechanism underlying the variance of interictal
+1146             spike propagation. J. Neurosci. 32, 3009–3021 (2012).
+1147     34.     Chervin, R. D., Pierce, P. A. & Connors, B. W. Periodicity and directionality in the
+1148             propagation of epileptiform discharges across neocortex. J. Neurophysiol. 60,
+1149             1695–1713 (1988).
+1150     35.     Wong, B. Y. & Prince, D. A. The lateral spread of ictal discharges in neocortical
+1151             brain slices. Epilepsy Res. 7, 29–39
+1152     36.     Golomb, D. & Amitai, Y. Propagating neuronal discharges in neocortical slices:
+                                                                         Page 58
+
+     medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                           It is made available under a CC-BY-NC-ND 4.0 International license .
+1153             Computational and experimental study. J. Neurophysiol. 78, 1199–1211 (1997).
+1154     37.     Liou, J. Y. et al. A model for focal seizure onset, propagation, evolution, and
+1155             progression. Elife 9, (2020).
+1156     38.     Martina, M., Schultz, J. H., Ehmke, H., Monyer, H. & Jonas, P. Functional and
+1157             molecular differences between voltage-gated K+ channels of fast-spiking
+1158             interneurons and pyramidal neurons of rat hippocampus. J. Neurosci. 18, 8111–
+1159             8125 (1998).
+1160     39.     Rudy, B. & McBain, C. J. Kv3 channels: Voltage-gated K+ channels designed for
+1161             high-frequency repetitive firing. Trends in Neurosciences 24, 517–526 (2001).
+1162     40.     Lien, C. C. & Jonas, P. Kv3 potassium conductance is necessary and kinetically
+1163             optimized for high-frequency action potential generation in hippocampal
+1164             interneurons. J. Neurosci. 23, 2058–2068 (2003).
+1165     41.     Somjen, G. G. Ions in the brain : normal function, seizures, and stroke. (Oxford
+1166             University Press, 2004).
+1167     42.     Fröhlich, F., Bazhenov, M., Iragui-Madoz, V. & Sejnowski, T. J. Reviews:
+1168             Potassium dynamics in the epileptic cortex: New insights on an old topic.
+1169             Neuroscientist 14, 422–433 (2008).
+1170     43.     Cruikshank, S. J., Lewis, T. J. & Connors, B. W. Synaptic basis for intense
+1171             thalamocortical activation of feedforward inhibitory cells in neocortex. Nat.
+1172             Neurosci. 10, 462–468 (2007).
+1173     44.     Pouille, F. & Scanziani, M. Routing of spike series by dynamic circuits in the
+1174             hippocampus. Nature 429, 717–723 (2004).
+1175     45.     Markram, H. et al. Interneurons of the neocortical inhibitory system. Nature
+1176             Reviews Neuroscience 5, 793–807 (2004).
+1177     46.     Kawaguchi, Y. Physiological subgroups of nonpyramidal cells with specific
+1178             morphological characteristics in layer II/III of rat frontal cortex. J. Neurosci. 15,
+1179             2638–2655 (1995).
+1180     47.     Kramer, M. A. et al. Human seizures self-terminate across spatial scales via a
+1181             critical transition. Proc. Natl. Acad. Sci. U. S. A. 109, 21116–21121 (2012).
+1182     48.     Beverlin, B., Kakalios, J., Nykamp, D. & Netoff, T. I. Dynamical changes in
+1183             neurons during seizures determine tonic to clonic shift. J. Comput. Neurosci. 33,
+1184             41–51 (2012).
+1185     49.     Fröhlich, F., Sejnowski, T. J. & Bazhenov, M. Network bistability mediates
+1186             spontaneous transitions between normal and pathological brain states. J.
+1187             Neurosci. 30, 10734–10743 (2010).
+1188     50.     Blumenfeld, H. Cellular and network mechanisms of spike-wave seizures.
+1189             Epilepsia 46, 21–33 (2005).
+1190     51.     Berényi, A., Belluscio, M., Mao, D. & Buzsáki, G. Closed-loop control of epilepsy
+1191             by transcranial electrical stimulation. Science (80-. ). 337, 735–737 (2012).
+1192     52.     Wykes, R. C. et al. Epilepsy: Optogenetic and potassium channel gene therapy in
+1193             a rodent model of focal neocortical epilepsy. Sci. Transl. Med. 4, (2012).
+1194     53.     Paz, J. T. et al. Closed-loop optogenetic control of thalamus as a tool for
+1195             interrupting seizures after cortical injury. Nat. Neurosci. 16, 64–70 (2013).
+1196     54.     Krook-Magnuson, E., Armstrong, C., Oijala, M. & Soltesz, I. On-demand
+1197             optogenetic control of spontaneous seizures in temporal lobe epilepsy. Nat.
+1198             Commun. 4, 1–8 (2013).
+                                                                         Page 59
+
+     medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20204206.this version posted October 13, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                           It is made available under a CC-BY-NC-ND 4.0 International license .
+1199     55.     Sukhotinsky, I. et al. Optogenetic Delay of Status Epilepticus Onset in an In Vivo
+1200             Rodent Epilepsy Model. PLoS One 8, (2013).
+1201     56.     Bikson, M., Hahn, P. J., Fox, J. E. & Jefferys, J. G. R. Depolarization block of
+1202             neurons during maintenance of electrographic seizures. J. Neurophysiol. 90,
+1203             2402–2408 (2003).
+1204     57.     Hoffman, D. A., Magee, J. C., Colbert, C. M. & Johnston, D. K+ channel regulation
+1205             of signal propagation in dendrites of hippocampal pyramidal neurons. Nature 387,
+1206             869–875 (1997).
+1207     58.       Schmitzer-Torbert, N., Jackson, J., Henze, D., Harris, K., & Redish, A. D.
+1208               Quantitative measures of cluster quality for use in extracellular recordings.
+1209               Neuroscience 131, 1-11 (2005).
+1210     59.       Magloire, V., Mercier, M. S., Kullmann, D. M., & Pavlov, I. GABAergic
+1211               interneurons in seizures: Investigating causality with optogenetics. The
+1212               Neuroscientist 25, 344-358 (2019).
+1213     60.       De Polavieja, G. G., Harsch, A., Kleppe, I., Robinson, H. P. C. & Juusola, M.
+1214               Stimulus history reliably shapes action potential waveforms of cortical neurons. J.
+1215               Neurosci. 25, 5657–5665 (2005).
+1216
+1217
+1218
+1219
+1220
+1221
+1222
+1223
+                                                                         Page 60

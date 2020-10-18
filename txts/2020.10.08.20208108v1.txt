@@ -1,0 +1,620 @@
+   medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20208108.this version posted October 11, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                               All rights reserved. No reuse allowed without permission.
+ 1 Age-targeted dose allocation can halve COVID-19
+ 2 vaccine requirements
+ 3 Michael T. Meehan1,* , Daniel G. Cocks2 , Jamie M. Caldwell3 , James M. Trauer4 , Adeshina
+ 4 I. Adekunle1 , Romain R. Ragonnet4 , and Emma S. McBryde1
+ 5
+   1 Australian   Institute of Tropical Health and Medicine, James Cook University, Townsville, 4811, Australia
+ 6
+   2 Research     School of Physics, Australian National University, Canberra, Australia
+ 7
+   3 Department of Biology, University of Hawaii at Manoa, Hawaii, United States of America
+ 8
+   4 Epidemiological Modelling Unit, School of Public Health and Preventive Medicine, Monash University, Melbourne,
+ 9 Australia
+10
+   * michael.meehan1@jcu.edu.au
+11 ABSTRACT
+    In anticipation of COVID-19 vaccine deployment, we use an age-structured mathematical model to investigate the benefits of
+    optimizing age-specific dose allocation to suppress SARS-CoV-2 transmission. Across 179 countries, we find that the highest
+12
+    priority individuals are typically those between 30 and 59 years of age because of their high contact rates and higher risk of
+    infection and disease. We reaffirm that vaccination alone may be insufficient to achieve herd immunity in some settings, and
+    that additional intervention measures may be required. Nevertheless, we show that optimizing the allocation of vaccine doses
+    can more than double their effectiveness.
+13 Main
+14 Assuming a safe and sufficiently effective vaccine is approved for severe acute respiratory syndrome coronavirus-2 (SARS-
+15 CoV-2), the infection that causes coronavirus disease 19 (COVID-19), it is critical that initial deployments are targeted not only
+16 at those at greatest risk of infection and disease, but those most responsible for ongoing transmission. At present, there are no
+17 treatments to protect against SARS-CoV-2 infection or symptomatic COVID-19 disease; however, there are at least 76 potential
+18 vaccine candidates under either clinical (five) or pre-clinical (71) investigation1, 2 .
+19      SARS-CoV-2 is highly transmissible (basic reproduction number, R0 = 2.68; 95% credible interval: 2.47 - 2.86)4 and
+20 notoriously difficult to contain. In contrast with SARS-CoV-1, transmission of SARS-CoV-2 is partly driven by asymptomatic
+21 and presymptomatic individuals5 , with the former accounting for up to 30% of all infections by some estimates6 . Such "silent
+22 transmission" severely complicates infection control as it limits both (i) the capacity of non-pharmaceutical interventions such
+23 as case isolation and contact tracing to identify carriers and contain the spread of infection; and (ii) the potential impact on
+24 transmission of vaccines that prevent symptomatic disease only, since asymptomatic individuals can remain highly infectious.
+25 Together, these highlight the need for a vaccine that disrupts transmission and helps reach the herd immunity threshold: where
+26 the immune fraction of the population yields an effective reproduction number, Reff < 1.
+27      In the absence of pre-existing immunity, the minimum population-level vaccination coverage required to achieve herd
+28 immunity (under the assumption of homogeneous mixing and susceptibility across the population) is (1 − 1/R0 )/e; where
+29 the vaccine efficacy, e, is included because even the most effective vaccines only confer partial protection — particularly
+30 amongst the elderly. Given an R0 of 2.68, SARS-CoV-2 herd immunity thresholds can be estimated at between 60 and 70%,
+31 which equates to approximately 90% population-wide vaccination coverage for a vaccine that is 70% effective. However,
+32 recent studies incorporating population heterogeneity have suggested that SARS-CoV-2 herd immunity thresholds may be
+33 considerably lower than naïve estimates7–10 . This is due to the fact that young-to-middle-age groups have high contact rates
+34 combined with high infectiousness and susceptibility to infection. Removing these persons from the susceptible pool would
+35 therefore have disproportionate effects on the transmission potential. These observations are crucial for vaccination strategies,
+36 as they imply that the age-specific characteristics of both social mixing and SARS-CoV-2 infection could be leveraged to
+37 increase the efficiency of vaccine campaigns.
+38      In this study we use an age-stratified SARS-CoV-2 transmission model — which incorporates age-dependent susceptibility
+39 and disease severity calibrated to COVID-19 patient data11 — to estimate the age-specific transmission rates among infected
+40 individuals in 179 countries. We then use the candidate vaccine profiles developed by the World Health Organization12 to
+           NOTE: This preprint reports new research that has not been certified by peer review and should not be used to guide clinical practice.
+
+   medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20208108.this version posted October 11, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                               All rights reserved. No reuse allowed without permission.
+41 identify the optimal age-specific allocation of vaccine doses to limit SARS-CoV-2 transmission by: 1) minimizing the effective
+42 reproduction number, Reff , for a fixed number of available vaccine doses (categorized according to the fraction of the population
+43 that could receive a full vaccination course, i.e., the population-level coverage); and 2) minimizing the number of doses required
+44 to suppress transmission and achieve elimination (Reff < 1).
+45      We also consider two separate modes of action for vaccine candidates: those that reduce the recipient’s susceptibility to
+46 infection; and those that protect against symptomatic disease in persons who become infected. In each case vaccine doses are
+47 allocated independently among individuals divided into 10-year age bands from 0 − 9 up to 70+ years of age.
+48      At baseline, we assume that the vaccine is 70% effective12 across all age groups and that both individual susceptibility
+49 and risk of symptomatic disease are age dependent (see Methods). Variations to these assumptions are investigated through
+50 sensitivity analysis (Supplement).
+51      To demonstrate the breadth of optimal solutions that can be obtained across different regions, we provide detailed results
+52 for India, China and the United Kingdom (UK), which span low- to high-income settings and exhibit diverse population
+53 demographic structures and contact networks — moreover, the latter two (China13 and the UK14 ) have pre-COVID-19 contact
+54 survey data available. We also provide the global distribution of minimum vaccination coverage required to achieve herd
+55 immunity. Detailed, age-specific breakdowns for the remaining 176 countries appear in the Supplement.
+56 Results
+57 Age-specific transmission rates
+58 The different age distributions (Fig. 1A-C) and contact patterns in different countries drive highly heterogeneous transmission
+59 rates (Fig. 1D-F) among age groups and settings. Transmission in low- (e.g., India) and middle-income countries, which
+60 typically have bottom-heavy age pyramids, is predominately driven by younger age groups (0-29 years of age), particularly
+61 between individuals of the same age and from younger to older ages. However, there is often some additional inter-generational
+62 transmission generated by those between 20 and 59 years of age (Fig. 1A,D). Conversely, in China where high numbers of
+63 daily contacts were recorded among those aged 60 and above13 , transmission is much more intensely concentrated in the
+64 older age groups. In high-income settings (e.g., the UK), we see that in addition to the intense within-age-group transmission
+65 among those aged 19 years and below (which is similar to low-income settings), there is considerably more inter-generational
+66 transmission generated by those individuals aged between 20 and 69 years, which becomes even more intense for regions with
+67 top-heavy age distributions such as Japan and Hong Kong (see Supplement).
+68 Minimizing transmission with a fixed number of doses
+69 Targeted vaccination dramatically reduces the SARS-CoV-2 transmission rate relative to vaccination programs that uniformly
+70 distribute doses across the population (Fig. 2). Reductions are greatest at intermediate levels of population-level coverage (e.g.,
+71 60%) as results under the two strategies converge when coverage approaches 0 or 100%.
+72      Countries with contacts concentrated among a limited number of age groups (e.g., China, Fig. 2B) exhibit greater reductions
+73 in transmission under targeted vaccine allocation, as do countries with higher median ages (e.g., the UK, Fig. 2C) because older
+74 populations with rectangular age distributions possess greater scope for targeted dose allocation.
+75      Vaccines that reduce susceptibility to infection more effectively suppress transmission than those that prevent symptomatic
+76 disease among infected individuals (Fig. 2). The latter not only exhibit less improvement under targeted dose allocation, but
+77 they also fail to reach the herd immunity threshold in almost all settings considered (the exceptions being countries with
+78 baseline R0 values very close to one, e.g., Samoa).
+79      Looking at the age-specific dose allocation under optimized vaccination (Fig. 3), we observe that vaccines that protect
+80 against symptomatic disease (Fig. 3A-C) prioritize slightly older age groups than those that reduce susceptibility to infection
+81 (Fig. 3D-F). In either case, we find that individuals between 30 and 49 years of age (i.e., those typically most responsible for
+82 inter-generational transmission) are often assigned the highest priority among all age groups. As more doses become available
+83 (e.g., as 60% population-level coverage is reached), the targeted age groups expand contiguously, either to include 10-19 and
+84 20-29 year olds or 50-59 year olds, depending on whether vaccination protects against infection or disease, respectively. For
+85 each level of vaccination coverage and protection mode, the lowest priority individuals are typically those 70 years of age and
+86 over. Notable exceptions include China (Fig. 3B,E) where the high number of contacts among individuals over the age of 60
+87 mean the elderly (i.e., 60+ year olds) should be the first group vaccinated.
+88      In sensitivity analysis with reduced efficacy among 60+ year old individuals (i.e., 35% v. 70% in those <60 years old), we
+89 find similar results to those presented above, with changes in priority assigned to older individuals typically within the range of
+90 variation obtained from near-optimal solutions (grey bars) (Fig. S1). However, when we use an alternate model parameterization
+91 that only allows age-dependent variation in the clinical fraction (keeping individual susceptibility fixed across all age groups)
+92 we observe a shift in priority away from 50+ year old individuals to much younger age groups (particularly 10-19 year olds) in
+93 India and the UK; whilst the results in China are qualitatively similar under the different model parameterizations (Figs. S4-S9).
+                                                                                                                                             2/20
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20208108.this version posted October 11, 2020. The copyright holder for this preprint
+        (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                                All rights reserved. No reuse allowed without permission.
+    Figure 1. Age distributions and age-specific transmission rates. Population pyramids (Panels A-C) and transmission
+    matrices (Panels D-F) for India (left), China (middle) and the United Kingdom (right). In Panels D-F the colouring of the ith
+    row and jth column of the transmission matrices represents the average number of infections in age group i generated by an
+    individual in age group j over the course of an infectious episode with COVID-19. The elements of each matrix have been
+    rescaled such that the maximal eigenvalues of the respective transmission matrices match the basic reproduction numbers (R0 )
+    estimated by Abbott et al.15 , namely India: 2.2; China: 2.6; and the United Kingdom: 2.3.
+ 94 Efficiently reaching the herd immunity threshold
+ 95 Following our analysis of optimal age-specific vaccine allocation under the constraint of finite available doses, we next
+ 96 investigated the inverse problem: calculating the minimum number of doses required to achieve herd immunity under targeted
+ 97 vaccine allocation. Given the results of the previous section indicating that vaccines that protect against symptomatic disease
+ 98 are often unable to achieve herd immunity, in this section we focused specifically on vaccines that reduce susceptibility to
+ 99 infection, which were shown to be more effective.
+100     Under uniform vaccine allocation programs we observe that with a vaccine that is 70% effective at reducing susceptibility
+101 to infection most countries require population-level vaccination coverages in excess of 80% (Fig. 4). In particular, we find that
+102 whilst vaccination appears to be a viable strategy to achieve herd immunity in some settings, more than 20% of the countries
+103 considered would require substantial coverage levels (>85%) to reach this goal, whilst for several others (e.g., France) herd
+104 immunity may be unachievable through vaccination alone.
+105     In contrast, when dose allocation is optimized by targeting specific age groups, we observe dramatic reductions in the
+106 minimum population-level coverage required to achieve herd immunity (Fig. 5) — with most countries requiring less than 65%
+107 nationwide coverage under optimized, infection-preventing vaccination programs. As above, we find that countries with more
+108 intensely concentrated contacts within particular age groups experience greater (relative) reductions in the minimum population
+                                                                                                                                              3/20
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20208108.this version posted October 11, 2020. The copyright holder for this preprint
+        (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                                All rights reserved. No reuse allowed without permission.
+    Figure 2. Reduction in transmission under optimized vaccine allocation. Effective reproduction number, Reff , as a
+    function of the population-level vaccination coverage when allocation is targeted towards priority age groups (solid lines) and
+    the vaccine protects against infection (red) and disease (blue) for India (left), China (middle) and the United Kingdom (right).
+    For comparison, we also plot the analogous reduction in Reff when vaccine doses are allocated uniformly across age groups
+    (dashed lines). The herd immunity threshold (Reff <1) is indicated by the horizontal dotted black line.
+109 coverage required to achieve herd immunity under targeted vaccination programs, which in some cases can exceed 50% (e.g.,
+110 Mozambique).
+111     In both the uniform and targeted vaccination scenarios, the greatest variation in minimum coverage is observed across the
+112 African continent, which contains countries that require very low levels of vaccination (e.g., Angola, Mozambique), along with
+113 countries for which vaccination alone is insufficient to achieve herd immunity (e.g., Libya, Zimbabwe).
+114     Results obtained through sensitivity analysis with reduced vaccine efficacy in the 60+ year age groups (i.e., 35% v. 70% in
+115 those less than 60 years of age) are in most cases within a few percent of those presented in Figs. 4 and 5 (see Figs. S2 and S3).
+116 One notable exception is China, which under constant vaccine efficacy required only 61% (88%) population-level coverage
+117 under a targeted (uniform) vaccination policy, but is unable to reach the herd immunity threshold when efficacy wanes in 60+
+118 year old individuals because of the high number of contacts amongst individuals in this age group.
+119     We note that the minimum target values presented in Figs. 4 and 5 are highly sensitive to: (i) case-count-derived estimates
+120 of the basic reproduction numbers provided by Abbott et al.15 (and are therefore subject to biases introduced by variations in
+121 country-specific reporting rates); and (ii) the baseline vaccine efficacy (assumed here to be 70%). Nevertheless, our results can
+122 be readily rescaled without the need for re-optimization should updated estimates of R0 or vaccine efficacy become available.
+123 Discussion
+124 Targeting vaccination towards age groups that contribute more to the transmission of infection can dramatically enhance
+125 the effectiveness of COVID-19 vaccination. Whether the goal is to minimize transmission for a fixed number of doses or
+126 to minimize the number of doses required to achieve a certain reduction in transmission, our analysis indicates that dosage
+127 requirements or transmission rates can be halved under tailored age-specific vaccination strategies. Whilst the choice of which
+128 age groups to initially target for vaccination is dependent on setting, vaccinating middle-aged individuals (30-59 years of
+129 age) typically had the highest impact across the 179 countries considered (e.g., India and the UK). However, there were some
+130 settings (e.g., China) in which those aged 60 and above were the first to be selected for vaccination (in line with observed
+131 contact structures13 ).
+132     Additionally, the ability of vaccination to reduce transmission is highly dependent on the type of protection conferred16 .
+133 Since asymptomatic individuals contribute substantially to SARS-CoV-2 transmission, vaccines that prevent symptomatic
+134 disease but allow transmissible asymptomatic infection failed to achieve herd immunity in the overwhelming majority of
+135 settings considered; whereas vaccines that prevent initial infection by reducing the recipient’s susceptibility were far more
+136 likely to achieve elimination (and concomitantly possess greater scope for optimization). In either case, we emphasize that a
+137 vaccine with less than 100% efficacy may require substantial population-level coverage in order to achieve herd immunity17 ,
+138 although this threshold can be considerably reduced through targeted vaccination — as suggested by studies that account for
+139 heterogeneities in population susceptibility and mixing10 .
+140     In settings for which vaccination alone proves insufficient, supplementary measures may need to be invoked to achieve
+141 elimination; this may include a reliance on pre-exisiting immunity generated by initial COVID-19 epidemic waves — which
+                                                                                                                                              4/20
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20208108.this version posted October 11, 2020. The copyright holder for this preprint
+        (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                                All rights reserved. No reuse allowed without permission.
+    Figure 3. Optimal age-specific vaccination policy. The optimum coverage level for each age group (coloured bars) for
+    varying population coverage levels for India (left), China (middle) and the United Kingdom (right). Alongside the global
+    optimal solution (coloured bars) we provide the 2.5−97.5 percentile ranges (vertical grey lines) and median values (grey dots)
+    of age-specific coverage levels for all locally optimal solutions whose Reff is within 1% of the global optimal value. Panels
+    A-C show the results for vaccines that prevent symptomatic disease. Panels D-F give the analogous results for vaccines that
+    prevent infection. Here we have assumed that the vaccine is 70% effective across all age groups (remaining model parameters
+    assume their baseline values which can be found in Table S1).
+142 several serological surveys reveal may have already reached a sizeable fraction of the optimal targets identified in our analysis18 .
+143 We have chosen not to account for pre-existing immunity as a result of past infection in our analysis because of the difficulties
+144 in quantifying its contribution relative to that of vaccination.
+145      Throughout our analysis we have attempted to account for parameter uncertainty by exploring a range of alternatives
+146 suggested by the World Health Organization’s recent vaccination modelling call12 . Nevertheless, several limitations and
+147 possible extensions to the existing analysis remain. To begin, no vaccine provides perfect protection — and certainly not across
+148 all age groups. The results presented herein assume a vaccine efficacy of 70% that is sustained across all age groups at baseline;
+149 however, results assuming reduced efficacy (35%) in individuals over 60 years of age are presented in the Supplementary
+150 Materials. We found that reduced efficacy in individuals over 60 years of age had a negligible impact on the predicted minimum
+151 vaccination coverage targets and the level of priority assigned to particular age groups for most countries — China being a
+152 notable exception. Moreover, since the former estimates scale linearly with baseline efficacy, it is straightforward to update
+153 these values for vaccine efficacies other than 70%; nonetheless, the priority assigned to each age group should remain invariant.
+154      Next, we chose optimization targets designed to reduce transmission, which we defined through the reduction in the effective
+155 reproduction number, Reff . Whilst such targets may be suitable for settings in which transmission is currently suppressed by
+156 existing (non-pharmaceutical) control measures (e.g., New Zealand), countries with ongoing epidemics may choose to prioritize
+157 more severe outcomes such as COVID-19-related mortality. Although dynamic outputs such as cumulative morbidity (e.g.,
+158 Disability-Adjusted-Life-Years; DALYs) and mortality are beyond the scope of the present analysis, we anticipate that such
+159 targets will bias optimal vaccine allocation towards older age groups who typically suffer worse disease-related outcomes.
+160 This was demonstrated in the recent analyses aiming to minimize deaths through vaccination by Hogan et al.16 and Matrajt et
+161 al.19 . These authors found that when doses are limited, older age groups should be the first to receive vaccination. Ultimately
+162 however, we expect that the best way to limit deaths is to limit transmission, such that the priority age-groups identified by
+163 these alternate optimization targets will not deviate significantly from the results obtained here when population-level coverage
+164 is sufficient to limit transmission; this view is supported by16, 19 and the recent analysis by Ragonnet et al.20 which optimized
+                                                                                                                                              5/20
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20208108.this version posted October 11, 2020. The copyright holder for this preprint
+        (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                                      All rights reserved. No reuse allowed without permission.
+                  Population−level coverage
+                      >100 % (other strategies req’d)
+                      80 − 100 %
+                      60 − 79 %
+                      40 − 59 %
+                      20 − 39 %
+                      <20 %
+    Figure 4. Global target vaccination coverage under uniform vaccination policy. Map of the minimum target vaccination
+    coverage required to achieve herd immunity under uniform vaccine allocation programs. Countries coloured bright yellow are
+    incapable of achieving herd immunity through vaccination alone (i.e., their minimum coverage thresholds exceed 100%).
+165 age-specific mixing to achieve herd immunity whilst minimizing deaths and years of life lost.
+166     Furthermore, to avoid excessive speculation, we have not factored in the costs and feasibility of age-specific vaccine roll-out
+167 as part of our optimization search. However, alongside the global optimal solutions identified for each age group and setting,
+168 we have also indicated a range of possible age-specific coverage levels that have near-equivalent (within 1%) transmission
+169 reduction potential that may be selected if proven more cost-effective in practice.
+170     In this modelling study, we have exclusively chosen to optimize vaccine allocation by age. This choice is motivated by
+171 the most readily available patient and contact data (which regularly provide breakdowns by age) and the subsequent analyses
+172 that have firmly established that infection and disease risk vary substantially by age. Subsequent studies could also consider
+173 alternative demographic strata with known correlations with infection risk and disease severity, including occupation (e.g.,
+174 health- and aged-care workers) and socio-economic status, as well as the presence of comorbodities.
+175     Another important limitation of our analysis is the reliance on case-based estimates for the basic reproduction number, R0 , in
+176 each country. To be conservative, we have taken the upper limit of the 90% credible interval provided by the analysis in Abbott
+177 et al.15 . Whilst variations in reporting rates within different host countries will likely bias these estimates, our predictions for
+178 the minimum vaccination coverage for each country can be re-scaled to account for any updated values. Regardless, we point
+179 out that it is only the total reduction in Reff (in the fixed doses case) or minimum target coverage (in the unlimited doses case)
+180 that is sensitive to R0 , while the optimal age-specific allocation of available doses should remain unaltered.
+181     We also note that the limited efficacy of disease-preventing vaccines stems from the prominence of sub-clinical transmitters,
+182 which, following Davies et al.11 , we have assumed are 50% as infectious as clinical cases. If the contribution of asymptomatic
+183 transmission (either in the natural infection case or post-vaccination) is found to be lower, the estimated effectiveness of
+184 vaccines that prevent symptomatic disease would correspondingly increase.
+185     Another important consideration is the impact of waning vaccine-induced immunity, and the potentially harmful conse-
+186 quences of delaying an individual’s age-at-first-infection. This issue is known to influence the course of vaccination for several
+187 other communicable diseases (e.g., varicella21 and rubella) and may have important ramifications for COVID-19 that should
+188 be explored as more data become available — particularly given the significantly poorer outcomes observed among older
+                                                                                                                                              6/20
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20208108.this version posted October 11, 2020. The copyright holder for this preprint
+         (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                                       All rights reserved. No reuse allowed without permission.
+                   Population−level coverage
+                       >100 % (other strategies req’d)
+                       80 − 100 %
+                       60 − 79 %
+                       40 − 59 %
+                       20 − 39 %
+                       <20 %
+    Figure 5. Global target vaccination coverage under optimized vaccination policy. Map of the minimum target
+    vaccination coverage required to achieve herd immunity under country-specific optimized vaccine allocation programs.
+    Countries coloured yellow are incapable of achieving herd immunity through vaccination alone (i.e., their minimum coverage
+    threshold exceeds 100%).
+189 individuals.
+190      Finally, if and when a COVID-19 vaccine is approved and made available globally, it is critical that doses are allocated in
+191 a manner that most efficiently curtails transmission — as initial supplies will undoubtedly be limited. Our study shows that
+192 setting- and age-specific optimization of vaccine allocation can provide substantial improvements in efficiency over uniform
+193 vaccination programs, saving up to half of the available doses to achieve the same reduction in transmission in some settings.
+194 Moreover, in deriving the minimum coverage thresholds required to achieve herd immunity in 179 countries, this analysis has
+195 also underscored the often overlooked and unsavory outcome that vaccination alone may not be enough to completely suppress
+196 COVID-19 (particularly if the vaccine fails to prevent initial infection). In this case, permanent control measures — which may
+197 include social distancing or improved hygiene — may be required alongside vaccination.
+198 Methods
+199 Calibrating transmission and the next-generation matrix
+200 To model the transmission of SARS-CoV-2 we stratify the population into 16 5-year age bands i ∈ {0−4, 5−9, 10−14, . . . , 70−
+201 74, 75+} and assume that individuals in age group i possess a relative susceptibility to infection ui . Once infected, an age-
+202 dependent fraction yi go on to develop symptomatic (i.e., clinical) disease whilst the remaining (1 − yi ) develop asymptomatic
+203 (i.e., sub-clinical) disease. We assume that individuals in the sub-clinical class are less infectious than those in the clinical class
+204 by a relative factor f (set at 0.511 ) and that the total time spent infectious for both classes is τ = 5.0 days11 .
+         Each day, each individual in age group j makes ci j contacts with individuals in age group i leading to the following
+    expression for the (unscaled) next-generation matrix (NGM)11, 22 :
+                    ui Si ci j
+            K̄i j =            [y j + (1 − y j ) f ]τ                                                                                            (1)
+                       Nj
+205 where Si is the number of susceptible individuals in age group i and N j is total number of individuals in age group j.
+                                                                                                                                               7/20
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20208108.this version posted October 11, 2020. The copyright holder for this preprint
+        (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                                         All rights reserved. No reuse allowed without permission.
+        The (i, j)th entry of the NGM K̄ is proportional to the average number of new infections in age group i generated by an
+    individual in age group j over their entire infectious lifetime. To calculate the actual number of infections generated by each
+    individual these entries must be scaled by the (pseudo-)probability of transmission given contact, which we denote by η. In
+    particular, the basic reproduction number, R0 , which is proportional to the maximal eigenvalue of K̄, can be expressed as
+                                                    R0
+            R0 = ηρ(K̄)            ⇒      η=                                                                                                    (2)
+                                                 ρ(K̄)
+206 where we use ρ(K̄) to denote the spectral radius of the matrix K̄.
+207     For each of the 179 countries considered in our analysis we used estimates of R0 based on observed case counts15 to
+208 calibrate country-specific values for the scaling factor η. In particular, we assume R0 in each country is equal to the maximum
+209 value of the 90% credible interval upper limit of the time-varying reproduction number estimates generated by Abbott et al.15 .
+210 Where these values are unrealistically high (e.g., North Macedonia returned an R0 greater than 30) we used estimates provided
+211 by the Centres for Disease Control and Prevention (CDC).
+212     We assume that the age-dependent susceptibility (ui ) and clinical fraction (yi ) are universal across all countries and allow
+213 only the age-specific contact rates (ci j ), initial population sizes (Si and N j ) and transmission scaling factor η to vary among
+214 settings, i.e., all other parameters remain fixed among countries (see Table S1).
+215     We consider three separate models for age-dependent susceptibility and clinical fraction: M1 — allowing both age-dependent
+216 susceptibility and clinical fraction; M2 — allowing age-dependent susceptibility only; and M3 — allowing age-dependent
+217 clinical fraction only. The results for model M1 are those presented in the main article, whilst results for models M2 and M3
+218 appear in the Supplement. Parameter values under each model have been calibrated to patient data in Davies et al.11 and can be
+219 found in Table S2.
+220     Where available, the daily, age-dependent contact rates, ci j , between individuals in each country were taken from previously
+221 conducted nationwide contact surveys. This was the case for China13 and the UK14 , as well Italy, Germany, Luxembourg, the
+222 Netherlands, Poland, Finland and Belgium23 and Zimbabwe24 . In the absence of such survey data, synthetic contact matrices
+223 extrapolated from existing contact surveys across multiple settings were used25, 26 .
+224 Modelling vaccination
+225 To incorporate vaccination of otherwise susceptible individuals, we let vi denote the fraction of individuals in age group i that
+226 are vaccinated (i.e., the coverage of age-group i), e denote the baseline efficacy of the vaccine, and ri its age-dependent relative
+227 efficacy. For tractability, here we divide the population into 10-year age bands such that the vector vi has eight free parameters
+228 that are repeated pairwise to cover the 16 5-year age bands defined above.
+        We investigate two distinct modes of action for potential vaccines, those that protect against initial infection and those that
+    protect against symptomatic disease following infection. The former equates to a removal of susceptible individuals from the
+    total population whilst the latter influences the fraction of individuals that go on to develop symptomatic disease. The unscaled
+    NGM in each instance transforms, respectively, to:
+                           ui (1 − eri vi )Si ci j
+            K̄ivac,inf
+                j      =                           [y j + (1 − y j ) f ] τ.                                                                     (3)
+                                      Nj
+    and
+                           ui Si ci j
+            K̄ivac,dis
+                j      =              [(1 − er j v j )y j + (1 − (1 − er j v j )y j ) f ] τ.                                                    (4)
+                              Nj
+    In the presence of vaccination, the effective reproduction number, Reff , can be calculated via
+            Rkeff = ηρ(K̄ vac,k )                                                                                                               (5)
+229 where the index k ∈ {inf, dis} denotes the type of protection conferred by vaccination, and the scaling factor η is calibrated
+230 according the procedure described in the previous section.
+231 Optimizing vaccination
+232 Using expression (5) for the effective reproduction number as a function of the age-specific vaccination proportions v =
+233 (v0−9 , v10−19 , . . . , v70+ ), we pursue two optimization targets: 1) minimizing the effective reproduction number (Reff ) for a given
+234 (fixed) number of doses; and 2) minimizing the total number of doses (i.e., population-level coverage) required to achieve herd
+235 immunity, which we define as obtaining an effective reproduction number less than one. These optimization problems can
+236 respectively be stated as
+                                                                                                                                              8/20
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20208108.this version posted October 11, 2020. The copyright holder for this preprint
+        (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                                All rights reserved. No reuse allowed without permission.
+        1. Minimizing transmission with a fixed number of doses.
+           Minimize Reff (v) subject to             ∑ vi Ni = constant.                                                                         (6)
+                                                      i
+        2. Efficiently reaching the herd immunity threshold.
+           Minimize       ∑ vi Ni     subject to Reff (v) < 1.                                                                                  (7)
+                           i
+237     Since the surface Reff (v) = const. is highly complex, we expect that there may be multiple solutions to the optimization
+238 problems 1. and 2. Therefore, we used a stochastic simulated annealing algorithm to search the parameter space and re-ran it
+239 multiple times to uncover multiple solutions of roughly equivalent quality (i.e., similar objective values). Hence, in addition to
+240 storing the global optimum value (i.e., the solution with the minimum objective value among all solutions obtained) we also
+241 retained the values obtained from each of the remaining runs whose objective value was within 1% of the global optimum (the
+242 range of these values is indicated by the grey bars in Fig. 3).
+243 Data and code availability
+244 All input data and model source code has been deposited in a recognized public source repository GitHub, https://github.
+245 com/michaeltmeehan/covid19.
+246 References
+247 1. Krammer, F. et al. SARS-CoV-2 vaccines in development. Nature https://doi.org/10.1038/s41586-020-2798-3 (2020).
+248 2. Le, T.T., Andreadakis, Z., Kumar, A., et al. The COVID-19 vaccine development landscape. Nat Rev Drug Discov 19,
+249   306-306 (2020). https://doi.org/10.1038/d41573-020-00073-5
+250 3. Petersen, E., Koopmans, M., Go, U. et al. Comparing SARS-CoV-2 with SARS-CoV and influenza pandemics. The Lancet
+251   Infect Dis 20(9), E238-E244 (2020). https://doi.org/10.1016/S1473-3099(20)30484-9
+252 4. Wu, J.T, Leung, K.L., Leung, G.M. Nowcasting and forecasting the potential domestic and international spread of
+253   the 2019-nCoV outbreak originating in Wuhan, China: a modelling study. The Lancet, 395(10225), 689-697 (2020).
+254   https://doi.org/10.1016/S0140-6736(20)30260-9
+255 5. Moghadas, S.M., Fitzpatrick, M.C., Sah, P., et al. The implications of silent transmission for the control of COVID-19
+256   outbreaks. PNAS 117(30), 17513–17515 (2020). https://doi.org/10.1073/pnas.2008373117
+257 6. Nishiura, H., Miyama, T., Suzuki, A. et al. Estimation of the asymptomatic ratio of novel coronavirus infections (COVID-19).
+258   Int J Infect Dis 94, 154–155 (2020). https://doi.org/10.1016/j.ijid.2020.03.020
+259 7. Aguas, R., Corder, R.M., King, J.G., et al. Herd immunity thresholds for SARS-CoV-2 estimated from unfolding epidemics.
+260   medRxiv, (2020). https://doi.org/10.1101/2020.07.23.20160762
+261 8. Brennan, P.V., Brennan L.P. Susceptibility-adjusted herd immunity threshold model and potential R0 distribution fitting the
+262   observed COVID-19 data in Stockholm. medRxiv (2020). https://doi.org/10.1101/2020.05.19.20104596
+263 9. Britton, T., Ball, F., Trapman, P. A mathematical model reveals the influence of population heterogeneity on herd immunity
+264   to SARS-CoV-2. Science, 369(6505), 846-849 (2020). https://doi.org/10.1126/science.abc6810
+265 10. Gomes, M.G.M., Corder, R.M., King, J.G., et al. Individual variation in susceptibility or exposure to to SARS-CoV-2
+266   lowers the herd immunity threshold. medRxiv, (2020). https://doi.org/10.1101/2020.04.27.20081893
+267 11. Davies, N.G., Klepac, P., Liu, Y. et al. Age-dependent effects in the transmission and control of COVID-19 epidemics. Nat
+268   Med 26, 1205–1211 (2020). https://doi.org/10.1038/s41591-020-0962-9
+269 12. WHO Strategic Advisory Group of Experts (SAGE) on Immunization Working Group on COVID-19 Vaccines: Prioritized
+270   Infectious Disease and Economic Modelling Questions. The World Health Organization, (2020).
+271 13. Zhang, J., Klepac, P., Read, J. et al. (2020). Social contact data for China mainland [Data set]. Zenodo.
+272   http://doi.org/10.5281/zenodo.3878754
+273 14. van Hoek, A. J., Andrews, N., Campbell, H. et al. (2020). Social contact data for UK (Version 3) [Data set]. Zenodo.
+274   http://doi.org/10.5281/zenodo.3874717
+275 15. Abbott, S. et al. Estimating the time-varying reproduction number of SARS-CoV-2 using national and subnational case
+276   counts. Wellcome Open Research, 5:112 (2020).
+                                                                                                                                              9/20
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20208108.this version posted October 11, 2020. The copyright holder for this preprint
+        (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                                All rights reserved. No reuse allowed without permission.
+277 16. Hogan, A.B., Winskill, P., Watson, O.J. et al. Report 33. Modelling the allocation and impact of a COVID-19 vaccine.
+278   Imperial College London, UK. WHO Collaborating Centre for Infectious Disease Modelling MRC Centre for Global
+279   Infectious Disease Analysis, Abdul Latif Jameel Institute for Disease and Emergency Analytics, Imperial College London,
+280   UK 2020. https:doi.org/10.25561/82822
+281 17. Bartsch, S.M., O’Shea, K.J, Ferguson, M.C. et al. Vaccine efficacy needed for a COVID-19 coronavirus
+282   vaccine to prevent or stop and epidemic as the sole intervention. Am J Prev Med 59(4), 493-503 (2020).
+283   https://doi.org/10.1016/j.amepre.2020.06.011
+284 18. Eckerle, I., Meyer, B. SARS-CoV-2 seroprevalence in COVID-19 hostpots. The Lancet 396(10250), 514-515 (2020).
+285   https://doi.org/10.1016/S0140-6736(20)31482-3
+286 19. Matrajt, L., Eaton, J., Leung, T. et al. Vaccine optimization for COVID-19, who to vaccinate first? medRxiv, (2020).
+287   https://doi.org/10.1101/2020.08.14.20175257.t
+288 20. Ragonnet, R., Briffoteaux, G., Williams, B.M., et al. Optimising social mixing strategies to mitigate the impact of COVID-
+289   19 in six European countries: a mathematical modelling study. medRxiv, (2020). https://doi.org/10.1101/2020.08.25.20182162
+290 21. Brisson, M., Edmunds, W.J., Gay, N.J. Varicella vaccination: impact of vaccine efficacy on the epidemiology of VZV. J
+291   Med Virol 70, S31-S37 (2020). https://doi.org/10.1002/jmv.10317
+292 22. Diekmann, O., Heesterbeek, J.A.P., Roberts, M.G. The construction of next-generation matrices for compartmental
+293   epidemic models. J. R. Soc. Interface 7, 873–885 (2010). https://doi.org/doi:10.1098/rsif.2009.0386
+294 23. Mossong, J., Hens, N., Jit, M. et al. POLYMOD social contact data. (2020). https://doi.org/10.5281/zenodo.1043437
+295 24. Melegaro, A., Fava, E.D., Poletti, P. et al. Social contact data for Zimbabwe. (2020). https://doi.org/10.5281/zenodo.1127693
+296 25. Prem, K., Cook, A.R., Jit, M. Projecting social contact matrices in 152 countries using contact surveys and demographic
+297   data. PLoS Comp Biol 13(9): e1005697 (2017). https://doi.org/10.1371/journal.pcbi.1005697
+298 26. Prem, K., van Zandvoort, K., Klepac, P. et al. Projecting contact matrices in 177 geographical re-
+299   gions: an update and comparison with empirical data for the COVID-19 era. medarxiv:2020.07.22.20159772v2
+300   https://doi.org/10.1101/2020.07.22.20159772
+301 Acknowledgements
+302 M.M. is funded by a postdoctoral research fellowship from the National Health and Medical Research Council’s Centre of
+303 Research Excellence in Tuberculosis Control on Both Sides of Our Border (Project ID: 1153493).
+304 Author contributions statement
+305 M.M., R.R and E.M. conceived the project, M.M. and D.C. conducted the simulations, M.M., J.C., D.C., A.A., J.T., R.R. and
+306 E.M. analysed the results. All authors reviewed the manuscript.
+307 Additional information
+308 Competing interests The authors do not have any competing interests to declare.
+309 Supplementary Information
+310 In addition to the data provided below, further model inputs and results — including optimization results for all 179 countries
+311 — can be found in the public GitHub repository: https://github.com/michaeltmeehan/covid19/optimize_
+312 vaccination.
+                                                                                                                                             10/20
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20208108.this version posted October 11, 2020. The copyright holder for this preprint
+    (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+                  Parameter        Description                                                             Baseline value
+                                                                                                                 (range)
+                        ui         Relative susceptibility of age group i                                    See table S2
+                        yi         Fraction of infected individuals that develop clinical infection          See table S2
+                        τ          Infectious period                                                            5.0 days
+                         f         Relative infectiousness of asymptomatic individuals                             0.5
+                        η          Probability of transmission given contact                                      Fitted
+                        vi         Proportion of vaccinated individuals in age group i                        Optimized
+                        e          Overall vaccine efficacy                                                        0.7
+                        ri         Relative vaccine efficacy in individuals over the age of 60               1.0 (0.5-1.0)
+                                       Table S1. Transmission model parameters adapted from11 .
+                                Age-group (years)         Relative susceptibility (ui )   Clinical fraction (yi )
+                                                               M1 (M2, M3)                  M1 (M2, M3)
+                                        0−4                   0.39 (0.018, 1.0)            0.28 (0.50, 0.14)
+                                        5−9                   0.39 (0.018, 1.0)            0.28 (0.50, 0.14)
+                                       10 − 14                0.38 (0.018, 1.0)            0.20 (0.50, 0.14)
+                                       15 − 19                0.38 (0.018, 1.0)            0.20 (0.50, 0.15)
+                                       20 − 24                0.79 (0.022, 1.0)            0.26 (0.50, 0.18)
+                                       25 − 29                0.79 (0.028, 1.0)            0.26 (0.50, 0.23)
+                                       30 − 34                0.87 (0.036, 1.0)            0.33 (0.50, 0.29)
+                                       35 − 39                0.87 (0.042, 1.0)            0.33 (0.50, 0.34)
+                                       40 − 44                0.80 (0.046, 1.0)            0.40 (0.50, 0.38)
+                                       45 − 49                0.80 (0.049, 1.0)            0.40 (0.50, 0.40)
+                                       50 − 54                0.82 (0.053, 1.0)           0.49 (0.50., 0.44)
+                                       55 − 59                0.82 (0.060, 1.0)            0.49 (0.50, 0.50)
+                                       60 − 64                0.89 (0.067, 1.0)            0.63 (0.50, 0.55)
+                                       65 − 69                0.89 (0.070, 1.0)            0.63 (0.50, 0.57)
+                                       70 − 74                0.74 (0.071, 1.0)            0.69 (0.50, 0.58)
+                                        75+                   0.74 (0.071, 1.0)            0.69 (0.50, 0.58)
+Table S2. Fitted values of age-dependent susceptibility and clinical fraction generated by Davies et al.11 allowing for both
+age-dependent susceptibility and clinical fraction (M1); age-dependent susceptibility only (M2); and age-dependent clinical
+fraction only (M3).
+                                                                                                                                         11/20
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20208108.this version posted October 11, 2020. The copyright holder for this preprint
+    (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+Figure S1. Optimal age-specific vaccination policy (with reduced efficacy in 60+ year olds). The optimum coverage
+level for each age group (coloured bars) for varying levels of population-level coverage for India (left), China (middle) and the
+United Kingdom (right). Alongside the global optimal solution (coloured bars) we provide the 2.5−97.5 percentile ranges
+(vertical grey lines) and median values (grey dots) of age-specific coverage levels for all locally optimal solutions whose Reff is
+within 1% of the global optimal value. Panels A-C show the results for vaccines that prevent symptomatic disease and Panels
+D-F give the analogous results for vaccines that prevent infection. Here we have assumed that the vaccine is 70% effective for
+individuals aged 60 years and less and is 35% effective in those over the age of 60 (remaining model parameters assume their
+baseline values, which can be found in Tables S1 and S2).
+                                                                                                                                         12/20
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20208108.this version posted October 11, 2020. The copyright holder for this preprint
+   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                                 All rights reserved. No reuse allowed without permission.
+            Population−level coverage
+                 >100 % (other strategies req’d)
+                 80 − 100 %
+                 60 − 79 %
+                 40 − 59 %
+                 20 − 39 %
+                 <20 %
+Figure S2. Global target vaccination coverage under uniform vaccination policy (with reduced efficacy in 60+ year
+olds). Map of the minimum target vaccination coverage required to achieve herd immunity under uniform vaccine allocation
+programs. Countries coloured bright yellow are incapable of achieving herd immunity through vaccination alone (i.e., their
+minimum coverage thresholds exceed 100%). Here we have assumed that the vaccine is 70% effective for individuals aged 60
+years and less and is 35% effective in those over the age of 60 (remaining model parameters assume their baseline values,
+which can be found in Tables S1 and S2).
+                                                                                                                                        13/20
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20208108.this version posted October 11, 2020. The copyright holder for this preprint
+     (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                                  All rights reserved. No reuse allowed without permission.
+              Population−level coverage
+                  >100 % (other strategies req’d)
+                  80 − 100 %
+                  60 − 79 %
+                  40 − 59 %
+                  20 − 39 %
+                  <20 %
+Figure S3. Global target vaccination coverage under optimized vaccination policy (with reduced efficacy in 60+ year
+olds). Map of the minimum target vaccination coverage required to achieve herd immunity under country-specific optimized
+vaccine allocation programs. Countries coloured yellow are incapable of achieving herd immunity through vaccination alone
+(i.e., their minimum coverage threshold exceeds 100%). Here we have assumed that the vaccine is 70% effective for individuals
+aged 60 years and less and is 35% effective in those over the age of 60 (remaining model parameters assume their baseline
+values, which can be found in Tables S1 and S2).
+                                                                                                                                          14/20
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20208108.this version posted October 11, 2020. The copyright holder for this preprint
+     (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+Figure S4. Full country results for India, allowing age-dependent susceptibility only (M2). Panel A: Population
+pyramid. Panel B: Age-specific daily contact rates. Panel C: Age-specific infection rates over the lifetime of infection. Panel
+D: Reduction in transmission (Reff ) as a function of population-level vaccination coverage for vaccines that prevent infection
+(blue) and disease (red) under targeted (solid) and uniform (dashed) vaccination programs. Panel E: Optimal age-specific
+vaccination coverage for varying levels of population-level coverage. Coloured bars represent the global optimum value whilst
+the grey vertical lines (dots) indicate the 2.5-97.5 percentile range (median) of near-optimal solutions (i.e., solutions with an
+Reff within 1% of the global optimum). The top row (i, ii) give the results for disease-preventing vaccines and the bottom row
+(iii, iv) give the results for infection-preventing vaccines. The windows on the left (i, iii) give the results for vaccines with
+constant efficacy (70%) across all age groups and the windows on the right (ii, iv) give the results for vaccines with variable
+efficacy amongst 60+ year olds (35% v. 70% in <60 year olds).
+                                                                                                                                          15/20
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20208108.this version posted October 11, 2020. The copyright holder for this preprint
+     (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+Figure S5. Full country results for China, allowing age-dependent susceptibility only (M2). Panel A: Population
+pyramid. Panel B: Age-specific daily contact rates. Panel C: Age-specific infection rates over the lifetime of infection. Panel
+D: Reduction in transmission (Reff ) as a function of population-level vaccination coverage for vaccines that prevent infection
+(blue) and disease (red) under targeted (solid) and uniform (dashed) vaccination programs. Panel E: Optimal age-specific
+vaccination coverage for varying levels of population-level coverage. Coloured bars represent the global optimum value whilst
+the grey vertical lines (dots) indicate the 2.5-97.5 percentile range (median) of near-optimal solutions (i.e., solutions with an
+Reff within 1% of the global optimum). The top row (i, ii) give the results for disease-preventing vaccines and the bottom row
+(iii, iv) give the results for infection-preventing vaccines. The windows on the left (i, iii) give the results for vaccines with
+constant efficacy (70%) across all age groups and the windows on the right (ii, iv) give the results for vaccines with variable
+efficacy amongst 60+ year olds (35% v. 70% in <60 year olds).
+                                                                                                                                          16/20
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20208108.this version posted October 11, 2020. The copyright holder for this preprint
+    (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+Figure S6. Full country results for the United Kingdom, allowing age-dependent susceptibility only (M2). Panel A:
+Population pyramid. Panel B: Age-specific daily contact rates. Panel C: Age-specific infection rates over the lifetime of
+infection. Panel D: Reduction in transmission (Reff ) as a function of population-level vaccination coverage for vaccines that
+prevent infection (blue) and disease (red) under targeted (solid) and uniform (dashed) vaccination programs. Panel E: Optimal
+age-specific vaccination coverage for varying levels of population-level coverage. Coloured bars represent the global optimum
+value whilst the grey vertical lines (dots) indicate the 2.5-97.5 percentile range (median) of near-optimal solutions (i.e.,
+solutions with an Reff within 1% of the global optimum). The top row (i, ii) give the results for disease-preventing vaccines and
+the bottom row (iii, iv) give the results for infection-preventing vaccines. The windows on the left (i, iii) give the results for
+vaccines with constant efficacy (70%) across all age groups and the windows on the right (ii, iv) give the results for vaccines
+with variable efficacy amongst 60+ year olds (35% v. 70% in <60 year olds).
+                                                                                                                                         17/20
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20208108.this version posted October 11, 2020. The copyright holder for this preprint
+     (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+Figure S7. Full country results for India, allowing age-dependent clinical fraction only (M3). Panel A: Population
+pyramid. Panel B: Age-specific daily contact rates. Panel C: Age-specific infection rates over the lifetime of infection. Panel
+D: Reduction in transmission (Reff ) as a function of population-level vaccination coverage for vaccines that prevent infection
+(blue) and disease (red) under targeted (solid) and uniform (dashed) vaccination programs. Panel E: Optimal age-specific
+vaccination coverage for varying levels of population-level coverage. Coloured bars represent the global optimum value whilst
+the grey vertical lines (dots) indicate the 2.5-97.5 percentile range (median) of near-optimal solutions (i.e., solutions with an
+Reff within 1% of the global optimum). The top row (i, ii) give the results for disease-preventing vaccines and the bottom row
+(iii, iv) give the results for infection-preventing vaccines. The windows on the left (i, iii) give the results for vaccines with
+constant efficacy (70%) across all age groups and the windows on the right (ii, iv) give the results for vaccines with variable
+efficacy amongst 60+ year olds (35% v. 70% in <60 year olds).
+                                                                                                                                          18/20
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20208108.this version posted October 11, 2020. The copyright holder for this preprint
+     (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+Figure S8. Full country results for China, allowing age-dependent clinical fraction only (M3). Panel A: Population
+pyramid. Panel B: Age-specific daily contact rates. Panel C: Age-specific infection rates over the lifetime of infection. Panel
+D: Reduction in transmission (Reff ) as a function of population-level vaccination coverage for vaccines that prevent infection
+(blue) and disease (red) under targeted (solid) and uniform (dashed) vaccination programs. Panel E: Optimal age-specific
+vaccination coverage for varying levels of population-level coverage. Coloured bars represent the global optimum value whilst
+the grey vertical lines (dots) indicate the 2.5-97.5 percentile range (median) of near-optimal solutions (i.e., solutions with an
+Reff within 1% of the global optimum). The top row (i, ii) give the results for disease-preventing vaccines and the bottom row
+(iii, iv) give the results for infection-preventing vaccines. The windows on the left (i, iii) give the results for vaccines with
+constant efficacy (70%) across all age groups and the windows on the right (ii, iv) give the results for vaccines with variable
+efficacy amongst 60+ year olds (35% v. 70% in <60 year olds).
+                                                                                                                                          19/20
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20208108.this version posted October 11, 2020. The copyright holder for this preprint
+    (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+Figure S9. Full country results for the United Kingdom, allowing age-dependent clinical fraction only (M3). Panel A:
+Population pyramid. Panel B: Age-specific daily contact rates. Panel C: Age-specific infection rates over the lifetime of
+infection. Panel D: Reduction in transmission (Reff ) as a function of population-level vaccination coverage for vaccines that
+prevent infection (blue) and disease (red) under targeted (solid) and uniform (dashed) vaccination programs. Panel E: Optimal
+age-specific vaccination coverage for varying levels of population-level coverage. Coloured bars represent the global optimum
+value whilst the grey vertical lines (dots) indicate the 2.5-97.5 percentile range (median) of near-optimal solutions (i.e.,
+solutions with an Reff within 1% of the global optimum). The top row (i, ii) give the results for disease-preventing vaccines and
+the bottom row (iii, iv) give the results for infection-preventing vaccines. The windows on the left (i, iii) give the results for
+vaccines with constant efficacy (70%) across all age groups and the windows on the right (ii, iv) give the results for vaccines
+with variable efficacy amongst 60+ year olds (35% v. 70% in <60 year olds).
+                                                                                                                                         20/20

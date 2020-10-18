@@ -1,0 +1,894 @@
+   medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20207936.this version posted October 13, 2020. The copyright holder for this
+    preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                   perpetuity.
+                                           All rights reserved. No reuse allowed without permission.
+ 1   Age-differences in information flow in executive and sensorimotor brain networks
+ 2   during childhood and adolescence
+ 3
+ 4   Martina J. Lund1*, Dag Alnæs1,2, Jaroslav Rokicki1,3, Simon Schwab4,5, Ole A. Andreassen1,6,
+ 5   Lars T. Westlye1,3,6, Tobias Kaufmann1*.
+ 6
+     1
+ 7      Norwegian Centre for Mental Disorders Research (NORMENT), Division of Mental Health
+ 8      and Addiction, Oslo University Hospital, and Institute of Clinical Medicine, University of
+ 9      Oslo, Norway
+     2
+10     Bjørknes College, Oslo, Norway
+     3
+11      Department of Psychology, University of Oslo, Oslo, Norway
+     4
+12      Center for Reproducible Science (CRS) & Epidemiology, Biostatistics and Prevention
+13      Institute (EBPI), University of Zürich, Zurich, Switzerland
+     5
+14      Big Data Institute, Li Ka Shing Centre for Health Information and Discovery, Nuffield
+15      Department of Population Health, University of Oxford, Oxford, UK
+     6
+16     KG Jebsen Centre for neurodevelopmental disorders, University of Oslo, Oslo, Norway
+17
+     *
+18      Corresponding authors:
+19      Martina J. Lund and Tobias Kaufmann, PhD
+20      Email: m.j.lund@medisin.uio.no, tobias.kaufmann@medisin.uio.no
+21      Postal address: OUS, PoBox 4956 Nydalen, 0424 Oslo, Norway
+22      Telephone: +47 23 02 73 50, Fax: +47 23 02 73 33
+23
+24
+25   Counts:
+26      Abstract: 181 words
+27      Main text body: 4021 words
+28      Figures: 4
+29
+30   Keywords:
+31      Directed functional connectivity
+32      Development
+33      Dynamic graphical models
+34      Resting-state fMRI
+35      The Healthy Brain Network
+36
+37
+38
+39
+40
+41
+42
+43
+44
+       NOTE: This preprint reports new research that has not been certified by peer review and should not be used to guide clinical practice.
+45
+                                                                         1
+
+   medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20207936.this version posted October 13, 2020. The copyright holder for this
+    preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                   perpetuity.
+                                           All rights reserved. No reuse allowed without permission.
+46   Abstract
+47   Objective: Mental disorders often emerge during adolescence, and age-related differences in
+48   connection strengths of brain networks (static connectivity) have been identified. However,
+49   little is known about the directionality of information flow (directed connectivity) in this period
+50   of brain development.
+51   Methods: We employed dynamic graphical models (DGM) to estimate directed functional
+52   connectivity from resting state functional magnetic resonance imaging data on 979 participants
+53   aged 6 to 17 years from the healthy brain network (HBN) sample. We tested for effects of age,
+54   sex, cognitive abilities and psychopathology on directionality.
+55   Results: We show robust bi-directionality in information flow between visual-medial and
+56   visual-lateral nodes of the network, in line with prior studies in adult samples. Furthermore, we
+57   found that age in this developmental sample was associated with directionality of information
+58   flow in sensorimotor and executive control networks, yet we did not find associations with
+59   cognitive abilities or psychopathology.
+60   Discussion: Our results revealed that directionality in information flow of large-scale brain
+61   networks is sensitive to age during adolescence, warranting further studies that may explore
+62   trajectories of development in more fine-grained network parcellations and in different
+63   populations.
+                                                                       2
+
+   medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20207936.this version posted October 13, 2020. The copyright holder for this
+    preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                   perpetuity.
+                                           All rights reserved. No reuse allowed without permission.
+64   Introduction
+65   The brain undergoes tremendous changes throughout life, where childhood and adolescence is
+66   a particularly sensitive developmental period for brain maturation processes (Blakemore,
+67   2012). A vital part of the brain’s maturation happens in the functional networks that show
+68   pronounced reorganization in order to facilitate neural efficiency and integration of
+69   information, as indicated by connectome studies in healthy children and young individuals as
+70   well as in clinical populations in the same age range (Insel, 2010; Keshavan, Giedd, Lau, Lewis,
+71   & Paus, 2014; Kolskar et al., 2018; Rausch et al., 2016; Schweinsburg, Nagel, & Tapert, 2005).
+72   This supports that this time period is a sensitive phase, where there is large alterations in the
+73   functional interconnections between brain regions as a whole that link to when different mental
+74   disorders emerge (Insel, 2010).
+75             The primary method to study functional brain interconnections so far has been to
+76   estimate static functional connectivity between brain regions, where research has shown that
+77   the functional connectome in healthy children and adolescents becomes more specialized (Li,
+78   Deng, He, Zhai, & Jia, 2019). Resting-state networks (RSNs) also become more coherent and
+79   stable during this time-period (Hoff, Van den Heuvel, Benders, Kersbergen, & De Vries, 2013),
+80   and evidence has indicated aberrant connectivity in individuals with pre-clinical psychiatric
+81   symptoms (Kaufmann et al., 2017), which is in line with the brain dysconnectivity hypothesis
+82   in mental disorders (Connolly et al., 2013; Di Martino et al., 2011; Hamm et al., 2014). Only
+83   recently has directed functional connectivity received interest as a field that could yield new
+84   knowledge about the connections between brain regions by estimating directionality in neural
+85   information flow. Riley et al. (2018) examined effective connectivity, the causal influence that
+86   one node exerts over another (Bielczyk et al., 2019; Friston, 2011), in a neurodevelopmental
+87   sample and observed that there are differences between sexes in relation to how memories are
+88   encoded in the hippocampus. In another neurodevelopmental study by Hwang, Velanova, and
+                                                                       3
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20207936.this version posted October 13, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+ 89   Luna (2010) the authors observed that improvements in inhibitory control were linked to
+ 90   strengthening of top-down connectivity for regions implicated in cognitive control networks,
+ 91   while similar findings were found in relation to top-down processing for a language network
+ 92   (Bitan et al., 2006). Further, it has been shown that there are differences in directionality in
+ 93   adolescent boys with externalizing behavior disorders compared to a control group (Shannon,
+ 94   Sauder, Beauchaine, & Gatzke-Kopp, 2009) and for children with Attention Deficit
+ 95   Hyperactivity Disorder (ADHD) (Zhao, Zheng, Yang, & Tian, 2017). However, the literature
+ 96   on connection directionality is scarce, calling for validation of earlier findings and for new
+ 97   insights using novel approaches. In particular, we do not currently know if and how the
+ 98   direction flow in the communication between brain networks is implicated in mental traits and
+ 99   disorders, including cognitive abilities. Given that cognitive deficits are seen across mental
+100   disorders, connecting these behavioral and clinical characteristics is crucial for gaining a better
+101   understanding of how higher-order processing is characterized in children and adolescence.
+102   Such integrative understanding is also important given that no consensus has been reached
+103   when it comes to the disorder-specific connectivity alterations that characterize particular
+104   mental disorders and the known overlap of symptoms (Craddock & Owen, 2010; Jollans &
+105   Whelan, 2018) and the pleiotropy between disorders (Demontis et al., 2019; Grove et al., 2019;
+106   Hibar et al., 2015; Schizophrenia Working Group of the Psychiatric Genomics, 2014;
+107   Talkowski et al., 2012).
+108             Dynamic graphical models (DGM) is a Bayesian approach for examining directed
+109   functional connectivity using dynamic linear models (Schwab et al., 2018). As such, it
+110   implements a state space model that is linear and Gaussian in form. This includes statistically
+111   stationary properties as it uses a hidden Markov modelling approach, although it incorporates
+112   time varying coefficients and as a result can provide information about directionality in the
+113   form of a binary view of coupling between two brain regions for each connectivity direction.
+                                                                        4
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20207936.this version posted October 13, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+114             Here, we used DGM and publicly available resting-state functional magnetic resonance
+115   imaging (rsfMRI) data from the Healthy Brain Network (HBN) project (Alexander et al., 2017)
+116   to study brain network information flow in children and adolescents and its associations with
+117   age, sex, cognitive abilities and psychopathology. We hypothesized that information flow
+118   would be strengthened with increasing age (Bitan et al., 2006; Hwang et al., 2010), that there
+119   would be differences between females and males in the maturation of brain networks (Riley et
+120   al., 2018), as well as alterations associated with information flow for control networks as these
+121   nodes are central to a range of disorders (Cortese, Kelly, & Di Martino, 2012; Eisenberg &
+122   Berman, 2010; Francx et al., 2015; Geiger et al., 2016; Li et al., 2017; Zhao, Swati, Metmer,
+123   Sang, & Lu, 2019).
+124   Methods
+125   Study samples
+126             The HBN is a project organized by the Child Mind Institute (Alexander et al., 2017) and
+127   is a resource targeting novel insight into the critical time period when psychiatric and mental
+128   disorders emerge. The HBN consortium aims to include 10,000 individuals in the age range of
+129   5-21 years from the New York area, where participants are included by use of announcements
+130   that are distributed to community members, educators, local care providers with the addition of
+131   sending information via email lists and events to parents, encouraging participation of children
+132   with clinical concerns to this study (Alexander et al., 2017). Data on these individuals include
+133   a package consisting of MRI scanning, genetics, electroencephalography (EEG), eye-tracking,
+134   as well as biological testing and a neuropsychological battery consisting of cognitive, lifestyle
+135   indices, behavioral and psychiatric domains in addition to actigraphy and voice and video
+136   interviews (Alexander et al., 2017). Exclusion criteria include serious neurological disorders,
+137   neurodegenerative disorders, acute encephalopathy, hearing or visual impairment, lifetime
+                                                                        5
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20207936.this version posted October 13, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+138   substance abuse that necessitated chemical replacement therapy/acute intoxication at time of
+139   study, recent diagnosis of a severe mental disorder or manic/psychotic episode within the last
+140   6 months without ongoing treatment, in addition to the onset of suicidality/homicidality where
+141   there is no current, ongoing treatment (Alexander et al., 2017). All participants over the age of
+142   18 years provided signed informed consent, while legal guardians signed informed consent for
+143   participants under the age of 18, in addition to participants giving a written assent (Alexander
+144   et al., 2017). The Chesapeake Institutional Review Board approved the study (https://www.
+145   chesapeakeirb.com/).
+146
+147   MRI acquisition and preprocessing
+148   MR data was collected by the study team of HBN, where we included MRI data from the
+149   following sites; Rutgers University Brain Imaging Center (RUBIC), Citigroup Biomedical
+150   Imaging Center (CBIC) and a mobile scanner located in Staten Island. MRI data was
+151   collected using one scanner at each site, giving a total of 3 scanners comprising our sample.
+152   Rutgers applied a Siemens 3T Trim Tio scanner, while CBIC utilized a Siemens 3T Prisma,
+153   and both sites applied the same MRI parameters, where resting- state blood-oxygen-level-
+154   dependent (BOLD) fMRI data was collected for each subject using a T2*-weighted BOLD
+155   echo-planar imaging (EPI) sequence with a repetition time (TR) of 800ms, echo time (TE) of
+156   30ms, 60 number of slices with the rsfMRI session consisting of 375 volumes and with voxel
+157   size= 2.4×2.4×2.4 mm. The third mobile scanner located in Staten Island used a 1.5T Siemens
+158   Avanto system equipped with 45 mT/m gradients (Alexander et al., 2017), where the
+159   following parameters were implemented; TR= 1.45s, TE=40ms, number of volumes=420,
+160   slices= 54, resolution in mm= 2.5×2.5×2.5 mm (for more information about the MRI
+161   parameters, see
+162   http://fcon_1000.projects.nitrc.org/indi/cmi_healthy_brain_network/MRI%20Protocol.html).
+                                                                        6
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20207936.this version posted October 13, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+163   Raw imaging data was downloaded from the HBN database
+164   (http://fcon_1000.projects.nitrc.org/indi/cmi_healthy_brain_network/sharing_neuro.html#Dir
+165   ect%20Down), and analyzed on the secure data storage and computing facilities (TSD,
+166   https://www.uio.no/tjenester/it/forskning/sensitiv) at University of Oslo. Image processing
+167   tools, based largely on Smith et al. (2013), were used for the functional data while T1-
+168   weighted data, which was applied as an intermediate in the registration, was processed using
+169   FreeSurfer 5.3 (http://freesurfer.net), including removal of non-brain tissue.
+170             As part of the HBN MRI protocol, multiple T1weighted sequences were acquired for
+171   each subject, and we used MRIQC for automated quality assessment (N=2427, CUNY scanning
+172   site was included for the MRIQC stage, yet this site was dropped at a later stage due the low
+173   sample size, N=22). From this, T1 weighted images with the best image quality metrics were
+174   used as input for registration, while structural scans that were flagged (N=160) were manually
+175   checked and excluded (N=117) if they were of low quality. In addition, 22 subjects had errors
+176   when they were run through FreeSurfer and after manually inspecting these datasets, these were
+177   also omitted due to motion artefacts and/or having MRI findings disrupting the segmentation
+178   pipeline in FreeSurfer. We also made a global mask of the T1 data where we manually checked
+179   subjects that had low coverage, excluding another 95 subjects leaving a total of 2171 datasets
+180   that had a usable T1w sequence for registration.
+181             Two of the MRI sites, RUBIC and CBIC, had two resting-state scans acquired as part
+182   of the same MRI session. As such, we merged these scans together to leverage all available
+183   resting-state data and to optimize the data for the DGM method that benefits from more time
+184   points. Furthermore, the first four volumes for the fMRI dataset were discarded. We
+185   preprocessed fMRI data using FSL 6.0.3 (http://fsl.fmrib.ox.ac.uk), including motion correction
+186   and brain extraction. FSL’s FEAT (Woolrich, Ripley, Brady, & Smith, 2001) included spatial
+187   smoothing with a Gaussian kernel FWHM of 6 mm and a high-pass temporal filter equivalent
+                                                                        7
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20207936.this version posted October 13, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+188   to 100s. FMRIB’s Nonlinear Image Registration tool (FNIRT) was used to register fMRI
+189   volumes to standard space (MNI-152) with the T1w volumes as intermediates.
+190             We also implemented a cleaning step for fMRI data, where we made a global mask for
+191   the fMRI datasets (which indicated data coverage across participants), and from this we
+192   excluded 45 of 1813 datasets with poor coverage. To reduce the influence of noise in the data,
+193   we removed artefacts by use of ICA-AROMA, which is a classifier that identifies and removes
+194   motion specific noise in fMRI data (Pruim, Mennes, Buitelaar, & Beckmann, 2015; Pruim,
+195   Mennes, van Rooij, et al., 2015). In addition, FSL’s FIX (FMRIB’s ICA-based X-noisiefier,
+196   (Griffanti et al., 2014; Salimi-Khorshidi et al., 2014)) was used with the recommended
+197   threshold of 20 to remove remaining motion confounds and other artefacts in the data. Next,
+198   data was temporally demeaned and variance normalized (Beckmann & Smith, 2004), and the
+199   quality controlled fMRI dataset (N=1678) was submitted to a group ICA, utilizing FSL’s
+200   Multivariate Exploratory Linear Optimized Decomposition into Independent Components
+201   (MELODIC) tool (Beckmann & Smith, 2004; Hyvärinen, 1999), where 30 components were
+202   extracted from the ICA and used for further analysis. Dual regression was applied to estimate
+203   individual spatial maps and corresponding time series from the group ICA (Beckmann & Smith,
+204   2004; Filippini et al., 2009), which were used as input for the DGM analysis.
+205
+206   Mental and cognitive measures
+207   From the HBN data release, N=1768 participants were included after quality assessment. Out
+208   of these, information on age was missing for N=332, age at MR for N=3, sex for N=46, and
+209   cognitive/clinical information for 740. The participants were 5-22 years (mean: 11.4, years, sd:
+210   3.55 years) and 36.3% were females. This data was used to study group-level patterns of dFC
+211   (average connectivity matrix). For the subsequent associations with age, sex, cognition and
+212   mental health, we had to restrict the analysis to a subset based on data availability. Thus, the
+                                                                        8
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20207936.this version posted October 13, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+213   final sample for the association analyses comprised N=979 individuals aged 6-17 years (mean:
+214   10.6, years, sd: 2.68 years, 37.6% females). A large proportion of this sample had a diagnosis
+215   (N=865), while N=93 did not have a diagnosis, N=20 dropped out before a diagnosis could be
+216   determined, and N=1 was missing information for clinical consensus diagnosis data and had as
+217   such not received a diagnosis. Broadly, the majority of patients included in our analysis had
+218   disorders in the following categories (where comorbidities are included): Neurodevelopmental
+219   disorders (N=1306), anxiety disorders (N=464), disruptive, impulsive control and conduct
+220   disorders (N=145), elimination disorders (N=94), and depressive disorders (N=92), see SI;
+221   SFig. 1-2 for further details.
+222             We used the full-scale intelligence quotient (FSIQ) from the Wechsler Intelligence
+223   Scale for Children (WISC-V) taken for participants aged 6-17 years as a proxy for cognitive
+224   ability. This composite score includes the following domains; visual spatial, verbal
+225   comprehension, fluid reasoning, working memory, and processing speed (Wechsler, 2003).
+226   Mental health was measured on a continuum including both healthy subjects and patients as it
+227   is difficult to uncover robust findings for psychiatric diagnosis that constitutes heterogeneous
+228   disorders, showing a wide range in symptoms, severity, duration and prognosis, and as patients
+229   often have more than one diagnosis. Such heterogeneity is also reflected in the brain, making
+230   the search for biological markers a complex task. As such, for mental health, we performed a
+231   principal component analysis (PCA) on The Extended Strengths and Weaknesses Assessment
+232   of Normal Behavior (E-SWAN), which has been shown to be a valid psychometric assessment
+233   tool for investigating behavior underlying DSM disorders (Alexander, Salum, Swanson, &
+234   Milham, 2020). E-SWAN domains include depression, social anxiety, disruptive mood
+235   dysregulation disorder (DMDD), and panic disorder. We excluded 3 of the items relating to
+236   panic disorder from the questionnaire that had a high degree (>90%) of missing values, giving
+237   a total of 62 items for the PCA analysis. The remaining items had available data for 1993
+                                                                        9
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20207936.this version posted October 13, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+238   participants with no missing values. We performed PCA using the “prcomp” function in R,
+239   where the first PC, often denoted as the p-factor or pF (Caspi et al., 2013), explained 44.0% of
+240   the variance (Figure 1). From the loadings from the PCA, this component was associated with
+241   items related to self-control and depression/anxiety (Figure 1). In accordance with other studies
+242   showing more than one factor being of importance (Alnaes et al., 2018; Mallard et al., 2019),
+243   we also included the second principal component referred to as pF2 which was associated with
+244   items relating to mood dysregulation. This component explained 11.2% of the variance.
+245
+246
+                                                                        10
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20207936.this version posted October 13, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+247   Figure 1: Principal component analysis performed on the ESWAN questionnaire taken as part
+248   of the HBN protocol. For visualization purpose, only the components included in our analysis
+249   are shown. We used the first two principal components as proxies of psychopathology, referred
+250   to as “pF” and “pF2”.
+251
+252   Network analysis
+253   We chose ten resting networks from the model order of 30 for inclusion in the dFC analysis.
+254   These networks were chosen based on spatial correlation and manually ensuring overlapping
+255   ICs with the ten RSNs reported by Smith et al. (2009). The ten networks comprised the default
+256   mode (DMN), cerebellar (Cer), visual occipital (VO), visual medial (VM), visual lateral (VL),
+257   right frontoparietal (FPR), left frontoparietal (FPL), sensorimotor (SM), auditory (Au), and
+258   executive control (Ex) network. These networks were also used in previous DGM studies (Lund
+259   et al., 2020; Schwab et al., 2018) and including the same nodes allowed us to compare results
+260   with prior findings and to integrate the current results obtained from a childhood and adolescent
+261   sample with previous adult studies. The included timeseries for each node were mean centered
+262   before estimating dFC from individual level RSN time series using the DGM package v1.7.2
+263   in R (for details on the DGM method, see Schwab et al. (2018) or description in the methods
+264   section of Lund et al. (2020)).
+265
+266   Statistical analysis
+267   We included all available rsfMRI scans for the group ICA, as a higher number of subjects is
+268   beneficial for yielding more robust ICs, while restricting the association analyses to the subset
+269   that had all covariates available. We performed the same analysis as previously reported in an
+270   adult sample (Lund et al., 2020), examining dFC on the edge- and node-level. Edge-level
+271   analysis deployed logistic regression for every connection of the directed network using
+                                                                        11
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20207936.this version posted October 13, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+272   directed connectivity as the response variable and testing for associations with age, age-
+273   orthogonalized age squared (age², using the poly function in R), sex, cognitive abilities, mental
+274   health, tSNR, motion and scanning site (as data was acquired at multiple scanners). These
+275   covariates were included into one model (see SI; SFig.3, for additional analyses examining
+276   potential multicollinearity for covariates included in the model). P-values were Bonferroni
+277   corrected for a number of 90 analyses on the edge-level (alpha level of 0.05). In addition, we
+278   performed node-level analysis to examine which networks overall send and receive information
+279   to each other (Lund et al., 2020). We calculated the number of output connections or outgoing
+280   edges (referred to as out-degree) and the number of input connections or incoming edges
+281   (referred to as in-degree) for a given node. We performed linear regression using in-degree and
+282   out-degree as dependent variables and the same independent variables as used in the logistic
+283   regression on edge-level. P-values were Bonferroni corrected for a number of 10 analysis on
+284   the node-level (alpha level of 0.05).
+285
+286   Results
+287   Figure 2 depicts the average directed functional connectivity matrix across all individuals.
+288   While many connections indicated bi-directionality in information flow, we found that most
+289   edges of the SM network were more often receivers than senders of information. For example,
+290   the DMN node sends information to the SM in 79.6% of cases whereas the DMN receiving
+291   from the SM was only present in 25.4% of cases. The edge most present across all individuals
+292   was SM receiving input from the Au (95.9%). However, this connection was also strongly
+293   expressed in the other direction (83.3%). It is also worth noting that we replicated the bi-
+294   directionality in dFC between the VM-VL networks that we previously found in adults (Lund
+295   et al., 2020), yet in this neurodevelopmental sample we did not observe that Cer and Au
+296   networks were mostly receivers, as found for adults (Lund et al., 2020; Schwab et al., 2018).
+                                                                        12
+
+      medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20207936.this version posted October 13, 2020. The copyright holder for this
+       preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                      perpetuity.
+                                              All rights reserved. No reuse allowed without permission.
+                         Sig. edges in average adjacency matrix
+                    VO
+                   DMN
+                    VM
+                    VL                                            mean
+         Sending
+                   FPR                                             0.75
+                   FPL                                             0.50
+                    SM                                             0.25
+                   Cer
+                    Au
+                    Ex
+                           VO DMN VM VL FPR FPL SM Cer Au   Ex
+297                                    Receiving
+298     Figure 2: Average directed connectivity matrices across HBN subjects showing the significant
+299     proportions of edges (binomial test, 5% FDR threshold, hypothesized probability p0 = .52).
+300     The legend shows the 10 RSNs included in the analysis; VO, visual occipital; DMN, default
+301     mode; VM, visual medial; VL, visual lateral; FPR, frontoparietal right; FPL, frontoparietal
+302     left; SM, sensorimotor; Cer, cerebellum; Au, auditory; Ex, executive control network, where
+303     the y-axis indicates the sender node, and the x-axis refers to the same nodes but here they are
+304     receivers.
+305
+306     Age effect on directionality and in-degree
+307     Edge-level analysis of dFC showed significant effects of age, in line with our hypothesis of age
+308     being associated with the functional networks’ maturation processes occurring in childhood and
+309     adolescence (Figure 3; SI Tables 1-5 show z-scores and p- values and SFig.3-4 show effects of
+310     scanner). We observed a positive association with age and dFC from the VO, DMN and SM to
+311     the Ex network. Also, the FPR and Ex send more information with higher age to the SM node.
+312                       On the node-level, we assessed similar phenotypic associations for the out-degree and
+313     in-degree of the networks. Confirming edge-level results, we found that age was significantly
+314     associated with the in-degree of SM and Ex (fig.4b), indicating that the SM and Ex nodes
+315     overall receive more information with increasing age. Additionally, there was significant
+316     confound effects of scanning site (SFig.3-4) and tSNR on edge-level and network in- and out-
+                                                                          13
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20207936.this version posted October 13, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+317   degree, and of motion for network in-degree and edge-level.
+318             Based on prior studies, we expected that mental health and cognitive abilities would be
+319   associated with information flow for control networks, however, this was not observed. We
+320   also expected sex-related differences in the maturation of brain networks, but this was not
+321   found.
+                                                                        14
+
+      medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20207936.this version posted October 13, 2020. The copyright holder for this
+       preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                      perpetuity.
+                                              All rights reserved. No reuse allowed without permission.
+                         a) Effects of age                                                          b) Effects of age²
+                    VO                                               X                         VO
+                   DMN                                               X                        DMN
+                    VM                                                                         VM
+                    VL                                                    z−score              VL                                               z−score
+         Sending                                                                    Sending
+                   FPR                                   X                  5                 FPR                                                 5
+                   FPL                                                      0                 FPL                                                 0
+                                                                            −5                                                                    −5
+                    SM                                               X                         SM
+                   Cer                                                                        Cer
+                    Au                                                                         Au
+                    Ex                                   X                                     Ex
+                           VO DMN VM VL FPR FPL SM Cer Au            Ex                                VO DMN VM VL FPR FPL SM Cer Au      Ex
+                                             Receiving                                                                   Receiving
+                         c) Effects of sex                                                          d) Effects of FSIQ
+                    VO                                                                         VO
+                   DMN                                                                        DMN
+                    VM                                                                         VM
+                    VL                                                    z−score              VL                                               z−score
+         Sending                                                                    Sending
+                   FPR                                                      5                 FPR                                                 5
+                   FPL                                                      0                 FPL                                                 0
+                                                                            −5                                                                    −5
+                    SM                                                                         SM
+                   Cer                                                                        Cer
+                    Au                                                                         Au
+                    Ex                                                                         Ex
+                           VO DMN VM VL FPR FPL SM Cer Au            Ex                                VO DMN VM VL FPR FPL SM Cer Au      Ex
+                                             Receiving                                                                   Receiving
+                         e) Effects of pF                                                           f) Effects of pF²
+                    VO                                                                         VO
+                   DMN                                                                        DMN
+                    VM                                                                         VM
+                    VL                                                    z−score              VL                                               z−score
+         Sending                                                                    Sending
+                   FPR                                                      5                 FPR                                                 5
+                   FPL                                                      0                 FPL                                                 0
+                                                                            −5                                                                    −5
+                    SM                                                                         SM
+                   Cer                                                                        Cer
+                    Au                                                                         Au
+                    Ex                                                                         Ex
+                           VO DMN VM VL FPR FPL SM Cer Au            Ex                                VO DMN VM VL FPR FPL SM Cer Au      Ex
+                                             Receiving                                                                   Receiving
+                         g) Effects of motion                                                       h) Effects of tSNR
+                    VO          X                                                              VO              X              X      X     X
+                   DMN                  X                                                     DMN              X              X      X     X
+                    VM                                                                         VM        X   X X              X      X     X
+                    VL          X                                         z−score              VL      X   X   X              X      X     X    z−score
+         Sending                                                                    Sending
+                   FPR                                       X              5                 FPR        X                    X      X     X      5
+                   FPL                                                      0                 FPL        X     X                     X            0
+                                                                            −5                                                                    −5
+                    SM      X                                    X                             SM        X     X              X      X X
+                   Cer                                                                        Cer      X     X X              X        X   X
+                    Au                                                                         Au              X              X      X     X
+                    Ex                                                                         Ex        X   X X              X      X X
+                           VO DMN VM VL FPR FPL SM Cer Au            Ex                                VO DMN VM VL FPR FPL SM Cer Au      Ex
+322                                          Receiving                                                                   Receiving
+323     Figure 3: Matrices showing the effects of age (a), age2 (b), sex (c), intellectual abilities (FSIQ)
+324     (d), mental health (pF and pF2) (e,f), motion (g), and tSNR (h) on directed connectivity. The
+325     analysis was performed in HBN data that had no missing values (N = 979, 6–17 years, df =
+                                                                                         15
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20207936.this version posted October 13, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+326   968). Significant edges following Bonferroni correction are marked as X. The legend shows the
+327   10 RSNs included in the analysis; VO, visual occipital; DMN, default mode; VM, visual medial;
+328   VL, visual lateral; FPR, frontoparietal right; FPL, frontoparietal left; SM, sensorimotor; Cer,
+329   cerebellum; Au, auditory; Ex, executive control network. The y-axis indicates the sender node,
+330   while the x-axis refers to the receiving node. The colors reflect the z-value for the corresponding
+331   effects where red indicates a positive association and blue a negative association.
+332
+333
+                                                                        16
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20207936.this version posted October 13, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+334   Figure 4: Associations on the node level (N=979, 6-17 years, df= 968). a) Out-degree matrix
+335   with corresponding effects of covariates age, age2, sex, cognition (FSIQ), mental health (pF
+336   and pF2), tSNR, and motion in HBN data. B) In-degree matrix with corresponding effects for
+337   the same covariates as in panel a). The colors reflect the t-value for the corresponding effect
+338   where numbers inside the boxes indicate t-statistic and p-value, and significant effects are
+339   marked with a red border following Bonferroni correction (p < .0.05).
+340
+341   Discussion
+342   Our analysis revealed dFC patterns of the visual networks, specifically a reciprocal information
+343   flow between the VM and VL networks in a sample of children and adolescence. This seems
+344   to be in alignment with findings in adult samples (Lund et al., 2020), However, we did not find
+345   that the cerebellum or auditory networks are mostly receivers of information as observed in
+346   adults (Lund et al., 2020; Schwab et al., 2018). In contrast, our results implicated the SM
+347   network as the network that was receiving most information from other networks.
+348             We observed significant associations between age and directed connectivity both at
+349   edge and node-level. Specifically, at the edge-level, with increasing age the VO, DMN and SM
+350   had higher information flow to the Ex network, and the FPR and Ex send more information to
+351   the SM node. Likewise, on the node-level, the SM and Ex node received more information with
+352   increasing age. These results support sensitivity of dFC to age within the investigated age range
+353   of this developmental sample, especially for SM and Ex.
+354             Of note, studies on functional connectivity have implied the SM and Ex network in
+355   abnormal brain development (Berman et al., 2016; Cortese et al., 2012; Kaufmann et al., 2017;
+356   Zhang et al., 2020) and adults with psychiatric disorders (Birur, Kraguljac, Shelton, & Lahti,
+357   2017; Cortese et al., 2012; Kaufmann et al., 2015; Lee, Doucet, Leibu, & Frangou, 2018; Soros
+358   et al., 2019).
+                                                                        17
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20207936.this version posted October 13, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+359             Moreover, it has been reported that the cerebellar network is mostly a receiver of
+360   information from other attention and memory related regions in children with ADHD when
+361   estimating directed connectivity in rsfMRI using a seed-based approach (Zhao et al., 2017),
+362   although we did not find this in our sample.
+363             For cognition, FSIQ was not significantly associated with information flow. Here we
+364   used a normed cognitive composite test score as a proxy for cognition. However, this may not
+365   be an optimal approach as test norms could have limitations when it comes to representativeness
+366   and number of subjects included in the normative sample making it less sensitive for clinical
+367   populations and for the lowest scoring percentile.
+368             Symptoms pertaining to inattention and cognitive control in participants from 8-17 years
+369   old with ADHD has been linked to modifications in effective connectivity between control
+370   networks in task-fMRI (Cai, Griffiths, Korgaonkar, Williams, & Menon, 2019). In addition,
+371   cognitive flexibility in healthy adults has been associated with strong within-system
+372   connectivity in higher order systems and from these nodes to primary-sensory motor nodes
+373   (Chen et al., 2019). Here we estimated information flow between networks with different
+374   functions rather than within-system connectivity (with the exception of the visual networks),
+375   which may elucidate the lack of associations with cognition.
+376             We did not observe significant associations between dFC and mental health for any of
+377   the networks. Our dimensional approach of estimating PCA on symptom data represents both
+378   healthy subjects and individuals with a psychiatric disorder on symptom continuum rather
+379   than as cases and control. Such a dimensional approach may better capture intermediate
+380   phenotypes which map to brain biology and the neuronal mechanisms underlying the
+381   symptoms, compared to diagnostic categories (Hengartner & Lehmann, 2017; Krueger &
+382   Bezdjian, 2009). While the lack of significant associations in our study indicates that
+                                                                        18
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20207936.this version posted October 13, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+383   between-network dFC in large-scale brain networks is not sensitive to mental health in this
+384   sample, future research will need to investigate dFC in distinct subnetworks.
+385             Finally, we expected to find differences between sexes in relation to directed
+386   connectivity as this has been found previously in adolescence (Riley et al., 2018) using task-
+387   fMRI, and when examining dFC in adults (Lund et al., 2020). However, we did not find any
+388   significant sex differences in dFC on edge- or node-level in rsfMRI. This may partly relate to
+389   sample characteristics such as the uneven sex distribution and the inclusion of patients in our
+390   sample.
+391
+392   Limitations
+393   As with any MRI study, participant motion during scanning may confound the results,
+394   especially as it is known that both young individuals and those with a psychiatric diagnosis on
+395   average move more (Satterthwaite et al., 2012). We therefore implemented a stringent
+396   correction pipeline, where we implemented several steps of ICA and machine learning based
+397   cleaning (FIX and AROMA), and also included the mean relative motion measure from FSL as
+398   a covariate in our analysis step. Another relevant confound effect that could potentially bias our
+399   results and the comparison to previous work is variability in the ICA decompositions. We here
+400   performed ICA in the study sample sample and selected components based on similarity to
+401   (Smith et al., 2009). While this approach yielded overall good comparison to previous work,
+402   subtle differences between decompositions may retain and might impact the derived dFC
+403   patterns. As our results call for follow-up analysis in more fine-grained networks, different
+404   ways to parcellate the brain could be tested in such a framework.
+405             The majority of the individuals in the sample were patients. Medication may have had
+406   an effect on our results, as participants were asked to discontinue stimulant medication but were
+                                                                        19
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20207936.this version posted October 13, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+407   still enrolled if they choose not to discontinue due to personal reasons or if recommended by
+408   their physician.
+409             On a methodological note, DGM reflects instantaneous relationships and does not only
+410   look at lagged relationships, however sensitivity of DGM drops depending on the total offset
+411   between a node pair and can as such influence the estimation of these interactions (Schwab et
+412   al., 2018). Further, DGM estimates binary connections, which may have reduced the
+413   sensitivity of the association analyses.
+414             Lastly, whether these differences in findings are of methodological origin, such as
+415   differences in preprocessing pipelines or network definitions, or can be explained by
+416   differences in dynamic connectivity between children and adults remains to be further
+417   investigated.
+418
+419   Conclusions
+420   To conclude, using a sample of children and adolescents, we showed that the sensorimotor
+421   network receives information from other large-scale brain networks and found that direction of
+422   the information flow was age dependent in the sensorimotor and executive networks. These
+423   findings contribute to the existing knowledge in the brain development field, and warrant
+424   further studies for replication in healthy samples as well as other clinical populations.
+425
+426   Funding
+427   The authors were funded by the Research Council of Norway #276082 (LifespanHealth),
+428   #223273 (NORMENT), #249795, #298646, #300767, #283798; H2020 European Research
+429   Council #802998 (BRAINMINT); The South-East Norway Regional Health Authority
+430   #2019101, #2019107, #2020086; Swiss National Science Foundation #171598
+431
+                                                                        20
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20207936.this version posted October 13, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+432   Financial disclosures
+433   OAA is a consultant for HealthLytix.
+434
+435   Data and code availability
+436   The data incorporated in this work were gathered from the open access Healthy Brain
+437   Network resource. Software needed to estimate directed connectivity is available at
+438   https://github.com/schw4b/DGM.
+439
+440   Acknowledgements
+441   This manuscript was prepared using a limited access dataset obtained from the Child Mind
+442   Institute Biobank, the HBN resource (http://www.healthybrainnetwork.org). Its initiatives are
+443   supported by philanthropic contributions from the following individuals, foundations and
+444   organizations: Margaret Bilotti; Brooklyn Nets; Agapi and Bruce Burkard; James Chang;
+445   Phyllis Green and Randolph Cōwen; Grieve Family Fund; Susan Miller and Byron Grote; Sarah
+446   and Geoff Gund; George Hall; Jonathan M. Harris Family Foundation; Joseph P. Healey; The
+447   Hearst Foundations; Eve and Ross Jaffe; Howard & Irene Levine Family Foundation; Rachael
+448   and Marshall Levine; George and Nitzia Logothetis; Christine and Richard Mack; Julie
+449   Minskoff; Valerie Mnuchin; Morgan Stanley Foundation; Amy and John Phelan; Roberts
+450   Family Foundation; Jim and Linda Robinson Foundation, Inc.; The Schaps Family; Zibby
+451   Schwarzman; Abigail Pogrebin and David Shapiro; Stavros Niarchos Foundation; Preethi
+452   Krishna and Ram Sundaram; Amy and John Weinberg; Donors to the 2013 Child Advocacy
+453   Award Dinner Auction; Donors to the 2012 Brant Art Auction.
+454             This manuscript reflects the views of the authors and does not necessarily reflect the
+455   opinions or views of the Child Mind Institute.
+456             This work was performed on the TSD (Tjeneste for Sensitive Data) facilities, owned by
+                                                                        21
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20207936.this version posted October 13, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+457   the University of Oslo, operated and developed by the TSD service group at the University of
+458   Oslo, IT-Department (USIT) (tsd-drift@usit.uio.no).
+459
+460   References
+461
+462   Alexander, L. M., Escalera, J., Ai, L., Andreotti, C., Febre, K., Mangone, A., . . . Milham, M.
+463             P. (2017). An open resource for transdiagnostic research in pediatric mental health and
+464             learning disorders. Scientific Data, 4(1). doi:10.1038/sdata.2017.181
+465   Alexander, L. M., Salum, G. A., Swanson, J. M., & Milham, M. P. (2020). Measuring
+466             strengths and weaknesses in dimensional psychiatry. J Child Psychol Psychiatry,
+467             61(1), 40-50. doi:10.1111/jcpp.13104
+468   Alnaes, D., Kaufmann, T., Doan, N. T., Cordova-Palomera, A., Wang, Y., Bettella, F., . . .
+469             Westlye, L. T. (2018). Association of Heritable Cognitive Ability and
+470             Psychopathology With White Matter Properties in Children and Adolescents. JAMA
+471             Psychiatry, 75(3), 287-295. doi:10.1001/jamapsychiatry.2017.4277
+472   Bleuler's "Fragmented Phrene" as Schizencephaly. Archives of general psychiatry, 56(9), 781-
+473             787.
+474   Beckmann, C. F., & Smith, S. M. (2004). Probabilistic Independent Component Analysis for
+475             Functional Magnetic Resonance Imaging. IEEE Transactions on Medical Imaging,
+476             23(2), 137-152. doi:10.1109/tmi.2003.822821
+477   Berman, R. A., Gotts, S. J., McAdams, H. M., Greenstein, D., Lalonde, F., Clasen, L., . . .
+478             Rapoport, J. (2016). Disrupted sensorimotor and social-cognitive networks underlie
+479             symptoms in childhood-onset schizophrenia. Brain, 139(Pt 1), 276-291.
+480             doi:10.1093/brain/awv306
+481   Bielczyk, N. Z., Uithol, S., van Mourik, T., Anderson, P., Glennon, J. C., & Buitelaar, J. K.
+482             (2019). Disentangling causal webs in the brain using functional magnetic resonance
+483             imaging: A review of current approaches. Netw Neurosci, 3(2), 237-273.
+484             doi:10.1162/netn_a_00062
+485   Birur, B., Kraguljac, N. V., Shelton, R. C., & Lahti, A. C. (2017). Brain structure, function,
+486             and neurochemistry in schizophrenia and bipolar disorder-a systematic review of the
+487             magnetic resonance neuroimaging literature. NPJ Schizophr, 3, 15.
+488             doi:10.1038/s41537-017-0013-9
+489   Bitan, T., Burman, D. D., Lu, D., Cone, N. E., Gitelman, D. R., Mesulam, M. M., & Booth, J.
+490             R. (2006). Weaker top-down modulation from the left inferior frontal gyrus in
+491             children. NeuroImage, 33(3), 991-998. doi:10.1016/j.neuroimage.2006.07.007
+492   Blakemore, S.-J. (2012). Imaging brain development: The adolescent brain. NeuroImage,
+493             61(2), 397-406. doi:10.1016/j.neuroimage.2011.11.080
+494   Cai, W., Griffiths, K., Korgaonkar, M. S., Williams, L. M., & Menon, V. (2019). Inhibition-
+495             related modulation of salience and frontoparietal networks predicts cognitive control
+496             ability and inattention symptoms in children with ADHD. Mol Psychiatry.
+497             doi:10.1038/s41380-019-0564-4
+498   Caspi, A., Houts, R. M., Belsky, D. W., Goldman-Mellor, S. J., Harrington, H., Israel, S., . . .
+499             Moffitt, T. E. (2013). The p Factor. Clinical Psychological Science, 2(2), 119-137.
+500             doi:10.1177/2167702613497473
+501   Chen, O. Y., Cao, H., Reinen, J. M., Qian, T., Gou, J., Phan, H., . . . Cannon, T. D. (2019).
+502             Resting-state brain information flow predicts cognitive flexibility in humans. Sci Rep,
+503             9(1), 3879. doi:10.1038/s41598-019-40345-8
+                                                                        22
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20207936.this version posted October 13, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+504   Connolly, C. G., Wu, J., Ho, T. C., Hoeft, F., Wolkowitz, O., Eisendrath, S., . . . Yang, T. T.
+505             (2013). Resting-state functional connectivity of subgenual anterior cingulate cortex in
+506             depressed adolescents. Biol Psychiatry, 74(12), 898-907.
+507             doi:10.1016/j.biopsych.2013.05.036
+508   Cortese, S., Kelly, C., Chabernaud, C., Proal, E., , & Di Martino, A., Milham, M. P.,
+509             Castellanos, F. X. . (2012). Toward systems neuroscience of ADHD: a meta-analysis
+510             of 55 fMRI studies. . American Journal of Psychiatry, 169(10), 1038-1055.
+511   Craddock, N., & Owen, M. J. (2010). The Kraepelinian dichotomy - going, going... but still
+512             not gone. Br J Psychiatry, 196(2), 92-95. doi:10.1192/bjp.bp.109.073429
+513   Demontis, D., Walters, R. K., Martin, J., Mattheisen, M., Als, T. D., Agerbo, E., . . . Neale, B.
+514             M. (2019). Discovery of the first genome-wide significant risk loci for attention
+515             deficit/hyperactivity disorder. Nat Genet, 51(1), 63-75. doi:10.1038/s41588-018-0269-
+516             7
+517   Di Martino, A., Kelly, C., Grzadzinski, R., Zuo, X. N., Mennes, M., Mairena, M. A., . . .
+518             Milham, M. P. (2011). Aberrant striatal functional connectivity in children with
+519             autism. Biol Psychiatry, 69(9), 847-856. doi:10.1016/j.biopsych.2010.10.029
+520   Eisenberg, D. P., & Berman, K. F. (2010). Executive function, neural circuitry, and genetic
+521             mechanisms in schizophrenia. Neuropsychopharmacology, 35(1), 258-277.
+522             doi:10.1038/npp.2009.111
+523   Filippini, N., MacIntosh, B. J., Hough, M. G., Goodwin, G. M., Frisoni, G. B., Smith, S. M., .
+524             . . Mackay, C. E. (2009). Distinct patterns of brain activity in young carriers of the
+525             APOE- 4 allele. Proceedings of the National Academy of Sciences, 106(17), 7209-
+526             7214. doi:10.1073/pnas.0811879106
+527   Francx, W., Oldehinkel, M., Oosterlaan, J., Heslenfeld, D., Hartman, C. A., Hoekstra, P. J., . .
+528             . Mennes, M. (2015). The executive control network and symptomatic improvement in
+529             attention-deficit/hyperactivity disorder. Cortex, 73, 62-72.
+530             doi:10.1016/j.cortex.2015.08.012
+531   Friston, K. J. (2011). Functional and Effective Connectivity: A Review. Brain Connectivity,
+532             1(1), 13-36. doi:10.1089/brain.2011.0008
+533   Geiger, M. J., Domschke, K., Ipser, J., Hattingh, C., Baldwin, D. S., Lochner, C., & Stein, D.
+534             J. (2016). Altered executive control network resting-state connectivity in social
+535             anxiety disorder. World J Biol Psychiatry, 17(1), 47-57.
+536             doi:10.3109/15622975.2015.1083613
+537   Griffanti, L., Salimi-Khorshidi, G., Beckmann, C. F., Auerbach, E. J., Douaud, G., Sexton, C.
+538             E., . . . Smith, S. M. (2014). ICA-based artefact removal and accelerated fMRI
+539             acquisition for improved resting state network imaging. NeuroImage, 95, 232-247.
+540             doi:10.1016/j.neuroimage.2014.03.034
+541   Grove, J., Ripke, S., Als, T. D., Mattheisen, M., Walters, R. K., Won, H., . . . Borglum, A. D.
+542             (2019). Identification of common genetic risk variants for autism spectrum disorder.
+543             Nat Genet, 51(3), 431-444. doi:10.1038/s41588-019-0344-8
+544   Hamm, L. L., Jacobs, R. H., Johnson, M. W., Fitzgerald, D. A., Fitzgerald, K. D.,
+545             Langenecker, S. A., . . . Phan K. L. (2014). Aberrant amygdala functional connectivity
+546             at rest in pediatric anxiety disorders. Biology of mood & anxiety disorders, 4(1)(15).
+547   Hengartner, M. P., & Lehmann, S. N. (2017). Why Psychiatric Research Must Abandon
+548             Traditional Diagnostic Classification and Adopt a Fully Dimensional Scope: Two
+549             Solutions to a Persistent Problem. Front Psychiatry, 8, 101.
+550             doi:10.3389/fpsyt.2017.00101
+551   Hibar, D. P., Stein, J. L., Renteria, M. E., Arias-Vasquez, A., Desrivieres, S., Jahanshad, N., .
+552             . . Medland, S. E. (2015). Common genetic variants influence human subcortical brain
+553             structures. Nature, 520(7546), 224-229. doi:10.1038/nature14101
+                                                                        23
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20207936.this version posted October 13, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+554   Hoff, G. E., Van den Heuvel, M. P., Benders, M. J., Kersbergen, K. J., & De Vries, L. S.
+555             (2013). On development of functional brain connectivity in the young brain. Front
+556             Hum Neurosci, 7, 650. doi:10.3389/fnhum.2013.00650
+557   Hwang, K., Velanova, K., & Luna, B. (2010). Strengthening of top-down frontal cognitive
+558             control networks underlying the development of inhibitory control: a functional
+559             magnetic resonance imaging effective connectivity study. J Neurosci, 30(46), 15535-
+560             15545. doi:10.1523/JNEUROSCI.2825-10.2010
+561   Hyvärinen, A. (1999). Fast and robust fixed-point algorithms for independent component
+562             analysis. IEEE Transactions on Neural Networks, 10(3), 626–634.
+563   Insel, T. R. (2010). Rethinking schizophrenia. Nature, 468(7321), 187-193.
+564             doi:10.1038/nature09552
+565   Jollans, L., & Whelan, R. (2018). Neuromarkers for Mental Disorders: Harnessing Population
+566             Neuroscience. Front Psychiatry, 9, 242. doi:10.3389/fpsyt.2018.00242
+567   Kaufmann, T., Alnaes, D., Doan, N. T., Brandt, C. L., Andreassen, O. A., & Westlye, L. T.
+568             (2017). Delayed stabilization and individualization in connectome development are
+569             related to psychiatric disorders. Nat Neurosci, 20(4), 513-515. doi:10.1038/nn.4511
+570   Kaufmann, T., Skatun, K. C., Alnaes, D., Doan, N. T., Duff, E. P., Tonnesen, S., . . . Westlye,
+571             L. T. (2015). Disintegration of Sensorimotor Brain Networks in Schizophrenia.
+572             Schizophr Bull, 41(6), 1326-1335. doi:10.1093/schbul/sbv060
+573   Keshavan, M. S., Giedd, J., Lau, J. Y. F., Lewis, D. A., & Paus, T. (2014). Changes in the
+574             adolescent brain and the pathophysiology of psychotic disorders. The Lancet
+575             Psychiatry, 1(7), 549-558. doi:10.1016/s2215-0366(14)00081-9
+576   Kolskar, K. K., Alnaes, D., Kaufmann, T., Richard, G., Sanders, A. M., Ulrichsen, K. M., . . .
+577             Westlye, L. T. (2018). Key Brain Network Nodes Show Differential Cognitive
+578             Relevance and Developmental Trajectories during Childhood and Adolescence.
+579             eNeuro, 5(4). doi:10.1523/ENEURO.0092-18.2018
+580   Krueger, R. F., & Bezdjian, S. (2009). Enhancing research and treatment of mental disorders
+581             with dimensional concepts: toward DSM-V and ICD-11. . World Psychiatry, 8(1)(3).
+582   Lee, W. H., Doucet, G. E., Leibu, E., & Frangou, S. (2018). Resting-state network
+583             connectivity and metastability predict clinical symptoms in schizophrenia. Schizophr
+584             Res, 201, 208-216. doi:10.1016/j.schres.2018.04.029
+585   Li, C. L., Deng, Y. J., He, Y. H., Zhai, H. C., & Jia, F. C. (2019). The development of brain
+586             functional connectivity networks revealed by resting-state functional magnetic
+587             resonance imaging. Neural Regen Res, 14(8), 1419-1429. doi:10.4103/1673-
+588             5374.253526
+589   Li, P., Fan, T. T., Zhao, R. J., Han, Y., Shi, L., Sun, H. Q., . . . Lu, L. (2017). Altered Brain
+590             Network Connectivity as a Potential Endophenotype of Schizophrenia. Sci Rep, 7(1),
+591             5483. doi:10.1038/s41598-017-05774-3
+592   Lund, M. J., Alnaes, D., Schwab, S., van der Meer, D., Andreassen, O. A., Westlye, L. T., &
+593             Kaufmann, T. (2020). Differences in directed functional brain connectivity related to
+594             age, sex and mental health. Hum Brain Mapp. doi:10.1002/hbm.25116
+595   Mallard, T. T., Linnér, R. K., Okbay, A., Grotzinger, A. D., de Vlaming, R., Meddens, S. F.
+596             W., . . . Harden, K. P. (2019). Not just one p: Multivariate GWAS of psychiatric
+597             disorders and their cardinal symptoms reveal two dimensions of cross-cutting genetic
+598             liabilities. . bioRxiv, 603134. doi:10.1101/603134
+599   Pruim, R. H. R., Mennes, M., Buitelaar, J. K., & Beckmann, C. F. (2015). Evaluation of ICA-
+600             AROMA and alternative strategies for motion artifact removal in resting state fMRI.
+601             NeuroImage, 112, 278-287. doi:10.1016/j.neuroimage.2015.02.063
+                                                                        24
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20207936.this version posted October 13, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+602   Pruim, R. H. R., Mennes, M., van Rooij, D., Llera, A., Buitelaar, J. K., & Beckmann, C. F.
+603             (2015). ICA-AROMA: A robust ICA-based strategy for removing motion artifacts
+604             from fMRI data. NeuroImage, 112, 267-277. doi:10.1016/j.neuroimage.2015.02.064
+605   Rausch, A., Zhang, W., Haak, K. V., Mennes, M., Hermans, E. J., van Oort, E., . . . Groen, W.
+606             B. (2016). Altered functional connectivity of the amygdaloid input nuclei in
+607             adolescents and young adults with autism spectrum disorder: a resting state fMRI
+608             study. Mol Autism, 7, 13. doi:10.1186/s13229-015-0060-x
+609   Riley, J. D., Chen, E. E., Winsell, J., Davis, E. P., Glynn, L. M., Baram, T. Z., . . . Solodkin,
+610             A. (2018). Network specialization during adolescence: Hippocampal effective
+611             connectivity in boys and girls. NeuroImage, 175, 402-412.
+612             doi:10.1016/j.neuroimage.2018.04.013
+613   Salimi-Khorshidi, G., Douaud, G., Beckmann, C. F., Glasser, M. F., Griffanti, L., & Smith, S.
+614             M. (2014). Automatic denoising of functional MRI data: combining independent
+615             component analysis and hierarchical fusion of classifiers. NeuroImage, 90, 449-468.
+616             doi:10.1016/j.neuroimage.2013.11.046
+617   Satterthwaite, T. D., Wolf, D. H., Loughead, J., Ruparel, K., Elliott, M. A., Hakonarson, H., .
+618             . . Gur, R. E. (2012). Impact of in-scanner head motion on multiple measures of
+619             functional connectivity: relevance for studies of neurodevelopment in youth.
+620             NeuroImage, 60(1), 623-632. doi:10.1016/j.neuroimage.2011.12.063
+621   Schizophrenia Working Group of the Psychiatric Genomics, C. (2014). Biological insights
+622             from 108 schizophrenia-associated genetic loci. Nature, 511(7510), 421-427.
+623             doi:10.1038/nature13595
+624   Schwab, S., Harbord, R., Zerbi, V., Elliott, L., Afyouni, S., Smith, J. Q., . . . Nichols, T. E.
+625             (2018). Directed functional connectivity using dynamic graphical models.
+626             NeuroImage, 175, 340-353. doi:10.1016/j.neuroimage.2018.03.074
+627   Schweinsburg, A. D., Nagel, B. J., & Tapert, S. F. (2005). fMRI reveals alteration of spatial
+628             working memory networks across adolescence. J Int Neuropsychol Soc, 11(5), 631-
+629             644. doi:10.1017/S1355617705050757
+630   Shannon, K. E., Sauder, C., Beauchaine, T. P., & Gatzke-Kopp, L. M. (2009). Disrupted
+631             Effective Connectivity Between the Medial Frontal Cortex and the Caudate in
+632             Adolescent Boys With Externalizing Behavior Disorders. Criminal Justice and
+633             Behavior, 36(11), 1141-1157. doi:10.1177/0093854809342856
+634   Smith, S. M., Fox, P. T., Miller, K. L., Glahn, D. C., Fox, P. M., Mackay, C. E., . . .
+635             Beckmann, C. F. (2009). Correspondence of the brain's functional architecture during
+636             activation and rest. Proc Natl Acad Sci U S A, 106(31), 13040-13045.
+637             doi:10.1073/pnas.0905267106
+638   Soros, P., Hoxhaj, E., Borel, P., Sadohara, C., Feige, B., Matthies, S., . . . Philipsen, A.
+639             (2019). Hyperactivity/restlessness is associated with increased functional connectivity
+640             in adults with ADHD: a dimensional analysis of resting state fMRI. BMC Psychiatry,
+641             19(1), 43. doi:10.1186/s12888-019-2031-9
+642   Talkowski, M. E., Rosenfeld, J. A., Blumenthal, I., Pillalamarri, V., Chiang, C., Heilbut, A., .
+643             . . Gusella, J. F. (2012). Sequencing chromosomal abnormalities reveals
+644             neurodevelopmental loci that confer risk across diagnostic boundaries. Cell, 149(3),
+645             525-537. doi:10.1016/j.cell.2012.03.028
+646   Wechsler, D. (2003). Wechsler intelligence scale for children--Fourth Edition (WISC-IV)
+647   Woolrich, M. W., Ripley, B. D., Brady, M., & Smith, S. M. (2001). Temporal autocorrelation
+648             in univariate linear modeling of FMRI data. NeuroImage, 14(6), 1370-1386.
+649             doi:10.1006/nimg.2001.0931
+                                                                        25
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20207936.this version posted October 13, 2020. The copyright holder for this
+     preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                    perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+650   Zhang, M., Palaniyappan, L., Deng, M., Zhang, W., Pan, Y., Fan, Z., . . . Pu, W. (2020).
+651             Abnormal Thalamocortical Circuit in Adolescents With Early-Onset Schizophrenia. J
+652             Am Acad Child Adolesc Psychiatry. doi:10.1016/j.jaac.2020.07.903
+653   Zhao, D., Zheng, S., Yang, L., & Tian, Y. (2017). Causal connectivity abnormalities of
+654             regional homogeneity in children with attention deficit hyperactivity disorder: a rest-
+655             state fMRI study. ADMET and DMPK, 5(4), 242-252. doi:10.5599/admet.5.4.485
+656   Zhao, Q., Swati, Z. N. K., Metmer, H., Sang, X., & Lu, J. (2019). Investigating executive
+657             control network and default mode network dysfunction in major depressive disorder.
+658             Neurosci Lett, 701, 154-161. doi:10.1016/j.neulet.2019.02.045
+659
+                                                                        26

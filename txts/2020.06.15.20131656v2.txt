@@ -1,0 +1,562 @@
+  medRxiv preprint doi: https://doi.org/10.1101/2020.06.15.20131656.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                            It is made available under a CC-BY 4.0 International license .
+                                                            IEEE TRANSACTIONS ON MEDICAL IMAGING, VOL. xx, NO. X, NOVEMBER 2020                   1
+
+                   A Deep Learning Based Cardiac Cine
+     Segmentation Framework– Transfer Learning
+                    Application to 7T Ultrahigh-Field MRI
+     Markus J. Ankenbrand, David Lohr, Wiebke Schlötelburg, Theresa Reiter, Tobias Wech and Laura M.
+                                                                     Schreiber
+   Abstract — Artificial neural networks show promising                         and wall thickness, as well as dynamic measures such as wall
+performance in automatic segmentation of cardiac MRI.                           motion and the ejection fraction (EF). Cardiac cine MRI is the
+However, training requires large amounts of annotated data                      accepted gold standard for this assessment of cardiac function
+and generalization to different vendors, field strengths,
+                                                                                [1] and anatomy and is therefore of paramount clinical
+sequence parameters, and pathologies is limited. Transfer
+learning addresses this challenge, but recommendations                          importance [2,3]. Proper segmentation of such data sets is a
+regarding type and amount of required data is lacking. In                       tedious and time-consuming process that has increasingly been
+this study we assess data requirements for transfer                             tackled using various deep learning approaches [4-7].
+learning to experimental cardiac MRI at 7T where the                              Artificial neural networks have been shown to outperform
+segmentation task can be challenging. In addition, we                           other methods on several high profile image analysis
+provide guidelines, tools, and annotated data to enable                         benchmarks and, thus, so-called deep learning models have
+transfer learning approaches by other researchers and
+                                                                                become state-of-the-art for a wide variety of computer vision
+clinicians. A publicly available segmentation model was
+used to annotate a publicly available dataset. This labelled                    tasks. Multiple factors like the wide application area of deep
+dataset was subsequently used to train a neural network for                     learning, available compute power, and increasing investments
+segmentation of left ventricle and myocardium in cardiac                        as well as user-friendly open source software have enabled a
+cine MRI. The network is used as starting point for transfer                    rapid development of the field of artificial intelligence. This led
+learning to 7T cine data of healthy volunteers (n=22; 7873                      to ever increasing applications in medical imaging such as MRI
+images). Structured and random data subsets of different                        [8] where tasks nowadays range from data acquisition and
+sizes were used to systematically assess data require-                          image reconstruction [9-11], image restoration [12,13], to
+ments for successful transfer learning. On 7T cardiac cine                      image registration [14,15], segmentation [16-19] as well as
+images the initial model achieved DICELV=0.835 and
+                                                                                classification [20,21] and outcome prediction [22,23].
+DICEMY=0.670. Transfer learning using 7T cine data and
+ImageNet weight initialization improved model performance                         There is consensus in the field that the limited availability of
+to DICELV=0.900 and DICEMY=0.791. Using only end-systolic                       labelled or annotated data due to data access, privacy issues,
+and end-diastolic images reduced training data by 90%,                          missing data harmonization, and data protection is one of the
+with no negative impact on segmentation performance                             main obstacles for future clinical applications of deep neural
+(DICELV=0.908, DICEMY=0.805). This work demonstrates and                        networks [17,19,24]. While some resources like the UK
+quantifies the benefits of transfer learning for cardiac cine                   Biobank [25] already exist to address this issue, the high quality
+image segmentation. We provide practical guidelines for                         standards and the amount of work required to organize and
+researchers planning transfer learning projects in cardiac                      maintain such a resource makes data access expensive. In
+MRI and make data, models and code publicly available.
+                                                                                addition, such data may already exceed the quality that is
+                                                                                available in clinical routine cardiac MRI. This leads to neural
+   Index Terms—7T, cardiac magnetic resonance, cardiac
+function, deep learning, neural networks, segmentation,                         networks, which perform very well for a very specific task
+transfer learning, ultrahigh-field                                              within a confined data space, where training and testing data
+                                                                                share the same distribution. However, these networks usually
+                          I. INTRODUCTION                                       lack generalization capabilities. While methods such as data
+                                                                                augmentation, transfer learning, weakly-, self-supervised, and
+I  MAGE segmentation, which is of great interest in cardiac
+   magnetic resonance imaging is applied to partition acquired
+images into functionally meaningful regions, allowing the
+                                                                                unsupervised learning have been applied to overcome the issue
+                                                                                of small datasets in research, it is unclear how much data is
+                                                                                really required in order to create a well-generalizing network or
+extraction of quantitative static measures such as myocardial                   to apply transfer learning.
+mass, left ventricle (LV) volume, right ventricle (RV) volume,
+   This work was supported by the German Ministry of Education and Research under Grant 01EO1504.
+   The ﬁrst two authors contributed equally to this work.
+   M. J. Ankenbrand, D. Lohr, and L. M. Schreiber are with the Chair of Cellular and Molecular Imaging, Comprehensive Heart Failure Center
+(CHFC), University Hospital Würzburg, Würzburg, Germany (e-mail: Ankenbrand_M@ukw.de, E_Lohr_D@ukw.de, Schreiber_L@ukw.de).
+   W. Schlötelburg and T. Wech are with the Department of Radiology, University Hospital Würzburg, Würzburg, Germany.
+   T. Reiter is with the Department of Internal Medicine I, University Hospital Würzburg, Würzburg, Germany.
+           NOTE: This preprint reports new research that has not been certified by peer review and should not be used to guide clinical practice.
+
+  medRxiv preprint doi: https://doi.org/10.1101/2020.06.15.20131656.this version posted October 13, 2020. The copyright holder for this preprint
+     (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                            It is made available under a CC-BY 4.0 International license .
+2                                                                                  IEEE TRANSACTIONS ON MEDICAL IMAGING, VOL. xx, NO.     x, 2020
+  In this work, we aim to enable researchers and clinicians in                                             TABLE I
+                                                                            DATA COMPOSITION AND MEASUREMENT PARAMETERS OF THE KAGGLE DATA
+cardiology to apply deep learning- based segmentation models
+                                                                                            METRIC                          COUNT
+in their respective research by providing guidelines and easily                               Male                            670
+accessible tools as well as annotated data for transfer learning.                           Female                            470
+We create labels for a public data set, the Data Science Bowl                          Age: 0-17 [years]                      202
+Cardiac Challenge Data [26] (further referred to as Kaggle data                       Age: 18 – 30 [years]                    173
+                                                                                       Age: 31-50 [years]                     298
+set) which, at this point, does not have segmentation labels. We                        Age: 51+ [years]                      467
+further create a base network for LV segmentation using these                           Max Age [years]                       88
+labels and evaluate its performance on 7T human cine data. In                           Min Age [years]                      0.04
+addition, we assess if transfer learning improves model                                       1.5 T                          1025
+                                                                                              3.0 T                           115
+performance for the 7T segmentation task and analyze how
+much and which data is required. The framework provided in                                  METRIC                          RANGE
+this study in combination with access to scripts and the data                           Echo Time [ms]                    1.04 - 1.54
+used, will enable researchers to reproduce our results and apply                     Repetition Time [ms]                 14 - 54.72
+                                                                                     Bandwidth [Hz/Pixel]                 915 - 1235
+deep learning based segmentation in their respective field.                          Slice Thickness [mm]                    5-8
+                                                                                          Matrix Size                 120-608 x 160-736
+                                                                                        Resolution [mm]                   0.59 - 1.95
+                                                                                             Phases                        112 - 416
+                             II. METHODS
+                                                                              2) Creating Labels
+                                                                              Once the data was corrected for inconsistencies we ran the
+  A. The Kaggle Data Set
+                                                                            Python based segmentation model of Bai et al. for the complete
+  As mentioned above, cardiac MRI is the gold standard for the              data set, generating RV, LV, and blood pool labels as well as
+assessment of cardiac function, a key indicator of cardiac                  LV ESV and EDV volumes. ESV and EDV values were then
+disease. The 2015 Data Science Bowl challenged participants                 compared to the ground truth values provided by Kaggle in
+to create an algorithm for automatic assessment of end-systolic             order to determine the accuracy of the network prediction.
+and end-diastolic volumes (ESV and EDV) and thus, ejection                  Based on this comparison we created confidence sets where the
+fraction, based on cardiac cine MRI. The data set consists of a             predicted values were in the range of ±5% (p5), ±10% (p10),
+training, a validation, and a test set and once the challenge has           and ±15% (p15) of the true value. Respectively, these sets
+ended, all sets and their corresponding volume information                  contained 175, 520, and 763 examinations and 54540, 162480,
+(end-systolic and end-diastolic) was made available for                     and 238350 images. All scores (label versus ground truth) for
+research and academic pursuits, leading to a total of 1140                  ESV and EDV values are listed in the online repository.
+“annotated” cardiac MRI examinations of normal and abnormal
+cardiac function. Images are in DICOM format resolving up to
+30 phases of the cardiac cycle. While we will focus on short                  B. Hardware
+axis images in this study, the Kaggle data set also contains                  In order to deal with the extensive computation demands we
+alternative views. Examinations were done on 1.5 T and 3.0 T                used a custom workstation and a high performance cluster, both
+systems (Siemens Magnetom Aera and Skyra, Siemens                           with graphical processing units. Details are given in the online
+Healthineers, Erlangen, Germany) with applications of both                  repository.
+FLASH and TrueFISP sequences. An overview of the complete
+data set and its variation in patient data and sequence
+parameters is given in Table I.                                               C. Framework - Deep neural network
+  1) Data Curation                                                            All implementations were realized using Pytorch [27] and
+  The complete data set is a compilation of real, clinical data             fastai [28]. Training of neural networks (U-Net [29]
+from several sites and as such, subject to inconsistencies within           architectures with varying backbones: Restnet34 [30],
+individual examinations. Those can be a combination of:                     ResNet50 [31], and VGG16 [32]) was performed using fastai’s
+       missing time points                                                 implementation of the one cycle policy [33] with adjusted
+       inconsistent slice spacing                                          learning rates (lr) and the confidence sets p5, p10, and p15.
+       inconsistent image dimension                                          1) Parameter Search
+       repeat measurements (identical slice location)                        During the parameter search, we evaluated the influence of
+       scaled images                                                       different training parameters on the efficacy of the trained
+       image rotations                                                     model. Training speeds of the varying models and their
+  Prior to the application of the published segmentation                    architectures is given in the online repository. Training with a
+network of Bai et al. [4] we performed data curation, correcting            weight-decay of 0.02 and a batch-size of 32 was done for 30
+inconsistencies in all but 8 examinations. More detailed                    epochs with frozen weights (lr = 1e-4) and another 30 epochs
+information and curated data can be found in the online                     with unfrozen weights (lr = 1e-5). Details regarding frozen and
+repository               (https://github.com/chfc-cmi/cmr-seg-tl,           unfrozen weights are provided in the online repository. The
+https://doi.org/10.5281/zenodo.3876351).                                    smallest training set (p5) was used initially, image size was
+                                                                            256x256, and moderate data augmentation transforms (s1: flip
+
+   medRxiv preprint doi: https://doi.org/10.1101/2020.06.15.20131656.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                             It is made available under a CC-BY 4.0 International license .
+3                                                                                   IEEE TRANSACTIONS ON MEDICAL IMAGING, VOL. xx, NO.     x, 2020
+[none], rotation [20°], lighting [0.4], zoom [1.2], padding                  parameters therefore vary to some degree. The parameters
+[zeros]) were applied.                                                       were: TE = 3.57ms, FOV = 340 mm x 320 mm, interpolated
+  In order to avoid an extensive parameter grid search, we                   (zero filling) voxel size = 0.66 x 0.66 x 6 mm, GRAPPA
+assessed parameter dependent performance changes in                          acceleration factors: R = 2 and R = 3. Depending on the heart
+incremental steps. After each step, we determined the best-                  rate, 6-11 slices and 20-35 cardiac phases were measured using
+performing model using EF predictions and introduced                         retrospective gating (ECG). Short axis CINE stacks for
+subsequent parameter variations on this respective model.                    volumetric evaluation varied in the number of slices (14-17)
+  In the first step we evaluated the influence of the architecture           and multiple breath-holds (~13s) were necessary to acquire the
+(VGG16, ResNet34, ResNet50) compared to the fully                            whole stack. Images were assigned into training, validation and
+convolutional Network by Bai et al. [4] trained on UKBB data                 test sets (14, 5, 3 subjects and 5076, 1842, 955 images,
+(further referred to as UKBB model). Due to memory                           respectively). All images were manually segmented by an
+limitations, we had to reduce the batch size for training of the             expert radiologist (TR). Three data sets of the test set were
+VGG16 and the ResNet50 models.                                               additionally segmented by an expert cardiologist (WS), in order
+  In the second step, we assessed variations in the loss function            to obtain an estimate of interobserver-variability.
+such as cross-entropy (default), generalized DICE [34], and
+focal loss. In the third and last step we evaluated the influence              1) Starting Point for Model Training - 7T Human
+of the number of training images using the confidence sets p5,                 To assess the efficacy of transfer learning for LV
+p10, and p15.                                                                segmentation based on clinical 1.5T and 3T data and
+  We assessed the influence of training data resolution, training            experimental (human) 7T data, we compare models with
+a model with lower input resolution (128x128,                                varying degrees of training and transfer learning. Using a U-Net
+r34_CE_p5_128). Details are provided in the online repository.               architecture with a ResNet34 backbone (r34_CE_p5_s2), we
+                                                                             generated the following three models:
+  2) Data Augmentation                                                             1) initialization with random weights (R)
+  Since transfer learning applications assessed in this study are                  2) initialization with ImageNet-weights – transfer
+based on 7T data we expect somewhat different image contrast                            learning 1 (TL)
+and artefacts compared to conventional, clinical datasets. In                      3) Model 2, pre-trained on Kaggle data - transfer
+addition, we intended to account for the heterogeneous training                         learning 2 (TL2)
+data, which led to the following set of augmentations for the                  All models were used to generate predictions for the 7T test
+initial networks (s1: flip [none], rotation [20°], lighting [0.4],           set. Model performance was always evaluated using the
+zoom [1.2], padding [zeros]). Further, we aimed to introduce                 Sørensen-DICE [36] coefficient between predictions and
+some robustness to forms of data variations, such as 90°-                    respective ground truth labels.
+rotations and flips (left-right) using more extensive data
+augmentation (s2: flip [Left-Right], rotation [90°], lighting                  2) Data Requirements for Model Training - 7T Human
+[0.4], zoom [1.2], padding [zeros]). In order to test the efficacy           To assess how much and what data is required for convergence
+of these transforms we trained a new model (r34_CE_p5_s2)                    of a model we trained all models (R, TL, TL2) with subsets of
+and compared EF predictions on a dataset including rotated and               the training data. These subsets were created in two ways:
+flipped images retained during the data curation process.                         1) Complete subject data (all slices and all phases) from
+                                                                                       either 14, 7, 3, 1 subjects (5076, 2626, 1001, 306
+                                                                                       images, respectively); Partial subject data (only end-
+  D. Transfer Learning
+                                                                                       systolic and end-diastolic images) from all subjects
+  All assessments regarding transfer learning to 7T data are                           (448 images)
+done using model: r34_CE_p5_s2. As initial point of                               2) Shuffle all images once, create a list of images (1-
+comparison we used the UKBB model to create labels for 7T                              5076), and generate subsets corresponding to the
+data, in order to assess generalization capability of a model,                         respective image numbers from subset 1, always
+which was trained on a very homogeneous data set (UKBB).                               starting the count with image #1
+  Following approval of the local ethics committee (7/17-SC),                When training with subsets, the model is exposed to a smaller
+n=22 (14 female, 8 male) were examined using a 7T whole                      number of images in every epoch. We therefore increased the
+body MRI system (Siemens MAGNETOM Terra, Erlangen,                           number of epochs for the subsets to correct for this effect.
+Germany) and a 1TX/16RX thorax coil (MRI Tools, Berlin,
+Germany) [35]. Written informed consent was obtained prior to
+all measurements. Patient age was 22-53 years, body weight 52-                                              III. RESULTS
+95 kg, and height: 151-185cm. For triggering, both the
+integrated ECG and an external acoustic triggering system                      A. Framework - Deep neural network
+(MRI Tools, Berlin, Germany) were used in order to                             1) Parameter Search
+synchronize measurements with the heartbeat, choosing                          Results of the parameter search are illustrated in Fig. 1,
+whichever method provided a more stable trigger signal during                showing the absolute distance between the EF predictions based
+the examination. Images were obtained during initial sequence                on model segmentation and ground truth data provided by
+implementation and optimization for 7T cardiac MRI using a                   Kaggle. Overall the impact of parameter variation on model
+cardiovascular (CV) GRE cine-sequence and protocol                           performance was small (3.64-4.06% mean distance to ground
+
+  medRxiv preprint doi: https://doi.org/10.1101/2020.06.15.20131656.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                            It is made available under a CC-BY 4.0 International license .
+4                                                                                    IEEE TRANSACTIONS ON MEDICAL IMAGING, VOL. xx, NO.       x, 2020
+truth EF). In a first approach to interpret these results, we
+compared varying architectures, such as ResNet34, ResNet50,
+and VGG16 with the UKBB model (Fig. 1A). All models led to
+lower mean and median distance values compared to the UKBB
+model (Table II). The lowest median distance values were
+found using a ResNet50 (2.79%), while the lowest mean
+distance values were found using a ResNet34 (3.64%).
+Differences in the absolute distance between the models (r34,
+r50) were rather small (Δ0.08%), however. Considering
+computational demand, we selected the ResNet34. In the next
+step of the parameter search we evaluated model performance
+using varying loss functions, namely cross-entropy, generalized
+DICE, and focal loss (Fig. 1B). Using the generalized DICE                    Fig. 2 Model evaluation based on data including rotated images. Plots
+score led to the highest mean (3.93%) and median (3.07%)                    show the absolute distance between the EF predictions based on model
+distance values. Median distance values were similar for cross-             segmentation and ground truth data provided by Kaggle for all models
+                                                                            of the parameter search, plus one model trained with extended data
+entropy and focal loss (2.87% vs 2.86%), while the mean
+                                                                            augmentation (s2). Models are named by architecture (ResNet34: r34,
+distance value was lowest using cross-entropy (3.64%). We                   ResNet50: r50, VGG16: v16), loss function (cross entropy: CE, focal,
+thus selected cross-entropy for the next step of the parameter              DICE), confidence set (p5, p10, p15), and data augmentation (s1:
+search, where we evaluated model performance using varying                  standard data augmentation, s2: extended data augmentation, enabling
+                                                                            LR-flips and rotations up to 90°).
+confidence sets: 5%, 10%, 15% (Fig. 1C).
+                                                                                                              TABLE II
+                                                                             SUMMARY STATISTICS OF ABSOLUTE DEVIATION OF PREDICTED AND TRUE EF
+                                                                                       Model            Mean         Sd       Median          Iqr
+                                                                                  r34_CE_p5_ s1          3.64       3.38       2.87          3.72
+                                                                                  r50_CE_p5_s1           3.71       3.73       2.79          3.70
+                                                                                 r34_CE_p15_s1           3.73       3.38       2.91          3.72
+                                                                                 r34_focal_p5_s1         3.75       3.90       2.86          3.80
+                                                                                 r34_CE_p10_s1           3.77       4.44       2.89          3.76
+                                                                                r34_DICE_p5_s1           3.93       3.43       3.07          3.91
+                                                                                  v16_CE_p5_s1           4.06       4.94       3.02          3.87
+                                                                                       UKBB              5.42       8.83       3.72          4.34
+                                                                            EF in %. Models are named by architecture (ResNet34: r34, ResNet50: r50,
+                                                                            VGG16: v16), loss function (cross entropy: CE, focal, DICE), confidence set
+                                                                            (p5, p10, p15), and data augmentation (s1, s2)
+                                                                              Using the various confidence sets only slightly affected
+                                                                            median distance values (2.87%, 2.89%, 2.91%). Based on EF
+                                                                            predictions the model: r34_CE_p5_s1 performed best
+                                                                            achieving a mean distance value of 3.64%.
+                                                                              2) Data Augmentation
+                                                                              Fig. 2 shows the performance of our models on the image set
+                                                                            containing rotated images, plus the performance of an
+                                                                            additional model where data augmentation allowed left-right
+                                                                            flips, as well as rotations of up to 90°. Median and mean
+                                                                            absolute distance values were lowest (3.06%, 4.08%) using the
+                                                                            model with extended data augmentation (r34_CE_p5_s2).
+   Fig. 1 Model evaluation during incremental parameter search. Plots
+show the absolute distance between the EF prediction based on model
+segmentation and ground truth data provided by Kaggle. The range of
+the y-axis is restricted for better comparability, dashed lines indicates     B. Transfer Learning
+lowest median. Model performance with A: Architectures (r34:                  Exemplary cine images from the Kaggle and the 7T cine data
+ResNet34, r50: ResNet50, VGG16: v16, UKBB). B: Loss functions               set as well as respective data augmentation are shown in Fig.
+(Cross-entropy: CE, DICE, focal loss). C: Confidence sets (p5: 5%, p10:
+10%, p15: 15%).                                                             3A and 3B. While the Kaggle data set includes images with
+                                                                            varying field of views and resolution, the 7T data is consistent.
+
+   medRxiv preprint doi: https://doi.org/10.1101/2020.06.15.20131656.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                              It is made available under a CC-BY 4.0 International license .
+5                                                                                        IEEE TRANSACTIONS ON MEDICAL IMAGING, VOL. xx, NO.        x, 2020
+                                                                                  DICELV = 0.90, DICEMY = 0.79 as well as DICELV = 0.91,
+                                                                                  DICEMY = 0.81. Deviations in LV volume of individual images
+                                                                                  were smaller than 5 ml in >95% of the cases. Exemplary
+                                                                                  predictions of the AI and deviations to expert 1 are shown in
+                                                                                  Fig. 5. All apical slices labelled by the AI were in excellent
+                                                                                  agreement with that of our experts. The largest deviations
+                                                                                  between AI and both experts was found for the very basal slice
+                                                                                  where myocardial tissue moves in and out of plane throughout
+                                                                                  the cardiac cycle.
+                                                                                    1) Starting Point for Model Training
+                                                                                    Results of model training using varying degrees of transfer
+                                                                                  learning are displayed in Fig. 6. Plotted are the DICE scores for
+                                                                                  the left ventricle and the myocardium in dependence of the
+                                                                                  number of images seen during training, showing performance
+                                                                                  and overall convergence for the three models analyzed. All
+                                                                                  curves have been smoothed to increase interpretability.
+                                                                                  Respective plots of the raw data are shown in the online
+                                                                                  repository.
+  Fig. 3 Exemplary cine images and respective data augmentation.
+                                                                                    Starting with the full data set, there are clear differences in
+Random selection of five images (top) with five data augmentation                 starting points (DICE after first epoch), convergence speed, and
+examples (bottom) for the first image of the random selection. A: Kaggle          peak performance (highest performance reached) for the three
+data. B: 7T human cine data.                                                      models.
+                                                                                    R: Random weight initialization followed by training using
+  Fig. 4 presents the inter-observer variability as difference of                 7T data led to the:
+LV volume within each image in ml for all slices and phases of                           lowest starting points with DICELV ~ 0.57 and
+the 7T human cine test set (n=3). The slice count starts with 0                              DICEMY ~ 0.25
+at the most apical slice and moves towards the most basal slice
+                                                                                         lowest convergence speed, reaching plateau values
+with increasing slice number. Overall expert 2 achieved
+                                                                                             after 100.000 images
+DICELV = 0.94 and DICEMY = 0.81 and deviations in LV
+                                                                                         lowest peak performance with DICE LV ~ 0.89 and
+volume of individual images were lower than ±5 ml in all but
+                                                                                             DICEMY ~0.77
+one image (set 3, slice 12, phase 4). Compared to expert 1, who
+labelled our training data, and expert 2 the AI model achieved
+   Fig. 4 Inter-observer variability. Difference in LV volume in [ml] for all slices and phases of the 7T cine images of the test set. The slice count
+ starts with 0 at the most apical slice and moves towards the most basal slice with increasing slice number. Top: Inter-observer variability of the
+ two experts. Middle: Inter-observer variability expert 1 (labelled training data as well) versus AI. Bottom: Inter-observer variability expert 2
+ versus AI.
+
+   medRxiv preprint doi: https://doi.org/10.1101/2020.06.15.20131656.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                              It is made available under a CC-BY 4.0 International license .
+6                                                                                    IEEE TRANSACTIONS ON MEDICAL IMAGING, VOL. xx, NO.    x, 2020
+                                                                                TL: ImageNet weight initialization followed by training using
+                                                                              7T data led to the:
+                                                                                     starting points of DICELV ~ 0.77 and DICEMY ~ 0.51
+                                                                                     higher convergence speed, reaching plateau values
+                                                                                         after 50.000-60.000 images
+                                                                                     higher peak performance with DICE LV: 0.91 and
+                                                                                         DICEMY: 0.79
+                                                                                TL2: ImageNet weight initialization, pre-trained (Kaggle
+                                                                              data), re-trained 7T data led to the:
+                                                                                     highest starting points with DICE LV ~ 0.90 and
+                                                                                         DICEMY ~ 0.78
+                                                                                     higher convergence speed, reaching plateau values
+                                                                                         after 40.000-50.000 images
+                                                                                     higher peak performance with DICE LV: 0.92 and
+                                                                                         DICEMY: 0.81
+                                                                                2) Data Requirements for Model Training
+                                                                                Results of model training using varying degrees of transfer
+                                                                              learning and a smaller amount of training data are displayed in
+                                                                              Fig. 6 as well. The full training data set consists of 14
+                                                                              volunteers, while the subsets consist of 7, 3, and 1 volunteer.
+   Fig. 5 Predictions of TL2 on the 7T human test set. Examples of mid-
+                                                                              For the most part, curves follow the trend described for the full
+cavity segmentation results with high (top), intermediate (middle) and        data set, while each reduction in volunteers led to lower starting
+low (bottom) DICE scores. Images (left), with predicted classes (middle,      points. Peak performances remain similar with a reduction to 7
+background: purple, LV: blue, MY: yellow) and differences to the ground       volunteers, but drop using subset n3, in particular for models R
+truth (right, LV-error: blue, MY-error: yellow)
+                                                                              and TL. Only for a very small number of training images (n1)
+     Fig. 6 Training evaluation based on the validation set. DICE scores of the left ventricle and the myocardium in 7T human cardiac cine images
+  normalized for the number of images seen. Varying degrees of transfer learning (R: ResNet34 initialized with random weights and trained using 7T
+  cine images, TL: ResNet34 initialized with ImageNet weights and trained using 7T cine images, TL2: ResNet34 initialized with ImageNet weights,
+  pre-trained on the 1.5T and 3T Kaggle cine images and re-trained on 7T cine images) are shown for the two subsets 1 (line): subset of whole
+  volunteers (full=14, 7, 3, 1), 2 (dotted line): subset of random images with image numbers corresponding to first subset. In addition, there is one
+  model (“esed”) trained using only end-systolic and end-diastolic images from all volunteers and a corresponding model trained with a number of
+  random images equivalent to the “esed”-set.
+
+  medRxiv preprint doi: https://doi.org/10.1101/2020.06.15.20131656.this version posted October 13, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                            It is made available under a CC-BY 4.0 International license .
+7                                                                                  IEEE TRANSACTIONS ON MEDICAL IMAGING, VOL. xx, NO.     x, 2020
+peak performances are higher for model R (DICE LV: 0.86;                    distance to ground truth EF) were rather small. Similar to the
+DICEMY: 0.72) compared to TL (DICE LV: 0.83; DICEMY: 0.70).                 use in this study, researchers or clinicians can use this model as
+  For small subsets, such as n3 and n1, starting points as well             a starting point for their respective transfer learning
+as peak performances of all models is higher using the random               applications.
+selection of training images instead of all images from a set                  Considering the performance of this model on 7T human cine
+(3/1) of volunteers. The same trend is shown for the set n7 using           data (DICELV: 0.84, DICEMY: 0.67), generalization capability
+models R and TL.                                                            appears limited. This is also true for the UKBB model (7T
+  Using only end-systolic and end-diastolic images led to                   human cine, DICELV: 0.67, DICEMY: 0.52). As the authors4
+similar convergence speed and peak performance regarding                    point out, the UKBB model was “trained on a single data set,
+DICE scores compared to the full data set (R LV,MY: 0.90, 0.77;             the UK Biobank dataset, which is a relatively homogenous
+TLLV,MY: 0.90, 0.78; TL2LV,MY: 0.92, 0.81 versus RLV,MY: 0.89,              dataset” and might therefore “not generalize well to other
+0.77; TL LV,MY: 0.91, 0.79; TL2 LV,MY: 0.92, 0.81). In addition,            vendor or sequence datasets”. With respect to the performance
+the selection of end-systolic and end-diastolic images led to               on 7T data this just means that, compared to the UKBB dataset,
+increased DICE-scores as starting points, fast convergence, and             the Kaggle data set contains image patterns and characteristics
+higher peak performance for all models, when compared to the                more similar to the 7T data we acquired. In addition, it
+same number of randomly selected images.                                    emphasizes why improvements in generalization [37-39] are
+                                                                            needed and why we applied an additional step of transfer
+                           IV. DISCUSSION                                   learning to 7T data.
+  In this study, we successfully used a specialized, publicly                  Due to differences in training data our initial models based on
+available model4 to produce labels for a public data set of                 UKBB labels outperformed the UKBB model on the Kaggle
+clinical 1.5 and 3T cardiac cine MRI, enabling access to more               data. While the UKBB model was trained on the homogeneous
+annotated data. Based on these labels we created a basic AI                 UKBB data, our models were trained on the heterogeneous
+model, other researchers can use for their individual                       Kaggle data itself. In addition, we applied data augmentation
+segmentation tasks. In addition, we applied transfer learning to            with respect to rotations and contrast and used only Kaggle data
+segmentation of 7T human cine data, demonstrating that models               with the most accurate (top 15%) labels.
+based on these labels and a moderate amount of new domain                      While multiple studies [4,5,26,40] have demonstrated great
+data enable state-of-the-art segmentation results.                          image segmentation results for one specific dataset, these
+  One of the obstacles to get started in deep learning based                models have not been tested on other datasets or initially lack
+segmentation is the large amount of annotated data required to              generalization capability. In this study, we show that transfer
+train an initial model. In this study we circumvent this problem            learning leads to improved model performance. DICE scores
+by using the public Kaggle data set, to which we provide labels.            achieved on 7T human cine data prior to and after transfer
+The quality of these labels was evaluated using the volume                  learning were DICELV: 0.84, DICEMY: 0.67 and DICELV: 0.92,
+information (end-systolic and end-diastolic volumes) included               DICEMY: 0.81, respectively. This was comparable to human
+in the original Kaggle data set. Therefore, careful data curation           inter-observer variability (DICELV: 0.94 and DICEMY: 0.81)
+had to be applied to avoid data inconsistencies (slice spacing,             and is within the range of state-of-the-art results, despite the
+changes in image dimensions and image resolution, as well as                relatively small set of training data19. In addition, inter-
+missing slices) within individual patients. In addition, we found           observer-variability in EDV (3.5%) and ESV (10.5%) between
+that label quality was connected to image orientation and image             our model and the expert radiologist are in good agreement with
+resolution. Scores (mean distance between labels and Kaggle                 literature reports (EDV: 2.5-5.3%, ESV: 6.8-13.9%) [41] based
+“ground truth”), data curation scripts, as well as labels are               on SSFP CMR imaging.
+provided in the online repository, enabling future use in other                Typically, segmentation of the left ventricle is done to
+studies. We want to point out that label quality and accuracy               evaluate ejection fraction, a clinically used parameter. In this
+was assessed via comparison to volume information only, with                study we show that the model based volume prediction on the
+rare exceptions of visual confirmation. Thresholds of 5%, 10%,              test set is very accurate for apical, mid-cavity and basal slices,
+and 15% (deviation to the “ground truth”) for the subsets used              with the exception of the most basal slice, where myocardial
+in this study were chosen arbitrarily. With 54540, 162480, and              tissue moves in and out of plane throughout the cardiac cycle.
+239350 images respectively, we assumed these three sets to                  Since we do not have a “ground-truth” segmentation for the
+provide the reasonable compromise between label accuracy and                Kaggle data and no information on labelling protocols, we do
+label quantity needed to assess data requirements in this specific          not know if there is any consistency in the definition of basal
+transfer learning application.                                              slices or the inclusion or exclusion of papillary muscle.
+  Based on the now annotated data we trained initial                           While transfer learning allows models to adapt to similar tasks
+segmentation models with varying architectures (ResNet34,                   and new datasets, containing new characteristics and patterns,
+ResNet50, VGG16), varying loss functions (cross-entropy,                    this step also requires new labels. This aspect is often a
+generalized DICE, focal loss), varying training sets (p5, p10,              limitation, since labelled medical data is difficult to acquire,
+p15). The final model we selected was a ResNet34, using cross-              particularly in areas that require domain-specific knowledge. In
+entropy as a loss function, and the p5 set for training with an             addition, the manual labelling process for high quality
+image resolution of 256x256. While we selected this model                   segmentations itself is often tedious and labor intensive. In this
+based on performance (mean distance to ground truth EF),                    study we show that transfer learning applications (ImageNet
+overall impacts of parameter variations (3.64-4.06% mean                    weights to Kaggle data to 7T data) for cardiac cine
+
+  medRxiv preprint doi: https://doi.org/10.1101/2020.06.15.20131656.this version posted October 13, 2020. The copyright holder for this preprint
+     (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                            It is made available under a CC-BY 4.0 International license .
+8                                                                                  IEEE TRANSACTIONS ON MEDICAL IMAGING, VOL. xx, NO.                 x, 2020
+segmentation of human 7T data can provide state-of-the-art                  In addition, all data was acquired using Siemens whole body
+results when training with labelled data from 7-14 volunteers               MRI systems. Models trained using this dataset might thus not
+(2626 – 5076 images), reaching DICELV: 0.92 and DICEMY:                     generalize well to other vendor datasets, requiring transfer
+0.81 as well as accurate EF values. Having labels for three                 learning as demonstrated in this study.
+volunteers (1001 images) leads to decent results (DICE LV: 0.91               Since no disease-related information is provided in the
+and DICEMY: 0.80). We consider labels for only one volunteer                Kaggle dataset, we have no knowledge which and how many
+to be insufficient (DICELV: 0.88 and DICEMY: 0.77).                         pathological patterns are currently represented in the dataset. In
+  For small training datasets (n≤1001) we show that a random                this study we demonstrate that transfer learning to 7T data of
+selection of images from multiple volunteers leads to better                healthy human volunteers enables DICE scores of DICE LV:
+performance compared to the selection of all images from a                  0.92 and DICEMY: 0.81. A clinical application would require a
+smaller number of volunteers (n=3 or n=1, figure 6).                        performance assessment or transfer learning for specific cardiac
+Generalization capabilities of a model increase with the amount             pathologies, both beyond the scope of this cardiology-related
+of variation provided in the training data and thus using data              methodological work.
+from a multitude of patients or volunteers, where morphology                  Furthermore, the accuracy of the labels we created was
+and therefore image content and contrast differ, may be more                assessed based on comparison to provided volume information
+beneficial than providing the same number of more coherent                  only and visual confirmation of the contours may be biased,
+images from a small number of volunteers. Furthermore we                    because we do not know if the provided volume information is
+demonstrate that the number of required images can drastically              based on consistent definitions of basal slices or the inclusion
+be reduced (from 5076 to 448 images), using labelled data from              or exclusion of papillary muscle. This should be considered
+specific heart phases, end-diastolic and end-systolic, instead of           when creating models based on this dataset. In general, there is
+all images. This may be possible, because knowing the two                   a need for a standard benchmark dataset, where labels are based
+extreme states of contraction the model can deal more easily                on standardized protocols and images are representations of
+with intermediate states. Considering that n=448 images                     diverse clinical phenotypes (diseases, vendors, field strengths,
+(roughly two cardiac EF examinations) enable close to state-of-             sequences, protocols).
+the-art results for cardiac cine segmentation, data requirements
+for transfer learning applications in closely related tasks are
+low. In addition, labels for end-diastolic and end-systolic                                               V. CONCLUSIONS
+images are created in routine clinical cardiac examinations and             In this study, we provide access to annotated cardiac cine MRI
+thus easily accessible.
+                                                                            data, and AI models, which can be used as a starting point for
+                                                                            transfer learning applications. Using such a base model, we
+  In summary, how much and which kind of data should be
+                                                                            demonstrate that transfer learning from clinical 1.5 and 3T cine
+included in the transfer learning process should be carefully
+considered prior to labelling new data. In particular, the notion           data to 7T cine data is feasible with moderate data requirements,
+to provide data patient by patient may result in higher data                enabling future applications to other cardiac MRI examinations
+requirements than necessary. There are various other routine                such as T2, T1, LGE, and even T2*. Furthermore, we show that
+cardiac MR examinations such as T 2, T1, LGE, and even T2*                  not all data has the same value with respect to transfer learning
+that require segmentation [38,39,42]. Transfer learning                     approaches and that careful selection of the training data may
+applications to image segmentation of such varying contrasts                drastically reduce data requirements.
+may benefit from the amount of annotated data and the
+framework provided in this study.                                                                       ACKNOWLEDGMENT
+  With respect to future use of this annotated data we                          We thank Andreas Hotho for insightful discussions.
+recommend researchers take the following steps:
+    1) use the pre-trained model we provide (r34_CE_p5_s2)                                                  REFERENCES
+    2) re-train with training data from the new domain and
+                                                                            [1]       J. C. Moon, C. H. Lorenz, J. M. Francis, G. C. Smith, D. J.
+         tune hyper parameters using validation data from the                         Pennell. Breath-hold FLASH and FISP cardiovascular MR
+         new domain                                                                   imaging: left ventricular volume differences and reproducibility.
+    3) evaluate model performance on a test set from the new                          Radiology. Jun 2002;223(3):789-797.
+                                                                            [2]       J. P. Curtis, et al. The association of left ventricular ejection
+         domain                                                                       fraction, mortality, and cause of death in stable outpatients with
+  In this study, we used only the 5-15% of the most accurate                          heart failure. J Am Coll Cardiol. Aug 20 2003;42(4):736-742.
+kaggle labels to create our base models. Thus, researchers                  [3]       T. D. Karamitsos, J. M. Francis, S. Myerson, J. B. Selvanayagam,
+attempting to train their own base network using the labelled                         S. Neubauer. The role of cardiovascular magnetic resonance
+                                                                                      imaging in heart failure. J Am Coll Cardiol. Oct 6
+Kaggle data should always assess label quality.                                       2009;54(15):1407-1424.
+  The experimental 7T data used in this study is not comparable             [4]       W. Bai, et al. Automated cardiovascular magnetic resonance image
+to clinical cardiac MRI in patients. Future performances on                           analysis with fully convolutional networks. Journal of
+clinical data should be evaluated against the Kaggle dataset.                         cardiovascular magnetic resonance : official journal of the Society
+                                                                                      for Cardiovascular Magnetic Resonance. Sep 14 2018;20(1):65.
+  There are some limitations connected to the use of the Kaggle             [5]       C. F. Baumgartner, L. M. Koch, M. Pollefeys, E. Konukoglu. An
+dataset. While there are variations in measurement parameters,                        Exploration of 2D and 3D Deep Learning Techniques for Cardiac
+such as resolution, FOV, matrix size, TE, TR, bandwidth, and                          MR Image Segmentation. arXiv e-prints. 2017.
+slice thickness, most examinations (~90%) were done at 1.5T.
+
+  medRxiv preprint doi: https://doi.org/10.1101/2020.06.15.20131656.this version posted October 13, 2020. The copyright holder for this preprint
+     (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                               It is made available under a CC-BY 4.0 International license .
+9                                                                                     IEEE TRANSACTIONS ON MEDICAL IMAGING, VOL. xx, NO.            x, 2020
+[6]      Y. Jang, Y. Hong, S. ha, S. Kim, H.-J.Chang. Automatic                [30]      K. He, X. Zhang, S. Ren, J. Sun. Deep Residual Learning for
+         Segmentation of LV and RV in Cardiac MRI. 2018:161-169.                         Image Recognition. arXiv e-prints. 2015:arXiv:1512.03385.
+[7]      P. V. Tran. A Fully Convolutional Neural Network for Cardiac          [31]      S. Abbasi-Sureshjani, S. Amirrajab, C. Lorenz, J. Weese, J. Pluim,
+         Segmentation in Short-Axis MRI. arXiv e-prints. 2016.                           M. Breeuwer. 4D Semantic Cardiac Magnetic Resonance Image
+[8]      J. Liu, et al. Applications of deep learning to MRI images: A                   Synthesis on XCAT Anatomical Model. arXiv e-prints. 2020.
+         survey. Big Data Mining and Analytics. 2018;1(1):1-18.                [32]      K. Simonyan, A. Zisserman. Very Deep Convolutional Networks
+[9]      F. Chen, et al. Variable-Density Single-Shot Fast Spin-Echo MRI                 for Large-Scale Image Recognition. arXiv e-prints.
+         with Deep Learning Reconstruction by Using Variational                          2014:arXiv:1409.1556.
+         Networks. Radiology. Nov 2018;289(2):366-373.                         [33]      L. N. Smith. A disciplined approach to neural network hyper-
+[10]     J. Schlemper, J. Caballero, J. V. Hajnal, A. N. Price, D. Rueckert.             parameters: Part 1 -- learning rate, batch size, momentum, and
+         A Deep Cascade of Convolutional Neural Networks for Dynamic                     weight decay. arXiv e-prints. 2018:arXiv:1803.09820.
+         MR Image Reconstruction. IEEE transactions on medical imaging.        [34]      C. H. Sudre, W. Li, T. Vercauteren, S. Ourselin, M. Jorge Cardoso.
+         Feb 2018;37(2):491-503.                                                         Generalised Dice Overlap as a Deep Learning Loss Function for
+[11]     B. Zhu, J. Z. Liu, S. F. Cauley, B. R. Rosen, M. S. Rosen. Image                Highly Unbalanced Segmentations. 2017; Cham.
+         reconstruction by domain-transform manifold learning. Nature.         [35]      D. Lohr, M. Terekhov, A. Kosmala, M. R. Stefanescu, M. Hock, L.
+         2018/03/01 2018;555(7697):487-492.                                              M. Schreiber. Cardiac MRI with the Siemens Terra 7T System:
+[12]     A. Benou, R. Veksler, A. Friedman, T. Riklin Raviv. Ensemble of                 Initial Experience and Optimization of Default Protocols. Paper
+         expert deep neural networks for spatio-temporal denoising of                    presented at: Proc. of the 26th Annual Meeting of ISMRM; April,
+         contrast-enhanced MRI sequences. Med Image Anal. Dec                            2018; Paris, France.
+         2017;42:145-159.                                                      [36]      A. P. Zijdenbos, B. M. Dawant, R. A. Margolin, A. C. Palmer.
+[13]     C. Bermudez, A. J. Plassard, T. L. Davis, A. T. Newton, S. M.                   Morphometric analysis of white matter lesions in MR images:
+         Resnick, B. A. Landman. Learning Implicit Brain MRI Manifolds                   method and validation. IEEE transactions on medical imaging.
+         with Deep Learning. Proceedings of SPIE--the International                      1994;13(4):716-724.
+         Society for Optical Engineering. Mar 2018;10574.                      [37]      X. Feng, J. Yang, A. F. Laine, E. D. Angelini. Discriminative
+[14]     B. D. de Vos, E. F. Berendsen, M. A. Viergever, H. Sokooti, M.                  Localization in CNNs for Weakly-Supervised Segmentation of
+         Staring, I. Isgum. A Deep Learning Framework for Unsupervised                   Pulmonary Nodules. arXiv e-prints.
+         Affine and Deformable Image Registration. arXiv e-prints. 2018.       [38]      J. Chen, H. Li, J. Zhang, B. Menze. Adversarial Convolutional
+[15]     G. Wu, M. Kim, Q. Wang, B. C. Munsell, D. Shen. Scalable High-                  Networks with Weak Domain-Transfer for Multi-Sequence
+         Performance Image Registration Framework by Unsupervised                        Cardiac MR Images Segmentation. arXiv e-prints. 2019.
+         Deep Feature Representations Learning. IEEE transactions on bio-      [39]      J. Wang, H. Huang, C. Chen, W. Ma, Y. Huang, X. Ding. Multi-
+         medical engineering. Jul 2016;63(7):1505-1516.                                  sequence Cardiac MR Segmentation with Adversarial Domain
+[16]     Z. Akkus, A. Galimzianova, A. Hoogi, D. L. Rubin, B. J. Erickson.               Adaptation Network. arXiv e-prints. 2019.
+         Deep Learning for Brain MRI Segmentation: State of the Art and        [40]      P. V. Tran. A Fully Convolutional Neural Network for Cardiac
+         Future Directions. Journal of Digital Imaging. 2017/08/01                       Segmentation in Short-Axis MRI. arXiv e-prints.
+         2017;30(4):449-459.                                                             2016:arXiv:1604.00494.
+[17]     M. H. Hesamian, W. Jia, X. He, P. Kennedy. Deep Learning              [41]      S. E. Luijnenburg, D. Robbers-Visser, A. Moelker, H. W. Vliegen,
+         Techniques for Medical Image Segmentation: Achievements and                     B. J. M. Mulder, W. A. Helbing. Intra-observer and interobserver
+         Challenges. Journal of Digital Imaging. 2019/08/01                              variability of biventricular function, volumes and mass in patients
+         2019;32(4):582-596.                                                             with congenital heart disease measured by CMR imaging. Int J
+[18]     B. Ruijsink, et al. Fully Automated, Quality-Controlled Cardiac                 Cardiovasc Imaging. 2010;26(1):57-64.
+         Analysis From CMR: Validation and Large-Scale Application to          [42]      S. Vesal, N. Ravikumar, A. Maier. Automated Multi-sequence
+         Characterize Cardiac Function. JACC: Cardiovascular Imaging.                    Cardiac MRI Segmentation Using Supervised Domain Adaptation.
+         2019/07/17/ 2019.                                                               arXiv e-prints. 2019.
+[19]     C. Chen, et al. Deep learning for cardiac image segmentation: A
+         review. arXiv e-prints. 2019.
+[20]     F. Liu, C. Shen. Learning Deep Convolutional Features for MRI
+         Based Alzheimer's Disease Classification. arXiv e-prints. 2014.
+[21]     W. H. L. Pinaya, et al. Using deep belief network modelling to
+         characterize differences in brain morphometry in schizophrenia.
+         Scientific Reports. 2016/12/12 2016;6(1):38897.
+[22]     G. A. Bello, et al. Deep-learning cardiac motion analysis for
+         human survival prediction. Nature Machine Intelligence.
+         2019/02/01 2019;1(2):95-104.
+[23]     T. J. W. Dawes, et al. Machine Learning of Three-dimensional
+         Right Ventricular Motion Enables Outcome Prediction in
+         Pulmonary Hypertension: A Cardiac MR Imaging Study.
+         Radiology. May 2017;283(2):381-390.
+[24]     A. S. Lundervold, A. Lundervold. An overview of deep learning in
+         medical imaging focusing on MRI. Zeitschrift für Medizinische
+         Physik. 2019/05/01/ 2019;29(2):102-127.
+[25]     C. Sudlow, et al. UK Biobank: An Open Access Resource for
+         Identifying the Causes of a Wide Range of Complex Diseases of
+         Middle and Old Age. PLOS Medicine. 2015;12(3):e1001779.
+[26]     Data Science Bowl Cardiac Challenge Data 2016.
+         https://www.kaggle.com/c/second-annual-data-science-bowl/data.
+         Accessed 29th of July 2019.
+[27]     A. Paszke, et al. PyTorch: An Imperative Style, High-Performance
+         Deep Learning Library. arXiv e-prints. 2019:arXiv:1912.01703.
+[28]     J. Howard, S. Gugger. Fastai: A Layered API for Deep Learning.
+         Information. 2020;11(2):108.
+[29]     O. Ronneberger, P. Fischer, T. Brox. U-Net: Convolutional
+         Networks for Biomedical Image Segmentation. arXiv e-prints.
+         2015:arXiv:1505.04597.
