@@ -1,7 +1,7 @@
 from flask import Flask, render_template, redirect, url_for, request, make_response, session
 import airtable
 import json
-from .. import svm
+import svm
 app = Flask(__name__)
 app.secret_key = open("secret_key").read()
 
