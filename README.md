@@ -34,10 +34,7 @@ In the beginning, we had difficulty working with the medRxiv api and the extract
 We also ran into many issues with setting up the TF-IDF and SVM system. At first, we did not clean the PDF-to-text files to remove numerical tables and other unicode symbols. This caused our vectorizer to include tokens that were not English words, but rather, numbers and floats. Since these characters don’t carry any semantic meaning, we removed these symbols to prevent them from skewing our content vectors. We solved this by integrating a Regular Expression to filter out non alphabetical characters.
 
 For the SVM, we had trouble integrating our database with the vector dimensions it requires. To solve this problem, we had to create a pipeline to effectively translate to and from the models input and outputs. We also had to tweak the SVM several times. One parameter we set was content weighting. Since there are way less favorites than non-favorites in our dataset, we had to make sure that the favorites are given more weight in the model. Before the adjustment, our model would never mark any item as a favorite in our testing dataset. 
-
-## Accomplishments that we're proud of
-
-We are proud of integrating our machine learning models with a frontend. Zach and Rajen, more familiar with data science, learned a lot about Flask and front-end development. Simon, who developed the Flask backend, learned about the various machine learning models used in content recommendation. Together as a team, we were able to deliver a working type that can be presented to an end user. This project required a lot of effective communication and collaboration - we extensively used GitHub branches to share code and datasets. Overall, we had a great experience working together and learned a lot as a team. 
+ 
 ## What's next for Med Viewer
 
 We would like to add the following features:
