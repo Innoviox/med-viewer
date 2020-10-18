@@ -68,14 +68,15 @@
     </div>
 </div>
 
+{% for item in get_pdfs() %}
 <div class="card" style="width: 18rem;">
-  <img class="card-img-top" src="..." alt="Card image cap">
   <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
+    <h5 class="card-title">{{ item['title'] }}</h5>
+    <p class="card-text"> {{ item['abstract'] }}</p>
+    <a href="/pdfs/{{ item['filename'] }}.pdf" class="btn btn-primary">Read Full Paper</a>
   </div>
 </div>
+{% endfor %}
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
