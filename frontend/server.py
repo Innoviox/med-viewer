@@ -58,7 +58,6 @@ def recommendations(msg=None, error=None):
     svm.train_svm(session['user'], favs)
     results = svm.eval_svm(session['user'])
     items = svm.doi2Item(results)
-    print(items)
     return render_template('recommendations.html', recs = items, user=session.get('user'), error=error, message=msg)
 
 
