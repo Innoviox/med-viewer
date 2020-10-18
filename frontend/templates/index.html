@@ -77,7 +77,12 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ item['title'] }}</h5>
                     <p class="card-text"> {{ item['abstract'] }}</p>
-                    <a target="_blank" href="/static/pdfs/{{ item['filename'] }}.pdf" class="btn btn-primary">Read Full Paper</a>
+                    <div class="btn-group" role="group">
+                        <a target="_blank" href="{{ item['doi'].split()[1] }}" class="btn btn-primary">Read Full
+                            Paper</a>
+                        <button onclick="favorite('{{ item['doi'].split('/')[-1].strip() }}')" class="btn btn-success">Favorite
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -92,9 +97,17 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
-{% if error %}
 <script>
-    toastr.error('{{ error }}');
+    function favorite(doi) {
+        $.get('/favorite/' + doi, function() {
+            toastr.success("Favorite successful");
+        });
+    }
+</script>
+
+{% if error %}
+<script >
+toastr.error('{{ error }}');
 </script>
 {% endif %}
 

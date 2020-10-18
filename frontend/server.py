@@ -18,17 +18,27 @@ def utils():
         for i in pdfs:
             i['abstract'] = ' '.join(i['abstract'].split(' ')[:50]) + ' ...'
         return [pdfs[i:i+width] for i in range(0, number, width)]
-    return {'get_pdfs': get_pdfs}
 
-def set_user(f):
+    return {'get_pdfs': get_pdfs, 'favorite': favorite}
+
+def set_user(f, msg=True):
     session['user'] = f['username']
-    session['message'] = f'Logged in as {f["username"]}'
+    if msg:
+        session['message'] = f'Logged in as {f["username"]}'
 
     for user in db.get_all():
         f = user['fields']
-        if f['username'] == session['user']:
-            session['likes'], session['dislikes'] = f['likes'], f['dislikes']
+        if f.get('username') == session['user']:
+            session['likes'], session['dislikes'] = f.get('likes', ''), f.get('dislikes', '')
+            session['favorites'] = f.get("favorites", '')
             return
+
+@app.route('/favorite/<doi>')
+def favorite(doi):
+    session['favorites'] += ',' + 'https://doi.org/10.1101/' + doi
+    session['favorites'] = ','.join(filter(bool, set(session['favorites'].split(',')))) # get rid of emptys/repeats
+    db.update_by_field('username', session['user'], {'favorites': session['favorites']})
+    return redirect(url_for('index'))
 
 @app.route('/logout', methods=['POST'])
 def logout():
@@ -71,6 +81,9 @@ def create():
 
 @app.route('/')
 def index(msg=None, error=None):
+    if not session.get('likes'):
+        set_user({'username': session['user']}, msg=False)
+
     if msg := session.get('message'):
         session['message'] = None
 
