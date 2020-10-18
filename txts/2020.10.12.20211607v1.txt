@@ -1,0 +1,681 @@
+      medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211607.this version posted October 14, 2020.
+     The copyright holder for this preprint (which was not certified by peer review) is the author/funder, who has
+                                  granted medRxiv a license to display the preprint in perpetuity.
+                                       All rights reserved. No reuse allowed without permission.
+ORIGINAL ARTICLE
+Journal Section
+Tracking the Progression & Inﬂuence of
+Beta-Amyloid Plaques Using Percolation Centrality
+and Collective Inﬂuence Algorithm: A Study using
+PET images
+Gautam Kumar Baboo1†                                | Raghav Prasad1†                          | Pranav
+Mahajan1†                  | Veeky Baths Ph.D.1
+1 Cognitive  Neuroscience Lab, Department
+of Biological Sciences, BITS, Pilani - K. K.
+                                                              Network analysis allows investigators to explore the many
+Birla Goa Campus, South Goa, Goa,                             facets of brain networks, particularly the proliferation of
+403726, India
+                                                              disease using graph theory to model the disease movement.
+Correspondence                                                The disruption in brain networks in Alzheimer’s disease (AD)
+Gautam Kumar Baboo, Department of
+Biological Science, BITS, Pilani - K.K. Birla
+                                                              is due to the abnormal accumulation of beta-amyloid plaques
+Goa Campus, South Goa, Goa, 403726,                           and tau protein tangles. In this study, the potential use
+India
+Email: p20130404@goa.bits-pilani.ac.in
+                                                              of percolation centrality to study the movement of beta-
+                                                              amyloid plaques, as a feature of given PET image-based net-
+Present address
+† Cognitive Neuroscience Lab, Department                      works, is studied. The PET image-based network construc-
+of Biological Sciences, BITS, Pilani - K. K.                  tion is possible using the public access database - Alzheimer’s
+Birla Goa Campus, South Goa, Goa,
+403726, India
+                                                              Disease Neuroimaging Initiative, which provided 1522 scans,
+                                                              of which 429 are of AD patients, 583 of patients with mild
+Funding information
+Data usage and analysis for this study is
+                                                              cognitive impairment, and 510 of cognitively normal. For
+enabled by the Alzheimer’s Disease                            each image, the Julich atlas provides 121 regions of inter-
+Neuroimaging Initiative - National Institutes
+of Health Grant U01 AG024904, DOD
+                                                              est/network nodes. Additionally, the inﬂuential nodes for
+ADNI, Department of Defense award
+number W81XWH-12-2-0012
+Abbreviations: AD, Alzheimer’s Disease; ANOVA, Analysis of Variance; AV45, Florbetapir (18F-AV-45); CI, Collective Inﬂuence; CN, Cognitively Normal;
+CSF, Cerebrospinal Fluid; EEG, Electroencephalography; FAB, Frontal Assessment Battery; FDG, Fluorodeoxyglucose (18F-FDG); fMRI, functional Magnetic
+Resonance Imaging; FSL, FMRIB Software Library; GNU, GNU’s Not Unix; PCv, Percolation Centrality Value PET, Positron Emission tomography; PiB,
+Pittsburgh compound B (11C-PIB); MCI, Mild Cognitive Impairment; MEG, Magnetoencephalography; MLR, Multivariate Linear Regression; MMSE,
+Mini-Mental State Examination; NPIQ, Neuropsychiatric Inventory Questionnaire; OMST, Orthogonal Minimum Spanning Tree.
+† Equally contributing authors.
+                                                                                                                                                  1
+
+     medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211607.this version posted October 14, 2020.
+    The copyright holder for this preprint (which was not certified by peer review) is the author/funder, who has
+                            granted medRxiv a license to display the preprint in perpetuity.
+                               All rights reserved. No reuse allowed without permission.
+2                                                                                                             Gautam et al.
+                                                   each scan are calculated using the collective inﬂuence algo-
+                                                   rithm. Through this study, it is possible to use percolation
+                                                   centrality values to indicate the regions of interest that re-
+                                                   ﬂect the disease’s spread and show potential use for early
+                                                  AD diagnosis. Analysis of variance (ANOVA) shows the re-
+                                                   gions of interest for which percolation centrality is a valid
+                                                   measure, irrespective of the tracer type. A multivariate lin-
+                                                   ear regression between the percolation centrality values for
+                                                   each of the nodes and psychometric assessment scores re-
+                                                  veals that models Mini-Mental State Examination (MMSE)
+                                                   scores performed better than ones with Neuropsychiatric
+                                                   Inventory Questionnaire (NPIQ) scores as the target vari-
+                                                   able. Similar to ANOVA, the multivariate linear regression
+                                                   yields regions of interest for which percolation centrality
+                                                   is a good diﬀerentiator. Finally, a ranking of the regions
+                                                   of interest is made based on the collective inﬂuence algo-
+                                                   rithm to indicate the anatomical areas strongly inﬂuencing
+                                                   the beta-amyloid network.
+                                                   KEYWORDS
+                                                   Brain Connectivity, PET, Percolation Centrality, Alzheimer’s
+                                                   Disease, Graph theory, Collective Inﬂuence
+1 |      INTRODUCTION                                                Current methods of diagnosis of the disease include
+                                                                both non-invasive and invasive techniques of investiga-
+                                                                tions ranging from Positron Emission Tomography (PET)
+Alzheimer’s disease predominantly stands out when               scans or Cerebral Spinal Fluid (CSF) analysis to bedside
+it comes to neurodegenerative diseases—aﬀecting the             pen and paper-based questionnaires; each with its pros
+middle-age (early-onset Alzheimer’s disease (AD)) and           and cons. The ability to accurately determine that the
+the old-age (Late-onset AD) human population. Current           dementia is due to Alzheimer’s is of utmost importance,
+projections are estimated to cost about 2 Trillion US Dol-      followed by the ability to indicate the severity of the dis-
+lars by 2030[1], aﬀecting 75 million individuals by the         ease, which is a unique challenge.
+same year. The indirect costs are estimated to be about
+244 billion US Dollars[2]. With no sight of a cure for               A combination of techniques or criteria is currently
+AD and with increasing cases, early diagnosis and active        employed to detect and determine the extent of demen-
+management is the key to tackling this disease for now.         tia due to AD. Methods include family history, psychi-
+The ability to predict the disease’s progression with high      atric history for cognitive and behavioral changes, which
+accuracy helps design a suitable treatment regime at an         is then followed by psychometric assessments such as
+early stage, thereby bringing the disease’s management          Mini-Mental State Examination (MMSE) [3], Frontal As-
+to an aﬀordable cost range.                                     sessment Battery[4], and the Neuropsychiatric Inven-
+
+     medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211607.this version posted October 14, 2020.
+     The copyright holder for this preprint (which was not certified by peer review) is the author/funder, who has
+                           granted medRxiv a license to display the preprint in perpetuity.
+                               All rights reserved. No reuse allowed without permission.
+Gautam et al.                                                                                                              3
+tory Questionnaire (NPIQ)[5]. Others include Genetic            ods include applying algorithms to the raw PET im-
+testing[6] for markers of AD, the apolipoprotein-e4             ages to recognize patterns to resolve diﬀerences be-
+(APOE-e4)[7], or the use of blood testing or brain imag-        tween healthy controls and patients with neurodegen-
+ing to rule out dementia due to other factors. The use          eration [21]. Recent methods include genetic and pro-
+of PET imaging[8] and lumbar puncture[9] to determine           tein markers to improve the predicting the course of
+the levels of beta amyloids in either of them beyond the        the disease[22]. These methods rely on a considerable
+normal levels is the current standard of practice for the       amount of data points and equally reliable computing
+determination of dementia due to AD[10, 11].                    hardware; this is currently a challenge. Given that AD
+     Positron Emission Tomography or PET imaging in-            diagnosis is a global challenge, a method that works well
+volves the use of radiopharmaceuticals such as 2-               in a spectrum of nations, from developed countries such
+[P18PF] ﬂuoro-2-Deoxy-D-glucose (PFDG), ﬂorbetapir-             as the United States to rural hospitals of southeast Asia
+ﬂuorine-18 (AV45), or 11C-Pittsburgh compound B                 or Africa[2].
+(PiB). Among these, FDG has been used for nearly 20                   To address this challenge, we propose applying
+years now. In contrast, AV45 and PiB[12] are compar-            graph theoretic methods on PET images to understand
+atively newer and diﬀerent in terms of the image con-           the advancement of beta-amyloids. The main beneﬁt of
+struction mechanism; both AV45 and PiB bind to the              adding this method is that
+beta-amyloid and vary only in their half-life. AV45 has
+a half-life of 109.75 minutes and PiB, 20 minutes[13].          1.    This does not introduce any new steps for data col-
+In contrast, FDG indicates the neuronal activity based                lection from the patient and, at the same time
+on glucose consumption by the neuronal cells in that re-        2.    adds value to the existing data by computing the
+gion.                                                                 percolation centrality of a given node at a given time
+     The application of network analysis/graph theory
+to anatomical neural networks has proved useful in un-                Percolation centrality is deﬁned as the proportion
+derstanding the brain connectivity[14, 15] deviations           of ‘percolated paths’ that pass through that node; this
+under various psychological and neurological disease            measure quantiﬁes the relative impact of nodes based
+states. Network analysis on neuroimaging data such as           on their topological connectivity, as well as their perco-
+EEG, MEG, fMRI, and PET scans proves to be useful to            lated states. In other words, it is one such graph metric
+show the variation between a cognitively normal popu-           that looks at the extent to which a given node within
+lation versus other diagnostic states using various graph-      a network has percolated information or can percolate
+theoretic metrics[16, 17].                                      information. The volume of information transmitted via
+     Network analysis on AD is a practical application          a given node is provided by the values ranging from 0.0
+wherein it describes the Alzheimer’s brain network’s            to 1.0[23, 24]. Prior exploration of percolation centrality
+behavior. Connectivity analysis using fMRI and EEG              on disease networks[25, 26, 27, 28] and percolation cen-
+data reports provides mixed responses; when compar-             trality in disease networks of the brain[29] have shown
+ing AD patients and the control group[18], there is an          this as a promising metric for brain network investiga-
+increase or decrease in the network’s connectivity. A           tion.
+reduction in connectivity could explain the cortical at-              The knowledge on the application of percolation
+rophy/disruption of the network. An increase could ex-          centrality on human PET-image based networks is
+plain the compensatory mechanism[19].                           scarce in the present time. This work aims at adding
+     Network Analysis on PET images around AD mainly            knowledge to the gap. Collective inﬂuence, on the other
+revolve around learning models or are limited to trac-          hand, provides a minimum set of nodes or regions of the
+ers that focus on the metabolic networks and the asso-          interest that can transfer information or spread disease
+ciated deviations of these networks[20]. Other meth-            with ease with optimal spread[30] based on the optimal
+
+     medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211607.this version posted October 14, 2020.
+     The copyright holder for this preprint (which was not certified by peer review) is the author/funder, who has
+                            granted medRxiv a license to display the preprint in perpetuity.
+                               All rights reserved. No reuse allowed without permission.
+4                                                                                                              Gautam et al.
+percolation theory. By examining the network for the            1.   Combining individual frames of the PET image to
+minimum set of nodes, this set will provide the regions              form a 4D image. This is done using the fslmerge
+of interests within the brain that optimally move beta-              utility included in FSL[32].
+amyloid, which can disrupt the normal functioning of            2.   Registering the combined 4D image to MNI[33]
+the existing neural networks.                                        space. This is done using FreeSurfer[34]
+     Thus, the ability to detect the disease and predict
+the rate of progression of the disease at an early stage        Given the enormous volume of data, carrying out com-
+is imperative. To this end, the study aims to answer two        putation in a sequential manner would be highly time-
+main questions: 1) Can percolation centrality measure           consuming. Thus, to parallelize this operation, GNU Par-
+be used to determine the percolation of beta-amyloids           allel[? ] was used. This could potentially give a maxi-
+within the brain? 2) Can the collective inﬂuence algo-          mum speedup of up to 12 times on the system we used
+rithm provide a minimum set of nodes that are vital to          for computation (6-core, hyperthreaded Intel i7).
+the AD network?
+                                                                2.2 | PET Image-based Network
+2 |      MATERIALS AND METHODS                                  Construction
+Based on the tracer agents used for acquiring the PET           The network is constructed using the regions of inter-
+images, each diagnostic state subset of the dataset is di-      est (ROIs) from the Julich Atlas[35, 36, 37]. This atlas
+vided into the three available tracers; AV45[31], FDG,          provides 121 ROI’s, which translates to 121 nodes or
+and PiB[13].                                                    vertices in the network. Building networks from the pre-
+                                                                processed images requires the generation of adjacency
+     The patients are categorized into Cognitively
+                                                                matrices. This is accomplished by computing the partial
+normal, with Mild Cognitive Impairment, or having
+                                                                correlation values of intensities in the PET images.
+Alzheimer’s Disease (AD) based on the psychometric as-
+sessments obtained throughout the ADNI study. Next,                  The partial correlation is calculated using the corre-
+the PET image is matched with the patient’s diagnostic          lation between two residuals; the values are computed
+state at the time of the imaging procedure. This provides       using N −2 ROIs as co-factors for every pair of ROIs[38].
+us with a set of observations for each type of tracer for       The partial correlation values serve as the edge weights
+each patient condition category.                                and constitute the values in the adjacency matrices
+                                                                     The estimation of partial correlations[39] is a
+                                                                computationally intensive task, mainly due to the
+2.0.1 | IRB Waiver Statement
+                                                                pre-calculation of residuals before computing cross-
+Informed consent from the patients is obtained prior to         correlation; this calculation is done in a time-optimized
+the assessment carried out by ADNI study team (See              manner using the R package ppcor[40].
+ADNI website for details), and this study is a secondary             Next, the adjacency matrices are thresholded using
+data analysis of the ADNI data collection, which aims           a Data-Driven Thresholding Scheme Based on Orthog-
+at providing a simpliﬁed metric to an already diagnosed         onal Minimal Spanning Trees (OMSTs)[41, 42, 21]. Net-
+patient. The data access and usage is within the ADNI           work thresholding serves to remove inconsequential (or
+data use agreements                                             low-impact) edges and reduce the network complexity.
+                                                                     The Networkx[43] Python library is used for net-
+                                                                work construction from the thresholded adjacency ma-
+2.1 | PET Image preprocessing
+                                                                trices and subsequent percolation centrality computa-
+Image preprocessing is carried out in two steps:                tion.
+
+       medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211607.this version posted October 14, 2020.
+       The copyright holder for this preprint (which was not certified by peer review) is the author/funder, who has
+                               granted medRxiv a license to display the preprint in perpetuity.
+                                    All rights reserved. No reuse allowed without permission.
+Gautam et al.                                                                                                                  5
+2.3 | Percolation Centrality                                         or de-activating or immunizing inﬂuential nodes to pre-
+Computation                                                          vent large scale pandemics[26, 46]. In recent applica-
+                                                                     tions to neuroscience, this method has been used to ﬁnd
+Percolation centrality is a nodal metric and is calculated
+                                                                     nodes essential for global integration of a memory net-
+for each node. The percolation centrality for each node
+                                                                     work in rodents[29]. Our work is the ﬁrst to apply it to
+v at time t is calculated as shown below:
+                                                                     study the progression of AD, to the best of our knowl-
+                         1     Õ σs,r (v )         xt                edge. In the context of this investigation, these small
+         P C t (v ) =                         Í t s       (1)
+                      (N − 2) s,v ,r σs,r        xv − xvt            sets of inﬂuential nodes/ROIs would prove to be vital in
+                                                                     the movement of beta-amyloid plaques.
+Where σ s,r is the number of shortest paths between                        We use the Collective Inﬂuence (CI) algorithm to
+nodes s and r ,                                                      pinpoint these most inﬂuential nodes, more eﬃciently
+σ s,r (v) is the number of shortest paths between nodes s            than previously known heuristic techniques. CI is an op-
+and r that pass-through node v ,                                     timization algorithm that aims to ﬁnd the minimal set of
+xi t is the percolation state of node i at time t,                   nodes that could fragment the network in optimal per-
+xi t =0 indicates a non-percolated node and                          colation, or in a sense, their removal would dismantle
+xi t =1 indicates a fully percolated node.                           the network in many disconnected and non-extensive
+       The percolation centrality value is calculated for            components. In percolation theory, if we remove nodes
+each network using the inbuilt function of Networkx.                 randomly, the network would undergo a structural col-
+This has a worst-case time complexity of O(n3 ), where               lapse at a critical fraction where the probability that the
+n is the number of nodes in the network. Using a mod-                giant connected component exists is G = 0. The optimal
+iﬁed form of Brandes’ fast algorithm for betweenness                 percolation is an optimization problem that attempts to
+centrality[44], the complexity can be reduced to O(nm),              ﬁnd the minimal fraction of inﬂuencers q to achieve the
+where m is the number of edges. However, percolation                 result G (q ) = 0.
+centrality calculation with target nodes cannot take ad-
+vantage of this optimization and has a worst-case time
+complexity of O(n3 ) (see supplementary data)                        3 | RESULTS
+                                                                     Statistical analysis on the percolation centrality values
+2.4 | Collective Inﬂuence Algorithm                                  and the patient condition is carried out using the analy-
+                                                                     sis of variance (ANOVA) test.
+The algorithm is on the basis that, given a network: the
+ﬂow of information within the network is optimal with
+a minimum number of nodes that weigh heavily on                      3.1 | ANOVA
+the ﬂow of information through the said network[30].
+In the context of this investigation, the small sets of              The ANOVA test for each node in the network with the
+nodes/ROIs would prove to be vital in the movement                   null hypothesis that the mean percolation centrality of
+of beta-amyloid plaques.                                             that node is the same across the three diagnostic states,
+       The core idea is that the overall functioning of a net-       CN, MCI, and AD(See Tables 2. & 3).
+work in terms of the spread of information (or in our
+case, movement of beta-amyloid plaques) hinges on a
+                                                                     3.2 | Multivariate Linear regression
+speciﬁc set of nodes called inﬂuencers. This idea of
+ﬁnding the most inﬂuential nodes has been previously                 A linear regression model between the percolation cen-
+used in other contexts, for example, activating inﬂuen-              trality values for all 121 nodes and psychometric test
+tial nodes in social networks to spread information[45]              scores - MMSE and NPIQ - is computed to identify the
+
+      medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211607.this version posted October 14, 2020.
+     The copyright holder for this preprint (which was not certified by peer review) is the author/funder, who has
+                             granted medRxiv a license to display the preprint in perpetuity.
+                                 All rights reserved. No reuse allowed without permission.
+6                                                                                                                Gautam et al.
+regions of interests that can be used as reliable predic-         lobe is common in AD, which can lead to apraxia[48, 49],
+tors. Instead of performing multiple correlations across          which is attested by these results. AD is associated with
+all three diagnoses, a multivariate regression analysis us-       atrophy of the cornu ammonis, the subﬁeld of the hip-
+ing ordinary least squares is carried out, wherein the fea-       pocampus, and deﬁcits in episodic memory and spatial
+tures are the nodal percolation centrality values and the         orientation[50, 51, 52]. It is observed that the PC values
+target variable is the MMSE or NPIQ score(See Table 4.).          of the hippocampus subiculum are a reliable diﬀerentia-
+                                                                  tor across the three stages in the case of FDG tracer.
+                                                                        Comparing the nodes of the network obtained from
+4 |        DISCUSSION
+                                                                  the ANOVA test with the list of nodes in descending or-
+                                                                  der of inﬂuence(see Supporting Information) for each
+Graph metrics such as characteristic path length, clus-           radioisotope across all three diagnoses, Broca’s area
+tering coeﬃcient, modularity, and hubs have been stud-            emerged as a good diﬀerentiator in the ANOVA tests.
+ied and have provided insights into the brain networks            It also emerged as a relatively inﬂuential node in the AD
+of AD patients and control groups. Some studies have              condition in the AV45 radioisotope subset. Similarly,
+tried to map the progression of MCI to dementia due
+to AD [47, 18]; thus, network analysis and the various
+                                                                  1.    The secondary somatosensory cortex/Parietal oper-
+graph metrics have shown potential as a tool to investi-
+                                                                        culum, inferior parietal lobule, and superior longitu-
+gate the brain networks.
+                                                                        dinal fascicle in the AD-FDG subset are responsi-
+      The reliability of these graph metrics is question-               ble for functions such as Fine motor function areas,
+able since they tend to be inﬂuenced by other fac-                      arithmetic and language functions, and spatial ori-
+tors such as genetic predisposition, lifestyle, etc. Here,              entation.
+based on the variance analysis and multivariate regres-           2.    WM uncinate fascicle, primary somatosensory cor-
+sion testing, and the percolation centrality graph metric               tex, visual cortex, amygdala centromedial group,
+computed using the PET images, it is possible to show                   and Insula in the AD-PiB subset, which is involved
+the Alzheimer’s disease progressing through the beta-                   in the following functions, speciﬁc to the retrieval
+amyloid networks.                                                       of names of people/things, proprioception, halluci-
+      The intensity of a voxel/node is used to determine if             nations, the lack of motivation in patients with AD,
+the node is percolated or not; a higher intensity signiﬁes              autonomic control.
+a percolated node, and zero or lower intensity signiﬁes           3.    In the MCI-AV45 subset. The Premotor cortex;
+an ability to permeate with ease(See Figure 2.).                        in the MCI-PiB subset, the Inferior parietal lobule,
+      It is observed that percolation centrality values of              WM uncinate fascicle, and Primary somatosensory
+certain areas of the brain, such as inferior and superior               cortex. Fine motor skills, mathematical operations,
+parietal lobules, are reliable across the tracers - FDG and             spatial orientation and language functions, retrieval
+PiB, whereas for most other cases, the brain areas diﬀer                of names, proprioception(See Figure 3.).
+for each tracer considerably. The variation due to the
+tracers could be because AV45 and PiB bind to the amy-                  The collective inﬂuence algorithm yields nine rank
+loids, whereas the FDG tracer reﬂects the neuronal cells’         lists. These tables contain the ranking of the nodes, from
+glucose metabolism in a given region of interest. It is           most inﬂuential to least, for each patient condition and
+also observed that the percolation centrality of Broca’s          type of tracer used(see Figure 5.). Moreover, since the
+area is a reliable diﬀerentiator, which validates previ-          inﬂuential nodes are identiﬁed using optimal percolation
+ous ﬁndings that cognitive impairment aﬀects speech               theory, it validates percolation centrality as a potential
+production[48].                                                   metric for diagnosis.
+      Prior research shows that damage to the parietal                  The PET tracers used for acquiring the images, Pitts-
+
+     medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211607.this version posted October 14, 2020.
+     The copyright holder for this preprint (which was not certified by peer review) is the author/funder, who has
+                            granted medRxiv a license to display the preprint in perpetuity.
+                               All rights reserved. No reuse allowed without permission.
+Gautam et al.                                                                                                           7
+burgh Compound B (11C- PiB) and Florbetapir (18F-               for dementia due to Alzheimer’s disease, thereby tailor-
+AV-45), are compared to check for which among the               ing it to speciﬁc demographics or population subsets.
+two tracers provide a more consistent or reliable PCv.
+Here, the AV-45 tracer binds with a high aﬃnity to the
+beta-amyloid plaque, whereas PiB binds to oligomers or
+                                                                5 |       CONCLUSION
+protoﬁbrils. A possible explanation for the diﬀerence in
+PCv generated using these tracers would be their bind-          This study aims to show that percolation centrality is a
+ing targets. The use of second-generation tracers can           reliable predictor and identiﬁes the nodes that regulate
+help improve the accuracy and test the applicability of         the movement of beta-amyloid plaque and use them to
+percolation centrality on other neurodegenerative dis-          track the disease.
+eases and the possibility of using it in metastatic cancer           This work demonstrates that using the existing neu-
+scenarios.                                                      roimaging method, PET-CT, this work can add value
+     Unlike AV45 and PiB, which binds to beta-amyloid           with relatively short computation time provided suﬃ-
+plaques and tau proteins directly, and thus indicate beta-      cient hardware capability is present. The ability to pro-
+amyloid plaque concentrations, FDG reﬂects the re-              vide a metric to the extent of the disease state is advan-
+gional cerebral metabolic rate for glucose (rCGMr), pro-        tageous to the current world of Alzheimer’s. Prolong-
+viding information about the neuronal inactivity [53].          ing life with modern-day medicine pushes patients to a
+Hence, in a PET image that uses FDG, regions of higher          world of medical experiences that deviate from the nor-
+intensity indicate higher neuronal activity.      The cur-      mal. Being able to show the deviation with a value such
+rent pipeline is built for tracers such as AV45 and PiB,        as percolation centrality has potential applications.
+which indicate beta-amyloid plaque concentrations di-                The reliability of percolation centrality can be im-
+rectly. However, the pipeline can work with a tracer like       proved by addressing the concerns that arise by the fac-
+FDG with some appropriate modiﬁcations, namely: tak-            tors such as the number of patients and the number of
+ing the multiplicative inverse of the percolation states        patients within each category, time points of data collec-
+of each of the ROIs to reﬂect the behavior of the FDG           tion, demographic, and the PET tracers used were the
+tracer(See Figure 4.). The rest of the pipeline requires no     limiting factors. Thus, this study provides the usability
+change because the edge weights for the beta-amyloid            of percolation centrality value to determine the state of
+plaque networks are calculated as pairwise partial corre-       the patient and also sets the stage for studying other
+lations between the nodal percolation states.                   neurodegenerative diseases.
+                                                                     Unlike measures such as hub centrality or between-
+                                                                ness centrality, which provide information regarding a
+4.1 | Limitations
+                                                                vital vertex/node within a network, the collective inﬂu-
+This study does not give any evidence regarding the dis-        ence algorithm provides a minimum set of nodes of the
+ease progression in terms of the ROIs or patient cate-          network that are key to the beta-amyloid plaque move-
+gory. However, this can be addressed by increasing the          ment, which can provide information regarding a partic-
+number of observations within each patient category.            ular pathway that is susceptible to the disease.
+     By expanding the dataset to include more patients
+and with comprehensive data that factors in healthy ag-         Author Contribution
+ing shrinkage of the brain, which results in a decrease of      Gautam Kumar conceived the hypothesis and the de-
+the distances of the brain networks, can help improve           sign of the study. Pranav explored the potential of
+the reliability of the Percolation Centrality value. This       collective inﬂuence on the network.         Both Raghav
+can then provide a setting for testing out other psycho-        and Pranav carried out the analysis, and the neces-
+logical assessments that can be used as early indicators        sary scripting for the computing of PC values listing of
+
+     medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211607.this version posted October 14, 2020.
+     The copyright holder for this preprint (which was not certified by peer review) is the author/funder, who has
+                            granted medRxiv a license to display the preprint in perpetuity.
+                                All rights reserved. No reuse allowed without permission.
+8                                                                                                                Gautam et al.
+the inﬂuential nodes and statistical analysis and Veeky               and Molecular Imaging, and the Alzheimer’s Associ-
+Baths helped in the manuscript preparation.                           ation. Alzheimer’s & dementia : the journal of the
+                                                                      Alzheimer’s Association 2013 jan;9(1):e–1–16.
+                                                                  [9] Shaw LM, Arias J, Blennow K, Galasko D, Molinuevo
+Acknowledgements                                                      JL, Salloway S, et al. Appropriate use criteria for lum-
+                                                                      bar puncture and cerebrospinal ﬂuid testing in the di-
+ADNI for providing the access to the PET images.
+                                                                      agnosis of Alzheimer’s disease. Alzheimer’s & demen-
+                                                                      tia : the journal of the Alzheimer’s Association 2018
+                                                                      nov;14(11):1505–1521.
+Conﬂict of interest
+                                                                 [10] McKhann GM, Knopman DS, Chertkow H, Hyman
+No competing ﬁnancial interests exist.                                BT, Jack CRJ, Kawas CH, et al.          The diagnosis
+                                                                      of dementia due to Alzheimer’s disease: recom-
+                                                                      mendations from the National Institute on Aging-
+references                                                            Alzheimer’s Association workgroups on diagnostic
+                                                                      guidelines for Alzheimer’s disease. Alzheimer’s & de-
+  [1] El-Hayek YH, Wiley RE, Khoury CP, Daya RP, Ballard
+                                                                      mentia : the journal of the Alzheimer’s Association
+      C, Evans AR, et al. Tip of the Iceberg: Assessing
+                                                                      2011 may;7(3):263–269.
+      the Global Socioeconomic Costs of Alzheimer’s Dis-
+      ease and Related Dementias and Strategic Implica-          [11] Sperling RA, Aisen PS, Beckett LA, Bennett DA, Craft S,
+      tions for Stakeholders. Journal of Alzheimer’s Disease          Fagan AM, et al. Toward deﬁning the preclinical stages
+      2019;70:1–19.                                                   of Alzheimer’s disease: recommendations from the
+                                                                      National Institute on Aging-Alzheimer’s Association
+  [2] 2020 Alzheimer’s disease facts and ﬁgures.                      workgroups on diagnostic guidelines for Alzheimer’s
+      Alzheimer’s and Dementia 2020;16(3):391–460.                    disease. Alzheimer’s & dementia : the journal of the
+                                                                      Alzheimer’s Association 2011 may;7(3):280–292.
+  [3] Tombaugh TN, McDowell I, Kristjansson B, Hubley
+      AM. Mini-Mental State Examination (MMSE) and               [12] Landau SM, Thomas BA, Thurfjell L, Schmidt M,
+      the Modiﬁed MMSE (3MS): A psychometric compar-                  Margolin R, Mintun M, et al. Amyloid PET imaging
+      ison and normative data. Psychological Assessment               in Alzheimer’s disease: a comparison of three radio-
+      1996;8(1):48–59.                                                tracers. European journal of nuclear medicine and
+                                                                      molecular imaging 2014 jul;41(7):1398–1407. https:
+  [4] Dubois B, Slachevsky A, Litvan I, Pillon B. The FAB:            //pubmed.ncbi.nlm.nih.gov/24647577https://www.
+      a Frontal Assessment Battery at bedside. Neurology              ncbi.nlm.nih.gov/pmc/articles/PMC4055504/.
+      2000 dec;55(11):1621–1626.
+                                                                 [13] Yamin G, Teplow DB. Pittsburgh Compound-B (PiB)
+  [5] Cummings JL, Mega M, Gray K, Rosenberg-Thompson                 binds amyloid β -protein protoﬁbrils.       Journal of
+      S, Carusi DA, Gornbein J. The Neuropsychiatric Inven-           neurochemistry 2017 jan;140(2):210–215. https:
+      tory: comprehensive assessment of psychopathology               //pubmed.ncbi.nlm.nih.gov/27943341https://www.
+      in dementia. Neurology 1994 dec;44(12):2308–2314.               ncbi.nlm.nih.gov/pmc/articles/PMC5225051/.
+  [6] Loy CT, Schoﬁeld PR, Turner AM, Kwok JBJ. Ge-              [14] Reijneveld JC, Ponten SC, Berendse HW, Stam CJ.
+      netics of dementia. Lancet (London, England) 2014               The application of graph theoretical analysis to com-
+      mar;383(9919):828–840.                                          plex networks in the brain. Clinical Neurophysiology
+                                                                      2007;118(11):2317–2331.
+  [7] Holtzman DM, Herz J, Bu G. Apolipoprotein E and
+                                                                 [15] Stam CJ, Reijneveld JC, Graph theoretical analysis of
+      apolipoprotein E receptors: normal biology and roles
+                                                                      complex networks in the brain; 2007.
+      in Alzheimer disease. Cold Spring Harbor perspectives
+      in medicine 2012 mar;2(3):a006312.                         [16] Sakkalis V. Modern electroencephalographic assess-
+                                                                      ment techniques: Theory and applications; 2014.
+  [8] Johnson KA, Minoshima S, Bohnen NI, Donohoe KJ,
+      Foster NL, Herscovitch P, et al. Appropriate use           [17] Vecchio F, Miraglia F, Maria Rossini P.        Connec-
+      criteria for amyloid PET: a report of the Amyloid               tome: Graph theory application in functional brain net-
+      Imaging Task Force, the Society of Nuclear Medicine             work architecture. Clinical Neurophysiology Practice
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211607.this version posted October 14, 2020.
+    The copyright holder for this preprint (which was not certified by peer review) is the author/funder, who has
+                             granted medRxiv a license to display the preprint in perpetuity.
+                                All rights reserved. No reuse allowed without permission.
+Gautam et al.                                                                                                                9
+     2017;2:206–213. https://doi.org/10.1016/j.cnp.              [27] Piraveenan M, Prokopenko M, Hossain L. Percola-
+     2017.09.003.                                                     tion Centrality: Quantifying Graph-Theoretic Impact
+                                                                      of Nodes during Percolation in Networks. PLoS ONE
+[18] Tijms BM, Wink AM, de Haan W, van der Flier                      2013;8(1).
+     WM, Stam CJ, Scheltens P, et al. Alzheimer’s dis-
+     ease: connecting ﬁndings from graph theoretical             [28] Sander LM, Warren CP, Sokolov IM, Simon C, Koop-
+     studies of brain networks.        Neurobiology of Ag-            man J. Percolation on heterogeneous networks as
+     ing 2013;34(8):2023–2036. http://dx.doi.org/10.                  a model for epidemics. Mathematical biosciences
+     1016/j.neurobiolaging.2013.02.020.                               2002;180:293–305.
+[19] Wook Yoo S, Han CE, Shin JS, Won Seo S, Na DL,              [29] Del Ferraro G, Moreno A, Min B, Morone F, Pérez-
+     Kaiser M, et al. A network ﬂow-based analysis of cog-            Ramírez Ú, Pérez-Cervera L, et al. Finding inﬂuen-
+     nitive reserve in normal ageing and Alzheimer’s dis-             tial nodes for integration in brain networks using op-
+     ease. Scientiﬁc Reports 2015;5:1–14. http://dx.doi.              timal percolation theory. Nature Communications
+     org/10.1038/srep10057.                                           2018;9(1). http://dx.doi.org/10.1038/s41467- 018-
+                                                                      04718- 3.
+[20] Chung J, Yoo K, Kim E, Na DL, Jeong Y, Glu-
+     cose Metabolic Brain Networks in Early-Onset                [30] Morone F, Min B, Bo L, Mari R, Makse HA. Collective
+     vs. Late-Onset Alzheimer’s Disease ;             2016.           Inﬂuence Algorithm to ﬁnd inﬂuencers via optimal per-
+     https://www.frontiersin.org/article/10.3389/                     colation in massively large social media. Scientiﬁc re-
+     fnagi.2016.00159.                                                ports 2016 jul;6:30062.
+[21] Klyuzhin IS, Fu JF, Hong A, Sacheli M, Shenkov N,           [31] Chopra A, Shan L, Eckelman WC, Leung K, Latterner
+     Matarazzo M, et al. Data-driven, voxel-based analysis            M, Bryant SH, et al. Molecular Imaging and Contrast
+     of brain PET images: Application of PCA and LASSO                Agent Database (MICAD): evolution and progress.
+     methods to visualize and quantify patterns of neu-               Molecular imaging and biology 2012 feb;14(1):4–13.
+     rodegeneration. PLoS ONE 2018;13(11):1–20.                       https://europepmc.org/articles/PMC3259264.
+[22] Gupta Y, Lama RK, Kwon GR, Weiner MW, Aisen                 [32] Jenkinson M, Beckmann CF, Behrens TEJ, Wool-
+     P, Weiner M, et al., Prediction and Classiﬁca-                   rich MW, Smith SM.           FSL.     NeuroImage 2012
+     tion of Alzheimer’s Disease Based on Combined                    aug;62(2):782–790.
+     Features From Apolipoprotein-E Genotype, Cere-
+     brospinal Fluid, MR, and FDG-PET Imaging Biomark-           [33] Vizza P, Tradigo G, Messina D, Cascini GL, Veltri P.
+     ers ; 2019. https://www.frontiersin.org/article/                 Methodologies for the analysis and classiﬁcation of
+     10.3389/fncom.2019.00072.                                        PET neuroimages. Network Modeling Analysis in
+                                                                      Health Informatics and Bioinformatics 2013;2(4):191–
+[23] Newman MEJ, Watts DJ. Scaling and percolation in                 208. https://doi.org/10.1007/s13721- 013- 0035- 9.
+     the small-world network model. Physical Review E -
+     Statistical Physics, Plasmas, Fluids, and Related Inter-    [34] Reuter M, Schmansky NJ, Rosas HD, Fischl
+     disciplinary Topics 1999;60(6):7332–7342.                        B.        Within-subject template estimation for
+                                                                      unbiased longitudinal image analysis.               Neu-
+[24] Piraveenan M, Prokopenko M, Hossain L. Percola-                  roImage 2012 jul;61(4):1402–1418.                 https:
+     tion Centrality: Quantifying Graph-Theoretic Impact              //pubmed.ncbi.nlm.nih.gov/22430496https://
+     of Nodes during Percolation in Networks. PLOS ONE                www.ncbi.nlm.nih.gov/pmc/articles/PMC3389460/.
+     2013 jan;8(1):e53095. https://doi.org/10.1371/
+     journal.pone.0053095.                                       [35] Kötter R, Mazziotta J, Toga A, Evans A, Fox P, Lan-
+                                                                      caster J, et al. A probabilistic atlas and reference sys-
+[25] Moore C, Newman MEJ. Epidemics and percolation                   tem for the human brain: International Consortium for
+     in small-world networks. Physical Review E 2000                  Brain Mapping (ICBM). Philosophical Transactions of
+     may;61(5):5678–5682. https://link.aps.org/doi/                   the Royal Society of London Series B: Biological Sci-
+     10.1103/PhysRevE.61.5678.                                        ences 2001 aug;356(1412):1293–1322. https://doi.
+                                                                      org/10.1098/rstb.2001.0915.
+[26] Newman MEJ. Spread of epidemic disease on net-
+     works. Physical Review E 2002 jul;66(1):16128. https:       [36] Eickhoﬀ SB, Stephan KE, Mohlberg H, Grefkes C, Fink
+     //link.aps.org/doi/10.1103/PhysRevE.66.016128.                   GR, Amunts K, et al. A new SPM toolbox for combining
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211607.this version posted October 14, 2020.
+    The copyright holder for this preprint (which was not certified by peer review) is the author/funder, who has
+                              granted medRxiv a license to display the preprint in perpetuity.
+                                 All rights reserved. No reuse allowed without permission.
+10                                                                                                               Gautam et al.
+     probabilistic cytoarchitectonic maps and functional          [45] Richardson M, Domingos P.          Mining Knowledge-
+     imaging data. NeuroImage 2005 may;25(4):1325–                     Sharing Sites for Viral Marketing. In: Proceedings of
+     1335.                                                             the Eighth ACM SIGKDD International Conference on
+                                                                       Knowledge Discovery and Data Mining KDD ’02, New
+[37] Desikan RS, Ségonne F, Fischl B, Quinn BT, Dickerson              York, NY, USA: Association for Computing Machinery;
+     BC, Blacker D, et al. An automated labeling system for            2002. p. 61–70. https://doi.org/10.1145/775047.
+     subdividing the human cerebral cortex on MRI scans                775057.
+     into gyral based regions of interest. NeuroImage 2006
+     jul;31(3):968–980.
+                                                                  [46] Pastor-Satorras R, Vespignani A. Epidemic Spread-
+[38] Madigan D. Graphical models in applied multivari-                 ing in Scale-Free Networks. Phys Rev Lett 2001
+     ate statistics, by J. Whittaker, John Wiley & Sons,               Apr;86:3200–3203. https://link.aps.org/doi/10.
+     New York, 1990, 448 pp. Price: $59.95. Networks                   1103/PhysRevLett.86.3200.
+     1994 mar;24(2):125. https://doi.org/10.1002/net.
+     3230240213.                                                  [47] de Haan W, Mott K, van Straaten ECW, Scheltens P,
+                                                                       Stam CJ. Activity Dependent Degeneration Explains
+[39] Son SJ, Kim J, Seo J, min Lee J, Park H. Connectiv-               Hub Vulnerability in Alzheimer’s Disease. PLoS Com-
+     ity analysis of normal and mild cognitive impairment              putational Biology 2012;8(8).
+     patients based on FDG and PiB-PET images. Neuro-
+     science Research 2015;98:50–58.
+                                                                  [48] Fernández M, Gobartt AL, Balañá M, Group CS.
+[40] Kim S.       ppcor: An R Package for a Fast Cal-                  Behavioural symptoms in patients with Alzheimer’s
+     culation to Semi-partial Correlation Coeﬃ-                        disease and their association with cognitive impair-
+     cients.       Communications for Statistical Appli-               ment. BMC neurology 2010 sep;10:87. https:
+     cations and Methods 2015 nov;22(6):665–674.                       //pubmed.ncbi.nlm.nih.gov/20920205https://www.
+     http://http//www.csam.or.kr/journal/view.html?                    ncbi.nlm.nih.gov/pmc/articles/PMC2955564/.
+     doi=10.5351/CSAM.2015.22.6.665.
+                                                                  [49] Kueper JK, Speechley M, Lingum NR, Montero-
+[41] Dimitriadis SI, Salis C, Tarnanas I, Linden DE, Topolog-
+                                                                       Odasso M. Motor function and incident dementia: a
+     ical Filtering of Dynamic Functional Brain Networks
+                                                                       systematic review and meta-analysis. Age and Ageing
+     Unfolds Informative Chronnectomics:           A Novel
+                                                                       2017 sep;46(5):729–738. https://doi.org/10.1093/
+     Data-Driven Thresholding Scheme Based on Or-
+                                                                       ageing/afx084.
+     thogonal Minimal Spanning Trees (OMSTs) ; 2017.
+     https://www.frontiersin.org/article/10.3389/
+     fninf.2017.00028.                                            [50] Adler DH, Wisse LEM, Ittyerah R, Pluta JB, Ding SL,
+                                                                       Xie L, et al. Characterizing the human hippocampus in
+[42] Dimitriadis SI, Antonakakis M, Simos P, Fletcher                  aging and Alzheimer’s disease using a computational
+     JM, Papanicolaou AC.           Data-Driven Topological            atlas derived from ex vivo MRI and histology. Pro-
+     Filtering Based on Orthogonal Minimal Spanning                    ceedings of the National Academy of Sciences of the
+     Trees:      Application to Multigroup Magnetoen-                  United States of America 2018;115(16):4252–4257.
+     cephalography Resting-State Connectivity.          Brain
+     connectivity 2017 dec;7(10):661–670.              https:     [51] Masurkar AV. Towards a circuit-level understanding
+     //pubmed.ncbi.nlm.nih.gov/28891322https://www.                    of hippocampal CA1 dysfunction in Alzheimer’s dis-
+     ncbi.nlm.nih.gov/pmc/articles/PMC6435350/.                        ease across anatomical axes. Journal of Alzheimer’s
+                                                                       disease & Parkinsonism 2018;8(1):412.          https:
+[43] Hagberg AA, Schult DA, Swart PJ. Exploring Network
+                                                                       //pubmed.ncbi.nlm.nih.gov/29928558https://www.
+     Structure, Dynamics, and Function using NetworkX.
+                                                                       ncbi.nlm.nih.gov/pmc/articles/PMC6005196/.
+     In: Varoquaux G, Vaught T, Millman J, editors. Pro-
+     ceedings of the 7th Python in Science Conference
+     Pasadena, CA USA; 2008. p. 11–15.                            [52] Ogawa M, Sone D, Beheshti I, Maikusa N, Okita
+                                                                       K, Takano H, et al. Association between subﬁeld
+[44] Brandes U. A faster algorithm for betweenness                     volumes of the medial temporal lobe and cog-
+     centrality. The Journal of Mathematical Sociology                 nitive assessments.         Heliyon 2019;5(6):e01828.
+     2001 jun;25(2):163–177. https://doi.org/10.1080/                  http://www.sciencedirect.com/science/article/
+     0022250X.2001.9990249.                                            pii/S2405844018361486.
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211607.this version posted October 14, 2020.
+    The copyright holder for this preprint (which was not certified by peer review) is the author/funder, who has
+                          granted medRxiv a license to display the preprint in perpetuity.
+                              All rights reserved. No reuse allowed without permission.
+Gautam et al.                                                                                                     11
+[53] Smailagic N, Vacante M, Hyde C, Martin S, Uk-                  (MCI). The Cochrane database of systematic re-
+     oumunne O, Sachpekidis C. ¹F-FDG PET for the early             views 2015 jan;1(1):CD010632–CD010632. https:
+     diagnosis of Alzheimer’s disease dementia and other            //pubmed.ncbi.nlm.nih.gov/25629415https://www.
+     dementias in people with mild cognitive impairment             ncbi.nlm.nih.gov/pmc/articles/PMC7081123/.
+
+     medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211607.this version posted October 14, 2020.
+     The copyright holder for this preprint (which was not certified by peer review) is the author/funder, who has
+                           granted medRxiv a license to display the preprint in perpetuity.
+                              All rights reserved. No reuse allowed without permission.
+12                                                                                                          Gautam et al.
+6 |      FIGURES AND TABLES
+FIGURE 1       The pipeline of the PET-image processing and network construction.
+F I G U R E 2 A connected network of all the nodes using the Julich Atlas. Green circles indicate the ROIs, the
+connecting lines indicate the edges with their weights as denoted by the accompanying color bar
+
+     medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211607.this version posted October 14, 2020.
+     The copyright holder for this preprint (which was not certified by peer review) is the author/funder, who has
+                            granted medRxiv a license to display the preprint in perpetuity.
+                               All rights reserved. No reuse allowed without permission.
+Gautam et al.                                                                                                       13
+F I G U R E 3 Illustrates the ﬁndings of the ANOVA analysis. The green circles represent ROIs from AV45 scans
+with an f-value greater than the AV45 critical f-value, the red circles represent ROIs from FDG scans with an f-value
+greater than the FDG critical f-value, and the blue circles represent ROIs from PiB scans with an f-value greater than
+the PiB critical f-value. The critical f-values are tabulated in Table 2.
+F I G U R E 4 Illustrates the ROI’s that corresponds to MMSE and NPIQ. The green circles represent ROIs
+associated with the MMSE psychometric assessment, the red circles represent ROIs associated with the NPIQ
+psychometric assessment, and the blue circles represent ROIs associated with both MMSE and NPIQ
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211607.this version posted October 14, 2020.
+   The copyright holder for this preprint (which was not certified by peer review) is the author/funder, who has
+                            granted medRxiv a license to display the preprint in perpetuity.
+                               All rights reserved. No reuse allowed without permission.
+14                                                                                                           Gautam et al.
+FIGURE 5       CIRCOS plot comparing ROI ranklists of MCI-FDG and MCI-PiB scans
+TA B L E 1   Distribution of patients
+                         CN                                  MCI                              AD
+            AV45         FDG          PiB        AV45        FDG         PiB     AV45        FDG         PiB
+             272          225          13          98        418         67       117        293         19
+          M - 127      M - 122        M-8       M - 62     M - 274     M - 45   M - 68     M - 177     M - 11
+           F - 145      F - 103       F-5        F - 36    F - 144     F - 22   F - 49     F - 116      F-8
+           Total - 510; M - 257, F - 253        Total - 582; M - 381, F - 202   Total - 429; M - 256, F - 173
+TA B L E 2   Number of Scans per tracer type and corresponding critical F-value
+                                       Tracer              AV45       FDG      PiB
+                                       No. Of scans         487       936       99
+                                       Critical f-value    3.005    3.0005    3.042
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211607.this version posted October 14, 2020.
+   The copyright holder for this preprint (which was not certified by peer review) is the author/funder, who has
+                          granted medRxiv a license to display the preprint in perpetuity.
+                             All rights reserved. No reuse allowed without permission.
+Gautam et al.                                                                                                    15
+Supporting Information
+TA B L E 3    Represents the following nodes that reject the ANOVA null hypothesis.
+                                                        AV45
+                                              ROI                       F-value     p-value
+                          GM Primary somatosensory cortex BA2 L         8.5243      0.0002
+                          GM Broca’s area BA45 R                        3.2760      0.0386
+                          GM Premotor cortex BA6 L                      3.2357      0.0402
+                                                        FDG
+                                              ROI                       F-value     p-value
+                          GM Inferior parietal lobule Pga R             4.0590      0.0176
+                          GM Superior parietal lobule 7A L              3.4849      0.0311
+                          GM Hippocampus subiculum R                    3.4807      0.0312
+                          GM Superior parietal lobule 7A R              3.4493      0.0322
+                          GM Inferior parietal lobule PFcm L            3.3303      0.0362
+                          WM Corticospinal tract R                      3.0890      0.0460
+                          WM Superior longitudinal fascicle L           3.0716      0.0468
+                          GM Inferior parietal lobule PFt R             3.0531      0.0477
+                          GM Anterior intra-parietal sulcus hIP1 L      3.0235      0.0491
+                                                         PiB
+                                              ROI                       f_value    p_value
+                          GM Inferior parietal lobule PFm R             5.0120      0.0085
+                          WM Uncinate fascicle L                        4.8119      0.0102
+                          GM Insula Id1 L                               4.3022      0.0162
+                          GM Primary somatosensory cortex BA1 L         4.1049      0.0195
+                          WM Superior occipito-frontal fascicle R       3.9852      0.0217
+                          GM Superior parietal lobule 5Ci R             3.9103      0.0233
+                          GM Visual cortex V5 R                         3.7558      0.0269
+                          WM Optic radiation R                          3.6645      0.0293
+                          GM Amygdala_centromedial group R              3.5831      0.0316
+                          WM Superior occipito-frontal fascicle L       3.5776      0.0317
+                          WM Superior longitudinal fascicle R           3.4011      0.0374
+                          GM Primary somatosensory cortex BA1 R         3.2338      0.0437
+                          GM Insula Ig2 R                               3.2205      0.0443
+                          GM Insula Ig1 R                               3.1774      0.0461
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211607.this version posted October 14, 2020.
+    The copyright holder for this preprint (which was not certified by peer review) is the author/funder, who has
+                          granted medRxiv a license to display the preprint in perpetuity.
+                             All rights reserved. No reuse allowed without permission.
+16                                                                                                         Gautam et al.
+TA B L E 4 A summary of the MLR models between nodal percolation centrality values and MMSE score, and a list
+of nodes that have p-value < 0.05
+                                                        AV45
+                                                   Model summary
+               Adjusted R-squared                       F-statistic                    Prob(F-statistic)
+               0.952                                      41.04                          2.62 × 10−58
+                                                ROI                                         p-value
+                                    GM Premotor cortex BA6 R                                 0.046
+                                GM Superior parietal lobule 7P R                             0.036
+                           GM Primary somatosensory cortex BA1 L                             0.011
+                                 GM Superior parietal lobule 5L L                            0.004
+                                                         FDG
+                                                   Model summary
+               Adjusted R-squared                       F-statistic                    Prob(F-statistic)
+               0.963                                      147.3                          3.40 × 10−322
+                                                ROI                                         p-value
+                                GM Inferior parietal lobule PFm R                            0.044
+                               WM Superior longitudinal fascicle L                           0.044
+                                     GM Broca’s area BA44 L                                  0.017
+                                            WM Fornix                                        0.015
+                                GM Superior parietal lobule 7PC R                            0.014
+                                     WM Corticospinal tract R                                0.013
+               GM Secondary somatosensory cortex / Parietal operculum OP3 L                  0.009
+                                      GM Visual cortex V5 R                                  0.008
+                                     WM Corticospinal tract L                                0.005
+                            GM Anterior intra-parietal sulcus hIP2 R                         0.004
+                                GM Inferior parietal lobule PGp L                               0
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.12.20211607.this version posted October 14, 2020.
+   The copyright holder for this preprint (which was not certified by peer review) is the author/funder, who has
+                         granted medRxiv a license to display the preprint in perpetuity.
+                             All rights reserved. No reuse allowed without permission.
+Gautam et al.                                                                                                        17
+GRAPHICAL ABSTRACT
+                                                                                                  ANOVA and MLR anal-
+                                                                                                  ysis on the computed
+                                                                                                  Percolation centrality
+                                                                                                  values and Identiﬁca-
+                                                                                                  tion of Inﬂuential Nodes
+                                                                                                  of the Network reveal
+                                                                                                  regions of interests within
+                                                                                                  the brain.

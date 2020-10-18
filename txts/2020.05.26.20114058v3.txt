@@ -1,35 +1,24 @@
 medRxiv preprint doi: https://doi.org/10.1101/2020.05.26.20114058.this version posted October 15, 2020. The copyright holder for this preprint
   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
                                       It is made available under a CC-BY-NC-ND 4.0 International license .
-
-
-
-
     Analysis of Covid-19 Data for Eight European Countries and the United
     Kingdom Using a Simplified SIR Model
-
-
     Gyan Bhanot1,2* , Charles DeLisi3
-    1 Department of Physics and Astronomy, Rutgers University, Piscataway, NJ, 08854, USA;
+    1 Department       of Physics and Astronomy, Rutgers University, Piscataway, NJ, 08854, USA;
       Department of Molecular Biology and Biochemistry, Rutgers University, Piscataway, NJ, 08854,
       USA; Rutgers Cancer Institute of New Jersey, New Brunswick, NJ, 08903, USA
     2 Moores Cancer Center, University of California San Diego, La Jolla, CA 92103, USA.
     3 Department of Biomedical Engineering, Boston University, Boston, MA 02215, USA
-
-
     * Gyan Bhanot, PhD (corresponding author)
     136 Frelinghuysen Road, Busch Campus, Rutgers University, Piscataway, NJ 08854, USA
     Phone: (848) 391-7508
     Fax: (732) 235-5331
     Email: gyanbhanot@gmail.com
-
     Charles DeLisi, PhD
     24 Cummington Mall
     Boston University, Boston, Ma 02215
     Phone 617 875 5138
     Email: DeLisi@bu.edu
-
-
     Abstract
     Understanding the characteristics of the SARS-Cov-2/Covid-19 pandemic is central to
     developing control strategies. Here we show how a simple Susceptible-Infective-Recovered
@@ -51,17 +40,12 @@ medRxiv preprint doi: https://doi.org/10.1101/2020.05.26.20114058.this version p
     inferred pandemic characteristics separated into two distinct groups: those that are largely
     invariant across countries, and those that are highly variable. Among the former is the infective
     period, 𝑇𝐿 (𝑇𝐿 = 16.3 ± 2.7 days); the average time between contacts, TR (𝑇𝑅 = 3.8 ± 0.5) days
+                                                                                                                                              1
+       NOTE: This preprint reports new research that has not been certified by peer review and should not be used to guide clinical practice.
 
-                                                                                                                                                 1
-        NOTE: This preprint reports new research that has not been certified by peer review and should not be used to guide clinical practice.
-
 medRxiv preprint doi: https://doi.org/10.1101/2020.05.26.20114058.this version posted October 15, 2020. The copyright holder for this preprint
   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
                                       It is made available under a CC-BY-NC-ND 4.0 International license .
-
-
-
-
     and the average number of contacts while infective , 𝑅 (𝑅 = 4.4 ± 0.5). In contrast, there is a
     highly variable time lag 𝑇𝐷 between the peak in the daily number of confirmed cases and the
     peak in the daily number of deaths, ranging from a low of 𝑇𝐷 = 2,4 days for Denmark and Italy
@@ -74,24 +58,13 @@ medRxiv preprint doi: https://doi.org/10.1101/2020.05.26.20114058.this version p
     detectable effect of average temperature on the probability 𝛼 of infection per contact, with higher
     temperatures associated with lower infectivity. Policy implications of our findings are also
     briefly discussed.
-
-
     Keywords: Epidemic modelling, SARS-Cov-2/Covid-19 pandemic, SIR model, predictions.
-
-
-
-
                                                                                                                                        2
-
+
 medRxiv preprint doi: https://doi.org/10.1101/2020.05.26.20114058.this version posted October 15, 2020. The copyright holder for this preprint
   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
                                       It is made available under a CC-BY-NC-ND 4.0 International license .
-
-
-
-
     I. Introduction
-
     Coronaviruses are large, enveloped, single-stranded RNA viruses which are widespread in animals
     and usually cause only mild respiratory illnesses in humans [1-5]. However, in 2003, a new
     coronavirus SARS-CoV emerged, which caused a life-threatening respiratory disease, with a
@@ -105,19 +78,16 @@ medRxiv preprint doi: https://doi.org/10.1101/2020.05.26.20114058.this version p
     complications and death [9-11]. While the mortality in SARS-CoV-2 infections is lower than in
     SARS-CoV [9-12], it has more favorable transmission characteristics, a higher reproduction
     number [13], and as we will show, a long latency period and asymptomatic infective phase.
-
     The governments of several countries have taken significant measures to slow the infection rate of
     Covid-19, such as social distancing, quarantine, identification, tracking and isolation. However,
     there is no uniform policy, some governments have reacted later than others and some (e.g.
     Sweden) made a deliberate decision to keep the country open, leaving counter-measures up to
     individuals.
-
     A large amount of consistent public data is now available on the number of tests performed, the
     number of confirmed infected cases, and the number of deaths in different contexts, such as
     locations and health conditions [14]. These provide important sources of information for the
     development and testing of models that can identify pandemic characteristics affecting viral
     dynamics, and guide public policy by predicting the impact of various interventions [15].
-
     All data, of course, have limitations, and it’s ultimately the completeness and quality of data that
     limit the success of models. It is well known that confirmed infected cases seriously
     underestimate the actual number of infections [16,17]: not everyone who is infected is
@@ -127,7 +97,6 @@ medRxiv preprint doi: https://doi.org/10.1101/2020.05.26.20114058.this version p
     asymptomatic individuals – who comprise a substantial portion of the infected population [20]
     —militating against accurate estimates of transmission probability. Nonetheless as indicated in
     [21] and by our own verified forecasts, models can provide useful information.
-
     Dynamical (mechanistic) models, such as the one presented here, have been used for forecasting
     (meaning that once initial conditions are set, there are no changes in the model) and for
     projecting (the outcome is changed by intervention strategies). For example, projections and
@@ -136,23 +105,17 @@ medRxiv preprint doi: https://doi.org/10.1101/2020.05.26.20114058.this version p
     Case Fatality Ratios (CFRs) [22], to forecast and project the need for hospital beds [23] and to
     project and forecast mortality [24]. More specifically, among the many applications to COVID-
     19, four variable Susceptible-Exposed-Infective-Recovered models have been used to project the
-
                                                                                                                                        3
-
+
 medRxiv preprint doi: https://doi.org/10.1101/2020.05.26.20114058.this version posted October 15, 2020. The copyright holder for this preprint
   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
                                       It is made available under a CC-BY-NC-ND 4.0 International license .
-
-
-
-
     impact of social distancing on mortality [25], three variable Susceptible-Infective-Recovered
     models to estimate case fatality and recovery ratios early in the pandemic [26], and a time
     delayed SIR has been used to evaluate the effectiveness of suppression strategies [27]. One of the
     most ambitious dynamical models, which includes 8 state variables and 16 parameters was
     fruitfully applied to evaluate intervention strategies in Italy, in spite of the fact that parameter
     identifiability could not be assured [28].
-
     Our simplified version of the original SIR model [29] differentiates itself from the studies done so
     far by a unique methodological approach to rigorous identification of parameters, and by making
     a number of useful predictions very easily, such as the duration of the pandemic in different
@@ -161,21 +124,17 @@ medRxiv preprint doi: https://doi.org/10.1101/2020.05.26.20114058.this version p
     using daily mortality data is more reliable than daily verified cases, we find that at least in the
     countries we analyzed, the patterns for these two quantities are virtually identical, differing only
     in amplitude and a rigid time translation.
-
     It is important to note that extrapolating our model predictions for daily cases and deaths past the
     peak assumes that control measures such as lockdown, social distancing, use of masks etc and care
     given to Covid-19 patients remained the same after the peak in daily cases as before the peak.
     Observed deviations from our predictions are a measure of the extent to which loosening of control
     measures or changes in care of infected individuals impacted case-loads and deaths past the peaks
     in the number of cases and deaths.
-
     II. Methods:
-
     We model the Covid-19 pandemic using a simplified version of the SIR model [29], which
     partitions the population into three compartments, Susceptibles (S), Infectious (I) and Removed
     R: Recovered or Dead after being infected. This and other models to study the global spread of
     diseases have been used in a variety of contexts (For some recent reviews, see [30-32]).
-
     So far, the Covid-19 pandemic, at least in the developed countries in Europe where we will apply
     this model, seems to have the following dynamics: After being infected, an individual remains
     able to infect others for an average of 𝑇𝐿 days. After a time 𝑇𝐿 , the infected individual becomes
@@ -191,118 +150,76 @@ medRxiv preprint doi: https://doi.org/10.1101/2020.05.26.20114058.this version p
     fixed probabilities, that remain invariant over the course of the epidemic; i.e. that the number dead
     or recovered each day are proportional to the number infected on some previous day, with different
     time delays and probabilities.
-
-
                                                                                                                                        4
-
+
 medRxiv preprint doi: https://doi.org/10.1101/2020.05.26.20114058.this version posted October 15, 2020. The copyright holder for this preprint
   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
                                       It is made available under a CC-BY-NC-ND 4.0 International license .
-
-
-
-
     The Model:
-
     Let,
-
-    𝑋1 (𝑡) = number of Susceptible individuals at time t,                                                           (1)
-    𝑋2 (𝑡) = number of Infected individuals at time t,                                                              (2)
-    𝑋3 (𝑡) = number of individuals that are Removed at time t                                                       (3)
-    𝑋1 (𝑡) + 𝑋2 (𝑡) + 𝑋3 (𝑡) = 𝑁                                                                                    (4)
-
+    𝑋1 (𝑡) = number of Susceptible individuals at time t,                                                         (1)
+    𝑋2 (𝑡) = number of Infected individuals at time t,                                                            (2)
+    𝑋3 (𝑡) = number of individuals that are Removed at time t                                                     (3)
+    𝑋1 (𝑡) + 𝑋2 (𝑡) + 𝑋3 (𝑡) = 𝑁                                                                                  (4)
     A fraction 𝛿 of the infected individuals will die after being identified as infected. On average, there
     will be a time delay 𝑇𝐷 between when a person is identified to be infected (tests positive) and when
     he/she dies of the disease. 𝑇𝐷 will depend on a variety of factors, such as quality of care, age,
     severity of disease, co-morbidities, immune status etc.
-
     Under these assumptions, the number of deaths 𝑋4 (𝑡) at time 𝑡 is related to the number of Infected
     cases 𝑋2 by:
-
-    𝑋4 (𝑡) = 𝛿 𝑋2 (𝑡 − 𝑇𝐷 ) = number of individuals that died on day t                                              (5a)
-
+    𝑋4 (𝑡) = 𝛿 𝑋2 (𝑡 − 𝑇𝐷 ) = number of individuals that died on day t                                            (5a)
     Similarly, the number of Recovered at time 𝑡 will be:
-
-    𝑋5 (𝑡) =  𝑋2 (𝑡 − 𝑇𝑅𝑒 ) = number of individuals that recovered on day t                                        (5b)
-
+    𝑋5 (𝑡) =  𝑋2 (𝑡 − 𝑇𝑅𝑒 ) = number of individuals that recovered on day t                                      (5b)
     Let,
-
-     be the transmission rate, the probability of infection per day per contact.                                   (6)
-                                                                                1
-    and let  be the rate at which individuals leave the infected population = 𝑇 ,                                  (7)
-                                                                                                          𝐿
-    with 𝑇𝐿 being interpreted as the latency, or the average time interval during
+     be the transmission rate, the probability of infection per day per contact.                                 (6)
+                                                                                                           1
+    and let  be the rate at which individuals leave the infected population = 𝑇 ,                                (7)
+                                                                                                            𝐿
+     with 𝑇𝐿 being interpreted as the latency, or the average time interval during
     which an infected individual can infect a naive individual.
-
     The equations governing the dynamics are:
-
     𝑑𝑋1
-           = −𝛼𝑋1 𝑋2                                                                                                (8)
+         = −𝛼𝑋1 𝑋2                                                                                                (8)
      𝑑𝑡
-
     𝑑𝑋2
-           = 𝛼𝑋1 𝑋2 − 𝛾𝑋2                                                                                           (9)
+         = 𝛼𝑋1 𝑋2 − 𝛾𝑋2                                                                                           (9)
      𝑑𝑡
-
     The initial conditions at 𝑡 = 0 are:
-
-    𝑋1 (0) = (𝑁 − 𝑎) ~ 𝑁 and 𝑋2 (0) = 𝑎; with 𝑎 ≪ 𝑁                                                                 (10)
-
+    𝑋1 (0) = (𝑁 − 𝑎) ~ 𝑁 and 𝑋2 (0) = 𝑎; with 𝑎 ≪ 𝑁                                                               (10)
     An equation relating the state variables 𝑋1 and 𝑋2 can be obtained by dividing (8) by (9)
     and integrating. This gives,
-
-                         𝑁         𝑋1 (𝑡)
-    𝑋2 (𝑡) = 𝑁 +           log (            ) − 𝑋1 (𝑡)                                                              (11)
-                         𝑅           𝑁
-
-
+                          𝑁         𝑋1 (𝑡)
+    𝑋2 (𝑡) = 𝑁 +            log (          ) − 𝑋1 (𝑡)                                                             (11)
+                          𝑅           𝑁
                                                                                                                                        5
-
+
 medRxiv preprint doi: https://doi.org/10.1101/2020.05.26.20114058.this version posted October 15, 2020. The copyright holder for this preprint
   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
                                       It is made available under a CC-BY-NC-ND 4.0 International license .
-
-
-
-
-                   𝛼𝑁
-    where 𝑅                                                                                                        (12)
+                  𝛼𝑁
+    where 𝑅                                                                                                      (12)
                     𝛾
-
-
     Hence,
-
-    𝑑𝑋1                         𝑁           𝑋1 (𝑡)
-          = −𝛼𝑋1 [ 𝑁 +              log (            ) − 𝑋1 (𝑡)]                                                    (13)
-     𝑑𝑡                         𝑅             𝑁
-
-                                                                  𝛾    𝑁
-    From (9) the maximum in 𝑋2 is at 𝑋1 =                             =𝑅                                            (14)
-                                                                  𝛼
-
+    𝑑𝑋1                           𝑁          𝑋1 (𝑡)
+         = −𝛼𝑋1 [ 𝑁 +                log (          ) − 𝑋1 (𝑡)]                                                   (13)
+     𝑑𝑡                           𝑅           𝑁
+                                                               𝛾     𝑁
+    From (9) the maximum in 𝑋2 is at 𝑋1 =                         =𝑅                                              (14)
+                                                               𝛼
     Substituting this into (13) gives:
                                                           𝑁
-    Maximum value of 𝑋2 ≡ 𝑃 = 𝑁 − [ 1 + log(𝑅)]                                                                     (15)
+    Maximum value of 𝑋2 ≡ 𝑃 = 𝑁 − [ 1 + log(𝑅)]                                                                   (15)
                                                           𝑅
-
     At 𝑡 = ∞, 𝑋2 = 0. Hence, from (13), we get:
-
-               log(𝑆1 (∞))                               𝑋1 (∞)
-    𝑅=−         [1−𝑆1(∞)]
-                           ,   where 𝑆1 (∞) =                                                                       (16)
+              log(𝑆1 (∞))                               𝑋1 (∞)
+    𝑅=−        [1−𝑆1(∞)]
+                              , where 𝑆1 (∞) =                                                                    (16)
                                                            𝑁
-
-
     as the fraction of susceptible individuals at t = ∞.
-
     When 𝑆1 (∞) → 1, log(𝑆1 (∞)) ~ − (1 − 𝑆1 (∞)) and 𝑅 → 1
-
     This says that when nobody is infected, 𝑆1 (∞) = 1, i.e. there is no pandemic. This corresponds to
     𝑅 = 1. It is easy to show that if 𝑅 < 1, there are no solutions to (16) that satisfy 0 ≤ 𝑆1 (∞) ≤ 1.
-
-
     Fitting the Model to Data
-
     We focus on four North European countries, Netherlands, Denmark, Sweden and Norway,
     denoted by EN, four South European countries, France, Italy, Spain and Germany, denoted by
     ES, and the United Kingdom (UK). Data for the number of confirmed cases and deaths were
@@ -310,7 +227,6 @@ medRxiv preprint doi: https://doi.org/10.1101/2020.05.26.20114058.this version p
     established in 2005 and based in Stockholm with the aim to strengthen Europe’s defense against
     infectious diseases. The data for the number of tests was obtained from
     https://ourworldindata.org/coronavirus-testing [33].
-
     We note that the data identify the daily number of Confirmed cases, whereas the SIR model we
     described above requires the number of Infected cases. However, the number of confirmed cases
     at time t are derived from the infected cases at some previous time t’, where the time lag between
@@ -319,42 +235,32 @@ medRxiv preprint doi: https://doi.org/10.1101/2020.05.26.20114058.this version p
     implicit shift in time between a person becoming infected and being identified as such in the data.
     This shift in time would depend on how quickly infected individuals are identified and included in
     the case count, and hence may vary from country to country. However, we assume that within a
-
                                                                                                                                        6
-
+
 medRxiv preprint doi: https://doi.org/10.1101/2020.05.26.20114058.this version posted October 15, 2020. The copyright holder for this preprint
   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
                                       It is made available under a CC-BY-NC-ND 4.0 International license .
-
-
-
-
     given country, this time interval is fixed on average. With this caveat, in the results below, we will
     use the confirmed daily cases in our analysis to represent 𝑋2 (𝑡), and use either the term “infected”
     or “confirmed” when discussing 𝑋2 .
-
     The first date for which data was available for these countries was 12/31/2019, which we denote
     as day number 0 in our analysis and in the plots to follow. Among the countries considered here,
     the earliest cases were identified in France on 1/25/2020, which corresponds to day 25. In the other
     countries, the earliest cases were identified on the following days, counting from 12/31/2019:
     Netherlands: day 59, Denmark: day 58, Sweden: day 32, Norway: day 58, UK: day 31, Spain: day
     32, Germany: day 28, Italy: day 31.
-
     The available data includes
-    (a) The cumulative number 𝐼(𝑡) and daily number 𝑋2 (𝑡) of confirmed cases                                       (17)
+    (a) The cumulative number 𝐼(𝑡) and daily number 𝑋2 (𝑡) of confirmed cases                                     (17)
     and
-    (b) The cumulative number 𝐷 (𝑡) and daily number 𝑋4 (𝑡) of deaths                                               (18)
-
+    (b) The cumulative number 𝐷 (𝑡) and daily number 𝑋4 (𝑡) of deaths                                             (18)
     These are related by:
-     𝑋2 (𝑡) = 𝐼(𝑡) − 𝐼(𝑡 − 1)                                                                                       (19)
+     𝑋2 (𝑡) = 𝐼(𝑡) − 𝐼(𝑡 − 1)                                                                                     (19)
     and,
-    𝑋4 (𝑡) = 𝐷(𝑡) − 𝐷(𝑡 − 1) .                                                                                      (20)
-
+    𝑋4 (𝑡) = 𝐷(𝑡) − 𝐷(𝑡 − 1) .                                                                                    (20)
     It is worth noting that the dynamics of the number removed each day and the total number of
     removed do not enter our analysis explicitly. Some connection to the full SIR model [29] can be
     made by noting that the total number of removed individuals increases asymptotically at large
     times to 𝑁(1 − 𝑆1 (∞)).
-
     We determine and analyze the following parameters country by country: 𝑵, as defined in (4); 𝜶,
     the transmission rate; i.e. the number of infections per day per contact; 𝜸, the average rate at which
     individuals leave the infected pool; 𝑹 , the average number of transmissions per individual; 𝑻𝑹 ,
@@ -363,7 +269,6 @@ medRxiv preprint doi: https://doi.org/10.1101/2020.05.26.20114058.this version p
     average, recover 𝑻𝑹𝒆 days later; and 𝑻𝑳 , the infective period. We also determine the duration of
     the infection, defined as the number of days from 12/31/19 until the number of deaths drops below
     5 per day.
-
     The parameters 𝑁, 𝛼, 𝛾, 𝑅 were obtained using (5), (8) and (9) to do numerical fits. Because of
     the definition of R (see (12)), only three of the parameters, 𝑁, 𝛼, 𝛾, 𝑅, need to be determined from
     the data. Consequently, we proceed as follows:
@@ -373,39 +278,27 @@ medRxiv preprint doi: https://doi.org/10.1101/2020.05.26.20114058.this version p
     3. 𝛾(𝑅 − 1) is determined as the coefficient of 𝑡 in the exponential rise of 𝑋2 (𝑡) for small t (see
     Appendix A). This eliminates 𝛾.
     4. Using a numerical solver, we vary 𝑅 to fit the observed data for 𝑋2 (𝑡).
-
-
-
                                                                                                                                        7
-
+
 medRxiv preprint doi: https://doi.org/10.1101/2020.05.26.20114058.this version posted October 15, 2020. The copyright holder for this preprint
   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
                                       It is made available under a CC-BY-NC-ND 4.0 International license .
-
-
-
-
     We emphasize that in determining the parameters, we are only using the ascending limb and the
     peak in the data for 𝑋2 (𝑡) and use these to predict how 𝑋2 (𝑡) will evolve in time past the peak.
     Using the data for 𝑋4 (𝑡) and the fitted model, we can also determine 𝑇𝐷 and 𝛿 using (5a) by a
     simple translation and scaling of the fitted model for 𝑋2 (𝑡).
-
                                                                                                         𝑋 (∞)
     Furthermore, once 𝑁, 𝛼, 𝛾, 𝑅 are determined, (16) determines 𝑆1 (∞) = 1𝑁 , the fraction of the
     pool of interacting individuals who are naive (uninfected) at the end of the pandemic.
-
     Some other useful parameters we obtain are:
-                                         1
-    The infective period: 𝑇𝐿 = 𝛾,                                                                                   (21)
-                                                                     1
-    the average time between transmissions: 𝑇𝑅 = 𝑁𝛼,                                                                (22)
-                                                                                              𝑇𝐿       𝑁𝛼
-    and the average number of transmissions while infective = 𝑁𝐶 =                                 =        =𝑅      (23)
-                                                                                              𝑇𝑅       𝛾
-
-
+                                             1
+    The infective period: 𝑇𝐿 = 𝛾,                                                                                 (21)
+                                                                      1
+    the average time between transmissions: 𝑇𝑅 = 𝑁𝛼,                                                              (22)
+                                                                                              𝑇𝐿      𝑁𝛼
+    and the average number of transmissions while infective = 𝑁𝐶 =                                 =       =𝑅     (23)
+                                                                                             𝑇𝑅        𝛾
     Data and Fitting Methodology
-
     Although data on deaths is unambiguous, the data for the number of cases is trustworthy only when
     a sufficient number of tests are performed. It is therefore important to determine whether adequate
     testing was done to ensure the reliability of case data. Figure 1a and 1b show the cumulative
@@ -416,7 +309,6 @@ medRxiv preprint doi: https://doi.org/10.1101/2020.05.26.20114058.this version p
     assurance, it leaves unaddressed the problem of quality (reliability), breadth (the percentage of the
     population reached) and speed (the elapsed time between infection and identification of disease)
     of testing.
-
     One interesting observation from the testing data (Figure 1a, 1b) was that initially, public concern
     spread more rapidly than the virus. As the disease spread and testing ramped up, the initial value
     of 𝑇𝐶 (number of tests/case) was quite large (over 650 in the UK), suggesting that the exponential
@@ -424,7 +316,6 @@ medRxiv preprint doi: https://doi.org/10.1101/2020.05.26.20114058.this version p
     the testing of a large number of people with no disease. Later, as appropriate protocols to identify
     diseased individuals were established, 𝑇𝐶 decreased then flattened out when the testing capacity
     adequately accounted for new cases, and finally rose again as the pandemic waned.
-
     The values of 𝑋2 (𝑡) and 𝑋4 (𝑡) were extracted from the data for the cumulative number of cases
     and the cumulative number of deaths. To reduce fluctuations in these quantities, the data was
     averaged over 7 days. Once B = 𝛾(𝑅 − 1) and P were determined from the exponentially
@@ -434,16 +325,11 @@ medRxiv preprint doi: https://doi.org/10.1101/2020.05.26.20114058.this version p
     t to the peak and beyond, by finding numerical solutions of (8) and (9) using the Matlab Solver
     myode2 to determine [𝑋1 (𝑡), 𝑋2 (𝑡)] as a function of time, with the initial conditions,
     [𝑋1 (𝑡0 ) = 𝑁 − 𝑎, 𝑋2 (𝑡0 ) = 𝑎], starting from a value 𝑡0 of 𝑡 such that 𝑋2 (𝑡0 ) = 𝑎 ~ 10.
-
                                                                                                                                        8
-
+
 medRxiv preprint doi: https://doi.org/10.1101/2020.05.26.20114058.this version posted October 15, 2020. The copyright holder for this preprint
   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
                                       It is made available under a CC-BY-NC-ND 4.0 International license .
-
-
-
-
     To determine an error on the fitted parameters, the parameters were varied until a range of values
     was found that fit the data for 𝑋2 (𝑡) including fluctuations. Finally, 𝛿, 𝑇𝐷 were emperically
     determined (see eq. (5a)) by scaling and shifting the numerical fits for 𝑋2 (𝑡) to fit the data for
@@ -453,16 +339,13 @@ medRxiv preprint doi: https://doi.org/10.1101/2020.05.26.20114058.this version p
     predicted total cases per million and the predicted total deaths per million population and compared
     to their actual values in each country. Finally, the values of 𝑇𝐿 and 𝑇𝑅 were determined from the
     fitted data using (21) and (22) respectively.
-
     III. Results and Discussion
-
     It is important to note that the parameter values we determine are derived solely from: (i) the
     ascending (small t) limb of 𝑋2 (𝑡) and (ii) the first peak value of 𝑋2 (𝑡). Using the fitted parameters
     to derive results past the peak allows us to: (i) predict how the pandemic would have continued
     beyond the peak, if control measures such as social distancing, use of PPEs and masks etc. had
     remained the same as before the peak; (ii) determine deviations of the actual data from our model
     predictions to estimate the effect of changes in control measures post peak to pandemic dynamics.
-
     The results obtained for 𝑁, 𝛼, 𝛾, 𝑅, 𝛿, 𝑇𝐿 , 𝑇𝑅 , 𝑇𝐷 are given in Tables A. Figures 2 and 3 and
     Supplementary Figure S1a-i shows the data and fits of our model for 𝑋2 and 𝑋4 respectively.
     We note that for Sweden and the UK, there is no clear first peak in 𝑋2 (𝑡) but rather a plateau and
@@ -477,34 +360,24 @@ medRxiv preprint doi: https://doi.org/10.1101/2020.05.26.20114058.this version p
     disease past the first peak in 𝑋2 (Figure 2 a-i), most likely because of a combination of premature
     lifting of quarantine, inadequate use of facemasks and difficulties in limiting physical contacts,
     exacerbated by the advent of summer weather and holiday travel.
-
     In contrast, for the number of daily deaths 𝑋4 (Figure 3 a-i), there were significantly smaller
     increases past the peak for all countries, suggesting that measures to save lives worked better than
     measures to contain the number of infections. This is likely due to the efficiency of the health care
     systems in these countries and the competence and professionalism of health care workers.
-
-
     Results for 𝑻𝑫 , 𝜹, 𝑻𝑳 , the time delay between case identification and death and the time
     interval 𝑻𝑹 between transmissions while infective:
-
     The fraction 𝛿 of identified cases who died after a time interval 𝑇𝐷 (Figure 4a, Table A) also shows
     significant variation by country. Norway, Germany and Denmark have the smallest values: 𝛿 =
-
                                                                                                                                        9
-
+
 medRxiv preprint doi: https://doi.org/10.1101/2020.05.26.20114058.this version posted October 15, 2020. The copyright holder for this preprint
   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
                                       It is made available under a CC-BY-NC-ND 4.0 International license .
-
-
-
-
     0.03, 0.050 and 0.050 respectively, and the UK, France and Sweden have the highest:
     𝛿 = 0.21, 0.20 and 0.18 respectively. Assuming that most of the deaths occurred in hospitals, the
     average time 𝑇𝐷 from case identification to death for those who died was highest (12, 15 days) for
     Germany and Norway respectively and lowest (2, 4 days) for Denmark and Italy respectively
     (Figure 4b, Table A).
-
     It is significant that in each country, the relation between the daily number of cases and the daily
     deaths is described by just two parameters, 𝛿 and 𝑇𝐷 (Eq. 5a), for the entire duration of the
     pandemic. This is not required a priori. For example, pressure on resources during a peak period
@@ -514,24 +387,18 @@ medRxiv preprint doi: https://doi.org/10.1101/2020.05.26.20114058.this version p
     in these parameters over the pandemic, to within the quality of the data, suggests that although the
     effectiveness of life saving measures may differ between countries, these measures seem to be
     relatively insensitive to changes in the case burden.
-
     The average infective period 𝑇̅𝐿 = 1/𝛾 was approximately constant for all countries, with an
-                                                                                          1
-    average value: 𝑇𝐿 = 16.3 +/− 2.7 days. The average time between transmissions ̅̅̅
-                                                                                   𝑇𝑅 = 𝑁𝛼 was
+                                                                                                                               1
+    average value: 𝑇𝐿 = 16.3 +/− 2.7 days. The average time between transmissions ̅̅̅                                𝑇𝑅 = 𝑁𝛼 was
     also remarkably uniform across countries, averaging : 𝑇𝑅 = 3.8 +/- 0.5 days. Finally, the average
-                                                     ̅̅̅̅
-                                                     𝑇𝐿
-    number of transmissions while infective or ̅̅
-                                               𝑁̅̅
-                                                 𝐶 =      , which is also the average value of 𝑅, varied
                                                                          ̅̅̅̅
+                                                                         𝑇𝐿
+    number of transmissions while infective or ̅̅                 𝑁̅̅
+                                                                    𝐶 =  ̅̅̅̅
+                                                                              , which is also the average value of 𝑅, varied
                                                                          𝑇𝑅
     only in a narrow range for all countries, averaging: 𝑁𝐶 = 𝑅̅ = 4.4+/- 0.5.
-
-
     The duration of the pandemic, the case fatality ratio (deaths/million) and cases/million.
-
     We define the end of the pandemic as the day when daily deaths becomes less than 5 for the first
     time after first peaking. The duration of the pandemic in each country is shown in Figure 4c as the
     number of days from 12/31/2019 till the day that daily deaths became < 5. With this definition,
@@ -540,30 +407,21 @@ medRxiv preprint doi: https://doi.org/10.1101/2020.05.26.20114058.this version p
     (8/5 +/-13 days, 8/21), Spain: (6/29 +/-10 days, 6/29), Germany: (6/24 +/- 9 days, 7/14), France:
     (7/12 +/-12 days, 7/19), Italy: (7/28 +/- 15 days 8/2). Note that the model predictions for pandemic
     duration are in quite good agreement with observation.
-
     The measured case fatality ratio or the total number of deaths per million population (Table A)
     ranged from low values of 36 and 89 for Norway and Denmark, to high values of 621, 604 and
     582, 562 for the UK, Spain, Italy and Sweden respectively. The model predicted values for this
     quantity are in good agreement with the actual values (Figure 4d).
-
     The measured total number of cases per million population (Table A) ranged from low values of
     1367 and 1774 for Norway and Denmark to high values of 7375, 5293, 4806 and 4092 for Sweden,
     Spain, Sweden, the UK and Italy respectively. In UK and Spain, the model predictions for this
     quantity were in sharp disagreement with the actual numbers (Figure 4e), likely the result of a
     significant relaxation of containment measures after the peak in the daily cases was reached.
-
-
                                                                                                                                      10
-
+
 medRxiv preprint doi: https://doi.org/10.1101/2020.05.26.20114058.this version posted October 15, 2020. The copyright holder for this preprint
   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
                                       It is made available under a CC-BY-NC-ND 4.0 International license .
-
-
-
-
     SARS-Cov-2 may transmit less effectively at higher temperatures.
-
     As was also noticed in [34], an interesting finding was a weak “Temperature Effect” on the value
     of the infectivity parameter 𝛼. Figure 4f shows the average temperature in February 2020 for the
     principal cities in each country versus the fitted value of 𝛼, and suggests that SARS-Cov-2 may
@@ -571,7 +429,6 @@ medRxiv preprint doi: https://doi.org/10.1101/2020.05.26.20114058.this version p
     further testing and validation because of many confounding factors, such as humidity, use of air
     conditioning and exhaust fans, crowding, population density etc. that may also have significant
     effects on 𝛼.
-
     In summary, the simple extension of the original SIR model [29] that we propose in this paper is
     able to identify the full set of pandemic parameters and fully characterize all three compartments
     S, I and R. It would be useful to try to understand what policy measures would result in improved
@@ -586,7 +443,6 @@ medRxiv preprint doi: https://doi.org/10.1101/2020.05.26.20114058.this version p
     pandemic features. A low degree of correlation for a particular parameter would indicate that it
     had little influence on variation of the feature, whereas a high degree of correlation would be
     informative.
-
     To estimate some dependencies that may have useful policy implications, we computed the
     Spearman Correlation between the derived parameters 𝑇𝐿 , N, and 𝛿 and some metrics of value in
     determining policy – namely “ PD = pandemic duration” and “CFR = case fatality ratio or deaths
@@ -601,77 +457,51 @@ medRxiv preprint doi: https://doi.org/10.1101/2020.05.26.20114058.this version p
     obvious, and indeed have been used as mechanisms to limit the impact of the pandemic in many
     countries, the fact that they are also readily identifiable in the data is, in our opinion, quite
     interesting.
-
     The value of 𝑁, the average number of new infections per day, has clear implications for the time
     it will take a randomized trial to establish therapeutic efficacy. While a statistical analysis is outside
     the scope of this manuscript, we note that the wide inter-country dispersion in this parameter
     indicates that the choice of population could have a pronounced effect on the time to establish
     efficacy, and it might therefore be best to select a test population deliberately from a country or
-
-
                                                                                                                                      11
-
+
 medRxiv preprint doi: https://doi.org/10.1101/2020.05.26.20114058.this version posted October 15, 2020. The copyright holder for this preprint
   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
                                       It is made available under a CC-BY-NC-ND 4.0 International license .
-
-
-
-
     countries with large and similar values of this parameter, rather than mix populations from
     different countries with no consideration of the average rate of infectivity.
-
     Declarations
-
     Funding and Acknowledgments
     GB was partly supported by grants from M2GEN/ORIEN, DoD/ KRCP (KC180159) and NIH/NCI
     (1R01CA243547-01A1). He thanks Professors Pablo Tamayo and Jill Mesirov for their kind
     hospitality at UC San Diego during his sabbatical year 2019-2020 when this work was done. GB
     thanks Kevin Raines, Sebastian Doniach, Alain Billoire and Carl Dietrich Foerster for many
     helpful discussions and suggestions.
-
     Conflicts of interest/Competing interests
     The authors declare no conflict of interests.
-
     Ethics approval
     Not applicable
-
     Consent to participate
     Not applicable
-
     Consent for publication
     Not applicable
-
     Availability of data and material
     The data used in this paper were all derived from public sources. Links to these data are included
     in the paper.
-
     Code availability
     The Matlab codes used to analyze the data along with all data files will be provided on request.
     Please send an email to gyanbhanot@gmail.com if you want these codes.
-
     Author Contributions
     GB: Idea development, analysis, manuscript.
     CD: Idea development, analysis, manuscript.
-
-
-
-
                                                                                                                                      12
-
+
 medRxiv preprint doi: https://doi.org/10.1101/2020.05.26.20114058.this version posted October 15, 2020. The copyright holder for this preprint
   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
                                       It is made available under a CC-BY-NC-ND 4.0 International license .
-
-
-
-
     Figure Legends
-
     Figure 1: Ratio of the cumulative number of tests to number of identified Covid-19 positive
     cases as a function of time: (a) In the EN countries and (b) in the UK and ES countries. The
     dashed lines in (a) and (b) represent 5 and 3 tests/case respectively.
-
     Figure 2: Parameter fits for the number of daily cases: Blue circles are observed data for
     𝑋2 (𝑡), the number of cases per day. Solid lines are fits obtained by solving (8) and (9) using the
     ODE solver ode45 in Matlab. The values of the parameters are shown in the insets and represent
@@ -679,11 +509,9 @@ medRxiv preprint doi: https://doi.org/10.1101/2020.05.26.20114058.this version p
     exponential rise in 𝑋2 at early times (Appendix A), estimate the peak value 𝑃 of 𝑋2 (which gives
     the value of 𝑁 using (15)) and find an 𝑅 value that best fits the data (red solid line). The black
     lines represent solver results for R varying by 0.5 from the best fit value.
-
     Figure 3: Number of deaths per day and fits for 𝜹 𝐚𝐧𝐝 𝑻𝑫 : Red circles are observed data for
     𝑋4 (𝑡), the number of deaths per day. The solid lines were obtained by shifting the fits for 𝑋2 (t) in
     Figure 2 forward in time by an amount 𝑇𝐷 and scaling the results by 𝛿 (see eq. 5a).
-
     Figure 4: Predictions from fits. (a) Best fits for 𝑇𝐷 (see eq. 5a and Figure 3), the average number
     of days from case identification to death, if death occurs. Values range from a high of 15 days for
     Norway and a low of 4 days for Italy and Denmark. (b) Best fits for 𝛿, (see eq. 5a and Figure 3),
@@ -705,61 +533,42 @@ medRxiv preprint doi: https://doi.org/10.1101/2020.05.26.20114058.this version p
     a possible temperature effect on the infectivity parameter 𝛼. The x-axis shows the temperature for
     February 2020 for the principal cities of the countries studied on a linear scale. The results suggest
     that the infectivity of SARS-CoV-2 decreases with increasing temperature (see also [34]).
-
     Supplementary Figure Legend
-
     Supplementary Figure S1: Parameter fits for the number of daily cases plotted on a linear
     scale: These plots are the same as those in Figure 2 except that the y axis is shown in a linear scale,
     rather than a log scale. This is to show the accuracy of the fits which are shown as solid lines. Blue
     circles are observed data for 𝑋2 (𝑡), the number of cases per day. Solid lines are fits obtained by
-
                                                                                                                                      13
-
+
 medRxiv preprint doi: https://doi.org/10.1101/2020.05.26.20114058.this version posted October 15, 2020. The copyright holder for this preprint
   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
                                       It is made available under a CC-BY-NC-ND 4.0 International license .
-
-
-
-
     solving (8) and (9) using the ODE solver ode45 in Matlab. The values of the parameters are shown
     in the insets and represent the fit shown as the solid red line. The method used for the fits was to
     find 𝛾(𝑅 − 1) from the exponential rise in 𝑋2 at early times (Appendix A), estimate the peak
     value 𝑃 of 𝑋2 (which gives the value of 𝑁 using (15)) and find an 𝑅 value that best fits the data
     (red solid line). The black lines represent solver results for R varying by 0.5 from the best fit value.
-
-
     Table A Legend:
     Table showing a summary of all results for all 9 countries.
-
     References
     1. Thiel V, Coronaviruses: Molecular and Cellular Biology, Caister Academic Press 2007,
     ISBN:978-1-904455-16-5.
-
     2. Rabadan R, Understanding Coronavirus, University Printing House, Cambridge, UK (2020),
     ISBN: 978-1-108-920254.
-
     3. Su S, Wong G, Shi W, Liu J, Lai ACK, Zhou J, Liu W, Bi Y, Gao GF, Epidemiology, Genetic
     Recombination, and Pathogenesis of Coronaviruses, Trends Microbiol. 2016 Jun;24(6):490-502.
     doi: 10.1016/j.tim.2016.03.003. Epub 2016 Mar 21.
-
     4. Lai MM, Cavanagh D, The molecular biology of coronaviruses, Adv Virus Res1997;48:1-100.
-
     5. Masters PS, The molecular biology of coronaviruses, Adv Virus Res. 2006;66:193-292.
-
     6. Cherry JD, Krogstad P, SARS: the first pandemic of the 21st century, Pediatric Research 2004
     Jul;56(1):1-5. Epub 2004 May 19.
-
     7. Peiris J, Guan Y and Yuen K, Severe acute respiratory syndrome. Nat Med 10, S88–S97 (2004).
     https://doi.org/10.1038/nm1143.
-
     8. J. A. Al-Tawfiq, Asymptomatic coronavirus infection: Mers-cov and sars-cov-2 (covid-19),
     Travel Med Infect Dis, vol. 101608, 2020.
-
     9. Tay MZ, Poh CM, Rénia L, MacAry PA, Ng LFP, The trinity of COVID-19: immunity,
     inflammation and intervention, [published online ahead of print, 2020 Apr 28]. Nat Rev Immunol.
     2020;1‐12. doi:10.1038/s41577-020-0311-8
-
     10. Xu Z, Shi L, Wang Y, Zhang J, Huang L, Zhang C, Liu S, Zhao P, Liu H, Zhu L, et. al.,
     Pathological findings of covid-19 associated with acute respiratory distress syndrome, The Lancet
     Respiratory Medicine, vol. 8, no. 4, pp. 420–422, 2020.
@@ -767,213 +576,132 @@ medRxiv preprint doi: https://doi.org/10.1101/2020.05.26.20114058.this version p
     Li H, Wu X, Xu J, Tu S, Zhang Y, Chen H, Cao B, Clinical course and risk factors for mortality
     of adult inpatients with COVID-19 in Wuhan, China: a retrospective cohort study. Lancet. 2020
     Mar 28;395(10229):1054-1062. doi: 10.1016/S0140-6736(20)30566-3. Epub 2020 Mar 11.
-
-
                                                                                                                                      14
-
+
 medRxiv preprint doi: https://doi.org/10.1101/2020.05.26.20114058.this version posted October 15, 2020. The copyright holder for this preprint
   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
                                       It is made available under a CC-BY-NC-ND 4.0 International license .
-
-
-
-
     12. Sørensen MD, Sørensen B, Gonzalez-Dosal R, et. al., Severe acute respiratory syndrome
     (SARS): development of diagnostics and antivirals. Ann N Y Acad Sci. 2006;1067(1):500‐505.
     doi:10.1196/annals.1354.072
-
     13. Inglesby TV, Public Health Measures and the Reproduction Number of SARS-CoV-2
     [published online ahead of print, 2020 May 1], JAMA. 2020;10.1001/jama.2020.7878.
     doi:10.1001/jama.2020.7878; Liu Y, Gayle AA, Wilder-Smith A, Rocklöv J, The reproductive
     number of COVID-19 is higher compared to SARS coronavirus, Journal of Travel Medicine,
     Volume 27, Issue 2, March 2020, taaa021, https://doi.org/10.1093/jtm/taaa021.
-
     14. For example, see: https://Ourworldindata.org/coronavirus from The European Center for
     Disease Control and Prevention.
-
     15. Flaxman, S, Mishra, S, Gandy, A et al. Estimating the effects of non-pharmaceutical
-    interventions     on    COVID-19      in    Europe.     Nature     584,     257–261     (2020).
+    interventions            on        COVID-19             in      Europe.       Nature          584,     257–261           (2020).
     https://doi.org/10.1038/s41586-020-2405-7; Davies NG, Kucharski AJ,Eggo RM, Gimma A,
     Edmunds WJ, Effects of non-pharmaceutical interventions on COVID-19 cases, deaths, and
     demand for hospital services in the UK: a modelling study, The Lancet, July 01, 2020, Volume 5,
     Issue 7, e375-e385; Ferguson et al., Imperial College Covid-19 Response Team, Report 9(
     https://www.imperial.ac.uk/mrc-global-infectious-disease-analysis/covid-19/report-9-impact-of-
     npis-on-covid-19/).
-
     16. Lu FS, Nguyen AT, Link NB, Davis JT, Chinazzi M, Xiong X , Vespignani A, Lipsitch M,
     Santillana M, Estimating the Cumulative Incidence of COVID-19 in the United States Using
     Four Complementary Approaches, medRxiv 2020.04.18.20070821; doi:
     https://doi.org/10.1101/2020.04.18.20070821.
-
     17. COVID-19 Antibody Seroprevalence in Santa Clara County, California
     Bendavid E, Mulaney B, Sood N, Shah S, Ling E, Bromley-Dulfano R, Lai C, Weissberg Z,
     Saavedra-Walker R, Tedrow J, Tversky D, Bogan A, Kupiec T, Eichner, Gupta R, Ioannidis J,
     Bhattacharya J, COVID-19 Antibody Seroprevalence in Santa Clara County, California,
     medRxiv 2020.04.14.20062463; doi:https://doi.org/10.1101/2020.04.14.20062463
-
     18. https://www.washingtonpost.com/investigations/coronavirus-death-toll-americans-are-
     almost-certainly-dying-of-covid-19-but-being-left-out-of-the-official-
     count/2020/04/05/71d67982-747e-11ea-87da-77a8136c1a6d_story.html.
-
     19. https://www.nytimes.com/interactive/2020/06/01/us/coronavirus-deaths-new-york-new-
     jersey.html
-
     20. Li R, Pei S, Chen B, Song Y, Zhang T, Yang W, Shaman J, Substantial undocumented
     infection facilitates the rapid dissemination of novel coronavirus (SARS-CoV-2), Science, 01 May
     2020, Vol. 368, Issue 6490, pp. 489-493.
-
     21. https://covid-19.bsvgateway.org
-
-
                                                                                                                                      15
-
+
 medRxiv preprint doi: https://doi.org/10.1101/2020.05.26.20114058.this version posted October 15, 2020. The copyright holder for this preprint
   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
                                       It is made available under a CC-BY-NC-ND 4.0 International license .
-
-
-
-
     22. Verity R, Okell LC, Dorigatti I, Winskill P, Whittaker C, Imai N, et. al. Estimates of the
     severity of coronavirus disease 2019: a model-based analysis, The Lancet, June 01, 2020,
     Volume 20, Issue 6, p669-677.
-
     23. https://penn-chime.phl.io/
-
     24. https://www.kff.org/policy-watch/covid-19-models/
-
     25. Branas CC, Rundle A, Pei S, Yang W, Carr BG, Sims S, Zebrowski A, Doorley R, Schluger
     N, Quinn JW, Shaman J, Flattening the curve before it flattens us: hospital critical care capacity
     limits and mortality from novel coronavirus (SARS-CoV2) cases in US counties,
     medRxiv 2020.04.01.20049759; doi:https://doi.org/10.1101/2020.04.01.20049759
-
     26. Anastassopoulou C, Russo L, Tsakris A, Siettos C. Data-based analysis, modelling and
     forecasting of the COVID-19 outbreak. PLoS One. 2020, 15(3):e0230405.
     doi:10.1371/journal.pone.0230405.
-
     27. Casella F. Can the COVID-19 epidemic be controlled on the basis of daily test
     reports? Preprint 2020: https://arxiv.org/abs/2003.06967.
-
     28. Giordano, G., Blanchini, F., Bruno, R. et al. Modelling the COVID-19 epidemic and
     implementation of population-wide interventions in Italy. Nat Med 26, 855–860 (2020).
     https://doi.org/10.1038/s41591-020-0883-7
-
     29. Kermack W, McKendric A (1991), Contributions to the mathematical theory of epidemics –
     I. Bulletin of Mathematical Biology. 53 (1–2): 33–55; ibid. Contributions to the mathematical
     theory of epidemics – II. The problem of endemicity", Bulletin of Mathematical Biology. 53 (1–2):
     57–87. doi:10.1007/BF02464424. PMID 2059742; ibid. Contributions to the mathematical theory
     of epidemics – III. Further studies of the problem of endemicity. Bulletin of Mathematical Biology.
     53 (1–2): 89–118. doi:10.1007/BF02464425. PMID 2059743.
-
     30. Huppert A, Katriel G. Mathematical modelling and prediction in infectious disease
     epidemiology. Clin Microbiol Infect. 2013;19(11):999‐1005. doi:10.1111/1469-0691.12308
-
     31. Brauer F, Mathematical epidemiology: Past, present, and future. Infect Dis Model (2017)
     2(2):113‐127. Published 2017 Feb 4. doi:10.1016/j.idm.2017.02.001
-
     32. Colizza V, Barrat A, Barthelemy M, Valleron AJ, Vespignani A, Modeling the worldwide
     spread of pandemic influenza: baseline case and containment interventions. PLoS Med.
     2007;4(1):e13. doi:10.1371/journal.pmed.0040013.
-
     33. Hasell J, Mathieu E, Beltekian D et al. A cross-country database of COVID-19 testing. Sci
     Data 7, 345 (2020).
-
-
-
-
                                                                                                                                      16
-
+
 medRxiv preprint doi: https://doi.org/10.1101/2020.05.26.20114058.this version posted October 15, 2020. The copyright holder for this preprint
   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
                                       It is made available under a CC-BY-NC-ND 4.0 International license .
-
-
-
-
     34. Raines K, Doniach S, Bhanot G, The transmission of SARS-CoV-2 is likely comodulated by
     temperature and by relative humidity, medRxiv 2020.05.23.20111278; doi:
     https://doi.org/10.1101/2020.05.23.20111278.
-
-
-
-
                                                                                                                                      17
-
+
 All Figures
-
 Fig. 1a
-
 Fig. 1b
-
 Fig. 2a
-
 Fig. 2b
-
 Fig. 2c
-
 Fig. 2d
-
 Fig. 2e
-
 Fig. 2f
-
 Fig. 2g
-
 Fig. 2h
-
 Fig. 2i
-
 Fig. 3a
-
 Fig. 3b
-
 Fig. 3c
-
 Fig. 3d
-
 Fig. 3e
-
 Fig. 3f
-
 Fig. 3g
-
 Fig. 3h
-
 Fig. 3i
-
 Fig. 4a
-
 Fig. 4b
-
 Fig. 4c
-
 Fig. 4d
-
 Fig. 4e
-
 Fig. 4f
-
 medRxiv preprint doi: https://doi.org/10.1101/2020.05.26.20114058.this version posted October 15, 2020. The copyright holder for this preprint
   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
                                       It is made available under a CC-BY-NC-ND 4.0 International license .
-
+
 Supplementary Figures
-
 Fig. S1a
-
 Fig. S1b
-
 Fig. S1c
-
 Fig. S1d
-
 Fig. S1e
-
 Fig. S1f
-
 Fig. S1g
-
 Fig. S1h
-
 Fig. S1i
-

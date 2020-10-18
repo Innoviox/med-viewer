@@ -1,0 +1,964 @@
+medRxiv preprint doi: https://doi.org/10.1101/2020.07.23.20160895.this version posted October 8, 2020. The copyright holder for this preprint
+   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                           All rights reserved. No reuse allowed without permission.
+                                         Assessing the Age Specificity
+                         of Infection Fatality Rates for COVID-19:
+                                  Systematic Review, Meta-Analysis,
+                                       and Public Policy Implications
+                      Andrew T. Levin, William P. Hanage, Nana Owusu-Boaitey,
+           Kensington B. Cochran, Seamus P. Walsh, and Gideon Meyerowitz-Katz
+                                                            06 October 2020
+    Affiliations: Levin is a professor of economics at Dartmouth College, research associate
+    of the NBER, and international research fellow of the Centre for Economic Policy Research.
+    Hanage is an associate professor of epidemiology at the Harvard T.H. Chan School of
+    Public Health. Meyerowitz-Katz is an epidemiologist at the University of Wollongong and
+    research monitoring and surveillance coordinator at the Western Sydney Local Health District.
+    Owusu-Boaitey has a Ph.D. in immunology and is currently engaged in graduate work
+    in medicine and bioethics at the Case Western Reserve University School of Medicine.
+    Cochran and Walsh are recent graduates of Dartmouth College.
+    Corresponding Author:
+    Gideon Meyerowitz-Katz
+    Research, Monitoring & Surveillance Coordinator
+    Western Sydney Local Health District
+    PO Box 792
+    Seven Hills, NSW 2147 Australia
+    Phone: +61-2-9881-8878
+    Email: gideon.meyerowitzkatz@health.nsw.gov.au
+       NOTE: This preprint reports new research that has not been certified by peer review and should not be used to guide clinical practice.
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.07.23.20160895.this version posted October 8, 2020. The copyright holder for this preprint
+   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                           All rights reserved. No reuse allowed without permission.
+    Structured Abstract
+    Objective: Determine age-specific infection fatality rates for COVID-19 to inform
+    public health policies and communications that help protect vulnerable age groups.
+    Methods: Studies of COVID-19 prevalence were collected by conducting an online search of
+    published articles, preprints, and government reports. A total of 120 studies were reviewed in
+    depth and screened, of which 34 studies satisfied the inclusion criteria and were included in the
+    meta-analysis. Age-specific IFRs were computed using the prevalence data in conjunction with
+    reported fatalities four weeks after the midpoint date of the study, reflecting typical lags in
+    fatalities and reporting. Meta-regression procedures in Stata were used to analyze IFR by age.
+    Results: Our analysis finds a exponential relationship between age and IFR for COVID-19.
+    The estimated age-specific IFRs are very low for children and younger adults but increase
+    progressively to 0.4% at age 55, 1.4% at age 65, 4.6% at age 75, and 15% at age 85. We find that
+    differences in the age structure of the population and the age-specific prevalence of COVID-19
+    explain about 90% of the geographical variation in population IFR.
+    Discussion: These results indicate that COVID-19 is hazardous not only for the elderly but also
+    for middle-aged adults, for whom the infection fatality rate is two orders of magnitude greater
+    than the annualized risk of a fatal automobile accident and far more dangerous than seasonal
+    influenza. Moreover, the overall IFR for COVID-19 should not be viewed as a fixed parameter
+    but as intrinsically linked to the age-specific pattern of infections. Consequently, public health
+    measures to mitigate infections in older adults could substantially decrease total deaths.
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.07.23.20160895.this version posted October 8, 2020. The copyright holder for this preprint
+   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                           All rights reserved. No reuse allowed without permission.
+                                                                       1
+    Introduction
+    Since the onset of the COVID-19 pandemic in winter 2020, it has been evident that the severity
+    of the disease varies markedly across infected individuals.[1, 2] Some remain asymptomatic
+    throughout the course of infection or experience only mild symptoms such as headache or
+    ageusia, whereas others experience much more severe illness, hospitalization, or even death.
+    Thus, official case reporting may tend to encompass a high fraction of severe cases but only a
+    small fraction of asymptomatic or mildly symptomatic cases. Moreover, the availability of live
+    virus tests has varied significantly across locations and over time, and the deployment of such
+    tests may differ markedly across demographic groups.
+    Consequently, assessments of the case fatality rate (CFR), the ratio of deaths to reported cases,
+    are fraught with pitfalls in gauging the severity of COVID-19. For example, early case reports
+    from Wuhan noted a preponderance of older people among hospital admissions and a high CFR.
+    Subsequent studies have documented that children and young adults tend to exhibit fewer and
+    milder symptoms and a far lower CFR. Nonetheless, the link between age and severity of
+    COVID-19 infections has remained unclear for the reasons noted above.
+    To provide more accurate assessments of the spread of COVID-19, researchers have conducted
+    seroprevalence studies in numerous locations. Such studies analyze samples of serum to detect
+    antibodies in those infected with SARS-CoV-2, the virus that causes COVID-19. Seroprevalence
+    results can be used to estimate the infection fatality rate (IFR), the ratio of fatalities to total
+    infections, thereby facilitating the identification of vulnerable segments of the population and
+    informing key policy decisions aimed at mitigating the consequences of the pandemic.
+    For example, as shown in Table 1, the New York Department of Health conducted a large-scale
+    seroprevalence study and estimated about 1·6 million SARS-CoV-2 infections among the 8
+    million residents of New York City.[3] However, only one-tenth of those infections were
+    captured in reported COVID-19 cases, about one-fourth of which required hospitalization, and a
+    substantial fraction of cases had fatal outcomes.[4] All told, COVID-19 fatalities in NYC
+    represented a tenth of reported cases but only one-hundredth of all SARS-CoV-2 infections.
+    Nonetheless, divergences in study design and reporting have hampered comparisons of
+    seroprevalence and IFRs across locations and demographic groups. For example, a number of
+    studies have analyzed a representative sample of the general population, while other studies have
+    made use of “convenience samples” of residual sera collected for other purposes (such as
+    laboratory tests or blood donations). Some studies have simply reported results for raw
+    prevalence (the fraction of seropositive results), whereas other studies have reported results
+    adjusted for antibody test characteristics (sensitivity and specificity).
+    While the NYC data indicate an IFR of about 1%, seroprevalence estimates from other locations
+    have yielded a wide array of IFR estimates, ranging from about 0·6% in Geneva to levels
+    exceeding 2% in northern Italy. Such estimates have fueled intense controversy about the
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.07.23.20160895.this version posted October 8, 2020. The copyright holder for this preprint
+   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                           All rights reserved. No reuse allowed without permission.
+                                                                       2
+    severity of COVID-19 and the appropriate design of public health measures to contain it, which
+    in turn hinges on whether the hazards of this disease are mostly limited to the elderly and infirm.
+    Indeed, a recent meta-analysis noted the high degree of heterogeneity across aggregate estimates
+    of IFR and concluded that research on age-stratified IFR is “urgently needed to inform
+    policymaking.”[5]
+    This paper reports on a systematic review and meta-analysis of age-specific IFRs for COVID-19.
+    We specifically consider the hypothesis that the observed variation in IFR across locations may
+    primarily reflect the age specificity of COVID-19 infections and fatalities. Based on these
+    findings, we are able to assess and contextualize the severity of COVID-19 and examine how
+    age-specific prevalence affects the population IFR and the total incidence of fatalities.
+    Methodology
+    To perform the present meta-analysis, we collected published papers and preprints on the
+    seroprevalence and/or infection fatality rate of COVID-19 that were publicly disseminated prior
+    to 18 September 2020. As described in Supplementary Appendix B, we systematically performed
+    online searches in MedRxiv, Medline, PubMed, Google Scholar, and EMBASE, and we
+    identified other studies listed in reports by government institutions such as the U.K. Parliament
+    Office.[6] Data was extracted from studies by three authors and verified prior to inclusion.
+    We restricted our meta-analysis to studies of advanced economies, based on current membership
+    in the Organization for Economic Cooperation and Development (OECD), in light of the distinct
+    challenges of health care provision and reporting of fatalities in developing economies.[7] We
+    also excluded studies aimed at measuring prevalence in specific groups such as health care
+    workers.
+    Our meta-analysis encompasses two distinct approaches for assessing the prevalence of
+    COVID-19: (1) seroprevalence studies that test for antibodies produced in response to the virus,
+    and (2) comprehensive tracing programs using extensive live-virus testing of everyone who has
+    had contact with a potentially infected individual. Seroprevalence estimates are associated with
+    uncertainty related to the sensitivity and specificity of the test method and the extent to which the
+    sampling frame provides an accurate representation of prevalence in the general population; see
+    Supplementary Appendix C. Prevalence measures from comprehensive tracing programs are
+    associated with uncertainty about the extent of inclusion of infected individuals, especially those
+    who are asymptomatic.
+    Sampling frame
+    To assess prevalence in the general population, a study should be specifically designed to utilize
+    a random sample using standard survey procedures such as stratification and weighting by
+    demographic characteristics. Other sampling frames may be useful for specific purposes such as
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.07.23.20160895.this version posted October 8, 2020. The copyright holder for this preprint
+   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                           All rights reserved. No reuse allowed without permission.
+                                                                       3
+    sentinel surveillance but not well-suited for assessing prevalence due to substantial risk of
+    systemic bias. Consequently, our meta-analysis excludes the following types of studies:
+        •    Blood Donors. Only a small fraction of blood donors are ages 60 and above—a
+             fundamental limitation in assessing COVID-19 prevalence and IFRs for older age
+             groups—and the social behavior of blood donors may be systematically different from
+             their peers.[8, 9] These concerns can be directly investigated by comparing alternative
+             seroprevalence surveys of the same geographical location. As of early June, Public
+             Health England (PHE) reported seroprevalence of 8·5% based on specimens from blood
+             donors, whereas the U.K. Office of National Statistics (ONS) reported markedly lower
+             seroprevalence of 5·4% (CI: 4·3–6·5%) based on its monitoring of a representative
+             sample of the English population.[10, 11]
+        •    Dialysis Centers. Assessing seroprevalence of dialysis patients using residual sera
+             collected at dialysis centers is crucial for gauging the infection risks faced by these
+             individuals, of which a disproportionately high fraction tend to be underrepresented
+             minorities. Nonetheless, the seroprevalence within this group may be markedly different
+             from that of the general population. For example, a study of U.K. dialysis patients found
+             seroprevalence of about 36%, several times higher than that obtained using a very large
+             random sample of the English population.[12, 13] Similarly, a recent U.S. study found a
+             seropositive rate of 34% for dialysis patients in New York state that was more than twice
+             as high as the seroprevalence in a random sample of New York residents.[3, 14]
+        •    Hospitals and Urgent Care Clinics. Estimates of seroprevalence among current medical
+             patients are subject to substantial bias, as evident from a pair of studies conducted in
+             Tokyo, Japan: One study found 41 positive cases among 1071 urgent care clinic patients,
+             whereas the other study found only two confirmed positive results in a random sample of
+             nearly 2000 Tokyo residents (seroprevalence estimates of 3·8% vs. 0·1%).[15, 16]
+        •    Active Recruitment. Soliciting participants is particularly problematic in contexts of low
+             prevalence, because seroprevalence can be markedly affected by a few individuals who
+             volunteer due to concerns about prior exposure. For example, a Luxembourg study
+             obtained positive antibody results for 35 out of 1,807 participants, but nearly half of those
+             individuals (15 of 35) had previously had a positive live virus test, were residing in a
+             household with someone who had a confirmed positive test, or had direct contact with
+             someone else who had been infected.[17]
+    Our critical review has also underscored the pitfalls of seroprevalence studies based on
+    “convenience samples” of residual sera collected for other purposes. For example, two studies
+    assessed seroprevalence of Utah residents during spring 2020. The first study analyzed residual
+    sera from two commercial laboratories and obtained a prevalence estimate of 2·2% (CI: 1·2–
+    3·4%), whereas the second study collected specimens from a representative sample and obtained
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.07.23.20160895.this version posted October 8, 2020. The copyright holder for this preprint
+   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                           All rights reserved. No reuse allowed without permission.
+                                                                       4
+    a markedly lower prevalence estimate of 0·96% (CI: 0·4–1·8%).[18, 19] In light of these issues,
+    our meta-analysis includes residual serum studies but we flag such studies as having an elevated
+    risk of bias.
+    Comprehensive Tracing Programs
+    Our meta-analysis incorporates data on COVID-19 prevalence and fatalities in countries that
+    have consistently maintained comprehensive tracing programs since the early stages of the
+    pandemic. Such a program was only feasible in places where public health officials could
+    conduct repeated tests of potentially infected individuals and trace those whom they had direct
+    contact. We identify such countries using a threshold of 300 for the ratio of cumulative tests to
+    reported cases as of 30 April 2020, based on comparisons of prevalence estimates and reported
+    cases in Czech Republic, Korea, and Iceland; see Supplementary Appendices D and E.[20]
+    Studies of Iceland and Korea found that estimated prevalence was moderately higher than the
+    number of reported cases, especially for younger age groups; hence we make corresponding
+    adjustments for other countries with comprehensive tracing programs, and we identify these
+    estimates as subject to an elevated risk of bias.[21-23]
+    Measurement of fatalities
+    Accurately measuring total deaths is a substantial issue in assessing IFR due to time lags from
+    onset of symptoms to death and from death to official reporting. Symptoms typically develop
+    within 6 days after exposure but may develop as early as 2 days or as late as 14 days.[1, 24]
+    More than 95% of symptomatic COVID patients have positive antibody (IgG) titres within 17-19
+    days of symptom onset, and those antibodies remain elevated over a sustained period.[25-28]
+    The mean time interval from symptom onset to death is 15 days for ages 18–64 and 12 days for
+    ages 65+, with interquartile ranges of 9–24 days and 7–19 days, respectively, while the mean
+    interval from date of death to the reporting of that person’s death is about 7 days with an IQR of
+    2–19 days; thus, the upper bound of the 95% confidence interval between symptom onset and
+    reporting of fatalities is about six weeks (41 days).[29]
+    Figure 1 illustrates these findings in a hypothetical scenario where the pandemic was curtailed
+    two weeks prior to the date of the seroprevalence study. This figure shows the results of a
+    simulation calibrated to reflect the estimated distribution for time lags between symptom onset,
+    death, and inclusion in official fatality reports. The histogram shows the frequency of deaths
+    and reported fatalities associated with the infections that occurred on the last day prior to full
+    containment. Consistent with the confidence intervals noted above, 95% of cumulative fatalities
+    are reported within roughly four weeks of the date of the seroprevalence study.
+    As shown in Table 2, the precise timing of the count of cumulative fatalities is relatively
+    innocuous in locations where the outbreak had been contained for more than a month prior to the
+    date of the seroprevalence study. By contrast, in instances where the outbreak had only recently
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.07.23.20160895.this version posted October 8, 2020. The copyright holder for this preprint
+   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                           All rights reserved. No reuse allowed without permission.
+                                                                       5
+    been contained, the death count continued rising markedly for several more weeks after the
+    midpoint of the seroprevalence study.
+    Therefore, we construct age-specific IFRs using the seroprevalence data in conjunction with
+    cumulative fatalities four weeks after the midpoint date of each study; see Supplementary
+    Appendix F. We have also conducted sensitivity analysis using cumulative fatalities five weeks
+    after the midpoint date, and we flag studies as having an elevated risk of bias if the change in
+    cumulative fatalities between weeks 4 and 5 exceeds 10%.
+    By contrast, matching prevalence estimates with subsequent fatalities is not feasible if a
+    seroprevalence study was conducted in the midst of an accelerating outbreak. Therefore, our
+    meta-analysis excludes seroprevalence studies for which the change in cumulative fatalities from
+    week 0 to week 4 exceeds 200%.
+    Metaregression procedure
+    To analyze IFR by age, we use meta-regression with random effects, using the meta regress
+    procedure in Stata v16.[30, 31] We used a random-effects procedures to allow for residual
+    heterogeneity between studies and across age groups by assuming that these divergences are
+    drawn from a Gaussian distribution. Publication bias was assessed using Egger’s regression and
+    the trim-and-fill method. See Supplementary Appendix G for further details.
+    Results
+    After an initial screening of 1153 studies, we reviewed the full texts of 120 studies, of which
+    54 studies were excluded due to lack of age-specific data on COVID-19 prevalence or
+    fatalities.[11, 15, 16, 28, 32-81] Seroprevalence estimates for two locations were excluded
+    because the outbreak was still accelerating during the period when the specimens were being
+    collected and from two other locations for which age-specific seroprevalence was not
+    distinguishable from zero.[18, 82-84] Studies of non-representative samples were excluded as
+    follows: 13 studies of blood donors; 5 studies of patients of hospitals, outpatient clinics, and
+    dialysis centers; 4 studies with active recruitment of participants, and 6 narrow sample groups
+    such as elementary schools.[10, 14, 16, 17, 82, 85-107] Supplementary Appendix H lists all
+    excluded studies.
+    Consequently, our meta-analysis encompasses 34 studies, of which 28 are included in our
+    metaregression and 6 are used for out-of-sample analysis. The metaregression studies can
+    be categorized into three distinct groups:
+        •    Representative samples from studies of England, France, Ireland, Italy, Netherlands,
+             Portugal, Spain, Geneva (Switzerland), and four U.S. locations (Atlanta, Indiana,
+             New York, and Salt Lake City).[3, 13, 19, 108-117]
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.07.23.20160895.this version posted October 8, 2020. The copyright holder for this preprint
+   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+                                                                        6
+        •    Convenience samples from studies of Belgium, Sweden, Ontario (Canada),
+             and eight U.S. locations (Connecticut, Louisiana, Miami, Minneapolis, Missouri,
+             Philadelphia, San Francisco, and Seattle).[18, 118-120]
+        •    Comprehensive tracing programs for Australia, Iceland, Korea, Lithuania, and
+             New Zealand.[121-125]
+    The metaregression includes results from the very large REACT-2 seroprevalence study of the
+    English population.[13] Thus, to avoid pitfalls of nested or overlapping samples, two other
+    somewhat smaller studies conducted by U.K. Biobank and the U.K. Office of National Statistics
+    are not included in the metaregression but are instead used in out-of-sample analysis of the
+    metaregression results.[11, 126] Similarly, the metaregression includes two large-scale studies
+    involving representative samples from three French provinces and from Salt Lake City, and
+    hence two other studies using convenience samples from laboratories in France and in Utah are
+    used in the out-of-sample analysis along with two other small-scale studies.[18, 19, 127-129]
+    Data taken from included studies is shown in Supplementary Appendix I. Supplementary
+    Appendix J assesses the risk of bias for each individual study. As indicated in Supplementary
+    Appendix K, no publication bias was found using Egger’s test (p > 0.10), and the trim-and-fill
+    method produced the same estimate as the metaregression.
+    We obtain the following metaregression results:
+                                        𝑙𝑙𝑙𝑙𝑙𝑙10 (𝐼𝐼𝐼𝐼𝐼𝐼) = −3.27               + 0.0524 ∗ 𝑎𝑎𝑎𝑎𝑎𝑎
+                                                                   (0.07)           (0.0013)
+    where the standard error for each estimated coefficient is given in parentheses. These estimates
+    are highly significant with t-statistics of -44·5 and 40·4, respectively, and p-values below
+    0·0001. The residual heterogeneity τ2 = 0·071 (p-value < 0.0001) and I2 = 97·0, confirming that
+    the random effects are essential for capturing unexplained variations across studies and age
+    groups. The adjusted R2 is 94·7%.
+    As noted above, the validity of this metaregression rests on the condition that the data are
+    consistent with a Gaussian distribution. The validity of that assumption is evident in Figure 3:
+    Nearly all of the observations fall within the 95% prediction interval of the metaregression, and
+    the remainder are moderate outliers.
+    This specification of the metaregression also assumes that the intercept and slope parameters are
+    stable across the entire age distribution. We have confirmed the validity of that assumption by
+    estimating alternative specifications in which the parameters are allowed to differ between three
+    distinct age categories (ages 0–34, 35–59, and 60+ years). The estimated parameters are similar
+    across all three age categories, and the null hypothesis of parameter constancy is consistent with
+    the metaregression data (see Supplementary Appendix L).
+    Figure 4 depicts the exponential relationship between age and the level of IFR in percent, and
+    Figure 5 shows the corresponding forest plot. Evidently, the SARS-CoV-2 virus poses a
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.07.23.20160895.this version posted October 8, 2020. The copyright holder for this preprint
+   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                           All rights reserved. No reuse allowed without permission.
+                                                                       7
+    substantial mortality risk for middle-aged adults and even higher risks for elderly people: The
+    IFR is very low for children and young adults but rises to 0·4% at age 55, 1·4% at age 65,
+    4·6% at age 75, 15% at age 85, and exceeds 25% for ages 90 and above. These metaregression
+    predictions are well aligned with the out-of-sample IFRs; see Supplementary Appendix M.
+    As shown in Figure 6, the metaregression explains nearly 90% of the geographical variation in
+    population IFR, which ranges from about 0·5% in Salt Lake City and Geneva to 1·5% in
+    Australia and England and 2·7% in Italy. The metaregression explains this variation in terms of
+    differences in the age structure of the population and age-specific prevalence of COVID-19.
+    Discussion
+    The IFR is central to our understanding of the public health impact of the COVID-19 pandemic
+    and the appropriate policies for mitigating those consequences. In the absence of effective
+    therapies or vaccines, such policies will primarily involve non-pharmaceutical interventions
+    (NPIs). NPIs may include relatively mild measures (such as prohibitions on large gatherings) or
+    more draconian restrictions such as shelter-in-place edicts, popularly known as “lockdowns.”
+    Unfortunately, public debate on these issues has been hampered by diverging assessments of the
+    severity of COVID-19. For example, some early seroprevalence studies (using relatively small
+    and non-representative samples, often in areas of low prevalence) yielded miniscule estimates of
+    population IFR similar to those of seasonal influenza. Such estimates implied that strict NPIs
+    would be completely irrational given the limited benefits and severe economic and social costs.
+    With the dissemination of many more seroprevalence studies over recent months, a wide array of
+    hypotheses have been mooted to explain the diverging implications for IFR, including regional
+    variations in the quality of treatment or the extent of T-cell immunity to other betacoronaviruses.
+    By contrast, our critical review identifies the key characteristics of seroprevalence studies that
+    can be used to provide reliable assessments of IFR. Indeed, once we focus on this group of
+    studies (which includes nine national seroprevalence studies), our metaregression reveals a
+    remarkably high degree of consistency in the implications for age-specific IFR. Moreover, our
+    results indicate that most of the variation in population IFR across locations reflects differences
+    in the extent to which vulnerable age groups were exposed to the virus.
+    One key implication of our findings is that the incidence of fatalities from a COVID-19 outbreak
+    depends crucially on the age groups that are infected, which in turn reflects the age structure of
+    that population and the extent to which public health measures limit the incidence of infections
+    among vulnerable age groups. Indeed, even if an outbreak is mainly concentrated among
+    younger people, it may be very difficult to prevent the virus from spreading among older adults.
+    To illustrate the benefits of age-stratified public health strategies for COVID-19, we have
+    constructed a set of three scenarios for the U.S. trajectory of infections and fatalities (see
+    Supplementary Appendix N). Each scenario assumes that U.S. prevalence rises to a plateau of
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.07.23.20160895.this version posted October 8, 2020. The copyright holder for this preprint
+   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                           All rights reserved. No reuse allowed without permission.
+                                                                       8
+    around 20% but with different patterns of age-specific prevalence. In particular, if prevalence
+    becomes uniform across age groups, this analysis projects that total U.S. fatalities would exceed
+    500 thousand and that population IFR would converge to around 0·8%. By contrast, a scenario
+    with relatively low incidence of new infections among vulnerable age groups would be
+    associated with less than half as many deaths and a much lower population IFR of about 0·3%.
+    A further implication of our results is that the risks of infection to the middle aged cannot be
+    neglected. This is important for pandemic management strategies that aim to avoid large influxes
+    of patients to healthcare. Indeed, it is likely that an unmitigated outbreak among adults over 35
+    years old could have severe consequences on the healthcare system. Table 3 contextualizes this
+    issue by comparing the age-specific IFRs from our meta-regression analysis to the annualized
+    risks of fatal automobile accidents or other unintentional injuries in England and in the United
+    States.[130, 131] For example, an English person aged 55–64 years who gets infected with
+    SARS-CoV-2 faces a fatality risk that is more than 200 times higher than the annual risk of
+    dying in a fatal car accident. These results also confirm that COVID-19 is far more deadly than
+    seasonal flu, for which the population IFR is about 0·05% (see Supplementary Appendix O).
+    Moreover, seasonal influenza outbreaks are limited by prior immunity, whereas that is not the
+    case for SARS-CoV-2.
+    Our critical review highlights the benefits of assessing prevalence using large-scale studies of
+    representative samples of the general population rather than convenience samples of blood
+    donors or medical patients. Conducting such studies on an ongoing basis will enable public
+    health officials to monitor changes in prevalence among vulnerable age groups and gauge the
+    efficacy of public policy measures. Moreover, such studies enable researchers to assess the
+    extent to which antibodies to SARS-CoV-2 may gradually diminish over time as well as the
+    extent to which advances in treatment facilitate the reduction of age-specific IFRs.
+    Our critical review also underscores the importance of methodological issues in assessing IFR.
+    For example, the raw prevalence results reported by a national study of Italy would imply a
+    population IFR of about 2·3%, whereas test-adjusted prevalence implies a substantially higher
+    IFR of 2·7%. Likewise, a few recent studies have excluded all deaths occurring in nursing homes
+    and retirement communities and have obtained estimates of population IFR that are markedly
+    lower than our estimates based on all confirmed COVID-19 fatalities, whereas assessments of
+    IFR based on measures of excess mortality are broadly similar to our estimates.[110, 132-134]
+    See Supplementary Appendix P for further discussion.
+    Our metaregression results are broadly consistent with the study of Verity et al. (2020), which
+    was completed at a very early stage of the COVID-19 pandemic and characterized an
+    exponential pattern of age-specific IFRs (see Supplementary Appendix Q).[135] Our results are
+    also well-aligned with a more recent meta-analysis of population IFR; indeed, our age-specific
+    analysis explains a very high proportion of the dispersion in population IFRs highlighted by that
+    study.[5] In contrast, our findings are markedly different from those of an earlier review of
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.07.23.20160895.this version posted October 8, 2020. The copyright holder for this preprint
+   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                           All rights reserved. No reuse allowed without permission.
+                                                                       9
+    population IFR, mostly due to differences in selection criteria.[136] Finally, the exponential
+    pattern of our age-specific IFR estimates is qualitatively similar to that of age-specific CFRs but
+    the magnitudes are systematically different (see Supplementary Appendix R).
+    A potential concern about measuring IFR based on seroprevalence is that antibody titers
+    may diminish over time, leading to underestimation of true prevalence and corresponding
+    overestimation of IFR, especially for locations where the seroprevalence study was conducted
+    several months after the outbreak had been contained. However, a key feature of our
+    metaregression analysis is that we also utilize age-specific IFR data based on RT-PCR results
+    (not seroprevalence) for five countries that have maintained comprehensive tracing programs
+    since the onset of the pandemic, namely, Australia, Iceland, Korea, Lithuania, and New Zealand.
+    As shown in figure 3, the age-specific IFRs for those five countries are well aligned with the
+    metaregression predictions, indicating that these findings do not rely upon any specific method
+    of gauging prevalence.
+    A substantial limitation of our work is that we have not considered factors apart from age that
+    affect the IFR of COVID-19. For example, a recent U.K. study found that mortality outcomes are
+    strongly linked to specific comorbidities such as diabetes and obesity but did not resolve the
+    question of whether those links reflect differences in prevalence or causal effects on IFR.[137]
+    See Supplementary Appendix S for additional evidence. Likewise, we have not considered the
+    extent to which IFRs may vary with other demographic factors such as race and ethnicity or
+    potential causal interactions between these factors.[32, 61] Further research on these issues is
+    clearly warranted.
+    It should also be noted that our analysis has focused exclusively on the incidence of fatalities but
+    has not captured the full spectrum of adverse health consequences of COVID-19, some of which
+    may be severe and persistent. Further research is needed to assess age-stratified rates of
+    hospitalization as well as longer-term sequelae attributable to SARS-CoV-2 infections. These
+    factors are likely to be particularly important in quantifying risks to health care.
+    In summary, our meta-analysis demonstrates that COVID-19 is not only dangerous for the
+    elderly and infirm but also for healthy middle-aged adults. The metaregression explains nearly
+    90% of the geographical variation in population IFR, indicating that the population IFR is
+    intrinsically linked to the age-specific pattern of infections. Consequently, public health
+    measures to protect vulnerable age groups could substantially reduce the incidence of mortality.
+    Declaration of Interests
+    The authors have no financial interests nor any other conflicts of interest related to this study.
+    No funding was received for conducting this study. This study was preprinted at:
+    https://www.medrxiv.org/content/10.1101/2020.07.23.20160895v3.
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.07.23.20160895.this version posted October 8, 2020. The copyright holder for this preprint
+   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                           All rights reserved. No reuse allowed without permission.
+                                                                       10
+    Table 1: COVID-19 Infections in New York City
+                                                    Total as of July 15, 2020                    Share of Infections
+     NYC residents                                              8 million                                  NA
+     Estimated infections                                     1·6 million                                100%
+     Symptomatic infections                                   1·1 million                                 65%
+     Reported cases                                          220 thousand                                 12%
+     Hospitalized patients                                    55 thousand                                  3%
+     Fatal outcomes                                           23 thousand                                  1%
+    Note: This table reports on the characteristics of COVID-19 infections in New York City (NYC).
+    Infection prevalence was estimated by the New York Department of Health.[3] The ratio of
+    symptomatic to total infections reflects a recent assessment by the U.S. Center for Disease
+    Control and Prevention.[29] The number of cases, hospitalized patients, and fatal outcomes is
+    reported by the NYC Department of Health.[4]
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.07.23.20160895.this version posted October 8, 2020. The copyright holder for this preprint
+   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                            All rights reserved. No reuse allowed without permission.
+                                                                        11
+    Table 2: Timing of reported fatalities for selected seroprevalence studies
+                                                  Cumulative Fatalities                            Change (%)
+                                        Study                                5 weeks         Weeks           Weeks
+            Location                  midpoint           4 weeks later         later          0 to 4          4 to 5
+     Europe
+             Belgium                     6,262               8,843             9,150            41               3
+      Geneva, Switzerland                 255                 287               291             13               1
+              Spain                     26,834              27,136            28,324             1               4
+             Sweden                      2,586               3,831            3,940             48               3
+     USA
+           Connecticut                   2,257               3,637            3,686             61               1
+             Indiana                      932                1,984            2,142            113               8
+            Louisiana                     477                2,012            2,286            322              14
+              Miami                       513                1,160            1,290            126              11
+           Minneapolis                    393                 964              1093            145              13
+            Missouri                      218                 562               661            158              18
+            New York                    20,212              28,663            29,438            42               3
+           Philadelphia                   456                1509              1754            231              16
+          San Francisco                   265                 424               449             60               6
+              Seattle                     536                 732               775             37               6
+               Utah                       41                  96                98             134               2
+    Note: This table shows data on confirmed COVID-19 deaths for 4 European locations and
+    11 U.S. locations where seroprevalence has been assessed.[18, 114, 119, 138-140] Sources
+    of fatality data are given in Supplementary Appendix F. For each location, the second column
+    shows cumulative fatalities from the onset of the pandemic until the midpoint date of that
+    seroprevalence study, while the next two columns report cumulative deaths 4 and 5 weeks later,
+    respectively. The last two columns show the percent change in cumulative fatalities over each
+    specified time interval (weeks 0 to 4 and weeks 4 to 5, respectively).
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.07.23.20160895.this version posted October 8, 2020. The copyright holder for this preprint
+   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                           All rights reserved. No reuse allowed without permission.
+                                                                       12
+    Table 3: Age-specific fatality rates for COVID-19 infections vs. accidental deaths (%)
+                                                          Automobile Fatalities                Other Accidental Fatalities
+                          COVID-19 IFR
+     Age Group                 (95% CI)                  England              USA               England                 USA
+                                  0·004
+        0 to 34                                           0·002              0·015                0·004                0·032
+                           (0·003–0·005)
+                                  0·068
+       35 to 44                                           0·002              0·012                0·017                0·043
+                           (0·058–0·078)
+                                   0·23
+       45 to 54                                           0·002              0·013                0·019                0·043
+                             (0·20–0·26)
+                                   0·75
+       55 to 64                                           0·003              0·013                0·014                0·043
+                             (0·66–0·87)
+                                    2·5
+       65 to 74                                           0·003              0·013                0·020                0·040
+                               (2·1–3·0)
+                                    8·5
+       75 to 84                                           0·005              0·017                0·069                0·094
+                              (6·9–10·4)
+                                   28·3
+         85+                                              0·007              0·019                0·329                0·349
+                             (21·8–36·6)
+    Note: This table compares IFRs for COVID-19 with the incidence of accidental deaths in
+    England and in the USA. For each age group, the second column shows the metaregression
+    estimate of the age-specific IFR with its 95% confidence interval enclosed in parentheses. The
+    final four columns report the annual incidence of automobile fatalities and other accidental
+    fatalities as a percent of the population of each age group in each country. The accidental fatality
+    data for England as of 2019 is reported by the U.K. Office of National Statistics, while the
+    corresponding U.S. data are reported as of 2018 by the U.S. National Center for Health
+    Statistics.[130, 131]
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.07.23.20160895.this version posted October 8, 2020. The copyright holder for this preprint
+   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                           All rights reserved. No reuse allowed without permission.
+                                                                       13
+          Figure 1: Time lags in the incidence and reporting of COVID-19 fatalities
+    Note: This figure illustrates time lags in the incidence and reporting of COVID-19 fatalities using
+    the results of a simulation calibrated to reflect the estimated distribution for time lags between
+    symptom onset, death, and inclusion in official fatality reports.[29] As indicated by the vertical
+    green line, this simulation assumes that the seroprevalence study was conducted two weeks after
+    the pandemic was curtailed. The histogram shows the frequency of deaths and reported fatalities
+    associated with the infections that occurred on the last day prior to full containment. As indicated
+    by the orange vertical line, 95% of cumulative fatalities are reported within about four weeks
+    after the midpoint date of the seroprevalence study.
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.07.23.20160895.this version posted October 8, 2020. The copyright holder for this preprint
+   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                           All rights reserved. No reuse allowed without permission.
+                                                                       14
+        Figure 2: Study selection (PRISMA flow diagram)
+                                                       5 countries with
+                                                          comprehensive case
+                                                           reporting & tracing
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.07.23.20160895.this version posted October 8, 2020. The copyright holder for this preprint
+   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                           All rights reserved. No reuse allowed without permission.
+                                                                       15
+      Figure 3: The log-linear relationship between IFR and age
+    Note: Our metaregression indicates that the infection fatality rate (IFR) increases exponentially
+    with age, and hence this figure uses a base-10 logarithmic scale so that the relationship is evident
+    across all ages from 5 to 95 years. Each marker denotes a specific metaregression observation,
+    that is, the IFR for a particular age group in a particular location. The marker style reflects the
+    type of observation: circles for observations from seroprevalence studies of representative
+    samples, diamonds for seroprevalence studies of convenience samples, and squares for countries
+    with comprehensive tracing programs. The red line denotes the metaregression estimate of IFR
+    as a function of age, the shaded region depicts the 95% confidence interval for that estimate.
+    The dashed lines denote the prediction interval (which includes random variations across studies
+    and age groups), and almost all of the 108 metaregression observations lie within that interval.
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.07.23.20160895.this version posted October 8, 2020. The copyright holder for this preprint
+   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                           All rights reserved. No reuse allowed without permission.
+                                                                       16
+      Figure 4: Benchmark analysis of the link between age and IFR
+    Note: This figure depicts the relationship between the infection fatality rate (IFR) and age, where
+    IFR is shown in percentage terms. Each marker denotes a specific metaregression observation,
+    that is, the IFR for a particular age group in a particular location. The marker style reflects the
+    type of observation: circles for observations from seroprevalence studies of representative
+    samples, diamonds for seroprevalence studies of convenience samples, and squares for countries
+    with comprehensive tracing programs. The red line denotes the metaregression estimate of IFR
+    as a function of age, the shaded region depicts the 95% confidence interval for that estimate.
+    The dashed lines denote the prediction interval (which includes random variations across studies
+    and age groups); almost all of the 104 metaregression observations lie within that interval.
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.07.23.20160895.this version posted October 8, 2020. The copyright holder for this preprint
+   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                           All rights reserved. No reuse allowed without permission.
+                                                                       17
+     FIgure 5: Forest plot of metaregression data
+     Cohorts with median age of 5-15 years
+     Cohorts with median age of 16-25 years
+     Cohorts with median age of 26-34 years
+                                                                                             (Figure 5 continues on next page)
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.07.23.20160895.this version posted October 8, 2020. The copyright holder for this preprint
+   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                           All rights reserved. No reuse allowed without permission.
+                                                                       18
+     Cohorts with median age of 35-54 years
+     Cohorts with median age of 55-64 years
+                                                                                             (Figure 5 continues on next page)
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.07.23.20160895.this version posted October 8, 2020. The copyright holder for this preprint
+   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                           All rights reserved. No reuse allowed without permission.
+                                                                       19
+     Cohorts with median age of 65-74 years
+     Cohorts with median age of 75 years and above
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.07.23.20160895.this version posted October 8, 2020. The copyright holder for this preprint
+   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                           All rights reserved. No reuse allowed without permission.
+                                                                       20
+      Figure 6: Variations in population IFR across geographical locations
+    Note: This figure depicts the extent to which the metaregression results account for variations in
+    population IFR across geographical locations. The blue circles denote seroprevalence studies of
+    representative samples, and the green diamonds denote countries with comprehensive tracing
+    programs. For each observation, its position on the horizontal axis denotes its predicted IFR
+    obtained by aggregating across the age-specific predictions of the metaregression, and its
+    position on the vertical axis denotes the actual population IFR for that location. The dashed
+    segments denote the estimated line obtained by fitting a regression to these 16 observations.
+    The R2 of this regression is 0.87, indicating that nearly 90% of the variation in population IFR
+    can be explained by variations in age composition and age-specific prevalence of COVID-19.
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.07.23.20160895.this version posted October 8, 2020. The copyright holder for this preprint
+   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                           All rights reserved. No reuse allowed without permission.
+                                                                       21
+    References
+    1.       Khalili M, Karamouzian M, Nasiri N, Javadi S, Mirzazadeh A, Sharifi H. Epidemiological
+             characteristics of COVID-19: a systematic review and meta-analysis. Epidemiol Infect.
+             2020;148:e130. doi:10.1017/S0950268820001430
+    2.       Oran DP, Topol EJ. Prevalence of Asymptomatic SARS-CoV-2 Infection: A Narrative Review. Ann
+             Intern Med. 2020. doi:10.7326/M20-3012
+    3.       Rosenberg ES, Tesoriero JM, Rosenthal EM, et al. Cumulative incidence and diagnosis of SARS-
+             CoV-2 infection in New York. annals of epidemiology. 2020.
+             doi:10.1016/J.ANNEPIDEM.2020.06.004
+    4.       New York City Department of Health. COVID-19 Data. 2020.
+    5.       Meyerowitz-Katz G, Merone L. A systematic review and meta-analysis of published research
+             data on COVID-19 infection-fatality rates. 2020.
+    6.       United Kingdom Parliament Office. Antibody Tests for COVID-19. 2020.
+    7.       Organization for Economic Cooperation and Development. Member Countries. 2020.
+    8.       Brown TS, Walensky RP. Serosurveillance and the COVID-19 Epidemic in the US: Undetected,
+             Uncertain, and Out of Control. JAMA. 2020. doi:10.1001/jama.2020.14017
+    9.       Lattimore S, Wickenden C, Brailsford SR. Blood donors in England and North Wales: demography
+             and patterns of donation. Transfusion. 2015;55(1):91-9. doi:10.1111/trf.12835
+    10.      Public Health England. Sero-Surveillance of COVID-19: Week 22. 2020.
+    11.      United Kingdom Office for National Statistics. Coronavirus (COVID-19) infection survey:
+             characteristics of people testing positive for COVID-19 in England, August 2020. 2020.
+    12.      Clarke C, Prendecki M, Dhutia A, et al. High Prevalence of Asymptomatic COVID-19 Infection in
+             Hemodialysis Patients Detected Using Serologic Screening. Journal of the American Society of
+             Nephrology. 2020:ASN.2020060827. doi:10.1681/ASN.2020060827
+    13.      Ward H, Atchison CJ, Whitaker M, et al. Antibody prevalence for SARS-CoV-2 in England
+             following first peak of the pandemic: REACT2 study in 100,000 adults. medRxiv.
+             2020:2020.08.12.20173690. doi:10.1101/2020.08.12.20173690
+    14.      Anand S, Montez-Rath M, Han J, et al. Prevalence of SARS-CoV-2 antibodies in a large
+             nationwide sample of patients on dialysis in the USA: a cross-sectional study. The Lancet.
+             doi:10.1016/S0140-6736(20)32009-2
+   15.       Japan Ministry of Health Labour and Welfare. Updates on COVID-19 in Japan. 2020.
+   16.       Takita M, Matsumura T, Yamamoto K, et al. Geographical Profiles of COVID-19 Outbreak in
+             Tokyo: An Analysis of the Primary Care Clinic-Based Point-of-Care Antibody Testing. J Prim Care
+             Community Health. 2020;11:2150132720942695. doi:10.1177/2150132720942695
+   17.       Snoeck CJ, Vaillant M, Abdelrahman T, et al. Prevalence of SARS-CoV-2 infection in the
+             Luxembourgish population: the CON-VINCE study. 2020.
+   18.       Havers FP, Reed C, Lim T, et al. Seroprevalence of Antibodies to SARS-CoV-2 in 10 Sites in the
+             United States, March 23-May 12, 2020. JAMA Intern Med. 2020.
+             doi:10.1001/jamainternmed.2020.4130
+   19.       University of Utah Health. Utah HERO project announces phase one findings. 2020.
+   20.       Our World in Data. Coronavirus (COVID-19) testing: tests per confirmed case. 2020.
+             https://ourworldindata.org/coronavirus-testing#tests-per-confirmed-case. Accessed August 18.
+    21.      Gudbjartsson DF, Helgason A, Jonsson H, et al. Spread of SARS-CoV-2 in the Icelandic Population.
+             N Engl J Med. 2020;382(24):2302-15. doi:10.1056/NEJMoa2006100
+    22.      Korea Center for Disease Control. Updates on COVID-19 in Korea as of July 9. 2020.
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.07.23.20160895.this version posted October 8, 2020. The copyright holder for this preprint
+   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                           All rights reserved. No reuse allowed without permission.
+                                                                       22
+    23.      Song SK, Lee DH, Nam JH, et al. IgG Seroprevalence of COVID-19 among Individuals without a
+             History of the Coronavirus Disease Infection in Daegu, Korea. Journal of Korean medical science.
+             2020;35(29):e269-e. doi:10.3346/jkms.2020.35.e269
+    24.      Byrne AW, McEvoy D, Collins AB, et al. Inferred duration of infectious period of SARS-CoV-2:
+             rapid scoping review and analysis of available evidence for asymptomatic and symptomatic
+             COVID-19 cases. BMJ Open. 2020;10(8):e039856-e. doi:10.1136/bmjopen-2020-039856
+    25.      Long QX, Liu BZ, Deng HJ, et al. Antibody responses to SARS-CoV-2 in patients with COVID-19.
+             Nat Med. 2020;26(6):845-8. doi:10.1038/s41591-020-0897-1
+    26.      Sethuraman N, Jeremiah SS, Ryo A. Interpreting Diagnostic Tests for SARS-CoV-2. JAMA.
+             2020;323(22):2249-51. doi:10.1001/jama.2020.8259
+    27.      Choe PG, Kang CK, Suh HJ, et al. Antibody Responses to SARS-CoV-2 at 8 Weeks Postinfection in
+             Asymptomatic Patients. Emerging Infectious Disease journal. 2020;26(10).
+             doi:10.3201/eid2610.202211
+    28.      Ripperger TJ, Uhrlaub JL, Watanabe M, et al. Detection, prevalence, and duration of humoral
+             responses to SARS-CoV-2 under conditions of limited population exposure. medRxiv.
+             2020:2020.08.14.20174490. doi:10.1101/2020.08.14.20174490
+    29.      U.S. Center for Disease Control and Prevention. COVID-19 Pandemic Planning Scenarios. 2020.
+    30.      Harbord RM, Higgins JPT. Meta-regression in Stata. Stata Journal. 2008;8(4):493-519.
+    31.      Higgins JPT, Thompson SG, Spiegelhalter DJ. A re-evaluation of random-effects meta-analysis. J R
+             Stat Soc Ser A Stat Soc. 2009;172(1):137-59. doi:10.1111/j.1467-985X.2008.00552.x
+    32.      Chamie G, Marquez C, Crawford E, et al. SARS-CoV-2 Community Transmission During Shelter-in-
+             Place in San Francisco. 2020.
+    33.      Czech Ministry of Health. Collective Immunity Study SARS-CoV-2: Czech Prevalence. 2020.
+    34.      Denmark State Blood Institute. Notat: Nye foreløbige resultater fra den repræsentative
+             seroprævalensundersøgelse af COVID-19. 2020.
+    35.      Dimeglio C, Loubes J-M, Miedougé M, Herin F, Soulat J-M, Izopet J. The real seroprevalence of
+             SARS-CoV-2 in France and its consequences for virus dynamics. Research Square; 2020.
+    36.      Jersey Health & Community Services. Prevalence of Antibodies – Community Survey Round 2.
+             2020.
+    37.      Lavezzo E, Franchin E, Ciavarella C, et al. Suppression of COVID-19 outbreak in the municipality
+             of Vo, Italy. 2020.
+    38.      Mahajan S, Srinivasan R, Redlich CA, et al. Seroprevalence of SARS-CoV-2-Specific IgG Antibodies
+             Among Adults Living in Connecticut Between March 1 and June 1, 2020: Post-Infection
+             Prevalence (PIP) Study. medRxiv. 2020:2020.08.04.20168203.
+             doi:10.1101/2020.08.04.20168203
+    39.      McLaughlin CC, Doll MK, Morrison KT, et al. High Community SARS-CoV-2 Antibody
+             Seroprevalence in a Ski Resort Community, Blaine County, Idaho, US. Preliminary Results.
+             medRxiv. 2020. doi:10.1101/2020.07.19.20157198
+   40.       Nawa N, Kuramochi J, Sonoda S, et al. Seroprevalence of SARS-CoV-2 IgG Antibodies in
+             Utsunomiya City, Greater Tokyo, after first pandemic in 2020 (U-CORONA): a household- and
+             population-based study. 2020.
+   41.       Nishiura H, Kobayashi T, Yang Y, et al. The Rate of Underascertainment of Novel Coronavirus
+             (2019-nCoV) Infection: Estimation Using Japanese Passengers Data on Evacuation Flights. J Clin
+             Med. 2020;9(2). doi:10.3390/jcm9020419
+   42.       Norrbotten Region. Forekomst av antikroppar mot covid-19 - Norrbottens befolkning maj 2020.
+             2020.
+   43.       Norway Public Health Institute. Truleg berre ein liten andel av befolkninga som har vore smitta
+             av koronavirus. 2020.
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.07.23.20160895.this version posted October 8, 2020. The copyright holder for this preprint
+   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                           All rights reserved. No reuse allowed without permission.
+                                                                       23
+    44.      Oklahoma State Department of Health. Weekly Epidemiology and Surveillance Report. 2020.
+    45.      Oregon State University. TRACE results suggest 17% of Hermiston community infected with
+             SARS-CoV-2. 2020.
+    46.      Petersen MS, Strøm M, Christiansen DH, et al. Seroprevalence of SARS-CoV-2–Specific
+             Antibodies, Faroe Islands. emerging infectious diseases. 2020;26(11).
+             doi:10.3201/EID2611.202736
+    47.      Rhode Island Department of Health. COVID-19 serology testing brief. 2020.
+    48.      Riverside County Joint Information Center. Antibody study shows coronavirus spread wider in
+             Riverside County. 2020.
+    49.      Saltzman J. Nearly a third of 200 blood samples taken in Chelsea show exposure to coronavirus.
+             Boston Globe. 2020 4/17/2020.
+    50.      San Miguel County Department of Health & Environment. IgG Antibody Tests: Statistics and
+             Demographics. 2020.
+    51.      Skowronski DM, Sekirov I, Sabaiduc S, et al. Low SARS-CoV-2 sero-prevalence based on
+             anonymized residual sero-survey before and after first wave measures in British Columbia,
+             Canada, March-May 2020. 2020.
+    52.      Slovenia Government Communication Office. First study carried out on herd immunity of the
+             population in the whole territory of Slovenia. 2020.
+    53.      Stadlbauer D, Tan J, Jiang K, et al. Seroconversion of a city: Longitudinal monitoring of SARS-CoV-
+             2 seroprevalence in New York City. medRxiv. 2020:2020.06.28.20142190.
+             doi:10.1101/2020.06.28.20142190
+    54.      Stockholm Region. Lägesrapport om arbetet med det nya coronaviruset. 2020.
+    55.      Streeck H, Schulte B, Kuemmerer B, et al. Infection fatality rate of SARS-CoV-2 infection in a
+             German community with a super-spreading event. 2020.
+    56.      University of Miami. SPARK-C: understanding the burden of COVID-19 in Miami-Dade County
+             through rapid serological testing of a representative random sample. 2020.
+    57.      Washoe County Health District. Seroprevalence of SARS-CoV-2 Specific Antibodies Among Adults
+             in Washoe County, Nevada on June 9-10, 2020. 2020.
+    58.      Weis S, Scherag A, Baier M, et al. Seroprevalence of SARS-CoV-2 antibodies in an entirely PCR-
+             sampled and quarantined community after a COVID-19 outbreak - the CoNAN study. 2020.
+    59.      Wells PM, Doores KM, Couvreur S, et al. Estimates of the rate of infection and asymptomatic
+             COVID-19 disease in a population sample from SE England. 2020.
+    60.      Sweden Public Health Authority. The Infection Fatality Rate of COVID-19 in Stockholm –
+             Technical Report. 2020.
+    61.      Feehan AK, Fort D, Garcia-Diaz J, et al. Seroprevalence of SARS-CoV-2 and Infection Fatality
+             Ratio, Orleans and Jefferson Parishes, Louisiana, USA, May 2020. Emerg Infect Dis. 2020;26(11).
+             doi:10.3201/eid2611.203029
+    62.      Giustizia News. Coronavirus, l'incubo senza fine di Ariano Irpino: 60 positivi al tampone dopo i
+             test sierologici. May 28.
+    63.      Austria Statistik. COVID-19 prevalence study: a maximum of 0.15% of the population in Austria
+             infected with SARS-CoV-2. 2020.
+    64.      Saltzman J. Study: 1 out of 10 residents in 4 neighborhoods unwittingly had coronavirus. Boston
+             Globe. 2020 May 15.
+    65.      Micolitti A. Caldari Ortona: 12% cittadini sottoposti a test sierologici positivi con anticorpi al
+             Covid 19. Rete8. 2020 June 3.
+    66.      Finland National Institute for Health and Welfare. Weekly report of THL serological population
+             study of the coronavirus epidemic. 2020.
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.07.23.20160895.this version posted October 8, 2020. The copyright holder for this preprint
+   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                           All rights reserved. No reuse allowed without permission.
+                                                                       24
+    67.      Bogogiannidou Z, Vontas A, Dadouli K, et al. Repeated leftover serosurvey of SARS-CoV-2 IgG
+             antibodies, Greece, March and April 2020. Eurosurveillance. 2020;25(31):2001369.
+             doi:doi:https://doi.org/10.2807/1560-7917.ES.2020.25.31.2001369
+    68.      Times of Israel Staff. Coronavirus : Israël est encore loin de l’immunité de groupe. Times of
+             Israel. 2020 July 23.
+    69.      Aziz NA, Corman VM, Echterhoff AKC, et al. Seroprevalence and correlates of SARS-CoV-2
+             neutralizing antibodies: Results from a population-based study in Bonn, Germany. medRxiv.
+             2020:2020.08.24.20181206. doi:10.1101/2020.08.24.20181206
+    70.      CBC News. Serology study gives officials first look at spread of COVID-19 through Alberta's
+             population. 2020 July 30.
+    71.      Feehan AK, Velasco C, Fort D, et al. Racial and workplace disparities in seroprevalence of SARS-
+             CoV-2 in Baton Rouge, Louisiana, July 15-31, 2020. medRxiv. 2020:2020.08.26.20180968.
+             doi:10.1101/2020.08.26.20180968
+    72.      Hicks S, Pohl K, Neeman T, et al. A dual antigen ELISA allows the assessment of SARS-CoV-2
+             antibody seroprevalence in a low transmission setting. medRxiv. 2020:2020.09.09.20191031.
+             doi:10.1101/2020.09.09.20191031
+    73.      Lundkvist Å, Hanson S, Olsen B. Pronounced difference in Covid-19 antibody prevalence
+             indicates cluster transmission in Stockholm, Sweden. Infection Ecology & Epidemiology.
+             2020;10(1):1806505. doi:10.1080/20008686.2020.1806505
+    74.      University of Louisville School of Medicine. Phase II results of Co-Immunity Project show higher-
+             than-expected rates of exposure to novel coronavirus in Jefferson County. 2020.
+    75.      van den Broek-Altenburg E, Atherly A, Diehl S, et al. Risk Factors for COVID-19: Community
+             Exposure and Mask-Wearing. 2020. doi:https://dx.doi.org/10.2139/ssrn.3676570
+    76.      Knabl L, Mitra T, Kimpel J, et al. High SARS-CoV-2 Seroprevalence in Children and Adults in the
+             Austrian Ski Resort Ischgl. medRxiv. 2020:2020.08.20.20178533.
+             doi:10.1101/2020.08.20.20178533
+    77.      Naranbhai V, Chang CC, Beltran WFG, et al. High seroprevalence of anti-SARS-CoV-2 antibodies
+             in Chelsea, Massachusetts. The Journal of Infectious Diseases. 2020. doi:10.1093/infdis/jiaa579
+    78.      Fenwick C, Croxatto A, Coste AT, et al. Changes in SARS-CoV-2 Antibody Responses Impact the
+             Estimates of Infections in Population-Based Seroprevalence Studies. medRxiv.
+             2020:2020.07.14.20153536. doi:10.1101/2020.07.14.20153536
+    79.      Figueiredo-Campos P, Blankenhaus B, Mota C, et al. Seroprevalence of anti-SARS-CoV-2
+             antibodies in COVID-19 patients and healthy volunteers. medRxiv. 2020:2020.08.30.20184309.
+             doi:10.1101/2020.08.30.20184309
+    80.      Hibino S, Hayashida K, Ahn AC, Hayashida Y. Dynamic Change of COVID-19 Seroprevalence
+             among Asymptomatic Population in Tokyo during the Second Wave. medRxiv.
+             2020:2020.09.21.20198796. doi:10.1101/2020.09.21.20198796
+    81.      Northeast Texas Public Health Department. Hideaway COVID-19 antibody testing program.
+             2020.
+    82.      Reifer J, Hayum N, Heszkel B, Klagsbald I, Streva VA. SARS-CoV-2 IgG antibody responses in New
+             York City. diagnostic microbiology and infectious disease. 2020.
+             doi:10.1016/J.DIAGMICROBIO.2020.115128
+    83.      Merkely B, Szabo AJ, Kosztin A, et al. Novel coronavirus epidemic in the Hungarian population, a
+             cross-sectional nationwide survey to support the exit policy in Hungary. Geroscience.
+             2020;42(4):1063-74. doi:10.1007/s11357-020-00226-9
+    84.      Sutton M, Cieslak P, Linder M. Seroprevalence Estimates of SARS-CoV-2 Infection in Convenience
+             Sample — Oregon, May 11–June 15, 2020. Morbidity and Mortality Weekly Report.69:1100-1.
+             doi:http://dx.doi.org/10.15585/mmwr.mm6932a4
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.07.23.20160895.this version posted October 8, 2020. The copyright holder for this preprint
+   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                           All rights reserved. No reuse allowed without permission.
+                                                                       25
+    85.      Armann JP, Unrath M, Kirsten C, Lueck C, Dalpke A, Berner R. Anti-SARS-CoV-2 IgG antibodies in
+             adolescent students and their teachers in Saxony, Germany (SchoolCoviDD19): very low
+             seropraevalence and transmission rates. 2020. doi:10.1101/2020.07.16.20155143
+    86.      Bendavid E, Mulaney B, Sood N, et al. COVID-19 Antibody Seroprevalence in Santa Clara County,
+             California. 2020.
+    87.      Bryan A, Pepper G, Wener MH, et al. Performance Characteristics of the Abbott Architect SARS-
+             CoV-2 IgG Assay and Seroprevalence in Boise, Idaho. J Clin Microbiol. 2020;58(8).
+             doi:10.1128/JCM.00941-20
+    88.      Erikstrup C, Hother CE, Pedersen OBV, et al. Estimation of SARS-CoV-2 infection fatality rate by
+             real-time antibody screening of blood donors. clinical infectious diseases. 2020.
+             doi:10.1093/CID/CIAA849
+    89.      Fiore J, Centra M, de Carlo A, et al. Far away from herd immunity to SARS-CoV-2: results from a
+             survey in healthy blood donors in southeastern Italy. 2020. doi:10.1101/2020.06.17.20133678
+    90.      Fischer B, Knabbe C, Vollmer T. SARS-CoV-2 IgG seroprevalence in blood donors located in three
+             different federal states, Germany, March to June 2020. Euro Surveill. 2020;25(28).
+             doi:10.2807/1560-7917.ES.2020.25.28.2001285
+    91.      Fontanet A, Tondeur L, Madec Y, et al. Cluster of COVID-19 in northern France: A retrospective
+             closed cohort study. medRxiv. 2020:2020.04.18.20071134. doi:10.1101/2020.04.18.20071134
+    92.      Kraehling V, Kern M, Halwe S, et al. Epidemiological study to detect active SARS-CoV-2 infections
+             and seropositive persons in a selected cohort of employees in the Frankfurt am Main
+             metropolitan area. 2020.
+    93.      Nesbitt DJ, Jin D, Hogan JW, et al. Low Seroprevalence of SARS-CoV-2 in Rhode Island Blood
+             Donors Determined using Multiple Serological Assay Formats. 2020.
+    94.      Ng D, Goldgof G, Shy B, et al. SARS-CoV-2 seroprevalence and neutralizing activity in donor and
+             patient blood from the San Francisco Bay Area. medRxiv. 2020.
+             doi:10.1101/2020.05.19.20107482
+    95.      Percivalle E, Cambie G, Cassaniti I, et al. Prevalence of SARS-CoV-2 specific neutralising
+             antibodies in blood donors from the Lodi Red Zone in Lombardy, Italy, as at 06 April 2020. Euro
+             Surveill. 2020;25(24). doi:10.2807/1560-7917.ES.2020.25.24.2001031
+    96.      Slot E, Hogema BM, Reusken CBEM, et al. Herd immunity is not a realistic exit strategy during a
+             COVID-19 outbreak. 2020. doi:10.21203/rs.3.rs-25862/v1
+    97.      Thompson CP, Grayson N, Paton R, et al. Detection of neutralising antibodies to SARS
+             coronavirus 2 to determine population exposure in Scottish blood donors between March and
+             May 2020. medRxiv. 2020:2020.04.13.20060467. doi:10.1101/2020.04.13.20060467
+    98.      Valenti L, Bergna A, Pelusi S, et al. SARS-CoV-2 seroprevalence trends in healthy blood donors
+             during the COVID-19 Milan outbreak. 2020.
+    99.      Doi A, Iwata K, Kuroda H, et al. Estimation of seroprevalence of novel coronavirus disease
+             (COVID-19) using preserved serum at an outpatient setting in Kobe, Japan: A cross-sectional
+             study. 2020.
+    100.     Emmenegger M, Cecco ED, Lamparter D, et al. Population-wide evolution of SARS-CoV-2
+             immunity tracked by a ternary immunoassay. 2020.
+    101.     Canadian Blood Services. COVID-19 seroprevalence report-August 19, 2020. 2020.
+    102.     Poletti P, Tirani M, Cereda D, et al. Age-specific SARS-CoV-2 infection fatality ratio and
+             associated risk factors, Italy, February to April 2020. Euro surveillance : bulletin Europeen sur les
+             maladies transmissibles = European communicable disease bulletin. 2020;25(31):2001383.
+             doi:10.2807/1560-7917.ES.2020.25.31.2001383
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.07.23.20160895.this version posted October 8, 2020. The copyright holder for this preprint
+   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                           All rights reserved. No reuse allowed without permission.
+                                                                       26
+    103.     Rigatti SJ, Stout R. SARS-CoV-2 Antibody Prevalence and Association with Routine Laboratory
+             Values in a Life Insurance Applicant Population. medRxiv. 2020:2020.09.09.20191296.
+             doi:10.1101/2020.09.09.20191296
+    104.     Toenshoff B, Muller B, Elling R, et al. Prevalence of SARS-CoV-2 Infection in Children and Their
+             Parents in Southwest Germany. 2020. doi:http://dx.doi.org/10.2139/ssrn.3668418
+    105.     Dodd RY, Xu M, Stramer SL. Change in Donor Characteristics and Antibodies to SARS-CoV-2 in
+             Donated Blood in the US, June-August 2020. JAMA. 2020. doi:10.1001/jama.2020.18598
+    106.     Ulyte A, Radtke T, Abela IA, et al. Variation in SARS-CoV-2 seroprevalence in school-children
+             across districts, schools and classes. medRxiv. 2020:2020.09.18.20191254.
+             doi:10.1101/2020.09.18.20191254
+    107.     Vassallo RR, Bravo MD, Dumont LJ, Hazegh K, Kamel H. Seroprevalence of Antibodies to SARS-
+             CoV-2 in US Blood Donors. medRxiv. 2020:2020.09.17.20195131.
+             doi:10.1101/2020.09.17.20195131
+    108.     Biggs HM. Estimated Community Seroprevalence of SARS-CoV-2 Antibodies — Two Georgia
+             Counties, April 28–May 3, 2020. morbidity and mortality weekly report. 2020;69(29):965-70.
+             doi:10.15585/MMWR.MM6929E2
+    109.     Italy National Institute of Statistics. Primi risultati dell'indagine di sieroprevalenza sul SARS-CoV-
+             2. 2020.
+    110.     Pastor-Barriuso R, Perez-Gomez B, Hernan MA, et al. SARS-CoV-2 infection fatality risk in a
+             nationwide seroepidemiological study. medRxiv. 2020:2020.08.06.20169722.
+             doi:10.1101/2020.08.06.20169722
+    111.     Perez-Saez J, Lauer SA, Kaiser L, et al. Serology-informed estimates of SARS-CoV-2 infection
+             fatality risk in Geneva, Switzerland. The Lancet Infectious Diseases. doi:10.1016/S1473-
+             3099(20)30584-3
+    112.     Netherlands National Institute for Public Health and the Environment. Children and COVID-19.
+             2020.
+    113.     Portugal National Institute of Health. Relatório de Apresentação dos Resultados Preliminares do
+             Primeiro Inquérito Serológico Nacional COVID-19. 2020.
+    114.     Menachemi N, Yiannoutsos CT, Dixon BE, et al. Population Point Prevalence of SARS-CoV-2
+             Infection Based on a Statewide Random Sample — Indiana, April 25–29, 2020. morbidity and
+             mortality weekly report. 2020;69(29):960-4. doi:10.15585/MMWR.MM6929E1
+    115.     Ireland Health Service Executive. Preliminary report of the results of the Study to Investigate
+             COVID-19 Infection in People Living in Ireland (SCOPI): a national seroprevalence study, June-
+             July 2020. 2020.
+    116.     Waterfield T, Watson C, Moore R, et al. Seroprevalence of SARS-CoV-2 antibodies in children - A
+             prospective multicentre cohort study. medRxiv. 2020:2020.08.31.20183095.
+             doi:10.1101/2020.08.31.20183095
+   117.      Carrat F, de Lamballerie X, Rahib D, et al. Seroprevalence of SARS-CoV-2 among adults in three
+             regions of France following the lockdown and associated risk factors: a multicohort study.
+             medRxiv. 2020:2020.09.16.20195693. doi:10.1101/2020.09.16.20195693
+   118.      Molenberghs G, Faes C, Aerts J, et al. Belgian Covid-19 Mortality, Excess Deaths, Number of
+             Deaths per Million, and Infection Fatality Rates (8 March - 9 May 2020). 2020.
+   119.      Sweden Public Health Authority. Seroprevalence of Antibodies following COVID-19 Infection in
+             Blood Samples from Outpatient Care, Interim report 1, updated on June 18 using data thru week
+             21 - Påvisning av antikroppar efter genomgången covid-19 i blodprov från öppenvården,
+             delrapport 1 - uppdaterad 2020-06-18 med data för prover insamlade vecka 21. 2020.
+   120.      Ontario Public Health. COVID-19 seroprevalence in Ontario: March 27, 2020 to June 30, 2020.
+             2020.
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.07.23.20160895.this version posted October 8, 2020. The copyright holder for this preprint
+   (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                           All rights reserved. No reuse allowed without permission.
+                                                                       27
+    121.     Australia Department of Health. Coronavirus (COVID-19) current situation and case numbers.
+             2020.
+    122.     Iceland Directorate of Health. COVID-19 in Iceland - Statistics 28 Feb to 14 June 2020. 2020.
+    123.     Korea Center for Disease Control. Weekly Report on the COVID-19 Situation in the Republic of
+             Korea. 2020.
+    124.     Lithuania Central Registry. Koronaviruso (COVID-19) Lietuvoje statistika. 2020.
+    125.     New Zealand Ministry of Health. COVID-19 Current Cases. 2020.
+    126.     United Kingdom BioBank. UK Biobank SARS-CoV-2 Serology Study Weekly Report - 21 July 2020.
+             2020.
+    127.     Mizumoto K, Kagaya K, Zarebski A, Chowell G. Estimating the asymptomatic proportion of
+             coronavirus disease 2019 (COVID-19) cases on board the Diamond Princess cruise ship,
+             Yokohama, Japan, 2020. eurosurveillance. 2020;25(10). doi:10.2807/1560-
+             7917.ES.2020.25.10.2000180
+    128.     Pagani G, Conti F, Giacomelli A, et al. Seroprevalence of SARS-CoV-2 significantly varies with age:
+             Preliminary results from a mass population screening. Journal of Infection.
+             doi:10.1016/j.jinf.2020.09.021
+    129.     France Public Health. COVID-19 : point épidémiologique du 9 juillet 2020. 2020.
+    130.     U.S. National Center for Health Statistics. Underlying Cause of Death, 1999-2018. 2020.
+    131.     United Kingdom Office of National Statistics. Mortality statistics - underlying cause, sex and age.
+             2020.
+    132.     Blackburn J, Yiannoutsos CT, Carroll AE, Halverson PK, Menachemi N. Infection Fatality Ratios for
+             COVID-19 Among Noninstitutionalized Persons 12 and Older: Results of a Random-Sample
+             Prevalence Study. Annals of Internal Medicine. 2020. doi:10.7326/M20-5352
+    133.     O'Driscoll M, Ribeiro Dos Santos G, Wang L, et al. Age-specific mortality and immunity patterns
+             of SARS-CoV-2 infection in 45 countries. medRxiv. 2020:2020.08.24.20180851.
+             doi:10.1101/2020.08.24.20180851
+    134.     Martin-Olalla JM. Age and sex disaggregation of crude excess deaths during the 2020 spring
+             COVID-19 outbreak in Spain. medRxiv. 2020:2020.08.06.20169326.
+             doi:10.1101/2020.08.06.20169326
+    135.     Verity R, Okell LC, Dorigatti I, et al. Estimates of the severity of coronavirus disease 2019: a
+             model-based analysis. lancet infectious diseases. 2020;20(6):669-77. doi:10.1016/S1473-
+             3099(20)30243-7
+   136.      Ioannidis J. The infection fatality rate of COVID-19 inferred from seroprevalence data. 2020.
+   137.      Williamson EJ, Walker AJ, Bhaskaran K, et al. Factors associated with COVID-19-related death
+             using OpenSAFELY. Nature. 2020. doi:10.1038/s41586-020-2521-4
+   138.      Herzog S, Bie JD, Abrams S, et al. Seroprevalence of IgG antibodies against SARS coronavirus 2 in
+             Belgium: a prospective cross-sectional study of residual samples. 2020.
+   139.      Pollán M, Pérez-Gómez B, Pastor-Barriuso R, et al. Prevalence of SARS-CoV-2 in Spain (ENE-
+             COVID): a nationwide, population-based seroepidemiological study. The Lancet. 2020.
+             doi:10.1016/s0140-6736(20)31483-5
+   140.      Stringhini S, Wisniak A, Piumatti G, et al. Seroprevalence of anti-SARS-CoV-2 IgG antibodies in
+             Geneva, Switzerland (SEROCoV-POP): a population-based study. The Lancet.
+             2020;396(10247):313-9. doi:10.1016/s0140-6736(20)31304-0

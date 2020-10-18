@@ -28,7 +28,7 @@ def medrxiv_pdfs(out_dir='pdfs/'):
     pdf_json = {"articles": []}
 
     start_page = 0
-    max_pages = 10
+    max_pages = 40
 
     for page in range(start_page, max_pages):
         soup = make_soup(url.format(page))

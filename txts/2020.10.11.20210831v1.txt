@@ -1,0 +1,657 @@
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.11.20210831.this version posted October 13, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+                  The SIR model estimates incorrectly the basic
+                 reproduction number for the covid-19 epidemic
+                                Hyun Mo Yanga∗, Luis Pedro Lombardi Juniorb ,
+                                                       Ariana Campos Yangc
+           a,b
+               Department of Applied Mathematics, State University of Campinas
+                        Praça Sérgio Buarque de Holanda, 651; CEP: 13083-859,
+                                                         Campinas, SP, Brazil
+                                            c
+                                              Division of Allergy and Immunology,
+             General Hospital of the Medicine School of University of São Paulo
+                       Av. Dr. Eneas Carvalho de Aguiar, 255; CEP: 05403-000,
+                                                         São Paulo, SP, Brazil
+                 emails: a hyunyang@ime.unicamp.br, b luispedro jr@hotmail.com,
+                                                         c
+                                                           arianacy@gmail.com
+                                                                    Abstract
+                 The transmission of severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2)
+            becomes pandemic, but presents different patterns in the world. To characterize the epi-
+            demic of coronavirus disease 2019 (covid-19) in each countries and regions, mathematical
+            models were formulated aiming the estimation of the basic reproduction number R0 . Sim-
+            ple mathematical model, the SIR model, provided lower estimation for R0 , ranging from
+            1.5 to 3.0. However, more elaborate model presented here estimated higher value for
+       ∗
+         Corresponding author: tel. + 55 19 3521-6031
+                                                                           1
+       NOTE: This preprint reports new research that has not been certified by peer review and should not be used to guide clinical practice.
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.11.20210831.this version posted October 13, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+           R0 , 9.24 and 8.0 respectively, for São Paulo State (Brazil) and Spain. Additionally, SIR
+           model estimated R0 using the severe covid-19 cases, which are not participating in the
+           SARS-CoV-2 transmission chain.
+                 Keywords: mathematical model; estimation; basic reproduction number, São Paulo
+           State (Brazil); Spain
+    Introduction
+    At the beginning of the epidemic, and also during the first months, we have two sets of covid-19
+    data: Severe covid-19 cases (those in hospitals, where they were tested and confirmed), and
+    deaths due to covid-19. Mathematical models were formulated and used to fit the epidemic
+    curve to estimate the basic reproduction number R0 .
+        In the literature, the usually assumed basic reproduction number R0 is around 2.5, see for
+    instance [1] and [2]. The reliable estimation of R0 is important because this number determines
+    the magnitude of effort to eradicate infection. For instance, the efforts of vaccination to eradi-
+    cate an infection must be vaccinating a fraction equal or greater than 1 − 1/R0 of susceptibles
+    [3]. In [4], analyzing vaccination as a control mechanism, if R0 is reduced by the vaccine to
+    value lower than one, the number of cases decreased following exponential-type decay.
+        The estimation of the basic reproduction number R0 , however, depends on the mathematical
+    model. We consider two examples. The first model is the simplest susceptible - infectious -
+    recovered (SIR) model, and the second is a model taking into account more aspects of the
+    natural history of covid-19 infection encompassing the lethality rate depending on the age,
+    called the elaborated model. These models are fitted taking into account the severe covid-19
+    data collections from São Paulo State (Brazil) [5] and Spain [6].
+        São Paulo State, Brazil, has 44.6 million inhabitants (demographic density, 177/km2 ) with
+    15.3% of the population comprised of elder individuals. The first case was registered on Febru-
+    ary 26, and partial quarantine was implemented on March 24. Considering that there is a delay
+    around 9 days since the infection and the onset of covid-19, we estimate the basic reproduction
+    number considering collected data from February 26 to April 2.
+        Spain has 47.4 million inhabitants (demographic density, 92.3/km2 ) with 25.8% of the popu-
+    lation comprised of elder individuals. The first case was registered on January 31, and lockdown
+    was implemented on March 16. Considering a delay of around 9 days, we estimate the basic
+                                                                         2
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.11.20210831.this version posted October 13, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+    reproduction number considering collected data from January 31 to March 25.
+        Yang et al. [7], using the elaborated model, estimated R0 using the first period of covid-19
+    data representing the natural (without any interventions) epidemic, obtaining 9.24 (São Paulo
+    State) and 8.0 (Spain). The estimation of R0 based on the first period is in concordance with
+    the definition of the basic reproduction number: Completely susceptible population without
+    constraints (interventions) [3].
+    1      The SIR model
+    In the SIR model, the dynamical system is (the varying total population N is N = S + I + R)
+                                                  
+                                                  
+                                                  
+                                                        d
+                                                       dt
+                                                          S    = φN − β NI S − µS
+                                                        d
+                                                       dt
+                                                          I    = β NI S − (γ + µ + α) I                                                 (1)
+                                                  
+                                                        e
+                                                          R    = γI − µR,
+                                                  
+                                                       dt
+    where the total population N obeys
+                                                            d
+                                                              N = φN − µN − αI,                                                         (2)
+                                                           dt
+    and φ and µ are, respectively, the birth and natural mortality rates, β, γ, and α are, respectively,
+    the transmission rate, the infectious rate, and the additional mortality (lethality) rate. If
+    φ = µ + αI/N , then N is constant.
+        In Appendix A, the steady-state corresponding to the system of equations (1) was analyzed
+    to obtain the basic reproduction number R0 . For simplicity, let us consider φ = µ. The system
+    of equations (1), using R = N − I − S, can be rewritten as
+                                                 (
+                                                      d
+                                                      dt
+                                                         S    = µN − β NI S − µS
+                                                      d
+                                                                                                                                        (3)
+                                                      dt
+                                                         I    = (γ + µ + α) (Ref − 1) I
+    where the effective reproduction number Ref is defined by
+                                                                          S
+                                                              Ref = R0      = R0 s,                                                     (4)
+                                                                         N
+    with the basic reproduction number R0 being given by equation (A.2) changing φ by µ, that
+    is, R0 = β/ (γ + µ + α).
+        Let us analyze the system of equations (3) at two boundaries. Let us assume that the first
+                                                                         3
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.11.20210831.this version posted October 13, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+    case of covid-19 is introduced at t = 0, that is, the initial conditions supplied to equation (3)
+    are S(0) = N − 1 and I(0) = 1. For a large population, we can approximate S ∼ N and the
+    system of equations can be approximated by
+                                                 (
+                                                      d
+                                                      dt
+                                                         S   ∼ −βI
+                                                      d
+                                                      dt
+                                                         I   ∼ (γ + µ + α) (R0 − 1) I,
+    with R = N − S − I. Hence, at the beginning of the epidemic, if we estimate the transmission
+    rate β, we can calculate R0 using the expression obtained from the steady-state analysis. The
+    system of equations (3) does not approach to a steady-state, but attains it when α = 0. In this
+    case, asymptotically (t → ∞), we have dI/dt = 0 if Ref = R0 S/N = 1, that is, S → S ∗ = s∗ N
+    and I → I ∗ = i∗ N , where i∗ and s∗ are given by equations (A.6) and (A.7), respectively.
+    Therefore, when α = 0, at t = 0, Ref = R0 , and when t → ∞ (steady-state), Ref = 1 (see
+    equation (A.7)), from which we retrieve the well known relationship s∗ = 1/R0 [3].
+        Therefore, based on Ref given by equation (4) when φ = µ and α = 0, the basic reproduction
+    number R0 obtained from mathematical modelings provides two useful information: At the
+    beginning of the epidemic (t = 0), R0 gives the magnitude of the initial takeoff of the epidemic,
+    and when epidemic reaches the steady-state (after many waves of the epidemic, that is, t → ∞),
+    R0 measures its severity providing the fraction of susceptible individuals, that is, s∗ = 1/R0 .
+    Between these two extremes, the effective reproduction number Ref dictates the course of an
+    epidemic, which follows decaying oscillations around Ref = 1 [4]. It is worth stressing the fact
+    that Ref given by equation (4) is valid only when φ = µ and α = 0, and when one of these
+    conditions is not valid, Ref given by equation (4) can be used as an approximated value.
+        The number of accumulated severe covid-19 cases Ω is given by the exits from S, and
+    entering into classes I, that is,
+                                                      d           I
+                                                         Ω = β S, with Ω(0) = 0.                                                        (5)
+                                                     dt           N
+    To evaluate the parameter β, we calculate
+                                                                  n
+                                                                X                         2
+                                                                      Ω (ti ) − Ωob (ti ) ,
+                                                                     
+                                                     Sum =                                                                              (6)
+                                                                 i=1
+    where Ωob is the accumulated severe covid-19 registered cases. The value of β that minimizes
+    Sum is the fitted value. We stress the fact that we are estimating the model parameters against
+    the severe covid-19 cases.
+                                                                         4
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.11.20210831.this version posted October 13, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+         We estimate the basic reproduction number using equation (1) with different infective per-
+    sons at t = 0. The model parameters are γ = 1/10, and, for São Paulo State, φ = µ =
+    1/(78.4 × 365) and α = 0.002, and for Spain, φ = µ = 1/(83.4 × 365) and α = 0.002 (all
+    in days−1 ). The transmission rate β is estimated and the basic reproduction number R0 is
+    calculated using equation (A.2).
+         For the data collected from São Paulo State, we obtained for I(0) = 1, R0 = 3.14 with
+    Sum = 8.02 × 105 , for I(0) = 10, R0 = 2.4 with Sum = 8.49 × 105 , for I(0) = 25, R0 = 2.11
+    with Sum = 1.86 × 106 , and for I(0) = 100, R0 = 1.62 with Sum = 5.87 × 106 . Other initial
+    conditions are S(0) = 44.6 million and R(0) = 0. The lowest Sum occurs when R0 = 3.14.
+         For the data collected from Spain, we obtained for I(0) = 1, R0 = 2.97 with Sum =
+    4.16 × 108 , for I(0) = 10, R0 = 2.5 with Sum = 6.32 × 108 , for I(0) = 25, R0 = 2.3 with
+    Sum = 1.13 × 109 , and for I(0) = 100, R0 = 2.06 with Sum = 1.19 × 109 . Other initial
+    conditions are S(0) = 47.4 million and R(0) = 0. The lowest Sum occurs when R0 = 2.97.
+         We observed that the larger the value of I(0), the small is the estimated R0 . By the stringent
+    definition of R0 , we must consider I(0) = 1. However, the initial condition I(0) > 1 mimics
+    the first case of covid-19 occurring earlier than the time t = 0. The Singapore University of
+    Technology and Design [8] estimated R0 using I(0) = 100 for different countries.
+    2      The elaborated model
+    One of the main aspects of covid-19 is increased lethality in elder individuals. For this reason,
+    a population is divided into two groups, composed of young (60 years old or less, denoted by
+    subscript y), and elder (60 years old or more, denoted by subscript o) individuals. The vital
+    dynamic of this community is described by the per-capita rates of birth (φ) and mortality (µ),
+    and ϕ is the aging rate, that is, the flow from young subpopulation y to elder subpopulation o.
+         Since we are dealing with the initial phase of the epidemic, the model is that presented in
+    [7], but the compartments related to quarantine and mass testing are removed. Hence, for each
+    subpopulation j (j = y, o), individuals are divided into six classes: susceptible Sj , exposed and
+    incubating Ej , asymptomatic Aj , symptomatic persons in the initial phase of covid-19 (or pre-
+    diseased) D1j , and symptomatic persons with severe covid-19 D2j , mild covid-19 Q2j . However,
+    all young and elder individuals in classes Aj , Q2j , and D2j enter into the same immune class I
+    (this is the 7th class, but common to both subpopulations).
+         The natural history of new coronavirus infection is the same for young (j = y) and elder
+    (j = o) subpopulations. We assume that persons in the asymptomatic (Aj ), pre-diseased (D1j ),
+                                                                         5
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.11.20210831.this version posted October 13, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+    and a fraction zj of mild covid-19 (Q2j ) classes are transmitting the virus, and other infected
+    classes ((1 − zj ) Q2j and D2j ) are under voluntary or forced isolation. Susceptible persons are
+    infected according to λj Sj (known as the mass action law [3]) and enter into class Ej , where
+    λj is the per-capita incidence rate (or force of infection) defined by λj = λ (δjy + ψδjo ), with λ
+    being
+                                  1
+                          λ=         (β1y Ay + β2y D1y + β3y zy Q2y + β1o Ao + β2o D1o + β3o zo Q2o ) ,                                 (7)
+                                 N
+    where δij is Kronecker delta, with δij = 1 if i = j, and 0, if i 6= j; and β1j , β2j and β3j are
+    the transmission rates, that is, the rates at which a virus encounters a susceptible people and
+    infects him/her. After an average period 1/σj in class Ej , where σj is the incubation rate,
+    exposed individuals enter into the asymptomatic class Aj (with probability pj ) or pre-diseased
+    class D1j (with probability 1 − pj ). After an average period 1/γj in class Aj , where γj is
+    the recovery rate of asymptomatic individuals, asymptomatic individuals acquire immunity
+    (recovered) and enter into immune class I. Possibly asymptomatic individuals can manifest
+    symptoms at the end of this period, and a fraction 1 − χj enters into mild covid-19 class Q2j .
+    For symptomatic persons, after an average period 1/γ1j in class D1j , where γ1j is the infection
+    rate of pre-diseased individuals, pre-diseased individuals enter into severe covid-19 class D2j
+    (with probability 1 − mj ) or class Q2j (with probability mj ). Individuals in class D2 acquire
+    immunity after period 1/γ2j , where γ2j is the recovery rate of severe covid-19, and enter into
+    class I or die under the disease-induced (additional) mortality rate αj . Individuals in class Q2j
+    acquire immunity after period 1/γ3j , where γ3j is the recovery rate of mild covid-19, and enter
+    into immune class I.
+        The new coronavirus transmission model is described by the system of ordinary differential
+    equations, with j = y, o. Equations for susceptible individuals are
+                                               
+                                                d Sy = φN − (ϕ + µ) Sy − λSy
+                                               
+                                                    dt                                                                                  (8)
+                                                     d
+                                               
+                                                       So = ϕSy − µSo − λψSo ,
+                                                    dt
+                                                                         6
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.11.20210831.this version posted October 13, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+    for infectious individuals,
+                                          d
+                                 
+                                 
+                                           Ej    = λ (δjy + ψδjo ) Sj − (σj + µ) Ej
+                                         dt
+                                 
+                                 
+                                          d
+                                 
+                                 
+                                                  = pj σj Ej − (γj + µ) Aj
+                                 
+                                 
+                                           Aj
+                                  dt
+                                 
+                                 
+                                       d
+                                           D1j    = (1 − pj ) σj Ej − (γ1j + µ) D1j                                                     (9)
+                                     dt
+                                       d
+                                 
+                                 
+                                           Q2j    = (1 − χj ) γj Aj + mj γ1j D1j − (γ3j + µ) Q2j
+                                 
+                                 
+                                 
+                                 
+                                      dt
+                                  d D2j
+                                 
+                                 
+                                                  = (1 − mj ) γ1j D1j − (γ2j + µ + αj ) D2j ,
+                                 
+                                      dt
+    and for immune individuals,
+                          d
+                             I = χy γy Ay + γ3y Q2y + γ2y D2y + χo γo Ao + γ3o Q2o + γ2o D2o − µI,                                     (10)
+                         dt
+    where Nj = Sj + Ej + Aj + D1j + Q2j + D2j , and N = Ny + No + I obeys
+                                                  d
+                                                    N = (φ − µ) N − αy D2y − αo D2o ,                                                  (11)
+                                                 dt
+    with the initial number of population at t = 0 being N (0) = N0 = N0y + N0o , where N0y and
+    N0o are the size of young and elder subpopulations at t = 0. If φ = µ+(αy D2y + αo D2o ) /N , the
+    total size of the population is constant. The accumulated severe covid-19 cases Ω is obtained
+    from
+                                              d
+                                                 Ω = γ1y D1y + γ1o D1o , with Ω(0) = 0.                                                (12)
+                                              dt
+        Table 2 summarizes the model parameters. The description of the assigned values can be
+    found in [7]. The transmission and additional mortality rates are estimated.
+        The basic reproduction number R0 for the system of equations (8), (9) and (10) written in
+    terms of the corresponding fractions is
+                                                R0 = (R1y + R2y ) s0y + (R1o + R2o ) s0o ,                                             (13)
+    where                                                      
+                                                                            φ
+                                                                s0y =
+                                                               
+                                                                          φ+ϕ
+                                                                     0      ϕ
+                                                                so =
+                                                                                ,
+                                                                          φ+ϕ
+                                                                         7
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.11.20210831.this version posted October 13, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+    Table 1: Summary of the model parameters (j = y, o) and values (rates in days−1 , and
+    proportions are dimensionless). The values (∗ ) correspond to São Paulo State. For Spain,
+    φ = µ = 1/(83.4 × 365) days−1 , ϕ = 1.14 × 10−5 days−1 , and ψ = 1.1.
+           Symbol               Meaning                                                                        Value
+           µ∗                   Natural mortality rate                                                         1/(78.4 × 365)
+           φ∗                   Birth rate                                                                     1/(78.4 × 365)
+           ϕ∗                   Aging rate                                                                     6.7 × 10−6
+           σy (σo )             Incubation rate                                                                1/5.8 (1/5.8)
+           γy (γo )             Recovery rate of asymptomatic persons                                          1/12 (1/14)
+           γ1y (γ1o )           Infection rate of pre-diseased persons                                         1/4 (1/4)
+           γ2y (γ2o )           Recovery rate of severe covid-19                                               1/12 (1/21)
+           γ3y (γ3o )           Infection rate of mild covid-19 persons                                        1/13 (1/16)
+           αy (αo )             Additional mortality rate                                                      0.00185 (0.0071)
+           zy (zo )             Proportion circulating of mild covid-19 persons                                0.5 (0.2)
+           ψ∗                   Scaling factor of transmission among elder persons                             1.15
+           χy (χo )             Proportion of remaining as asymptomatic persons                                0.98 (0.95)
+           py (po )             Proportion of asymptomatic persons                                             0.8(0.8)
+           my (mo )             Proportion of mild (non-hospitalized) covid-19                                 0.92 (0.75)
+    and                                    σy      β1y                      σy       β2y
+                
+                    R1y = py                                + (1 − py )
+                
+                
+                                        σy + φ γ y + φ                    σy + φ γ1y + φ
+                
+                                           σ o    β 1o ψ                    σo     β2o ψ
+                 R1o = po                                  + (1 − po )
+                
+                
+                                     σ o + φ γo + φ                      σo + φ γ1o + φ                                              (14)
+                                              σy                    γy                     σy              γ1y       zy β3y
+                
+                    R2y = py                       (1 − χy )             + (1 − py )              my
+                                     σy + φ                     γy + φ                 σy + φ γ1y + φ γ3y + φ
+                
+                
+                
+                
+                
+                                            σ  o                   γ o                   σo              γ1o      zo β3o ψ
+                 R2o = po
+                                                   (1 − χo )            + (1 − po )              mo                        .
+                                           σo + φ                γo + φ                σo + φ γ1o + φ γ3o + φ
+    Details of calculations can be found in [7].
+        To estimate the transmission rates, we consider βy = β1y = β2y = β3y and βo = β1o = β2o =
+    β3o = ψβy , and we use equation (6) and Ω given by equation (12). The values for the model
+    parameters are those given in Table 1. The basic reproduction number R0 is calculated using
+    equation (13).
+        The initial conditions supplied to the system of equations (8), (9) and (10) are, for young
+                                                                         8
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.11.20210831.this version posted October 13, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+    and elder subpopulations,
+                                                                                                                                        
+     young Sy (0) = N0y , Ey (0) = 30, Ay (0) = 24, D1y (0) = 6, Q2y (0) = 6, D2y (0) = 0
+    
+    
+        and                                                                                                                             
+    
+    
+     elder S (0) = N , E (0) = 20, A (0) = 16, D (0) = 4, Q (0) = 3, D (0) = 1,
+                      o              0o       o                   o                1o                  2o               2o
+                                                                                                                                       (15)
+    plus I(0) = 0, where the initial simulation time t = 0 corresponds to the calendar time when
+    the first case was confirmed (February 26 for São Paulo State, and January 31 for Spain). For
+    São Paulo State, N0y = 37.8 million and N0o = 6.8 million, and for Spain, N0y = 35.17 million
+    and N0o = 12.23 million.
+        For the data collected from São Paulo State, we obtained R0 = 9.24, with Sum = 1.22×106 ,
+    while for the data collected from Spain, we obtained R0 = 8.0, with Sum = 5.8 × 108 . If we let
+    zy = zo = 0 (mild covid-19 cases do not transmit) and χy = χo = 1 (asymptomatic individuals
+    do not relapse to mild covid-19), the estimated basic reproduction number is R0 = 8.72 for São
+    Paulo State, with Sum = 1.23 × 106 , and R0 = 7.35 for Spain, with Sum = 1.59 × 108 .
+    3      Discussion and conclusion
+    Firstly, in the elaborated model, there are several infectious classes but the severe covid-19
+    cases do not transmit the SARS-CoV-2, for this reason, R0 does not depend on the additional
+    mortality rates αy and αo (see equations (13) and (14)). On the other hand, in the SIR model,
+    there is only one infectious class, and R0 depends on the additional mortality rate α (see
+    equation (A.2)).
+        As we have pointed out, at the beginning and also in the early phase of the covid-19 epidemic,
+    only hospitalized severe covid-19 cases were registered after confirmed by serological or PCR
+    test. These individuals are either isolated in hospitals (receiving treatment) or discharged from
+    hospitals but recommend to be isolated in their home. Then, somehow, the majority of these
+    individuals are not participating in the populational SARS-CoV-2 chain transmission. In the
+    SIR model, the unique way to estimate the transmission rate is considering that severe covid-9
+    cases are forming the infective class I. Hence, the estimation of R0 provided by the SIR model
+    using severe covid-19 cases is unrealistic.
+        There are different manners to define an epidemic curve. For instance, one possible definition
+    is the curve formed by those positive for serological and PCR tests. However, in the early phase
+    of (natural) epidemic, the covid-19 epidemic curve must be defined by severe cases, which are
+    the only available data. In the elaborated model, the covid-19 epidemic curve was retrieved by
+                                                                         9
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.11.20210831.this version posted October 13, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+    estimating the transmission rates of asymptomatic, pre-diseased, and a fraction of mild classes.
+    The estimated basic reproduction number was higher than that usually accepted: R0 = 9.24
+    for São Paulo State, and R0 = 8.0 for Spain. The usually accepted estimation of R0 is around 3
+    obtained from the SIR model, which results from the estimated transmission rate of the severe
+    covid-19 class. In [9], it was shown that the ratio between non-apparent and apparent covid-19
+    is around 24, showing that SARS-CoV-2 is being transmitted by a huge number of hidden cases.
+        In the elaborated model, the initial conditions E(0) = 50 and I(0) = 1 were supplied to
+    the dynamical system, resulting in R0 = 9.24 (São Paulo State) and R0 = 8.0 (Spain). Instead
+    of comparing with the SIR model, let us compare with the SEIR model considering the same
+    initial conditions E(0) = 50 and I(0) = 1 supplied to the elaborated model (see Appendix B).
+    The estimated basic reproduction number for São Paulo State was R0 = 3.92, and for Spain,
+    R0 = 4.41.
+        Comparing SIR, SEIR, and elaborated model, as the model incorporates more aspects of the
+    natural history of the infection, higher becomes the estimation of R0 . For SIR and SEIR models,
+    there is not any alternative except considering severe covid-19 cases as infective. However, in
+    the elaborated model, the asymptomatic (A), pre-diseased (D1 ) and a fraction of mild covid-19
+    (Q2 ) individuals are transmitting SARS-CoV-2, but the severe covid-19 (D2 ) individuals are
+    isolated and do not contribute, except to the hospital staff [9].
+        As we have pointed out, the estimation of R0 is important because this number determines
+    the magnitude of effort to eradicate infection. In [7], describing the lockdown in Spain, they
+    argued that if R0 = 3, at least 67% of the population must be isolated to control the epidemic,
+    while for R0 = 8, at least 87% of the population must be isolated. They showed that 70% of the
+    population in lockdown did not explain the covid-19 data in Spain, but 90% of the population
+    in lockdown explained better the observed data.
+        With respect to the SIR model, Li et al. [10] explicitly cited that, by using data from
+    January 10 to February 8, 2020, they estimated the effective reproduction number Ref instead
+    of R0 , arguing that the most recent common ancestor could have occurred on November 17,
+    2019. The time elapsed from November 17, 2019 (the first case) to January 10, 2020 (the first
+    day in the estimation) is 54 days. However, on January 23, 2020, Wuhan and other cities
+    of Hubei province imposed a rigid lockdown, sowing that they estimated R0 taking also into
+    account data recorded 16 days after the lockdown. In other words, they used the severe covid-
+    19 data from 54 after the possible first case to 16 days after the implementation of a rigid
+    lockdown (January 10 to February 8).
+        We conclude that the SIR model is not appropriate to estimate the basic reproduction
+    number R0 , specifically in the case of the covid-19 epidemic when the severe covid-19 cases
+                                                                        10
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.11.20210831.this version posted October 13, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+    may not transmit SARS-CoV-2 populationally. Elaborated models taking into account im-
+    portant aspects related to the natural history of the infection estimate more accurately R0 .
+    For instance, the incorporation of the asymptomatic individuals, the pre-diseased individuals,
+    different lethality according to age, for instance, to improve the mathematical model.
+    References
+     [1] Koo JR, et al. Interventions to mitigate early spread of SARS-CoV-2 in Singapore: a mod-
+          elling study. Lancet Infect Dis. 2020; 20 (6): 678-688. doi 10.1016/S1473-3099(20)30162-6.
+     [2] Ferguson NM, et al. Impact of non-pharmaceutical interventions (NPIs) to reduce covid-19
+          mortality and healthcare demand. Imperial College covid-19 Response Team 2020; March
+          16, 2020. doi: https://doi.org/10.25561/77482.
+     [3] Anderson RM, May, RM. Infectious Diseases of Human. Dynamics and Control. Oxford,
+          New York, Tokyo: Oxford University Press; 1991: 757 p.
+     [4] Yang HM. Modeling directly transmitted infections in a routinely vaccinated population –
+          The force of infection described by Volterra integral equation. Applied Mathematics and
+          Computation 2001; 122 (1): 27-58.
+     [5] SEADE, SP contra o novo coronavı́rus – Boletim completo. Available from:
+          https://www.seade.gov.br/coronavirus/?utm source=portal&utm medium=banner&utm campaign=
+          completo, (accessed on August 14, 2020).
+     [6] CNE, Covid19. Available from: https://cnecovid.isciii.es/covid19/. (accessed on August
+          14, 2020).
+     [7] Yang HM, Lombardi Junior LP, Campos AC, Castro FFM. Mathematical mod-
+          eling of the transmission of SARS-CoV-2 – Evaluating the impacts of isolation
+          in São Paulo State (Brazil) and lockdown in Spain associated with protective
+          measures on the epidemic of covid-19. PLOS One, submitted (2020). [MedRxiv,
+          https://www.medrxiv.org/content/10.1101/2020.07.30.20165191v1.]
+     [8] Luo J. When will COVID-19 end? Data-driven prediction. Data-Driven Innovation Lab.
+          2020 [accessed on October 10, 2020]. Available from: https://ddi.sutd.edu.sg/publications.
+                                                                        11
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.11.20210831.this version posted October 13, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+      [9] Yang HM, Lombardi Junior LP, Castro FFM, Campos AC. Mathematical model describing
+          covid-19 in São Paulo State, Brazil – Evaluating isolation as control mechanism and fore-
+          casting epidemiological scenarios of release. Epidemiology and Infection 2020 148: e155.
+          doi: 10.1017/S0950268820001600.
+    [10] Li RY, et al. Substantial undocumented infection facilitates the rapid dissemination of
+          novel coronavirus (SARS-CoV2). Science 2020; 368(6490): 489-493. doi: 10.1126/sci-
+          ence.abb3221.
+    A        Steady-state analysis of the SIR model
+    The system of equations (1) does not reach steady state, except if φ = µ + αI/N . However, the
+    system (1) in term of fractions attains steady state [7]. Defining the fraction x = X/N , with
+    X = {S, I, R}, we have
+                                   dX          1 d           X 1 d           1 d
+                                            =         X−               N=          X − x (φ − µ − αi) ,
+                                  dt N         N dt          N N dt          N dt
+    using equation (2), and the system of equations (1) becomes
+                                                
+                                                     d
+                                                
+                                                   dt
+                                                       s    = φ − βis − φs + αis
+                                                     d
+                                                    dt
+                                                       i    = βis − (γ + φ + α) i + αi2                                              (A.1)
+                                                
+                                                     d
+                                                       r    = γi − φr + αir,
+                                                
+                                                    dt
+    with s + i + r = 1, hence, the equation for r can be decoupled from the system, through
+    r = 1 − s − i. Notice that d (s + i + r) /dt = 0, and the system of equations in terms of
+    fractions attain a steady state.
+         The system of equations (A.1), dropping out the decoupled equation for r, has two equi-
+    librium points: The trivial (disease-free) equilibrium point P 0 = (s̄ = 1, ı̄ = 0) and non-trivial
+    (epidemic) equilibrium point P ∗ = (s̄ = s∗ , ı̄ = i∗ ).
+         The Jacobian matrix J evaluated at the trivial equilibrium point P 0 = (s̄ = 1, ı̄ = 0) is
+                                                           "                               #
+                                                              −φ          −β + α
+                                                    J=                                        ,
+                                                                0 β − (γ + φ + α)
+    with eigenvalues ρ1 = −φ and ρ2 = (γ + φ + α) (R0 − 1), where the basic reproduction number
+                                                                        12
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.11.20210831.this version posted October 13, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+    R0 is given by
+                                                                            β
+                                                               R0 =                 .                                                (A.2)
+                                                                       γ+φ+α
+    Hence, P 0 is locally asymptotically stable if R0 < 1.
+        The non-trivial equilibrium point P ∗ = (s̄ = s∗ , ı̄ = i∗ ) has the coordinates given by
+                                                               (
+                                                                             φ
+                                                                  s∗ =   (β−α)i∗ +φ
+                                                                                                                                     (A.3)
+                                                                  P2 (i) = 0,
+    where i∗ is the positive root but small than one of the second degree polynomial P2 (i) given by
+                                                                  "                                                #
+                                                                                                          2
+                  α                           γ+φ                   γ +  φ +  α                  (γ   +  φ)   + γα
+      P2 (i) =          (R0 − 1) +                          i2 −                 (R0 − 1) +                           i + (R0 − 1) ,
+                  φ                        γ+φ+α                         φ                        φ (γ + φ + α)
+                                                                                                                                     (A.4)
+    which has the value, at i = 1,
+                                                                                                           
+                                                      γ                 γ (γ + φ) + φ (γ + φ − α)
+                                    P2 (1) = −           (R0 − 1) +                                           .
+                                                      φ                         φ (γ + φ + α)
+    When R0 > 1, we have P2 (1) < 0 (the condition γ + φ > α is satisfied once γ > α), and the
+    two positive roots of P2 (i) are such that 0 < i∗1 < 1 < i∗2 . Hence the small root i∗1 is biologically
+    feasible. When R0 = 1, we have i∗1 = 0 and i∗2 > 1, hence i∗1 = 0 is biologically feasible. When
+    R0 < 1, we have i∗1 < 0 and i∗2 > 1, hence i∗1 = 0 is biologically feasible. Therefore, the small
+    root i∗1 , which is biologically feasible, assumes a negative value for R0 < 1, zero at R0 = 1, and
+    positive value but lower than 1 for R0 > 1. The small root of P2 (i) is given by
+                                                    h                               2
+                                                                                          i √
+                                                      γ+φ+α
+                                                          φ
+                                                               (R0 − 1) + (γ+φ)
+                                                                              φ(γ+φ+α)
+                                                                                      +γα
+                                                                                            − ∆
+                                             i∗1 =                h                       i           ,                              (A.5)
+                                                                                    γ+φ
+                                                              2 αφ (R0 − 1) + γ+φ+α
+    where ∆ is
+                  "                                                       #2
+                                                       (γ + φ)2 + γα
+                                                                                                                   
+                     γ+φ+α                                                        α                        γ+φ
+          ∆=                          (R0 − 1) +                             −4         (R0 − 1) +                    (R0 − 1) .
+                            φ                          φ (γ + φ + α)              φ                     γ+φ+α
+        The complexity arises due to the non-constant population under the additional mortality
+                                                                        13
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.11.20210831.this version posted October 13, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+    rate. Let us consider α = 0. In this case, P2 (i) has a unique positive solution
+                                                                      φ (R0 − 1)
+                                                               i∗ =                ,                                                 (A.6)
+                                                                      (γ + φ) R0
+    and the fraction of susceptible individuals, from equation (A.3), is
+                                                                            1
+                                                                    s∗ =      .                                                      (A.7)
+                                                                           R0
+    When α > 0, comparing equations (A.3) and (A.5), we notice that s∗ has a complex dependency
+    with R0 , not simply 1/R0 .
+    B        The SEIR model
+    Including the exposed class E in the SIR model, we have the SEIR model
+                                                   
+                                                   
+                                                   
+                                                   
+                                                         d
+                                                        dt
+                                                           S    =    φN − β NI S − µS
+                                                         d
+                                                                     β NI S − (σ + µ) E
+                                                   
+                                                   
+                                                        dt
+                                                           E    =
+                                                         d
+                                                                                                                                     (B.1)
+                                                   
+                                                   
+                                                       dt
+                                                           I    =    σE − (γ + µ + α) I
+                                                         e
+                                                   
+                                                   
+                                                        dt
+                                                           R    =    γI − µR,
+    where σ is the incubation rate. As the previous analysis for the SIR model, we can obtain the
+    basic reproduction number R0 , which is given by
+                                                                    σ            β
+                                                         R0 =             ×              ,                                           (B.2)
+                                                                 σ+µ γ+µ+α
+    when φ = µ, and the accumulated cases Ω obeys
+                                                       d
+                                                           Ω = σE, with Ω(0) = 0.
+                                                       dt
+         To estimate R0 for the elaborated model in the main text, we used as the initial conditions
+    E(0) = 50 and I(0) = 1 among others. For SEIR model, let us consider as the initial conditions
+    E(0) = 50 and I(0) = 1, but S(0) and R(0) are the same supplied to the SIR model. We let
+    σ = 1/5.8 days−1 (elaborated model), and the values for other parameters are those provided in
+    the SIR model. The value γ = 1/10 days−1 in somehow considered an average value among γ,
+    γ1 , γ2 and γ3 in the elaborated model. The estimated basic reproduction number for São Paulo
+    State was R0 = 3.92 with Sum = 1.29 × 106 , and for Spain, R0 = 4.41 with Sum = 2.24 × 108 .
+                                                                         14
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.11.20210831.this version posted October 13, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                      It is made available under a CC-BY-NC-ND 4.0 International license .
+        Notice that σ/ (σ + µ) = 0.99999, hence, R0 given by equations (A.2) and (B.2) must be
+    equal if β is the same. However, β is estimated by the dynamical systems (1) or (B.1) against
+    the accumulated severe covid-19 cases. For this reason, the estimated β must be different
+    between SIR and SEIR models. Let us consider SEIR model considering the initial conditions
+    S(0) = N0 , E(0) = 0, R(0) = 0, and varying I(0).
+        For the data collected from São Paulo State, with S(0) = 44.6 million, we obtained for
+    I(0) = 1, R0 = 7.84 with Sum = 1.11 × 106 , for I(0) = 10, R0 = 5.1 with Sum = 4.52 × 105 ,
+    for I(0) = 25, R0 = 4.02 with Sum = 1.21 × 106 , and for I(0) = 100, R0 = 2.74 with
+    Sum = 3.51 × 106 . The lowest Sum occurs when R0 = 5.1.
+        For the data collected from Spain, with S(0) = 47.4 million, we obtained for I(0) = 1,
+    R0 = 6.86 with Sum = 7.01×108 , for I(0) = 10, R0 = 5.1 with Sum = 7.79×108 , for I(0) = 25,
+    R0 = 4.46 with Sum = 9.54 × 108 , and for I(0) = 100, R0 = 3.58 with Sum = 1.33 × 109 . The
+    lowest Sum occurs when R0 = 6.86.
+        Comparing with the estimated R0 provided by the SIR model (see the main text), we observe
+    that SEIR model estimated with higher value. Let us assess the role played by E(0). We choose
+    data from São Paulo State, letting I(0) = 10, S(0) = 44.6 million, R(0) = 0, and varying E(0)
+    (for the SIR model, R0 = 2.4). for E(0) = 1, R0 = 5.03 with Sum = 4.57 × 105 , for E(0) = 10,
+    R0 = 4.61 with Sum = 6.19 × 105 , for E(0) = 25, R0 = 4.13 with Sum = 9.86 × 105 , and
+    for E(0) = 100, R0 = 3.04 with Sum = 3.31 × 106 . The lowest Sum occurs when R0 = 5.03,
+    however, as E(0) increases, the estimated R0 approaches to that provided by the SIR model.
+                                                                        15

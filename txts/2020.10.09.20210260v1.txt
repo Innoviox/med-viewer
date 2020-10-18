@@ -1,0 +1,857 @@
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20210260.this version posted October 13, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                 perpetuity.
+                                  It is made available under a CC-BY-NC-ND 4.0 International license .
+    Group Testing with Homophily to Curb Epidemics with Asymptomatic Carriers
+                                             Louis-Marie Harpedanne de Belleville
+           Paris School of Economics, Université Paris 1 Panthéon-Sorbonne and Banque de France1
+                                                            October 9, 2020
+                                                      Non-technical summary
+  The global fight against COVID-19 is plagued by asymptomatic transmission and false negatives. Group
+  testing is increasingly recognized as necessary to fight this epidemic. I examine the gains from
+  considering heterogeneous interpersonal interactions (homophily), which induce potential
+  contamination, when designing testing pools. Homophily can be identified ex ante at a scale
+  commensurate with pool size, so that the risk of contamination is higher within a well-designed pool
+  than with an outsider. This makes it possible to overcome the usual information-theoretic limits of
+  group testing which rely on an implicit homogeneity assumption. More importantly, group testing with
+  homophily detects asymptomatic carriers that would be missed even by exhaustive individual testing
+  because of false negatives. Such a strategy should be implemented at least at a weekly frequency to
+  fit the time profile of test positivity. It can be used either to avoid unnecessary lockdowns or to make
+  lockdowns more efficient.
+                                                                Keywords
+     COVID-19, Epidemics, Asymptomatic Carriers, Asymptomatic Transmission, Group Testing, Pooled
+      Testing, RT-PCR, Homophily, Clustering, Information Theory, Dilution, Noisy Tests, False Negative
+  All relevant ethical guidelines have been followed
+  This study does not include any experiment: no IRB nor ethical committee approval was needed, no
+  patient/participant consent was needed, and no institutional forms needed to be archived
+  The study has not benefited from any funding
+  The author has no conflict of interest
+  1
+    I thank
+    NOTE:   Marc
+          This     Fleurbaey
+               preprint          andresearch
+                        reports new     seminar participants
+                                              that has not been at Parisby
+                                                                certified School   of Economics
+                                                                             peer review and shouldfor
+                                                                                                    not very useful
+                                                                                                        be used      comments
+                                                                                                                to guide            and
+                                                                                                                         clinical practice.
+  suggestions. The opinions expressed here are those of the author only. The usual disclaimer applies.
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20210260.this version posted October 13, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                               perpetuity.
+                                  It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                      Harpedanne - Group Testing with Homophily - October 9, 2020
+  1. Introduction
+  The present study analyzes the potential gains from taking homophily into account when
+  implementing pool testing to fight epidemics with asymptomatic carriers and false negatives. It shows
+  that designing test pools that encompass potential contamination clusters improves the efficiency of
+  tests significantly, and makes it possible, in combination with more advanced complementary exams,
+  to identify carriers that would be missed even by exhaustive (and unfeasible) individual testing.
+  Various strategies have been implemented to curb the COVID-19 epidemic. Trace and track may be
+  efficient (Normile, 2020) but can be thwarted by asocial behaviors or religious beliefs (see patient 31
+  in South Korea) and tracking teams are overwhelmed when incidence is too high. Lockdowns and
+  quarantine work (World Health Organization, 2020, Kupferschmidt and Cohen, 2020) but are costly
+  (Gourinchas, 2020). The need for testing, which can substantially reduce the need for indiscriminate
+  quarantines, was identified early in the epidemic (Piguillem and Shi, 2020).
+  Massive and timely identification of asymptomatic disease carriers is crucial if human-to-human
+  asymptomatic transmission happens. Clinical diagnosis based on symptoms is inefficient in that case,
+  while Yelin et al. (2020) lament that focusing tests on acutely ill patients leave potentially infectious
+  carriers undiagnosed at the community 2. Testing of asymptomatic people is also useful if the disease
+  has long-lasting consequences even without symptoms or if subsequent phases induce a higher fatality
+  rate. Chan, Yuan, Kok et al. (2020) and Zhou, Li, Li and Zhang (2020) find ground-glass opacities for the
+  vast majority of COVID19 asymptomatic patients; although further research may be needed on that
+  point, this may signal potential sequelae even for asymptomatic patients.
+  More or less stringent definitions of asymptomatic carriers exist. Zhou, Li, Li and Zhang (2020)
+  document the existence of both presymptomatic and truly asymptomatic carriers. In order to tackle
+  the contamination induced by the former, one could consider implementing trace and track, at least if
+  the presymptomatic contagious period is short. However, as noted already, tracking teams may soon
+  be overwhelmed. Thus, massive and timely identification of presymptomatic carriers may be
+  necessary. More generally, I follow Harpedanne (2020) and use “asymptomatic” transmission to cover
+  the transmission of a disease by asymptomatic but also presymptomatic, subclinical, or only mildly sick
+  patients. Post-symptomatic patients may also present viral load, but these patients cause less
+  problems for disease transmission since they can be isolated easily.
+  First, many studies document the existence of asymptomatic carriers. In a meta-analysis of 66 articles
+  and pre-prints, Koh, Naing, Rozledzana et al. (2020) find average asymptomatic proportion at diagnosis
+  of 25.9%, including two thirds of presymptomatic and one third of truly asymptomatic. Among other
+  studies, Zhou, Li, Li and Zhang (2020) document a low proportion of asymptomatic carriers (4%),
+  probably due to sample selection issues (virologically confirmed COVID-19 patients in Shanghai Public
+  Health Centre). Kimball et al. (2020) find 13% asymptomatic carriers and 43% presymptomatic;
+  Mizumoto et al. (2020) find 18% asymptomatic carriers; Qiu et al. (2020) find 28%, Nishiura, Kobayashi,
+  Suzuki et al. (2020) find 31%, and Day (2020) cites China National Health Commission pointing to 78%
+  asymptomatic carriers in new cases observed over 24 hours to April 1, 2020.
+  Second, Human-to-human transmission of COVID-19/SARS-CoV-2 was early documented by Xu et al.
+  (2020), Li, Guan et al. (2020), Chan, Yuan, Kok et al. (2020) and Phan et al. (2020). More specifically,
+  biological and epidemiologic evidence for asymptomatic transmission is provided by Bai et al. (2020),
+  2
+    Massive and repeated testing of asymptomatic people may also be considered when no direct human-to-human
+  transmission occurs. For instance, malaria -one of the most severe issues in public health in many countries in
+  “normal” times- is mostly mosquito-borne, but mosquitoes are infected by biting infected humans, who are
+  reservoirs of malaria (more specifically, humans may be reservoirs of malaria for Plasmodium falciparum,
+  Plasmodium vivax, Plasmodium ovale and Plasmodium malariae).
+                                                                   2
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20210260.this version posted October 13, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                               perpetuity.
+                                  It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                      Harpedanne - Group Testing with Homophily - October 9, 2020
+  Rothe et al. (2020), Zou et al. (2020), Santarpia et al. (2020)3, while Wong, Aziz, Chaw, Mahamud,
+  Griffith Ying-Ru et al. (2020) strengthen the evidence for both asymptomatic and presymptomatic
+  transmission. Koh, Naing, Rozledzana et al. (2020) find that the risk of transmission is 2.55 higher when
+  the index case is symptomatic. Li, Pei et al. (2020) find that although the transmission rate of
+  undocumented carriers is only 55% that of documented carriers, the former are responsible for 80%
+  of contaminations, due to their high absolute numbers. Thus, massive testing of asymptomatic people
+  has gained popularity during the epidemic (Allen, Block, Cohen et al., 2020, Lakdawalla et al., 2020).
+  However, individual testing of asymptomatic people is hopeless. For instance, France (the sixth largest
+  world economy, with a population of 67 millions) has reached 1.19 million COVID-19 tests per week as
+  of September 2020. Even in the unlikely case in which all these tests would be dedicated to detect
+  asymptomatic carriers, each person would be tested less than once a year.
+  Group testing (batching the samples of different people and implementing a single test on the pooled
+  sample), first proposed by Dorfman (1943), makes asymptomatic testing much more efficient.
+  According to Mutesa (2020), when the prevalence of COVID-19 is .1 percent, the Dorfman’s design
+  decreases 17-fold the number of tests required to identify asymptomatic COVID-19 carriers (0.06 test
+  per person) while a new strategy suggested by Mutesa et al. decrease 55 times this number of tests
+  (0.018 test per person). Still, the gains of group testing over individual testing are lower for higher
+  prevalence, and there exist information-theoretic limits to the potential improvements allowed by
+  group testing (see below Section 3).
+  I examine the benefits of taking a priori information on interpersonal relations into account when
+  designing the pools used for group testing. Considering this information (which I label “homophily”,
+  see Section 2) makes it possible to push the information-theoretic limits mentioned above and improve
+  test’s efficiency further. Also, group testing with homophily proves very efficient to tackle false
+  negatives, a major deficiency of usual COVID19 RT-PCR tests based on nasopharyngeal swabs.
+  Group testing is used to fight COVID19 in China, India, Germany, the United States (Mallapaty, 2020)
+  and Rwanda (Mutesa et al., 2020). In the United States, it is authorized for pools of up to four people
+  (Lakdawalla and Trish, 2020). The specific literature on group testing and COVID19 includes Gollier and
+  Gossner (2020), Conger et al. (2020), Lakdawalla et al. (2020), Eberhardt, Breuckmann and Eberhardt
+  (2020), Mutesa et al. (2020), Mallapaty (2020), Lohse et al. (2020) and Yelin et al. (2020).
+  Group testing methods are either adaptive or non-adaptive. A group testing framework is adaptive if
+  the results of a given round of test influence the design of subsequent rounds. For instance, Dorfman
+  (1943) proposes a two-step procedure in which groups are tested in a first round, and if a group is
+  positive, individual tests are implemented in this group. Mutesa et al. (2020, Section IV and Appendices
+  B and C) discuss the pros and cons of various adaptive and non-adaptive tests to fight the COVID-19.
+  Section 2 presents homophily and clustering as well as their links to contamination channels and
+  contamination clusters; it shows that homophily can be identified ex ante, so that the strategy analyzed
+  here, and especially in Section 5, is feasible. Then, Section 3 provides counterexamples to the limits
+  computed by Chan et al. (2011) and Baldassini et al. (2013) and concludes that the homophily structure
+  provides relevant information. Then, Section 4 shows that homophily makes it possible to reduce the
+  effects of the dilution induced by group testing. Eventually, Section 5 considers false negatives induced
+  by idiosyncratic noise: I find evidence that an adaptive strategy combining a first step group testing
+  with homophily and a second step based on more advanced individual complementary exams can help
+  identify asymptomatic carriers that could not be detected even by exhaustive individual tests. The
+  appendix analyze the efficiency of this strategy to identify carriers at reduced cost and minimize the
+  risk of false negatives.
+  3
+    As regards other epidemics, Asymptomatic forms of SARS-CoV-1 are documented by Wilder-Smith et al. (2005),
+  while asymptomatic transmission is documented for MERS (Omrani et al., 2013) and has induced long-lasting
+  debates for influenza (Leung, Xu, Ip, and Cowlin,2015).
+                                                                   3
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20210260.this version posted October 13, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                               perpetuity.
+                                  It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                      Harpedanne - Group Testing with Homophily - October 9, 2020
+  Although many examples and references relate to the COVID19 epidemic, most results are
+  mathematical or logical in nature and may be useful more generally during epidemics in which massive
+  and repeated asymptomatic testing is necessary.
+  2. Homophily, clustering, clusters, and contamination channels
+  In this Section, I present homophily and clusitering, which are concepts used in social sciences, and
+  clusters, which are used in epidemiology. I show that these concepts, that I summarize by “homophily”
+  can be used ex ante to identify potential contamination structures in order to design testing pools
+  accordingly, which is a necessary condition to implement the testing strategy analyzed in the rest of
+  the present paper.
+  Homophily was defined in 1954 by Lazarsfeld and Merton. It “refers to the fact that people are more
+  prone to maintain relationships with people who are similar to themselves” (Jackson, 2008, p. 68).
+  McPherson et al. (2003) document the prevalence of homophily in many social networks. Jackson and
+  Lopez-Pintado (2013) analyze the effects of homophily on contagion. In particular, they show that
+  starting from a small initial seed (a small number of infected people), homophily facilitates diffusion
+  under rather limited conditions. Since homophily is prevalent in network analysis and relates to
+  contagion, it makes sense to consider this phenomenon when designing testing strategies. Surprisingly
+  enough, the literature on group testing has disregarded these aspects until now.
+  A related econometric concept is clustering. Clustering refers to the nondeterministic correlation of
+  outcomes between individuals that are somewhat related. Moulton (1986, 1990) introduced this idea
+  and showed that failing to take it into account induce significant errors when estimating standard
+  errors. Clustering has been popularized by Bertrand et al. (2004) who have shown that the standard
+  errors of difference-in-difference estimates were not properly estimated when neglecting clustering.
+  Clustering may be “multi-way” (Cameron, Gelbach and Miller, 2011), meaning for instance that an
+  individual may be correlated with people working in the same firm on the one hand, with people living
+  in the same village on the other hand, but also with people going to the same gym club, those having
+  their children in the same school, etc, without these different clusters being nested.
+  Nowadays, correcting for potential clustering is a condition sine qua non for scientific work in applied
+  economics. Many results show that overlooking clustering would underestimate standard errors,
+  which means that there exists a positive correlation between outcomes for individual belonging to
+  groups identified ex ante on rather simple criteria. This pattern is verified for a wide range of outcomes
+  in many settings.
+  In other words, various branches of social sciences converge on both the necessity and the possibility
+  of taking heterogeneous interpersonal interactions into account when analyzing many mechanisms,
+  and contagion especially.
+  The medical literature confirms that contamination occurs through clusters. Han and Yang (2020) cite
+  a Chinese-written article asserting that “In some cities, cases involving cluster transmission accounted
+  for 50% to 80% of all confirmed cases of COVID‐19.” The strategy analyzed in the present study requires
+  to group together COVID cases in the same testing pool, or a few number of pools. Pools may include
+  a few dozen individuals, at most one hundred (See Section 4 on dilution). Thus, it is needed to identify
+  ex ante potential clusters of limited size. Madewell et al. (2020) report that “To better understand
+  clustering within households, it would also be useful for researchers to report the number of infections
+  by household in addition to the total number of infected individuals.” Unfortunately, this is rarely done,
+  so that the feasibility of the strategy here analyzed must be evaluated indirectly. This can be done for
+  instance by looking at studies on small clusters with high attack rate (ratio of contaminated people in
+  a given group) or secondary attack rate (SAR is the number of people contaminated by an index case,
+  divided by the people in contact with this index case).
+  Koh, Naing, Rozledzana et al. (2020) provide a meta-analysis of 20 studies on secondary attack rate.
+  Household is quite often the place where the SAR is highest (15.4% on average), and Qiu et al. (2020)
+                                                                   4
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20210260.this version posted October 13, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                               perpetuity.
+                                  It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                      Harpedanne - Group Testing with Homophily - October 9, 2020
+  find that out of 36 children infected in a Chinese city, 32 (89%) had transmission by close contact with
+  family members. But high SAR have also been observed in a chalet (73.3%), at a choir (53.3%) and at a
+  religious event; high SARs are observed sometimes for travels and eating with an index case. Koh,
+  Naing, Rozledzana et al. (2020) report other cases of clusters with very high attack rate: “a nursing
+  home in Kings County, Washington (64%) […] a church in Arkansas (38%), a homeless shelter in Boston
+  (36%), a fitness dance class (26.3%) and the Diamond Princess cruise ship in Japan (18.8%). Park et al.
+  (2020) analyze an outbreak in a Korean building: 94 of 97 cases worked on the same floor (11th). 79
+  cases worked in the same open-space (attack rate of 52%). Many clusters have also been observed in
+  slaughterhouses. Thus, most of these results show high concentrations of cases in groups of limited
+  size that can be tested in one or a few groups.
+  Is it possible to derive from these results ex ante general contamination patterns in small clusters?
+  Many studies (Li, Zhang, Lu et al., 2020, Madewell et al., 2020, Liu, Lian, Zhong et al.,2020) and the
+  meta-analysis by Koh, Naing, Rozledzana et al. (2020) underline that longer and more intense exposure
+  to infection sources increases the risk of infection. Crowded indoor environments with sustained close
+  contact and conversations are a particularly high-risk setting (Nishiura, Oshitani, Kobayashi, et al.,
+  2020). Interestingly, Park et al. (2020) find a high concentration of cases in open spaces but only one
+  case in small offices. This is consistent with the theoretical analysis in Harpedanne de Belleville (2020)
+  who shows an almost convex effect of the number of room users onto contamination.
+  Using these general patterns and theoretical results, it is possible to identify ex ante potential clusters,
+  and to design pools that encompass these clusters. Section 3 to 5 analyze the gains from this strategy.
+  More generally, Harpedanne 2020) relates contamination channels and contamination probabilities
+  between individuals who have interpersonal interactions. For instance, airborne and droplets
+  contagions increase the probability of contagion between people sharing the same office, open space,
+  corridor, etc. Contagion through fomites increase the probability of contagion between people using
+  successively the same toilet, the same seat in a train coach, etc.
+  Thus, like Harpedanne (2020), the present paper deals with curbing epidemics with asymptomatic
+  contamination and heterogeneous social interactions inducing specific expected contamination
+  patterns. For Harpedanne (2020), asymptomatic carriers are unidentified but organizational measures
+  can affect interpersonal interactions; conversely, the present paper takes interpersonal interactions
+  for granted and proposes to take them into account to better identify asymptomatic carriers.
+  In Section 5, I analyze a two-step strategy in which the first step (pool test on nasopharyngeal swabs)
+  draws on homophily to design test pools. From a policy perspective, many patterns of homophily and
+  potential clusters are identified; they can be used to make testing more efficient and therefore reduce
+  the need for unnecessary lockdowns (Piguillem and Shi, 2020). Still, households are documented as
+  frequent clusters (high homophily inside households), and lockdowns may aggravate this fact. Thus,
+  the two-step strategy can also be implemented to identify household contamination and make
+  lockdowns more efficient and shorter.
+  3. Using homophily to push information-theoretic limits
+  In this section, I show that if the homophily structure is known before implementing a pooled test, it
+  contains information that can make the test more efficient. For that purpose, I evidence that if
+  homophily is “strong” enough and can be properly identified when designing the pooled tests - more
+  specifically, when designing the pools -, it makes it possible to overcome the most recent and tight
+  information-theoretic lower bounds on the efficiency of group testing. These limits have been
+  identified by Chan et al. (2011) who, for the first time in the literature, define limits in terms of actual
+  numbers and not only rate or capacity, and Baldassini et al. (2013), who follow the same path and
+  provide a new and tighter lower bound.
+  Unlike Sections 4 and 5, the present Section focuses on noiseless tests. Thus, a few definitions may be
+  useful here. A group test is noiseless if a negative test outcome is guaranteed when all items in the
+                                                                   5
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20210260.this version posted October 13, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                               perpetuity.
+                                  It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                      Harpedanne - Group Testing with Homophily - October 9, 2020
+  testing pool are nondefective, and a positive outcome when a least one item in the pool is defective
+  (Aldridge, Johnson and Scarlett, 2019). Otherwise, the test is noisy.
+  Noisy tests are often examined under the assumptions of constant (Chan et al., 2011) or worst-case
+  (Macula, 1997) noise. However, the results by Yelin et al. (2020) point instead to an increasing risk of
+  false negatives when dilution increases, and the results by Yang, Yang, Shen et al. (2020), Wang, Xu,
+  Gao et al. (2020) and Wang, Tan, Wang et al. (2020) point to patient-specific idiosyncratic noise. These
+  two issues are analyzed in Sections 4 and 5, respectively, and I show that taking homophily into account
+  brings specific gains. Conversely, the general form noise models (such as the symmetric error model,
+  see e.g. Chan et al. , 2011, or the additive model, see e.g. Atia and Saligrama, 2012) are not relevant
+  to analyze these forms of noises, so that there is no need to provide a general noisy-models analysis.
+  I consider noiseless tests for different other reasons. First, this makes it clear that the benefits of taking
+  homophily into account in group testing are not limited to noise-related issues. Second, it makes the
+  comparison with the information-theoretic limit of Baldassini et al. (2013) easier.
+  Baldassini et al. (2013, Section III) analyze a noiseless test in a population of size N, with K defectives
+  (K is known for simplicity). They show that if the number of tests is limited to T, the probability of
+  correct identification of the set of defectives is:
+                                                                        2𝑇
+  (1)                                                     𝑃(𝑠𝑢𝑐) ≤       𝐾
+                                                                        𝐶𝑁
+                       𝑁!
+  where 𝐶𝑁𝐾 =                  .
+                   𝐾!(𝑁−𝐾)!
+  Let N be 64 and K be 8. Using 6 tests only (T=6), one can cut the population in 8 groups of 8 people
+  each and determine which group contains carriers if only one group contains carriers (think of the 64
+  population as a 4x4x4 cube and cut the cube in half in each dimension, that is implement 6 tests over
+  32 people each). According to (1):
+                                                                        26
+  (2)                                                     𝑃(𝑠𝑢𝑐) ≤       8  ≈ 1.45 10−8
+                                                                        𝐶64
+  Let now introduce homophily. Homophily means that there exists high potential for contamination
+  within each group, while the potential for intergroup contamination is low. Let assume that only one
+  individual has imported the disease in the 64 population: this a decent assumption if the prevalence is
+  low in the general population; this assumption may be verified with probability (1- ε1), and let ε2 be
+  the probability that intergroup contamination has happened. Then with a probability higher than
+  (1 - ε1)(1 - ε2), all 8 carriers are in the same group. For instance, if ε1=0.2 and ε2=.5, we get:
+  (3)                                                          𝑃(𝑠𝑢𝑐) ≥ 0.4
+  Which of course contradicts (2). Strong homophily provides information that makes it possible to
+  overcome information-theoretic limits based on the implicit assumption of absence of homophily.
+  The counterexample just provided is extreme and not very useful in practice; the aim of this example
+  is merely to illustrate that the usual information-theoretic limits rely on an implicit homogeneity
+  assumption. By taking homophily into account, we relax this assumption. More realistic adaptative
+  frameworks may provide rather high probability of success with a limited number of test. Think of
+  testing the 8 groups independently in a first step and testing individually all people in the first two
+  groups that turn positive in the first step. With decent homophily, this strategy would likely provide a
+  very good probability of success while (1) would give a bound equal to 0.3 %. Actually, (1) would not
+  apply since the strategies examined by Baldassini et al. (2013) are only non-adaptative, but since the
+  authors point to the limited gain in efficiency brought by adaptative designs, it is likely that gains from
+  homophily could be formally proven for adaptative designs. This is beyond the scope of the present
+  paper, and (3) suffices to prove that homophily, if identified ex ante when designing a group test, may
+  provide relevant information.
+                                                                   6
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20210260.this version posted October 13, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                               perpetuity.
+                                  It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                      Harpedanne - Group Testing with Homophily - October 9, 2020
+  4. Correcting the dilution effect of group testing thanks to homophily
+  Dilution is a crucial issue for group testing applied to disease detection. If a positive swab is pooled
+  with many negative swabs, it may difficult to identify traces of the virus. Dilution is dealt with already
+  in the seminal paper on group testing by Dorfman (1943) who tackles syphilis detection among young
+  drafted Americans. Dorfman finds that “diagnostic tests for syphilis are extremely sensitive and will
+  show positive results for even great dilution of antigen”. Still, dilution may be more of an issue for
+  other diseases. Dilution has been examined in a group testing framework by Hwang (1976). Warasi et
+  al. (2017) propose a parametric model to tackle dilution.
+  A series of studies have examined dilution for RT-PCR test targeting genes of SARS-CoV-2. Lohse et al.
+  (2020) target the E gene (envelop gene) and S gene (spike gene) of SARS-CoV-2 and show that it is
+  possible to identify positive samples correctly, even when diluted 30-fold (that is, one positive swab
+  pooled with 29 negatives swabs). Yelin et al. (2020) find that group testing can be implemented with
+  up to 32 individuals per group with a rate of false negative of 10 % in the case of COVID19, which they
+  claim is low when compared to other sources of noise. They also suggest that implementing additional
+  amplification cycles would make it possible to implement group testing with up to 64 individuals per
+  group. Accordingly, Mutesa et al. (2020) show that using a Ct-value of 40 makes it possible to detect
+  positive swabs diluted up one hundred-fold. More precisely, they show that for tests targeting the N
+  gene of SARS-CoV-2, the upper 95% bound is below 40 and for tests targeting the Orf1ab gene, the
+  upper 90 % bound is below 40. Subsequently, they confirm these results with tests targeting the E and
+  RdRp genes.
+  If homophily is taken into account when designing the pools, it is rather likely that carriers will be
+  concentrated in a few pools, and therefore that no single carrier will be isolated in a pool. If many
+  carriers are concentrated in a pool, this counteracts the effects of dilution. For instance, if a pool with
+  32 swabs contains 2 positive swabs, the dilution is 1/16, which is rather limited.
+  In the present paper, I do not analyze further the interactions between homophily and dilution. Indeed,
+  the available literature points to limited effect of dilution for COVID-19. Still, this issue remains open
+  to further research.
+  5. Group testing with homophily to detect individual false negatives
+  Idiosyncratic noise in tests can occur for many different reasons: contamination of the samples, error
+  or insufficient training of the person in charge of collecting the swabs, etc. I focus here on a type of
+  noise that has been extensively documented by the literature on COVID19: the swabs used for tests
+  may fail to contain viral loading for many disease carriers. To solve this issue, a strategy based on group
+  testing with homophily can identify more asymptomatic carriers than group testing alone, but also
+  more than exhaustive individual testing.
+  Many methods can be used to identify SARS-CoV-2 carriers: clinical diagnosis, chest radiograph and
+  CT-scan, fibrobronchoscope brush biopsy, RT-PCR on bronchoalveolar lavage fluid, sputum, nasal
+  swabs, pharyngeal swabs, feces, etc. By definition, clinical diagnosis does not work for asymptomatic
+  carriers; chest radiograph and CT-scan are not available to implement massive identification of
+  asymptomatic carriers; as underlined by Yang, Yang, Shen et al. (2020), collecting lower respiratory
+  samples (bronchoalveolar lavage fluid, fibrobronchoscope brush biopsy) requires specific equipment
+  and skilled operators, and can be painful; among upper respiratory samples, sputum is produced in
+  only 28 % of COVID cases examined by Huang et al. (2020). Thus, only nasal swabs and pharyngeal
+  swabs may be used for large scale asymptomatic testing.
+  Yang, Yang, Shen et al. (2020) analyze four types of specimens (bronchoalveolar lavage fluid, nasal
+  swabs, pharyngeal swabs and sputum) from 213 confirmed COVID patients and find strong evidence
+  of false negatives for individual tests based on nasal or pharyngeal swabs: the rate of positive is only
+  50% to 73.3 % for nasal swabs; it is higher (72.1 % to 73.3 %) for the swabs collected over the first week
+                                                                   7
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20210260.this version posted October 13, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                               perpetuity.
+                                  It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                      Harpedanne - Group Testing with Homophily - October 9, 2020
+  after the onset of the disease. The rate is even lower for the pharyngeal swabs: 11 % to 61.3 %; once
+  again higher for the swabs collected over the first week (60 % to 61.3 %).
+  Wang, Xu, Gao et al. (2020) analyze eight types of samples (bronchoalveolar lavage fluid,
+  fibrobronchoscope brush biopsy, sputum, nasal swabs, pharyngeal swabs, feces, bood and urine). They
+  also find a high rate for false negative for individual nasal swabs and even more for pharyngeal swabs.
+  They also point the very poor performance of rRt-PCR tests based on blood and urine. Wang, Tan,
+  Wang et al. (2020) compare the detection performance of individual nasopharyngeal and
+  oropharyngeal swabs for 535 patients. They also find better results for the former, and find that using
+  both tests increase detection slightly over nasopharyngeal alone, which confirms the existence for
+  false negatives for both. Overall, nasal swabs, which are widely used for rRT-PCR identification of SARS-
+  CoV-2 (Wang, Hu, Hu et al., 2020), display a significant rate of false negatives.
+  Yang, Yang, Shen et al. (2020) underline cases in which all upper respiratory tests (or all upper
+  respiratory tests over a given period) are negative for confirmed COVID-19 patients. This points to the
+  fact that false negative results are related to specific individuals rather than mere technical errors.
+  Group testing with homophily can be very beneficial here. Indeed, even if a carrier is “false negative”
+  (meaning that there is no viral load in the sample collected for this individual), with homophily it is
+  likely that other carriers belong to the same group/pool, so that the pooled test has more chances to
+  turn positive4. If α is the proportion of false negatives in carriers and false negative individuals are i.i.d.
+  in the population of carriers, the risk of missing the identification of a carrier is α for individual tests
+  and for test with only one carrier in a pool, but it is α² if there are 2 carriers in the pool… and αn if there
+  are n carriers. Since the literature shows that 0< α <1, we get αn< αn-1….< α ²< α: more carriers in a
+  group increase the probability of a correct (positive) result at the group level.
+  The multistage testing strategies usually considered in the group testing literature are clearly not
+  optimal in the presence of individual false negatives: the last stage usually implemented is individual
+  testing in positive groups, which would pick only part of the true positives in each group. But if groups
+  are properly defined by taking homophily into account, carriers are likely to be concentrated in the
+  positive groups. Thus, rather than implementing the same tests as in the first step, it makes sense to
+  isolate and take care of all people in the positive groups and to implement advanced search onto them;
+  for COVID-19: clinical diagnosis, chest radiograph or CTscan, fibrobronchoscope brush biopsy, and rRT-
+  PCR on bronchoalveolar lavage fluid, sputum if available and feces (this choice of samples for rRT-PCR
+  is based on Wang, Xu, Gao et al., 2020).
+  In this multistage strategy, two “costs” depend on homophility. First, even if this strategy is more
+  efficient at tackling false negatives and identifying carriers than existing testing strategies, missed
+  carriers happen. Second, if carriers are identified but are not concentrated, many pools must undergo
+  the costly second-step process.
+  Graph 1 analyze the quantitative gains from homophily in the two-step strategy described above, for
+  an absolute number of defectives ranging from 2 to 5. This covers a large range of different situations.
+  For instance, two defectives in a population of two thousand correspond to a rate of 0.1%, while five
+  in a population of 50 correspond to a rate of 10%. The size (and number) of pools do not affect the
+  graphs, so that the graphs also covers a large range of pool size. From left to right, each graph provides
+  statistics (described below) for increasing concentration of the defectives in a few testing pools.
+  As in Section 3, K is the number of defective. α is the probability that a test result is a false negative.
+  According to Wang, Xu, Gao et al. (2020), RT-PCR on nasal swabs identifies 63% of carriers (72% to 74%
+  for swabs collected over the first two weeks after onset for Yang, Yang, Shen et al., 2020). Thus, realistic
+  figures for α range from 0.25 to 0.5, with an average value close to 0.33. I provide results for these
+  three values. For instance, in the upper graphs (2 defectives), the left case (1 1) corresponds to one
+  defective in a pool and one in another, while the right case (2) corresponds to the two defectives in
+  4
+    For the sake of simplicity, I neglect dilution. This is valid under mild conditions, including a limited pool size.
+                                                                   8
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20210260.this version posted October 13, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                                             perpetuity.
+                                             It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                            Harpedanne - Group Testing with Homophily - October 9, 2020
+  the same pool. Increasing concentration can be denoted by the operator <C. <C is transitive but is not
+  a total order, and using brackets ≈ for configurations that cannot be ordered through <C, we obtain,
+  for 5 defectives: (1 1 1 1 1) <C (2 1 1 1) <C (2 1 1) ≈ (3 1 1) <C (3 2) ≈ (4 1) <C (5).
+  The bars describe the expected number of missed carriers due to false negatives. When carriers are
+  concentrated in a few pools or a single pool (on the right of each graph), they are detected more easily
+  and the expected number of missed carriers decreases. Let consider for instance the case with exactly
+  5 carriers. If homophily was disregarded when designing the pools and carriers are distributed i.id. in
+  the pools, it is likely that five groups contain each 1 carrier (1 1 1 1 1) or one group will contain 2
+  carriers and 3 groups will each contain 1 (2 1 1 1). Conversely, if homophily was taken into account,
+  carriers are likely to be concentrated in a few groups. For instance, we note (3 2) the case in which one
+  group contain 3 carriers and another contains 2, and (5) the extreme case where one group contains
+  all the carriers. In the latter case, the number of expected missed carrier may be infinitesimal.
+                        Graph 1: benefits of group testing and homophily to confront individual false negative
+                           K=2, α=0.25                                                     K=2, α=1/3                                                        K=2, α=0.5
+        2                                                             2                                                                2
+                                       expected missed carriers                                        expected missed carriers                                        expected missed carriers
+     1.5                                                            1.5                                                              1.5
+                                       expected positive groups                                                                                                        expected positive groups
+                                                                                                       expected positive groups
+        1                                                             1                                                                1
+     0.5                                                            0.5                                                              0.5
+        0                                                             0                                                                0
+                        11                      2_                                      11                      2_                                       11                     2_
+                           K=3, α=0.25                                                     K=3, α=1/3                                                        K=3, α=0.5
+   2.5                                                            2.5                                                               2.5
+                                        expected missed carriers                                         expected missed carriers                                         expected missed carriers
+     2                                                              2                                                                 2
+                                        expected positive groups                                         expected positive groups                                         expected positive groups
+   1.5                                                            1.5                                                               1.5
+     1                                                              1                                                                 1
+   0.5                                                            0.5                                                               0.5
+     0                                                              0                                                                 0
+                 111             21                     3_                      111               21                   3_                          111             21                  3_
+                           K=4, α=0.25                                                     K=4, α=1/3                                                        K=4, α=0.5
+   3.5                                                            3.5                                                              3.5
+                                         expected missed carriers                                         expected missed carriers                                       expected missed carriers
+     3                                                              3                                                                3
+                                         expected positive groups                                         expected positive groups                                       expected positive groups
+   2.5                                                            2.5                                                              2.5
+     2                                                              2                                                                2
+   1.5                                                            1.5                                                              1.5
+     1                                                              1                                                                1
+   0.5                                                            0.5                                                              0.5
+     0                                                              0                                                                0
+           1 1 11        211     22         31              4_            1 1 11         211      22         31              4_             1 1 11         211     22       31              4_
+                           K=5, α=0.25                                                     K=5, α=1/3                                                        K=5, α=0.5
+         4                                                              4                                                                 4
+                                     expected missed carriers                                          expected missed carriers                                        expected missed carriers
+       3.5                                                            3.5                                                               3.5
+                                     expected positive groups                                          expected positive groups                                        expected positive groups
+         3                                                              3                                                                 3
+       2.5                                                            2.5                                                               2.5
+         2                                                              2                                                                 2
+       1.5                                                            1.5                                                               1.5
+         1                                                              1                                                                 1
+       0.5                                                            0.5                                                               0.5
+         0                                                              0                                                                 0
+           1 1 11 1 2 1 11   221 311    32       41         5_            1 1 11 1  2 1 11   221  311    32       41          5_             1 1 11 1 2 1 11   221 311 32        41         5_
+                                                                                                 9
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20210260.this version posted October 13, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                               perpetuity.
+                                  It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                      Harpedanne - Group Testing with Homophily - October 9, 2020
+  More generally, when homophily is better taken into account when designing the groups for first-stage
+  testing, the “expected missed”, i.e. the expected number of carrier belongings to groups with false
+  negative results, decreases. Even when the proportion of individual false negatives is rather high
+  (α=.5), almost all carriers are expected to be identified when they are concentrated in, say, two of the
+  pools, and the risk of missing altogether vanishes when they belong to the same pool.
+  It is interesting to note than even without homophily, that is if carriers are i.i.d. in the different pools,
+  it is rather likely that at least two carriers will be in the same pool, which will reduce the expected
+  number of “missed” carriers. That is, group testing alone, without considering potential homophily,
+  can help identify and isolate carriers who would be missed by exhaustive individual testing. To the best
+  of my knowledge, this simple and striking result has been overlooked in the scientific and policy
+  debates about group testing to fight epidemics. Given the documented high prevalence of individual
+  false negatives for tests implemented all over the world to fight COVID-19, this fact alone may deserve
+  careful consideration.
+  As already noted, in the presence of individual false negatives, implementing the same (failing) tests
+  over the final phase(s) of a group tests process is useless and individuals in positive groups may rather
+  be isolated and submitted to medical examinations and tests based on more reliable samples.
+  This process induces a second cost related to groups that are positive in the first step. Homophily is
+  crucial here. If it is possible to assess ex ante the homophily structure of contamination and to take
+  that information into account when designing the pools and thus to increase the concentration of
+  carriers in a few pools, the expected number of contaminated groups, and therefore the expected
+  number of positive groups (groups that are identified as contaminated by the first step) are reduced
+  stringently. The absolute gains are especially high for low values of α, since for low α, most
+  contaminated groups are identified correctly.
+  In this framework, determining the optimal pool size is different from the usual optimization
+  introduced by Dorfman (1943). Here, the optimal size increases as usual with the cost of missing a
+  carrier, but also decreases with the cost of the second step.
+  Conclusion
+  The present paper shows that heterogeneous interpersonal interactions with more relations within
+  specific groups - homophily - contain relevant information to help detect asymptomatic carriers of
+  diseases such as COVID-19. Specifically, designing test pools that encompass potential small-scale
+  clusters makes it possible to overcome information-theoretic limits on the minimal number of test
+  required to identify all carriers with a given (non-one) probability even in a noiseless framework.
+  Still, the practical benefits of considering homophily for group testing may be related to noise in tests.
+  Indeed, homophily may help counteract the detrimental dilution effect of group testing, which exists
+  for COVID-19. Above all, group testing makes it possible to identify asymptomatic carriers who would
+  be missed even by exhaustive individual testings - a benefit apparently unnoticed in the group testing
+  literature -; in this context homophily helps increase the identification power while reducing the costs
+  of the second step which includes individual complementary examination and tests on people
+  belonging to positive groups.
+  From a policy perspective, homophily can be used to increase test efficiency and therefore to avoid
+  unnecessary lockdowns. Conversely, since households are one of the main clusters, especially during
+  lockdowns, a testing strategy based on homophily could prove very useful to identify household
+  contamination and make a lockdown shorter and more efficient.
+  The present paper illustrates the interest of analyzing social interactions and their group structure to
+  design testing strategies. I hope this work will encourage more research on group testing, false
+  negatives, and the structure on social relationships in order to curb the COVID-19 epidemic and other
+                                                                   10
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20210260.this version posted October 13, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                               perpetuity.
+                                  It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                      Harpedanne - Group Testing with Homophily - October 9, 2020
+  epidemics with asymptomatic carriers. Madewell et al. (2020) suggest to report contaminations by
+  households. More generally, the cluster structure of contamination should be reported whenever
+  possible, the links with contamination channels should be established, and general patterns should be
+  identified in order to better implement the strategy analyzed in the present study.
+  The computations in the appendix are based on the simplifying assumption that the results of different
+  tests for the same individual are uncorrelated, so that the probability of a false negative using different
+  swabs is the product of the rate of false negatives for each type of swab. More work on the correlation
+  of test results would be very useful to fine-tune this analysis.
+  Also, the time dimension is not taken into account in the present document. Optimization tools could
+  determine the optimal frequency together with other parameters (size of the pools, etc.), which is not
+  the aim of the present analysis. Still, from the appendix, a first order requirement is that the test
+  procedure be implemented at least every fortnight, and even weekly if CT-scan cannot be generalized
+  for the second step, in order to fit the time profile of test positivity.
+  The approach analyzed here cannot fight the COVID-19 epidemic alone, and should be implemented
+  in combination with other methods (track and trace…). However, these other approaches, as well as
+  more advanced testing methods recently proposed, cannot tackle false negatives specifically. Thus,
+  the combination of group testing and homophily provides a unique opportunity to tackle this crucial
+  issue to fight COVID19.
+  References
+  Aldridge, M, Johnson, O, and Scarlett, J. (2019, October 2), “Group Testing: An Information Theory
+  Perspective,” Foundations and Trends in Communications and Information Theory 15(3-4): 196-392.
+  Allen, D., Block, S., Cohen, J., et al. (2020, April). Roadmap to pandemic resilience: Massive scale
+  testing, tracing, and supported isolation (TTSI) as the path to pandemic resilience for a free society.
+  Edmond J. Safra Center for Ethics at Harvard University.
+  Atia, G. and V. Saligrama, “Boolean compressed sensing and noisy group testing,” IEEE Trans. Inform.
+  Theory, vol. 58, no. 3, pp. 1880 –1901, March 2012.
+  Bai, Y., Yao, L., Wei, T., Tian, F., Jin, D.-Y., Chen, L., and Wang, M. (2020, February 21), “Presumed
+  asymptomatic carrier transmission of COVID-19,” JAMA. (Epub ahead of print)
+  Baldassini, Leonardo, Oliver Johnson and Matthew Aldridge (2013), “The Capacity of Adaptative Group
+  Testing”, IEEE International Symposium on Information Theory, 2676-2680.
+  Bertrand, Marianne, Esther Duflo and Sendhil Mullainathan (2004), “How Much Should We Trust
+  Difference-in-Difference Estimates?”, The Quarterly Journal of Economics, Vol. 119 (1), pp. 249–275
+  Cameron, A.Colin., J. G. Gelbach and Douglas L. Miller (2011), “Robust Inference with Multi-Way
+  Clustering”, Journal of Business and Economic Statistics 29(2): 238-249.
+  Chan, Chun Lam, Pak Hou Che, Sidhart Jaggi and Venkatesh Saligrama (2011), “Non-adaptative
+  probabilistic group testing with noisy measurments: Near-optimal bounds with efficient algorithms”,
+  in 49th Allerton Conference, pp. 1832-1839.
+  Chan JF, S.Yuan, K.H. Kok, K.K.-W. To, H. Chu, J. Yang, F.Xing, J. Liu, C.C.-Y. Yip, R. W.-S. Poon, H.-W.
+  Tsoi, S. K.-F. Lo, K.-H.Chan, V. K.-M. Poon, W.-M. Chan, J. D. Ip, J.-P. Cai, V.C.-C.Cheng, H. Chen, C. K.-M.
+  Hui, K.-Y. Yuen (2020) “A familial cluster of pneumonia associated with the 2019 novel coronavirus
+  indicating person-to-person transmission: a study of a family cluster” Lancet.
+  Conger, K. (2020, April). Testing pooled samples for COVID-19 helps Stanford researchers track early
+  viral spread in Bay Area. Stanford Medicine News Center.
+  Cover, Thomas M. and Joy A. Thomas (2006), Elements of Information Theory, 2nd edition, John Wiley
+  and Sons, Hobeken, New Jersey, 748 pp.
+                                                                   11
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20210260.this version posted October 13, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                               perpetuity.
+                                  It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                      Harpedanne - Group Testing with Homophily - October 9, 2020
+  Day, M. (2020) “Covid-19: four fifths of cases are asymptomatic, China figures indicate”, BMJ
+  369:m1375.
+  Dorfman, R. (1943), “The detection of defective members of large population”, The Annals of
+  Mathematical Statistics, 436-440.
+  Gollier, Christian and Olivier Gossner (2020), “Group Testing against COVID-19”, CREST DT 2020-04.
+  Gourinchas, P. O. (2020, March 26), “Flatten the Curve of Infection and the Curve of Recession at the
+  Same Time”, Foreign Affairs. https://www.foreignaff OU32 airs.com/articles/world/2020-03-
+  26/flatten-curve-infection-and-curve-recession-same-time
+  Han, Yu and Hailan Yang (2020), “The transmission and diagnosis of 2019 novel coronavirus infection
+  disease (COVID-19): A Chinese perspective”, Journal of Meical Virology, 92-639-644.
+  Harpedanne de Belleville, Louis-Marie (2020), Act Now or Forever Hold Your Peace: Slowing contagion
+  with Unknown Spreaders, Limited Cleaning Capacities, and Costless Measures, mimeo.
+  https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3562739
+  https://mpra.ub.uni-muenchen.de/99728/
+  Huang C, Wang Y, Li X, et al. Clinical features of patients infected with 2019 novel coronavirus in
+  Wuhan, China. Lancet 2020.
+  F. K. Hwang (1976), “Group Testing with a Dilution Effect”, Biometrika, 63 (3), 671-673
+  Jackson, Matthew O. (2008), “Social and Economic Networks”, Princeton University Press, Princeton,
+  New Jersey, 504 pp.
+  Jackson, M. O., and Lopez-Pintado, D. (2013), “Diffusion and contagion in networks with
+  heterogeneous agents and homophily,” Network Science 1(1):49-67.
+  Kimball, Anne; Kelly M. Hatfield, Melissa Arons, Allison James, Joanne Taylor, Kevin Spicer, Ana C.
+  Bardossy, Lisa P. Oakley, Sukarma Tanwar, Zeshan Chisty, Jeneita M. Bell, Mark Methner, Josh Harney,
+  Jesica R. Jacobs, Christina M. Carlson, Heather P. McLaughlin, Nimalie Stone, Shauna Clark, Claire
+  Brostrom-Smith, Libby C. Page, Meagan Kay, James Lewis, Denny Russell, Brian Hiatt, Jessica Gant,
+  Jeffrey S. Duchin, Thomas A. Clark, Margaret A. Honein, Sujan C. Reddy, John A. Jernigan, Public Health
+  – Seattle & King County; CDC COVID-19 Investigation Team (2020) “Asymptomatic and Presymptomatic
+  SARS-CoV-2 Infections in Residents of a Long-Term Care Skilled Nursing Facility – King County,
+  Washington”. Morbidity and Mortality Weekly Report 69:377–81.
+  Koh, Wee Chian L, in Naing, Muhammad Ali Rosledzana, Mohammad Fathi Alikhan, Liling Chaw,
+  Matthew Griffith, Roberta Pastore and Justin Wong (2020), “ What do we know about SARS-CoV-2
+  transmission? A systematic review and meta-analysis of the secondary attack rate, serial interval, and
+  asymptomatic infection”, medRxiv.
+  Kupferschmidt, K., and J. Cohen (2020, March 2), “China’s aggressive measures have slowed the
+  coronavirus. They may not work in other countries,” Science.
+  Lakdawalla, Darius, Emmett Keeler, Dana Goldman, Erin Trish (2020), “Getting Americans Back to Work
+  (and School) with Pooled Testing”, USC Schaeffer Center White Paper.
+  Lakdawalla, Darius and Erin Trish (2020, July 20), “Group testing for coronavirus – called pooled testing
+  – could be the fastest and cheapest way to increase screening nationwide”
+  https://theconversation.com/group-testing-for-coronavirus-called-pooled-testing-could-be-the-
+  fastest-and-cheapest-way-to-increase-screening-nationwide-141579
+  Lazarsfeld, Paul F., and Robert K. Merton (1954), “Friendship as a Social Process: A Substantive and
+  Methodological Analysis”, pp. 18–66 in Freedom and Control in Modern Society, edited by M. Berger,
+  T. Abel, and C. H. Page. New York: Van Nostrand.
+  Leung, N. H., Xu, L. C., Ip, D. K. M., and Cowlin, B. J. (2015, November), “The fraction of influenza virus
+  infections that are asymptomatic: a systematic review and meta-analysis,” Epidemiology 26(6):862–
+  872. DOI:10.1097/EDE.0000000000000340
+                                                                   12
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20210260.this version posted October 13, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                               perpetuity.
+                                  It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                      Harpedanne - Group Testing with Homophily - October 9, 2020
+  Li, Q., Guan, X., Wu, P., Wang, X., Zhou, L., Tong, Y., Ren, R., Leung, K. S. M., Lau, E. H. Y., Wong, J. Y.,
+  Xing, X., Xiang, N., Wu, Y., Li, C., Chen, Q., Li, D., Liu, T., Zhao, J., Liu, M., Tu, W., Chen, C., Jin, L., Yang,
+  R., Wang, Q., Zhou, S., Wang, R., Liu, H., Luo, Y., Liu, Y., Shao, G., Li, H., Tao, Z., Yang, Y., Deng, Z., Liu,
+  B., Ma, Z., Zhang, Y., Shi, G., Lam, T. T. Y., Wu, J. T., Gao, G. F., Cowling, B. J., Yang, B., Leung, G. M., and
+  Feng, Z. (2020, January 31), “Early transmission dynamics in Wuhan, China, of novel Coronavirus–
+  infected pneumonia,” New England Journal of Medicine
+  Li, Ruiyun, Sen Pei , Bin Chen, Yimeng Song, Toa zang, Wan Yang and Jeffrey Shaman (2020),
+  “Substantial undocumented infection facilitates the rapid dissemination of novel coronavirus (SARS-
+  CoV-2)”, Science, 368:489-493. doi:10.1126/science.abb3221
+  Li W, Zhang B, Lu J, Liu S, Chang Z, Cao P, et al. (2020) “The characteristics of household transmission
+  of COVID-19”. Clinical Infectious Disease; ciaa450.
+  Liu T, Liang W, Zhong H, et al. (2020) “Risk factors associated with COVID-19 infection: a retrospective
+  cohort study based on contacts tracing”. Emerging Microbes & Infection: 1-31.
+  Lohse, Stefan ,Thorsten Pfuhl, Barbara Berkó-Göttel, Jürgen Rissland, Tobias Geißler, Barbara Gärtner,.,
+  Sören L Becker, Sophie Schneitler, Sigrun Smola (2020, April 28), “Pooling of Samples for testing for
+  SARS-CoV-2 in asymptomatic people," Lancet Infectious Diseases. https://doi.org/10.1016/S1473-
+  3099(20)30362-5.
+  Madewell, Zachary J., Yang Yang, Ira M. Longini Jr, M. Elizabeth Halloran, Natalie E. Dean “ Household
+  transmission of SARS-CoV-2: a systematic review and meta-analysis of secondary attack rate”,
+  medRxiv.
+  Macula, Anthony J. (1997) “Error-correcting nonadaptive group testing with dedisjunct matrices,”
+  Discrete Applied Mathematics, vol. 80, no. 2-3, pp. 217 – 222, 1997.
+  Mallapaty, Smriti (2020), “The marthematical strategy that could transform coronavirus testing”,
+  Nature (10 July 2020). https://www.nature.com/articles/d41586-020-02053-6
+  McPherson, Miller; Lynn Smith-Lovin and James M. Cook (2003). "Birds of a Feather: Homophily in
+  Social Networks", Annual Review of Sociology, Vol. 27 (1), pp. 415–444.
+  Mizumoto K., K. Kagaya, A. Zarebski and G. Chowell (2020), “Estimating the asymptomatic proportion
+  of coronavirus disease 2019 (COVID-19) cases on board the Diamond Princess cruise ship, Yokohama,
+  Japan, 2020”, Euro Surveill. 25(10). doi:10.2807/1560-7917.ES.2020.25.10.2000180
+  Moulton, Brent R. (1986), “Random Group Effects and the Precision of Regression Estimates”, Journal
+  of Econometrics, 32: 385-397.
+  Moulton, Brent R. (1990), “An Illustration of a Pitfall in Estimating the Effects of Aggregate Variables
+  on Micro Units”, Review of Economics and Statistics 72(3): 334-338.
+  Nishiura, Kobayashi, Suzuki et al. (2020) “Estimation of the asymptomatic ratio of novel coronavirus
+  infections (COVID-19)”, International Journal of Infectious Diseases 94, pp. 154–155.
+  Nishiura H, Oshitani H, Kobayashi T, et al. (2020) “Closed environments facilitate secondary
+  transmission of coronavirus disease 2019 (COVID-19)”. medRxiv.
+  Normile, D. (2020, March 17) “Coronavirus cases have dropped sharply in South Korea. What’s the
+  secret to its success?” Science. DOI:10.1126/science.abb7566
+  Omrani, A. S., Matin, M. A., Haddad, Q., Al-Nakhli, D., Memish, Z. A., Albarrak, A. M. (2013), “A family
+  cluster of Middle East respiratory syndrome coronavirus infections related to a likely unrecognized
+  asymptomatic or mild case.” International Journal of Infectious Diseases 17:668-72.
+  Phan LT, Nguyen TV, Luong QC, et al. Importation and Human-to-Human Transmission of a Novel
+  Coronavirus in Vietnam. N Engl J Med 2020.
+  Piguillem, Facundo and Liyan Shi (2020), “Optimal COVID-19 Quarantine and Testing Policies”, COVID
+  Economics 27, pp. 123-169.
+                                                                   13
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20210260.this version posted October 13, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                               perpetuity.
+                                  It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                      Harpedanne - Group Testing with Homophily - October 9, 2020
+  Qiu H, J. Wu, L. Hong, Y. Luo, Q. Song and D. Chen (2020) « Clinical and epidemiological features of 36
+  children with coronavirus disease 2019 (COVID-19) in Zhejiang, China: an observational cohort
+  study. Lancet Infectious Disease doi:10.1016/S1473-3099(20)30198-5
+  Rothe, C., Schunk, M., Sothmann, P., Bretzel, G., Froeschl, G., Wallrauch, C.,. Zimmer, T., Thiel, V.,
+  Janke, C., Guggemos, W., Seilmaier, M., Drosten, C., Vollmar, P., Zwirglmaier, K., Zange, S., Wölfel, R.,
+  Hoelscher, M., (2020, March 5), “Transmission of 2019-nCoV infection from an asymptomatic contact
+  in Germany,” New England Journal of Medicine (Epub ahead of print)
+  Santarpia, J. L., Rivera, D. N., Herrera, V., Morwitzer, M. J., Creager, H., Santarpia, G. W., Crown, K. K.,
+  Brett-Major, D. M., Schnaubelt, E., Broadhurst, M. J., Lawler, J. V., St. Reid, P., and Lowe, J. J. (2020,
+  March 26), “Transmission potential of SARS-CoV-2 in viral shedding observed at the University of
+  Nebraska Medical Center,” mimeo.
+  Wang, Dawei, Bo Hu, Fangfang Zhu, Xing Liu, Jing Zhang, Binbin Wang, Hui Xiang, Zhenshun Cheng,
+  Yong Xiong, Yan Zhao, Yirong Li, Xinghuan Wang, Zhiyong Peng, (February 7, 2020), “Clinical
+  characteristics of 138 hospitalized patients with 2019 novel coronavirus–infected pneumonia in
+  Wuhan, China”. JAMA.
+  Wang, Wenling, Yanli Xu, Ruqin Gao, Roujian Lu, Kai Han, Ghuizen Wu and Wenjie Tan (2020, March).
+  “Detection of SARS-CoV-2 in different types of clinical specimens” JAMA. doi:10.1001/jama.2020.3786.
+  Warasi, Md S., Christopher S. McMahan, Joshua M. Tebbs and Christopher R. Bilder (2017), “Group
+  testing regression models with dilution submodels”, Stat Med 36(30), 4860-4872.
+  Wilder-Smith, A., Teleman, M. D., Heng, B. H., Earnest, A., A. E. Ling and Leo, Y. S., (2005),
+  “Asymptomatic SARS Coronavirus infection among healthcare workers, Singapore,” Emerging
+  Infectious Diseases 11(7):1142-1145.
+  Wong J, Abdul Aziz ABZ, Chaw L, Mahamud A, Griffith MM, Ying-Ru LO, et al. High proportion of
+  asymptomatic and presymptomatic COVID-19 infections in travelers and returning residents to Brunei.
+  J Travel Med. 2020.
+  World Health Organization (2020, February 28), “Report of the WHO–China joint mission on
+  Coronavirus disease 2019 (COVID-19).”
+  Wuang, Xiong, Li Tan, Xu Wang, Weiyong Liu, Yanjun Liu, Liming Cheng and Ziyong Sun (2020),
+  “Comparison of nasopharyngeal and oropharyngeal swabs for SARS-CoV-2 detection in 353 patients
+  received tests with both specimens simultaneously”, International Journal of Infectious Diseases,
+  vol. 94, pp. 107-109.
+  Xu, XW, XX Wu, XG Yiang, KJ Xu, LJ Ying, CL Ma et al. (2020, February 19), “Clinical findings in a group
+  of patients infected with the 2019 novel coronavirus SARS-Cov-2 outside of Wuhan, China”, British
+  Medical Journal.
+  Yang, Yang, Minghui Yang, Chenguang Shen, Fuxiang Wang, Jing Yuan, Jinxiu Li, Mingxia Zhang, Zhaoqin
+  Wang, Li Xing, Jinli Wei, Ling Peng, Gary Wong, Haixia Zheng, Weibo Wu, Mingfeng Liao, Kai Feng,
+  Jianming Li, Qianting Yang, Juanjuan Zhao, Zheng Zang Lei Liu and Yingxia Liu (2020, February).
+  “Evaluating the accuracy of different respiratory specimens in the laboratory diagnosis and monitoring
+  the viral shedding of 2019-nCoV infections”.
+  Yelin, Idan, Noga Aharony, Einat Shaer Tamar, Amir Argoetti, Esther Messer, Dina Berenbaum, Einat
+  Shafran, Areen Kuzli, Nagam Gandali, Tamar Hashimshony, Yael Mandel-Gutfreund, Michael
+  Halberthal, Yuval Geffen, Moran Szwarcwort-Cohen and Roy Kishony (2020), “Evaluation of COVID-19
+  RT-qPCR test in multi-sample pools”, Clinical Infectious Diseases. doi: 10.1093/cid/ciaa531.
+  Zhou X, Y. Li, T. Li and W. Zhang (2020), “Follow-up of the asymptomatic patients with SARS-CoV-2
+  infection”, Clinical Microbiology and Infection, doi:10.1016/j.cmi.2020.03.024
+  Zou L., Ruan, F., Huang, M., Liang, L., Huang, H., Hong, Z., Yu, J., Kang, M., Song, Y., Xia, J., Guo, Q.,
+  Song, T., He, J., Yen, H. L., Peiris, M., and Wu, J. (2020, March 19), “SARS-CoV-2 viral load in upper
+  respiratory specimens of infected patients,” New England Journal of Medicine.
+                                                                   14
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.09.20210260.this version posted October 13, 2020. The copyright holder for this
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                               perpetuity.
+                                  It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                      Harpedanne - Group Testing with Homophily - October 9, 2020
+              Appendix: Efficiency of a multiple-step tests and exams strategy
+             to identify asymptomatic carriers of COVID19 with false negatives
+  As shown in Section 5, with false negatives, a test strategy with a first step based on RT-PCR test on
+  nasopharyngeal swabs and a second step based on a series of complementary exams can identify
+  asymptomatic carriers better than exhaustive individual RT-PCR tests on nasopharyngeal swabs if
+  multiple carriers are in the same pool. In Section 5, I examine the capacity of such a strategy to identify
+  groups of carriers and I show that taking homophily into account decreases both the risk of missing
+  individual carriers and the number of people on whom the second step must be implemented.
+  The present appendix does not tackle homophily and provides more technical details on the different
+  steps of such a strategy, with the aim of identifying as many carriers as possible while reducing the
+  costs as well as the sufferings, constraints and potential sequelae on tested people.
+  1st step: group testing using nasopharyngeal swabs
+  RT-PCR on nasal swabs identifies 63% of COVID-19 carriers only (Wang, Xu, Gao et al., 2020). The rate
+  is higher for swabs collected over the first two weeks after the onset of the disease (Yang, Yang, Shen
+  et al., 2020) but lower afterwards. Thus, one could consider using other swabs instead, or using a
+  combination of different swabs and exams. CT-scan or chest radiographs are available in limited
+  number and must be implemented individually. Thus, they are not suitable for group analysis which is
+  the cornerstone of the first step. Furthermore, CT scans or radiographs may induce potential sequelae
+  if implemented repeatedly over a long period.
+  Fibrobronchoscope brush biopsy and RT-PCR on bronchoalveolar lavage fluid requires specific
+  equipment and specifically trained operators to collect the swabs. Although the RT-PCR or biopsy could
+  be grouped, swabs collection is an individual and lengthy process. Thus, it cannot be implemented
+  repeatedly over the whole population. Furthermore, the collection of bronchoalveolar lavage fluid is
+  painful. The social acceptance of its large scale repeated collection is unlikely for COVID-19, which has
+  a rather limited mortality rate.5
+  2nd step: if a group is positive, then individual complementary exams on each group member
+  The following table describes the steps (column 2). In column 3, I compute the cumulative probability
+  of identification of a carrier, given the probabilities documented by Wang, Xu, Gao et al. (2020), under
+  the simplifying assumption that the results of different types of individual tests or exams are
+  independent for a given carrier. Wang, Xu, Gao et al. (2020) measure the probability of positive test
+  for identified carriers for eight different types of swabs: sputum, nasal, (oro)phatyngeal,
+  Fibrobronchoscope brush biopsy, Bronchoalveolar lavage fluid, blood and feces. I
+  In column 4, I compute the same cumulative probability given the probabilities documented by Yang,
+  Yang, Shen et al. (2020) for swabs collected over the week following the onset of the disease for mild
+  cases. Columns 5 and 6 provide the same computations for swabs collected 8 to 14 d.a.o, and after 15
+  d.a.o, respectively, also for mild cases.
+  The first step, based on nasal swabs, must be implemented at the very least every fortnight. Indeed,
+  RT-PCR based on nasal swabs are efficient over the first two weeks after onset, so that a test
+  implemented every fortnight is likely to identify asymptomatic carriers if they follow a pattern similar
+  to mild cases. Conversely, the rate of false negatives soars afterwards. The efficiency of BALF is
+  questionable for asymptomatic carriers. Thus, the second step should be based either on upper
+  respiratory track swabs alone or on a combination with CT-scan or radiographs. If the latter are not
+  widely available, it is crucial to implement complementary exams, and the whole procedure, weekly.
+  5
+    Whether sputum can be used in the first step instead of or together with nasal swab is on open question. In the
+  second step (individual complementary exams), if the sputum test is negative, the individual undergoes
+  additional exams which are likely discover the presence of the disease and may include painful bronchoalveolar
+  lavage. Thus, cheating during the series of complementary exams is irrational.
+                                                                   15
+
+                                  Cumulative probability of identification
+                                               of a disease carrier
+            Steps                                                                                                               comments
+                           Wang, Xu, Yang, Yang, Yang, Yang, Yang, Yang,
+                            Gao et al.     Shen et al. Shen et al.       Shen et al.
+                                            0~7 d.a.o     8~14 d.a.o     >=15 d.a.o.
+                                                                                      Sputum is available only for 28% of carriers (Huang C, Wang Y, Li X, et al.,2020). This
+          RT-PCR
+2a                            20.1%          23.0%          20.8%          12.0%      percentage of availability is applied to the percentage of positive identification in columns
+           sputum
+                                                                                      3 to 6. When available, RT-PCR is highly positive for actual carriers.
+                                                                                      According to Wang, Xu, Gao et al. (2020), RT-PCR on nasal swabs identifies 63% of
+          RT-PCR
+2b                            70.5%          78.5%          63.2%          60.0%      carriers (72% to 74% for swabs collected over the first two weeks after onset for Yang,
+            nasal
+                                                                                      Yang, Shen et al., 2020): large gains at small cost
+                                                                                      Less efficient than the two previous tests
+          RT-PCR
+2c                            79.9%          91.7%          74.1%          64.4%      But easy to implement:
+      (oro)pharyngeal
+                                                                                      Small gain but small cost
+                                                                                      Less efficient than the three previous tests
+          RT-PCR
+2d                            85.7%             /              /              /       But rather easy to implement:
+            feces
+                                                                                      Small gain but small cost
+                                                                                      Requires trained operator and specific device
+    Fibrobronchoscope         92.3%
+2e                                              /              /              /       but less painful than bronchoalveolar lavage.
+        brush biopsy
+                                                                                      Mildly efficient
+                                                                                      Requires trained operator and specific suction device; the procedure is painful for the
+     Bronchoalveolar
+2f                            99.5%          91.7%          74.1%          64.4%      patient. Very efficient according to Wang, Xu, Gao et al. (2020) but inefficient for mild
+        lavage fluid
+                                                                                      cases according to Yang, Yang, Shen et al. (2020)
+                                                                                      CT scan is implemented by Yang, Shen et al. (2020) for 3 carriers, including one
+2g        CT scan               ?           High % ?      High % ?        High % ?    without positive results for any previous RT-PCR test on upper or lower respiratory
+                                                                                      track swabs. Results are positive but the sample is too small.
+Computations of cumulative probability of identification are based on the assumption that the probabilities of identification at different steps are uncorrelated.

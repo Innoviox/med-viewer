@@ -1,0 +1,856 @@
+  medRxiv preprint doi: https://doi.org/10.1101/2020.07.13.20152082.this version posted October 10, 2020. The copyright holder for this preprint
+     (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                        It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                                                                                                 1
+              An exact method for quantifying the reliability of
+                         end-of-epidemic declarations in real time
+           Kris V Parag1, † , Christl A Donnelly1, 2 , Rahul Jha3 , and Robin N Thompson4
+                                                     †
+                                                       Email: k.parag@imperial.ac.uk
+       1
+         MRC Centre for Global Infectious Disease Analysis, Imperial College London, London, W2 1PG, UK
+                            2
+                              Department of Statistics, University of Oxford, Oxford, OX1 3LB, UK
+   3
+     Department of Applied Math and Theoretical Physics, University of Cambridge, Cambridge CB3 0WA, UK
+                             4
+                               Mathematical Institute, University of Oxford, Oxford, OX2 6GG, UK
+                                                                      Abstract
+           We derive and validate a novel and analytic method for estimating the probability that an epidemic
+      has been eliminated (i.e. that no future local cases will emerge) in real time. When this probability crosses
+      0.95 an outbreak can be declared over with 95% confidence. Our method is easy to compute, only requires
+      knowledge of the incidence curve and the serial interval distribution, and evaluates the statistical lifetime
+      of the outbreak of interest. Using this approach, we rigorously show how the time-varying under-reporting
+      of infected cases will artificially inflate the inferred probability of elimination, leading to premature (false-
+      positive) end-of-epidemic declarations. Contrastingly, we prove that incorrectly identifying imported cases
+      as local will deceptively decrease this probability, resulting in delayed (false-negative) declarations. Failing
+      to sustain intensive surveillance during the later phases of an epidemic can therefore substantially mislead
+      policymakers on when it is safe to remove travel bans or relax quarantine and social distancing advisories.
+      World Health Organisation guidelines recommend fixed (though disease-specific) waiting times for end-
+      of-epidemic declarations that cannot accommodate these variations. Consequently, there is an unequivocal
+      need for more active and specialised metrics for reliably identifying the conclusion of an epidemic.
+   Author Summary: Deciding on when to declare an infectious disease epidemic over is an important and non-
+trivial problem. Early declarations can mean that interventions such as lockdowns, social distancing advisories and
+travel bans are relaxed prematurely, elevating the risk of additional waves of the disease. Late declarations can
+unnecessarily delay the re-opening of key economic sectors, for example trade, tourism and agriculture, potentially
+          NOTE: This preprint reports new research that has not been certified by peer review and should not be used to guide clinical practice.
+
+     medRxiv preprint doi: https://doi.org/10.1101/2020.07.13.20152082.this version posted October 10, 2020. The copyright holder for this preprint
+        (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                           It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                                                                                                    2
+   resulting in significant financial and livelihood losses. Here we develop and test a novel and exact data-driven
+   method for optimising the timing of end-of-epidemic declarations. Our approach converts observations of infected
+   cases up to any given time into a prediction of the likelihood that the epidemic is over at that time. Using this
+   method, we quantify the reliability of end-of-epidemic declarations in real time, under ideal case surveillance,
+   showing that it can depend strongly on past infection numbers. We then prove that failing to compensate for
+   practical issues such as the time-varying under-reporting and importing of cases necessarily results in premature
+   and delayed declarations, respectively. These variations and biases cannot be accommodated by current worldwide
+   declaration guidelines. Sustained and intensive surveillance coupled with more adaptive declaration metrics are vital
+   if informed end-of-epidemic declarations are to be made.
+   Key-words: epidemic elimination; renewal processes; reproduction numbers; epidemic curves; Bayesian statistics;
+   infectious disease, second waves, epidemic extinction.
+ 1                                                                 I NTRODUCTION
+ 2    The timing of an end-of-epidemic declaration can have significant economic and public health consequences.
+ 3 Early or premature declarations can negate the benefits of prior control measures (e.g. quarantines or lockdown),
+ 4 leaving a population at an elevated risk to the resurgence of the infectious disease. The Ebola virus epidemic in
+ 5 Liberia (2014-2016), for example, featured several declarations that were followed by additional waves of infections
+ 6 [1]. Late or delayed declarations, however, can unnecessarily stifle commercial sectors such as agriculture, trade
+ 7 and tourism, leading to notable financial and livelihood losses. One of the first studies advocating the need for
+ 8 improved end-of-epidemic metrics suggested that the MERS-CoV epidemic in South Korea was declared over at
+ 9 least one week later than was necessary [2]. Balancing the health risk of a second wave of infections against the
+10 benefits of reopening the economy earlier is a non-trivial problem and is currently of major global concern as many
+11 countries prepare to meet the challenge of resurging COVID-19 caseloads.
+12    World Health Organisation (WHO) guidelines adopt a time-triggered (i.e. decisions are enacted after some fixed,
+13 deterministic time) approach to end-of-epidemic declarations, recommending that officials wait for some prescribed
+14 period after the last observed infected case has recovered, before adjudging the outbreak over. The most common
+15 waiting time, which applies to Ebola virus and MERS-CoV among others, involves twice the maximum incubation
+16 period of the disease [3]. While having a fixed decision time is simple and actionable, it neglects the stochastic
+17 variation that is inherently possible at the tail of an outbreak. Recent studies have started to question this time-
+18 triggered heuristic and to investigate the factors that could limit its practical reliability.
+19    Initial advances in this direction were made in [2], where mathematical formulae for assessing the end of an
+20 epidemic, in a data-driven manner, were derived. These formulae use the time-series of new cases (incidence) across
+
+     medRxiv preprint doi: https://doi.org/10.1101/2020.07.13.20152082.this version posted October 10, 2020. The copyright holder for this preprint
+         (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                            It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                                                                                                      3
+21 an epidemic together with estimates of its serial interval distribution and basic reproduction number to compute the
+22 probability that the outbreak is over at any moment. The serial interval distribution describes the random inter-event
+23 times between the onset of symptoms of an infector and infectee, while the basic reproduction number is the average
+24 number of secondary infections per primary infection at the start of an epidemic [4, 5]. The output of this method
+25 is an epidemiologically informed statistical measure of confidence in an end-of-epidemic declaration.
+26     This approach is important, but not perfect. It assumes that infected cases are reported without any error and
+27 it depends on parameters that relate to the initial growth phase of the epidemic. Moreover, to maintain simplicity,
+28 it adopts a mathematically conservative description of transmission, making its end-of-epidemic declaration time
+29 estimates likely to be late or delayed [2]. More recent studies [6, 7] have applied forward simulation to investigate
+30 the tail dynamics of an outbreak. These have revealed the impact of the constant under-reporting of cases [6] and
+31 demonstrated the sensitivity of declarations to the effective reproduction number [7], a parameter that generalises
+32 the basic reproduction number and that remains relevant across all phases of the epidemic. The influence of different
+33 routes of transmission on declarations has also been examined in [1] using the framework of [2].
+34     However, there is still much we do not know about the dynamics of an outbreak as it approaches its end.
+35 Specifically, analytic and general insight into the sensitivity of end-of-epidemic declarations to practical surveillance
+36 imperfections is needed. Real incidence data is corrupted by time-varying trends in under-reporting, delays in case
+37 notification and influenced by the interaction of imported and local cases [8, 9, 10]. Previous works have either
+38 assumed perfect reporting [2] or treated constant under-reporting within some simulated scenarios [6, 7]. Here
+39 we attempt to expose the implications of more realistic types of data corruption, particularly time-varying case
+40 under-reporting and importation, by developing an exact framework that provides broad and provable insights.
+41 Understanding how realistic surveillance patterns can bias our perception of the epidemic end is the first step to
+42 engineering sensible and effective countermeasures against these biases.
+43     We build on the renewal process transmission model from [11, 12], to derive and test a novel and exact real-time
+44 method for estimating the probability of elimination; defined as the probability that no future local cases will emerge
+45 conditioned on the past epidemic incidence. We explain this model in Fig. 1. Using this probability, we define an
+46 event-triggered [13, 14] declaration metric that guarantees confidence in that declaration provided the assumptions
+47 of the model hold. The trigger is the first time that this probability crosses a threshold e.g. we are 95% confident
+48 in our declaration if the threshold is 0.95. Event-triggered decision-making was essentially proposed by [2], has
+49 proven effective in other fields [15, 16, 17] and belies the time-triggered WHO approach, which fixes the time
+50 (elapsed since the last case1 ) but not the confidence in declaration.
+51     We benchmark our estimate against the true probability of elimination, i.e. the probability if the statistics and
+      1
+        Strictly, it is the time elapsed since the last case has recovered or died. However, as this additionally delay is not informative, it does not
+   invalidate or alter any of the results or statements in this paper and so we speak in terms of the last case time for simplicity.
+
+     medRxiv preprint doi: https://doi.org/10.1101/2020.07.13.20152082.this version posted October 10, 2020. The copyright holder for this preprint
+        (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                           It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                                                                                                    4
+52 effective reproduction number of the epidemic were known precisely, and show consistency under the perfect
+53 conditions in [2] but with the caveat that we estimate effective reproduction numbers from the incidence curve in
+54 real time. We find that even the true elimination probabilities strongly depend on the specific stochastic incidence
+55 curve observed, confirming that time-triggered decision heuristics are unwarranted. Using our exact framework we
+56 prove two key results about imperfect surveillance. First, any type of time-varying under-reporting will lead to
+57 premature or false-positive event-triggers and hence declarations, unless explicit knowledge of the under-reporting
+58 scheme is available. Second, a failure to identify and account for the differences between local and imported cases
+59 will result in delayed or false-negative event-triggers, regardless of the dynamics of case importation.
+60    Many infectious disease epidemics, including the ongoing COVID-19 pandemic, are known to feature extensive
+61 time-varying under-reporting and repeated importations from different regions [18, 19]. As this pandemic progresses
+62 into a potential second wave in several countries, public health authorities will need to decide when to relax and
+63 reapply intervention measures such as lockdowns, social distancing policies or travel bans [20]. Our work suggests
+64 that intensive surveillance, both of cases and their origin, must be sustained to make informed, reliable and adaptive
+65 decisions about the threat posed by the virus in the waning stages of the outbreak, even if reported case numbers
+66 remain at zero for consecutive days. We hope that our method, which is available at https://github.com/kpzoo/
+67 End-of-epidemic-declarations, will aid understanding and assessment of the tail kinetics of infectious epidemics.
+68                                                                   I. M ETHODS
+69 Infectious disease transmission models
+70    We can mathematically describe the transmission of an infection within a population over time with a renewal
+71 process based on the Euler-Lotka equation from ecology and demography [4]. This process models communicable
+72 pathogen spread from a primary (infected) case to secondary ones at some time s using two key variables: the
+73 effective reproduction number, Rs , and the generation time distribution with probabilities {wu } for all times u.
+74 Here Rs defines the number of secondary cases at time s + 1 one primary case at s infects on average, while wu is
+75 the probability that it takes u time units for a primary case to infect a secondary one [4]. As infection events are
+76 generally unobserved, we approximate the time of primary and secondary infection with the corresponding times
+77 of symptom onset i.e. the serial interval. This amounts to making the common assumption that the serial interval
+78 distribution, which can be observed, is a good approximation to the generation time distribution [2, 12].
+79    If Is counts the newly observed infected cases at s and a Poisson (Poiss) model is used to represent the noise
+80 in these observations then the renewal model captures the reproductive dynamics of infectious disease transmission
+   with Is ∼ Poiss(Rs−1 Λs ) [5]. Here Λs := s−1
+                                                            P
+81
+                                                               u=1 Is−u wu is the total infectiousness of the disease up to time s − 1
+82 and summarises how previous cases contribute to upcoming cases on day s. We use I1s := {I1 , I2 , . . . , Is } to
+
+     medRxiv preprint doi: https://doi.org/10.1101/2020.07.13.20152082.this version posted October 10, 2020. The copyright holder for this preprint
+        (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                           It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                                                                                                    5
+             (a)                 u (days) Past incidence (data) I1s
+                                                                           Add prior distributions & assumptions
+             Generation times                    ws I1                         e.g. {Rs−k+1, …, Rs} → Rτ(s)
+             ≈ serial intervals                                                                                         Epidemic
+                                                                                                                          over if:
+                                               ws−1I2
+                                                                                    Λs+1                                 Is+1 = 0
+                                                                              ∑
+                                                                                                   Parameter
+                                                                                             Rs
+                                                                                                   (unknown)             Is+2 = 0
+                                                 w1Is                                      Poiss Noise model
+              wu
+                                                                 Update                                                   I∞ = 0
+             (b)                                                                            Is+1 Next incidence
+                                    } 𝔼[Is+1 | Rs = 2] = 2Λs+1
+           Λs+1          × Rs
+                                         Effective branching e.g.
+                                                                                   (c)     Unreported              Imported
+                                                                                                Us                      Ms
+                   s          s + 1 Rs > 1 Epidemic growing and                  Sampled                    Local                   Total
+                                                  not under control
+                                        Rs < 1 Epidemic under control,              Ns          ∑              Is       ∑            Cs
+                                                  will be eliminated
+   Fig. 1: Transmission dynamics of an infectious disease. The renewal approach to infection propagation is outlined
+   under a Poisson noise model in panel (a). Past, observed infected cases I1s , which form an incidence curve, seed new
+   infections with probabilities proportional to wu defined by the generation time distribution of the disease, which is
+   approximated by the serial interval distribution. The total infectiousness Λs+1 sums the contributions of past cases
+   according to the set of {wu }. The effective reproduction number Rs determines how many effective infections are
+   passed on to the next time unit s + 1. It is common to group Rs values over a window τ (s) to improve estimation
+   reliability. When all future incidence values are zero we conclude that the epidemic is over or eliminated. Panel (b)
+   shows how Rs acts as a reproductive parameter, controlling whether the epidemic grows or dies out. This parameter
+   is therefore essential to predicting the dynamics of an epidemic. Panel (c) provides a breakdown of more realistic
+   observation assumptions, where we might not be able to directly measure the local and complete incidence Is due
+   to unreported Us or imported (migrating) Ms cases. If we can only observe sampled cases, Ns , or the total number
+   of cases, Cs , then our epidemic predictions will be biased.
+83 represent the incidence curve from time 1 to s. A schematic of this approach to epidemic transmission is given
+84 in Fig. 1. Usually we are interested in estimating the Rs numbers in real time [21, 22] from the progressing I1s ,
+85 assuming that the serial interval distribution is known (i.e. derived from some other linelist data) [12].
+86    This effective reproduction number is important for forecasting the kinetics of the epidemic. If Rs > 1 then we
+87 can expect the number of infections to increase monotonically with time. However, if Rs < 1 is sustained then we
+88 can be confident that the epidemic is being controlled and will, eventually, be eliminated [23]. In order to enhance
+89 the reliability of these estimates we usually assume that the epidemic transmission properties are stable over a look-
+90 back window of size k defined at time s as τ (s) := {s, s−1, . . . , s−k+1} [12, 24]. We let the reproduction number
+91 over this window be Rτ (s) and apply a conjugate gamma (Gam) prior distribution assumption: Rτ (s) ∼ Gam (a, 1/c)
+
+      medRxiv preprint doi: https://doi.org/10.1101/2020.07.13.20152082.this version posted October 10, 2020. The copyright holder for this preprint
+          (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                            It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                                                                                                     6
+ 92 with a and c as shape-scale hyperparameters. This formulation, together with the use of gamma prior distributions,
+ 93 is standard in current renewal model frameworks [12, 21, 25].
+ 94     The posterior distribution of Rτ (s) given the relevant window of the past incidence curve of data i.e. Iτ (s) :=
+ 95
+      s
+    Is−k+1     is also gamma distributed as follows [22]
+                                                                                                    
+                                                                                              1
+ 96                                                  Rτ (s) | Iτ (s) ∼ Gam a + iτ (s) ,     c+λτ (s)   ,                                          (1)
+ 97
+                                          P                               P
+ 98 with grouped sums iτ (s) :=               u∈τ (s) Iu   and λτ (s) :=     u∈τ (s) Λu . If some variable y ∼ Gam(α, β) then P(y) =
+             y/β
+ 99 y α−1 e−    /β α Γ(α) and E[y] = αβ . As a result, Eq. (1) yields the posterior mean estimate of R̂τ (s) = ατ (s) βτ (s) with
+100 ατ (s) := a + iτ (s) , βτ (s) := 1/c+λτ (s) . Eq. (1) allows us to infer the grouped or averaged effective reproduction
+101 number over the window τ (s), which is considered an approximation of the unknown Rs .
+102     We can derive the posterior predictive distribution of the next incidence value (at time s + 1) by marginalising
+103 over the domain of Rτ (s) as in [22]. If the space of possible predictions at s + 1 is x | Iτ (s) and NB indicates a
+104 negative binomial distribution then we obtain
+                                                                                                      
+                                                                                          Λs+1 βτ (s)
+105                                                x | Iτ (s) ∼ NB ατ (s) , pτ (s) :=    1+Λs+1 βτ (s)   .                                        (2)
+106
+107 Eq. (2) completely describes the uncertainty surrounding one-step-ahead incidence predictions and is causal because
+108 all of its terms (including Λs+1 ) only depend on the past observed incidence curve I1s [22].
+        If a random variable y ∼ NB(α, p) then P(y) := α+y−1                        (1 − p)α py and E[y] = pα/1−p. Hence our posterior
+                                                                                  
+109
+                                                                              y
+110 mean prediction is Iˆs+1 = E[x | Iτ (s) ] = Λs+1 R̂τ (s) . The current estimate of Rτ (s) influences our ability to predict
+111 upcoming incidence points. Thus, we expect that good estimation of the effective reproduction number is necessary
+112 for projecting the future behaviour of an infectious disease epidemic. In Results we rigorously extend and apply
+113 this insight to derive an exact method for computing the probability that an epidemic is reliably over at some time
+114 s i.e. that no future infections will occur from s + 1 onwards.
+115 Under-reported and imported cases
+116     The above formulation assumes perfect case reporting and that all cases, I1s , are local to the region being
+117 monitored. We now relax these assumptions. First, we consider more realistic scenarios where only some fraction
+118 of the local cases are reported or observed at any time. We use Ns and Us for the number of sampled and
+119 unreported cases at time s. We consider a general time-varying binomial (Bin) sampling model with 0 ≤ ρs ≤ 1
+120 as the probability that a true case is sampled at time s (hence 1 − ρs is the under-reporting probability). Then
+121 Ns ∼ Bin(Is , ρs ). The smaller ρs is, the less representative the sampled curve N1s is of the true I1s .
+
+      medRxiv preprint doi: https://doi.org/10.1101/2020.07.13.20152082.this version posted October 10, 2020. The copyright holder for this preprint
+         (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                            It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                                                                                                     7
+122    This is a standard model for under-reporting [8, 26] and implies the following statistical relationship
+123                                                 Is = Ns + Us ,         Ns ∼ Poiss(ρs Rs−1 Λs ).                                               (3)
+124
+125 Raikov’s theorem [27] states that if the sum of two independent variables is Poisson then each variable is also
+126 Poisson. Consequently, Us is Poisson with mean (1 − ρs )Rs−1 Λs . Most studies assume that ρs = ρ for all s i.e. that
+127 constant under-reporting occurs. The persistence of the Poisson relationship in Eq. (3) means that we can directly
+128 apply the forecasting and estimation results of the previous section to Ns . Practically, if we observe only N1s then
+129 unless we have independent knowledge of ρs (which can often be difficult to ascertain reliably [18, 26]) we can
+    only construct an approximation to ρs Λs as Λ̃s := s−1
+                                                                       P
+130
+                                                                          u=1 wu Ns−u with E[Λ̃(s)] = ρs Λs .
+131    Second, we investigate when imported or migrating cases from other regions, denoted by count Ms at time s,
+132 are introduced, resulting in the total number of observed cases being Cs . Within this framework we ignore the
+133 under-reporting of cases and assume that Is is observed to avoid confounding factors. We follow the approach of
+134 [9] and describe Ms as a Poisson number with some mean at time s of s . Using Raikov’s theorem we obtain
+135                                                C s = I s + Ms ,       Cs ∼ Poiss(Rs−1 Λs + s ).                                              (4)
+136
+137 Eq. (4) models how imported cases combine with existing local ones to propagate future local infections.
+138    While our work does not require assumptions on s , for ease of comparison later on we adopt the convention
+139 that the sum of imports and local cases drive the epidemic forward with the same reproduction number and serial
+    interval [28]. Consequently, Is ∼ Poiss(Rs−1 Λ̄s ) with Λ̄s := s−1
+                                                                                 P
+140
+                                                                                    u=1 wu Cs−u . Practically, when surveillance is poor
+141 (i.e. local and imported cases cannot be distinguished), it is common to assume that all observed cases are local
+142 and conform to the approximate model Cs ∼ Poiss(Rs−1 Λ̄s ) [25]. The forecasting and estimation results of the
+143 previous section therefore also apply under these conditions.
+144    In Results we examine the impact of imperfect (our null hypothesis H0 ) and ideal (the alternative H1 ) surveillance
+145 within the context of under-reporting and importation in turn. We treat each problem individually to isolate the
+146 impact of each bias. Ideal surveillance then represents the ability to know either Us or Ms (depending on the problem
+147 of interest) and hence account for their contributions. Imperfect surveillance refers to only having knowledge of Ns
+148 or Cs and basing inferences on these curves under the strong assumption that they approximate the true incidence.
+149 This assumption is often made in the literature [2, 12, 21] for the purposes of tractability and means Eq. (1) and
+150 Eq. (2) are valid. Fig. 1 summarises the relationships from Eq. (3) and Eq. (4).
+
+      medRxiv preprint doi: https://doi.org/10.1101/2020.07.13.20152082.this version posted October 10, 2020. The copyright holder for this preprint
+        (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                            It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                                                                                                     8
+151                                                                      R ESULTS
+152 An exact method for declaring an outbreak over
+153    We define an epidemic to be eliminated or over [23] at time s if no future, local or indigenous infected cases
+154 are observed i.e. Is+1 = Is+2 = · · · = I∞ = 0. We can define the estimated probability of elimination, zs , as
+                                                             zs := P ∧∞                    s
+                                                                                             
+155
+156
+                                                                          j=s Ij+1 = 0 | I1 ,                                                     (5)
+157 with I1s as the incidence curve (data), observed until time s. We refer to zs as an estimated probability because we
+158 do not have perfect knowledge of the epidemic statistics e.g. we cannot know Rs precisely. The importance of this
+159 distinction will become clear in the subsequent section (see Eq. (10)). However, we observe that if we could have
+160 this idealised knowledge then Eq. (5) would exactly define the probability of no future cases given I1s .
+161    Declaring the end of an epidemic with confidence µ% translates into solving the optimal stopping time problem
+                                                                                       µ
+162                                                              tµ = arg min zs ≥    100 ,                                                       (6)
+163                                                                          s
+164 with t95 , for example, signifying the first time that we are at least 95% sure that the epidemic has ended. Note that
+165 zs is a function of I1s and practically characterises our uncertainty in the outcome of the epidemic (i.e. if it is over
+166 or not). This uncertainty derives from the fact that a range of possible epidemics with distinct future incidences
+167
+      ∞ can possess the same I s and Rs values. Some uncertainty exists even if Rs is known perfectly.
+    Is+1                                  1          1                                                     1
+168    Eq. (6) presents an event-triggered approach to declaring the end of an epidemic with the µ threshold serving as
+169 an informative trigger. Event-triggered formulations have the advantage of being robust to changes in the observed
+170 data [13, 14], a point visible from the dependence of zs and hence tµ on I1s . While Eq. (6) is written in absolute
+171 time, we may also clock time relative to the last observed case, t0 . Our waiting time until declaration is then
+172 ∆tµ = tµ − t0 , which is more useful for comparing zs values from various realisations of I1s and for deriving
+173 confidence intervals. Later, we consider differences in the ∆tµ , denoted δtµ , proposed by comparable methods.
+174    Previous works on end-of-epidemic declarations have either approximated zs with a simpler, more conservative
+175 probability [2] or used simulations to estimate a quantity similar to zs that is averaged over those simulations [6]
+176 [7]. No study has yet (to our knowledge) included real-time estimates of Rs , within its assessment of epidemic
+177 elimination, despite the importance of this parameter in foretelling transmission [23]. By taking the renewal process
+178 approach to epidemic propagation (see Fig. 1), we explicitly embed uncertainty about Rs estimates to obtain an
+179 analytic and insightful expression for the probability that the outbreak is over given past observed cases (Eq. (5)).
+180    We derive this by inferring Rs within a sequential Bayesian framework from I1s , using a moving window of
+181 length k time units. We denote this estimate Rτ (s) with window τ (s) spanning Is−k+1                  s     [12, 22]. Our main result is
+182 summarised as a theorem below (see Methods for further details and notation). Fig. 2 illustrates how our computed
+
+      medRxiv preprint doi: https://doi.org/10.1101/2020.07.13.20152082.this version posted October 10, 2020. The copyright holder for this preprint
+         (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                            It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                                                                                                     9
+183 zs probability varies across the lifetime of an example incidence curve, thus providing a real-time, causal and
+184 dynamically updating view of our confidence in its end.
+    Fig. 2: Elimination probabilities across the lifetime of an epidemic. We simulate a single incidence curve, Is
+    (blue, case counts on left y-axis), under the serial interval distribution for Ebola virus [29] and a true Rs profile
+    that step changes from 2 to 0.5 at s = 100 days. We compute the true and estimated elimination probabilities,
+    zs∗ and zs , conditional on all cases observed up to time s in grey and red respectively (right y-axis). The circle
+    (black) indicates when the outbreak can be declared over with 95% confidence. Observe how zs and zs∗ respond
+    to the low Is at the beginning of the epidemic before remaining 0 until we get to the tail of the outbreak, where a
+    couple fluctuations occur due to some final cases. An estimate of the WHO declaration time, tW HO [3], which is
+    mostly insensitive to past case profiles is in dark blue. The central question in this study is how few cases need to
+    be observed in the recent past before we can be confident that the epidemic has been eliminated.
+185 Theorem 1. If the posterior distribution of the grouped effective reproduction number, Rτ (s) , given the incidence
+    curve I1s has form Gam ατ (s) , βτ (s) then the estimated probability that this epidemic has been eliminated at time
+                                                     
+186
+                                        −ατ (j)
+                                 Iˆj+1
+                        
+    s is zs = ∞                                    with Iˆj+1 = Λj+1 R̂τ (j) and R̂τ (j) = ατ (j) βτ (j) as the mean posterior incidence
+                Q
+187
+                  j=s     1  +   ατ (j)
+188 prediction and effective reproduction number estimate at time j , respectively.
+189    We outline the development of this theorem. First, we decompose Eq. (5) into sequentially predictive terms as:
+                                                                           Q∞                            
+                                                                                                        j
+190                                              zs = P (Is+1 = 0 | I1s )    j=s+1  P   Ij+1   =  0 | I1 .                                        (7)
+191
+                                                                  Q∞
+192 For simplicity, we rewrite Eq. (7) as zs = q0                   j=1 qj . The factor qj conditions on I1s+j , which includes all the
+                                                                                              s+j
+193 epidemic data, I1s and the sequence of assumed zeros beyond that i.e. Is+1                     = 0 for j ≥ 1. This sequence is treated
+194 as pseudo-data. Observe that q0 is simply a one-step-ahead prediction of 0 from the available incidence curve.
+195    We solve Eq. (7) by making use of known renewal model results derived in [12, 22, 24] and outlined in Methods.
+196 The renewal transmission model allows us to estimate the effective reproduction number Rs and hence compute
+
+      medRxiv preprint doi: https://doi.org/10.1101/2020.07.13.20152082.this version posted October 10, 2020. The copyright holder for this preprint
+        (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                            It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                                                                                                   10
+197 zs in real time (see Fig. 1). This estimate at time s, Rτ (s) , uses the look-back window τ (s) of k time units (e.g.
+                                                                                                                     
+198 days). The posterior over Rτ (s) is shape-scale gamma distributed as Gam ατ (s) , βτ (s) with ατ (s) := a + iτ (s)
+                        1
+199 and βτ (s) :=   c+λτ (s)    (see Eq. (1)). Here (a, c) are hyperparameters of a gamma prior distribution placed on Rτ (s)
+200 and iτ (s) and λτ (s) are grouped sums of the incidence Iu and total infectiousness Λu for u ∈ τ (s). The total
+201 infectiousness describes the cumulative impact of past cases and is defined in Methods.
+202    Under this formulation, the posterior predictive distribution of the incidence at s + 1 is negative binomially dis-
+203 tributed (NB) (see Eq. (2)). The probability of Is+1 being zero from this distribution gives q0 = (1+Λs+1 βτ (s) )−ατ (s)
+204 by substitution. The next term, q1 , is computed similarly because we condition on Is+1 = 0 as pseudo-data (i.e.
+205 the sequential terms in Eq. (7)) and update Λs+2 , βτ (s+1) and ατ (s+1) with this zero. Iterating for all terms yields
+                                                                 Q∞
+206                                                      zs =       j=s (1 + Λj+1 βτ (j) )−ατ (j) ,                                               (8)
+207
+208 which is an exact expression for zs . As a string of zero incidence values accumulates with time Λj+1 → 0 and
+209 hence qj → 1. Consequently, only a finite number of terms in Eq. (8) need to be computed and the initial ones are
+210 the most important for evaluating zs .
+211    The posterior mean estimate of Rτ (s) is R̂τ (s) = E[Rτ (s) | I1s ] = E[Rτ (s) | Iτ (s) ] = ατ (s) βτ (s) with Iτ (s) as the
+212 incidence values in the τ (s) window (the remaining I1s−k are assumed uninformative [12]). This follows from the
+213 Gam distribution and implies a posterior mean incidence prediction Iˆs+1 = E[Is+1 | Iτ (s) ] = Λs+1 R̂τ (s) from the
+214 NB posterior predictive distribution [22]. Substituting these into Eq. (8) gives:
+                                                                                                −ατ (j)
+                                                             Q∞           Iˆj+1 = Λj+1 R̂τ (j)
+215                                                   zs =      j=s   1+          ατ (j)                 .                                        (9)
+216
+217 This completes the derivation. Theorem 1, when combined with Eq. (6), provides a new, analytic and event-
+218 triggered approach to adjudging when an outbreak has ended. Eq. (9) provides direct and quantifiable insight into
+219 what controls the elimination of an epidemic and can be easily computed and updated in real time.
+220 Understanding the probability of elimination
+221    We dissect and verify the implications of Theorem 1, which provides an exact formula for estimating the
+222 probability, zs , that any infectious disease epidemic has been eliminated by time s. Eq. (8) formalises the expectation
+223 that any decrease in case incidence increases zs . This results because                      ∂qj/∂ατ (j) > 0 for all ατ (j) , meaning that qj
+224 is monotonically increasing in ατ (j) and hence iτ (j) . As zs is a product of qj and every qj is positive then zs is
+225 also monotonically increasing in all incidence window sums. Consequently, any process that reduces historical or
+226 cumulative incidence surely increases the probability of elimination.
+227    The main variable controlling zs is the average predicted incidence Iˆj+1 (see Eq. (9)). Reducing either Λj+1
+
+      medRxiv preprint doi: https://doi.org/10.1101/2020.07.13.20152082.this version posted October 10, 2020. The copyright holder for this preprint
+         (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                            It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                                                                                                   11
+228 or R̂τ (j) therefore increases our confidence in a declaration made after a fixed time (the time-triggered approach)
+229 or, decreases the time of declaration for a fixed confidence (the event-triggered approach). This highlights the
+230 two known ways that sustained interventions, e.g. vaccination, social-distancing or quarantine, can help drive an
+231 epidemic to extinction. First, such measures explicitly limit Rj and hence R̂τ (j) , leading to an expected rise in zs
+232 [23]. Second, they may also implicitly reduce the duration of the serial interval, resulting in smaller Λj+1 [30].
+233    Accordingly, under- or over-estimating R̂τ (j) or using incorrectly smaller or larger Λj+1 sums induces spurious
+234 fluctuations in zs and promotes premature or delayed declarations, respectively. This insight underlies later analyses,
+235 which investigate how surveillance imperfections can modulate the declaration time. Because we cannot reduce either
+236 reproduction numbers or serial intervals to arbitrary values of interest (e.g. certain diseases have intrinsically wider
+237 serial interval distributions) some epidemics will be innately harder to control and eliminate [31].
+238    Interestingly, while zs is controlled by mean estimates and predictions, it appears insensitive to the uncertainty
+239 around those means, despite its derivation from the posterior distributions of Eq. (1) and Eq. (2). This follows from
+240 the inherent data shortage at the tail of an epidemic (there are necessarily many zero incidence points), which likely
+241 precludes the inference of higher order statistics [24]. Moreover, when the incidence is small stochastic fluctuations
+242 can dominate epidemic dynamics. Consequently, to maximise the reliability of our zs estimates we recommend
+243 using long windows (large k ) for R̂τ (j) . Short windows are more sensitive to recent fluctuations and are more prone
+244 to yielding uninformative estimates when many zero incidence points occur [22].
+245    Last, we validate the correctness of our estimated zs by considering a hypothetical setting in which the true
+246 reproduction number, {Rs : s ≥ 0}, is known without error. This allows us to derive the true (but unknowable)
+247 probability of elimination zs∗ at time s, given complete information of the epidemic statistics. Under the renewal
+248 model P (Is+1 = 0 | I1s ) = e−Rs Λs+1 . Repeating this process sequentially for future zero infected cases (akin to
+249 describing the likelihood of that observation series) gives:
+                                                              Q∞                      P∞
+250                                                   zs∗ =      j=s e
+                                                                       −Λj+1 Rj = e−   j=s  Λj+1 Rj
+                                                                                                    .                                           (10)
+251
+252 Clearly zs∗ depends on the serial interval distribution and past incidence (through Λj+1 ) and the sequence of
+253 reproduction numbers Rj , which are the main factors underlying the transmission of the infectious disease.
+                                                                                                            µ
+254    The true declaration time with confidence µ% is then t∗µ = arg mins zs∗ ≥                           100   (see Eq. (6)). We can verify
+255 our approach to end-of-epidemic declarations if we can prove that tµ sensibly converges to t∗µ . At the limit of
+256 ατ (j) → iτ (j) → ∞, the estimated R̂τ (j) tends to the true Rj because under those conditions the posterior mean
+257 estimate coincides with the grouped maximum likelihood estimate of Rj , which is unbiased. Applying this limit to
+
+      medRxiv preprint doi: https://doi.org/10.1101/2020.07.13.20152082.this version posted October 10, 2020. The copyright holder for this preprint
+         (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                            It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                                                                                                   12
+258 qj in Eq. (9) we find that as R̂τ (j) → Rj :
+                                                                                  −iτ (j)
+                                                                      Λj+1 R̂τ (j)
+259                                                      lim     1+      iτ (j)             = e−Λj+1 Rj ,                                       (11)
+260
+                                                     iτ (j) →∞
+261 implying that zs → zs∗ , and consequently that tµ → t∗µ .
+262    This asymptotic consistency suggests that zs and tµ indeed approximate the true but unknowable probability
+263 of elimination zs∗ and declaration time t∗µ . Other end-of-epidemic metrics in the literature have not shown such
+264 theoretical justification. We illustrate zs and zs∗ across a simulated and representative incidence curve in Fig. 2.
+265 There we find a good correspondence between these probabilities and observe their sensitivity to changes in incidence
+266 at the beginning and end of this outbreak. Note that zs and zs∗ (and hence tµ and t∗µ ) depend on I1s and are more
+267 precisely written as zs | I1s and zs∗ | I1s . The WHO declaration time, tW HO , which is included for reference, is mostly
+268 independent of the shape of I1s [3], explaining why it provides no confidence guarantee.
+269 Practical comparisons and verification
+270    We have only validated our approach at an asymptotic limit that is not realistic for elimination i.e. the proof that
+271 zs and tµ converge to their true counterparts requires infinite incidence. While this proof suggests our formulation
+272 is mathematically correct, it does not indicate its performance on actual elimination problems. We now verify out
+273 method more practically. We first use simulated data to show that ∆tµ = tµ − t0 and ∆t∗µ = t∗µ − t0 correspond
+274 well over several end-of-epidemic problems, where we are far from this limit, and with t0 as the time of the last
+275 observed case. We characterise this via histograms of the error δtµ = ∆tµ − ∆t∗µ = tµ − t∗µ , which are given in
+276 panels (a)-(c) of Fig. 3. There we present 95% (µ = 0.95) declaration time errors over 1000 simulated epidemics
+277 with serial interval distributions from the COVID-19 pandemic [32], MERS-CoV in Saudi Arabia [25], Marburg
+278 virus in Angola [29] and Measles in Germany [12].
+279    We investigate true Rs profiles that describe (a) rapidly controlled, (b) partially recovering and (c) exponentially
+280 rising and falling transmission (boom-bust). For each profile we use the renewal model to simulate conditionally
+281 independent I1s curves and compute zs | I1s and zs∗ | I1s using Eq. (9) and Eq. (10). The declaration time errors then
+282 follow as above and from Eq. (6). Panel (d) plots these Rs profiles (top) and the serial interval distributions for
+283 each disease (bottom). Generally, we find that tµ is a good approximation to t∗µ , with some error naturally emerging
+284 from the difficulty of estimating Rs in conditions where data are necessarily scarce [33]. Our prior distribution
+285 over Rτ (j) is Gam(1, 5), which is both uninformative and has a large mean of 5.
+286    This error, δt95 , is more prominent for diseases featuring wide serial interval distributions, which are fundamen-
+287 tally more difficult to estimate, due to their dependence on much earlier epidemic dynamics. These simulations
+288 also demonstrate why time-triggered approaches can be misleading; they do not adapt to the shape of the specific
+
+  medRxiv preprint doi: https://doi.org/10.1101/2020.07.13.20152082.this version posted October 10, 2020. The copyright holder for this preprint
+    (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                        It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                                                                                               13
+(a)                                                                      (b)
+(c)                                                                      (d)
+Fig. 3: True and estimated declaration times. We simulate 1000 independent incidence curves under various
+renewal models and provide normalised histograms of the difference between the estimated and true declaration
+times i.e. δt95 = ∆t95 − ∆t∗95 = t95 − t∗95 . Panels (a)-(c) present these histograms for various infectious diseases
+under Rs profiles indicating (a) rapidly controlled, (b) recovering and (c) rising and then decaying transmission
+(boom-bust). The top row of (d) plots the true Rs curves in absolute time, while the bottom row of (d) provides the
+serial interval distributions of the infectious diseases examined. Generally we find that t95 ≈ t∗95 to a reasonable
+level. The quality of this approximation depends on the variability of the serial interval distribution (see S1 Fig)
+and the degree of fluctuation in transmission when incidence is small.
+
+      medRxiv preprint doi: https://doi.org/10.1101/2020.07.13.20152082.this version posted October 10, 2020. The copyright holder for this preprint
+        (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                            It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                                                                                                   14
+289 instance of I1s observed. An example of this is given in S1 Fig, where we find that the WHO declaration time
+290 ∆tW HO = tW HO − t0 is delayed relative to both the true (∆t∗95 ) and estimated ∆t95 event-triggered declaration
+291 times, for Ebola virus disease, which has a wide serial interval. Depending on the disease of interest ∆tW HO
+292 could also be premature. The large variability among the possible ∆t∗95 provides a clear visualisation of the non-
+293 deterministic nature of epidemic end-points and the need for adaptive metrics with stated confidence.
+294    At present, we have only verified our method under ideal reporting conditions. Practical surveillance is investigated
+295 in later sections. We now compare our method to the event-triggered one of [2], which assumes ideal surveillance
+296 and models epidemic transmission with a NB branching process that is strictly only valid at the beginning of the
+297 outbreak. This notably differs from our renewal model approach and the elimination probabilities derived in [2]
+298 are a mathematically conservative approximation to our zs . We compare both methods on MERS-CoV data from
+299 South Korea, examined in [2], by running them on a set of bootstrapped incidence curves generated from fitting
+300 the model of [2] to that data and compute 95% confidence intervals on the probability of elimination.
+301    Fig. 4 presents our main results with time relative to the last observed case in each bootstrap (∆s) and blue and
+302 red curves as the outputs of [2] and our method. While the median 95% relative declaration times (black circles) are
+303 close, the approach of [2] yields a delayed declaration. This effect is reduced if we use the lower bound of the zs
+304 curves instead of their median. When zs is small (which is not practical for defining end-of-epidemic declarations)
+305 we find that the methods are less consistent. The WHO declaration time (dark blue) for this epidemic is over one
+306 week later than the time proposed by both methods [2]. While our method shows wider uncertainty, the similarity
+307 of these intervals suggests that our formulation is robust to moderate model mismatch.
+308 Under-reporting leads to premature declarations
+309    Having verified zs and hence tµ as reliable and sensible means of assessing the conclusion of an epidemic,
+310 we investigate the effect of model mismatch due to imperfect surveillance. We start with case under-reporting,
+311 which affects all infectious disease outbreaks to some degree. While previous works have drawn attention to how
+312 constant under-reporting can bias end-of-epidemic declarations [6] [7], no analytic results are available. Moreover,
+313 the impact of time-varying under-reporting, which models a wide range of more realistic surveillance scenarios
+314 [8, 34], remains unstudied. We provide mathematical background for our under-reporting models in Methods.
+315    Fig. 1 illustrates how under-reporting results in only a portion, Ns , of the total local cases, Is being sampled
+316 or observed. We use Us = Is − Ns ≥ 0 to denote the unreported cases. We investigate two hypotheses or models
+317 about the incidence curve, a null one, H0 , where we assume that the observed cases N1s represent all the infected
+318 individuals and an alternative hypothesis H1 , in which the unreported cases U1s (and hence I1s ) are known and
+
+     medRxiv preprint doi: https://doi.org/10.1101/2020.07.13.20152082.this version posted October 10, 2020. The copyright holder for this preprint
+        (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                            It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                                                                                                  15
+    Fig. 4: Empirical method comparison. We compare 95% confidence intervals on the elimination probability from
+    [2] (blue) and zs from Eq. (9) (red) on bootstrapped epidemics based on the MERS-CoV data from South Korea
+    used in [2]. Black circles define the median relative declaration time (∆t95 ) when each method deems the epidemic
+    to be over with 95% confidence (the event trigger). Time is relative to the last observed case in each epidemic
+    bootstrap and the WHO (time-triggered) declaration time (∆tW HO ) is in dark blue.
+319 distinguished. The estimated elimination probabilities under both surveillance models are:
+                                                     H0 : zs | N1s = P ∧∞                             s
+                                                                                                        
+                                                                              j=s Nj+1 = 0 | N1           and
+320                                                                                                                                            (12)
+                                                     H1 : zs | I1s = P ∧∞                   = 0 | N1s ∧ U1s .
+                                                                                                           
+                                                                             j=s Ij+1
+321    Here H0 portrays a naive interpretation of the observed (Ns ) incidence, while H1 indicates ideal surveillance.
+322 Intensive and targeted population testing should interpolate between H0 and H1 . We compute zs | N1s by constructing
+    the sampled total infectiousness Λ̃s := s−1
+                                                         P
+323
+                                                            u=1 wu Ns−u and then applying Theorem 1. This follows because Ns can
+    also be described by a Poisson renewal model (see Methods for details). We therefore find that zs | N1s = ∞
+                                                                                                                                       Q
+324
+                                                                                                                                          j=s (1 +
+325 Λ̃j+1 β̃τ (j) )−a−nτ (j) with nτ (j) and λ̃τ (j) as the sums of Nu and Λ̃u within the τ (j) window and β̃τ (j) = 1/c+λ̃τ (j) .
+326 We get zs | I1s directly from Eq. (8) since this is the perfect surveillance case.
+327    Since Ns ≤ Is for all s then λτ (j) ≥ λ̃τ (j) for all j , assuming that the same serial interval distribution applies.
+    As a result, βτ (j) ≤ β̃τ (j) , which means that zs | N1s ≥ ∞                                            −a−nτ (j) := φ. From Eq. (8) we can
+                                                                                Q
+328
+                                                                                     j=s (1 + Λ̃j+1 βτ (j) )
+    rewrite zs | I1s = ∞                                 −a−nτ (j) −uτ (j) with u
+                          Q
+329
+                             j=s (1 + Λj+1 βτ (j) )                                    τ (j) = iτ (j) − nτ (j) as the total number of unreported
+330 cases in the window τ (j). We examine the ratio of zs | N1s to zs | I1s , which is at least as large as φ/(zs | I1s ). If
+331 this ratio is above 1 then the elimination probability is being inflated by imperfect surveillance. We find that
+                                                                         a+nτ (j)
+                                                  uτ (j) 1+Λj+1 βτ (j)
+                    Q∞
+332 φ/(zs | I s ) =
+             1       j=s (1  +  Λ  j+1  β τ (j) )         1+Λ̃    β
+                                                                                    . Since Λj ≥ Λ̃j at every j (historical numbers of cases
+                                                              j+1   τ (j)
+
+     medRxiv preprint doi: https://doi.org/10.1101/2020.07.13.20152082.this version posted October 10, 2020. The copyright holder for this preprint
+        (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                           It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                                                                                                  16
+333 are fewer) and the remaining term is always ≥ 1 we do find this inflation and consequently
+334                                                  zs | N1s ≥ zs | I1s =⇒ tµ | H0 ≤ tµ | H1 .                                                (13)
+335
+336 At no point have we assumed any form for the under-reporting fraction, denoted ρs at time s (see Methods). Our
+337 derivation only depends on under-reporting causing smaller (absolute) historical incidence.
+338    Thus any under-reporting, whether constant (i.e. all ρs are the same) or time-varying will engender premature
+339 or false-positive end-of-epidemic declarations provided Ns is randomly sampled from Is (so Theorem 1 holds; see
+340 Eq. (3)). We highlight this principle by examining a random sampling scheme using empirical SARS 2003 data
+341 from Hong Kong [12]. We binomially sample the SARS incidence with random probability ρs ∼ Beta(a, b). We
+342 set b = 40 and compute a so that the mean sampling fraction E[ρs ] = fρ takes some desired (fixed) value. We
+343 investigate various fρ and show that premature declarations are guaranteed in (a) and (b) of Fig. 5. The impact of
+344 ρs is especially large when under-reporting leads to early but false sequences of 0 cases, which is additional to the
+345 bias from Eq. (13). We present results in absolute time to showcase this effect.
+346 Importation results in late declarations
+347    The influence of imported cases on end-of-epidemic declarations, to our knowledge, has not been investigated
+348 in the literature. Repeated importations or migrations of infected cases are a common means of seeding and re-
+349 seeding local infectious epidemics. Failing to ascertain which cases are local or imported can significantly change
+350 our perception of transmission [9]. We assume that Is is the total count of local cases in our region of interest but
+351 that at time s there are also Ms imported cases that have migrated from neighbouring regions. The total number
+352 of infected cases observed is Cs = Is + Ms as displayed in Fig. 1. We provide mathematical background on
+353 how importations are included within the renewal framework in Methods. We consider two hypotheses about our
+354 observed incidence data that reflect real epidemic scenarios.
+355    Under the null hypothesis, H0 , we assume that all cases are local and so we cannot disaggregate the components
+356 of Cs . The alternative, H1 , assumes perfect surveillance. Imported cases are distinguished from local ones under
+357 H1 and their differing impact considered. The relevant elimination probabilities for each model are
+                                                  H0 : zs | C1s = P ∧∞                        s
+                                                                                                
+                                                                           j=s Cj+1 = 0 | C1      and
+358                                                                                                                                            (14)
+                                                          zs | I1s      ∧∞         = 0 | I1s ∧ M1s .
+                                                                                                    
+                                                  H1 :             =P     j=s Ij+1
+                                                                                                                               Ps−1
+359 Since H0 deems all cases local, it models Cs as a renewal process with total infectiousness Λ̄s :=                             u=1 Cs−u ws .
+360 Thus we use Theorem 1 to obtain the j th factor of zs | C1s as qj | C1s = (1+ Λ̄j+1 β̄τ (j) )−a−cτ (j) with β̄τ (j) = 1/c+λ̄τ (j) .
+361 Here cτ (j) and λ̄τ (j) are sums of Cu and Λ̄u over window τ (j).
+
+ medRxiv preprint doi: https://doi.org/10.1101/2020.07.13.20152082.this version posted October 10, 2020. The copyright holder for this preprint
+    (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                       It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                                                                                              17
+(a)                                                                     (b)
+(c)                                                                     (d)
+Fig. 5: Case under-reporting and importation lead to premature and delayed declarations respectively. In (a)
+and (b) we binomially sample an empirical SARS 2003 incidence curve from Hong Kong with reporting probabilities
+drawn from a beta distribution with mean fρ . In (a) we plot the elimination probability zs when surveillance is
+ideal i.e. there is no underreporting (red) versus when the under-reporting is unknown (blue). The difference in the
+95% declaration times, denoted δt95 , from these curves is in (b). As fρ increases we are more likely to declare too
+early. In (c) and (d) we consider an empirical MERS-CoV 2014-5 incidence curve from Saudi Arabia with local
+and imported cases. We increase the mean fraction of imported cases to f by adding Poisson imports with mean 
+and in (c) compute zs with (red) and without (blue) accounting for the difference between imports and local cases.
+The change in t95 is given in (d). As  and hence f increase later declarations become more likely. We repeat our
+sampling or importation procedure 1000 times to obtain confidence intervals in (a)–(d). As f → 0 or fρ → 1 we
+attain the ideal surveillance scenarios of no unreported or imported cases.
+
+      medRxiv preprint doi: https://doi.org/10.1101/2020.07.13.20152082.this version posted October 10, 2020. The copyright holder for this preprint
+         (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                            It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                                                                                                   18
+362    Under H1 the imported cases are distinguished but all cases still contribute to ongoing local transmission [9, 28].
+363 Consequently, Is still adheres to a renewal transmission process and Theorem 1 yields the j th factor of zs | I1s as
+364 qj | I1s = (1 + Λ̄j+1 β̄τ (j) )−a−iτ (j) . We compare qj | I1s with qj | C1s directly to easily prove that
+365                                                   zs | C1s ≤ zs | I1s =⇒ tµ | H0 ≥ tµ | H1 .                                                (15)
+366
+367 Not accounting for migrations shrinks the elimination probability leading to false-negative or unnecessarily late
+368 declarations. This result makes no assumption on the dynamics for importation other than it possesses Poisson
+369 noise (so Theorem 1 is valid for Cs ) and so holds quite generally (see Methods for further details).
+370    We illustrate this phenomenon using empirical MERS-CoV data from Saudi Arabia [25] in (c) and (d) of Fig. 5.
+371 Here repeated importations occur as zoonotic camel to human transmissions. We show the increasing effect of
+372 importation by adding further (artificial) imports via a Poisson noise variable with mean  (see Eq. (4)). The mean
+373 fraction of imported to total cases across the incidence curve is then f . In Fig. 5 we see that larger  promotes
+374 increasingly later declaration times. In Fig. 5 we do not add any imports beyond the time of the last local case.
+375 If imports do come after this case, and seed no further local infections, which is likely for epidemics with large
+376 heterogeneity, then the t0 assumed under H0 will be later, and further exacerbate the bias from importation.
+377                                                                    D ISCUSSION
+378    Understanding and predicting the temporal dynamics of infectious disease transmission in real time is crucial
+379 to controlling existing epidemics and to thwarting future resurgences of those outbreaks, once controlled [21]. To
+380 achieve this understanding it is necessary to characterise and study the infectious disease throughout its lifetime.
+381 While many works have focussed on the growth, peak and controlled phases of epidemics (see Fig. 2), relatively
+382 less research has examined how the tail of the outbreak shapes the kinetics of its elimination. For example, while
+383 much is known about how the basic and effective reproduction numbers influence the growth rate, peak size and
+384 controllability of an epidemic [4, 35], the relationship between these numbers and the waiting time to epidemic
+385 elimination or extinction is still largely unexplored.
+386    However, this relationship has important implications for public health policy. Knowing when to relax non-
+387 pharmaceutical interventions, such as social distancing or lockdowns, can be essential to effectively managing and
+388 mitigating the financial and social disruption caused by an outbreak as well as to safeguarding populations from the
+389 risk of future waves of the disease [1, 2]. The ongoing COVID-19 pandemic for instance, which in some countries
+390 such as New Zealand entered a prolonged period of near-elimination before resurgence occurred [33], provides a
+391 current and important example where this question might soon become urgent.
+392    Existing WHO guidance on deciding when an outbreak can be safely declared over takes a time-triggered
+393 approach. This means a fixed waiting time from the last observed case, usually based on the incubation period
+
+      medRxiv preprint doi: https://doi.org/10.1101/2020.07.13.20152082.this version posted October 10, 2020. The copyright holder for this preprint
+         (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                            It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                                                                                                   19
+394 of the disease, is adopted [3]. While this approach is easy to follow, it does not change informatively between
+395 outbreaks of the same disease, even if the patterns of transmission are very different and cannot provide a measure
+396 of the reliability of this suggested declaration time. The few existing studies that have investigated this waiting-time
+397 problem [2, 6, 7] have all converged to what is known as an event-triggered solution in control theory [13].
+398     Event-triggered decision-making has been shown to be more effective than acting at deterministic or fixed times
+399 for a range of problems including several involving the optimising of waiting or stopping times [14, 15, 16, 17].
+400 Moreover, because it directly couples decision making to observables of interest (in our case the incidence curve),
+401 it can better adapt or respond to changes in dynamics. Here we have attempted to build upon these realisations
+402 to better characterise the relationship between epidemic transmission and elimination. Specifically, we focussed on
+403 computing the probability at time s, zs , that the total future incidence of the epidemic is zero.
+404     This probability is directly responsible for determining how quickly an epidemic will end. In fact, if an outbreak
+405 is defined as surviving if it can propagate at least 1 future infection then 1−zs is precisely its survival function and is
+406 therefore rigorously linked to the future risk of cases. By taking a renewal process approach, we were able to derive
+407 an analytic and real-time measure of zs that explicitly depends on up-to-date estimates of the effective reproduction
+408 number (see Eq. (9)). This result formed the main theorem of this paper and provided a clear and easily-computed
+409 link between epidemic transmission and elimination. To our knowledge, no previous work has directly obtained
+410 zs . Specifically, [2] computed a simpler and more conservative quantity while [6] and [7] approximated something
+411 similar via simulation, and so cannot provide real-time formulae. The event-trigger for declaring an outbreak over
+                                                                                                 µ
+412 with µ% confidence is then the first time that zs crosses a threshold of                   100 .
+413     To validate the correctness of our approach we considered several comparisons. We proved mathematically that
+414 our formulae recover the true elimination probability and event trigger given perfect knowledge of the epidemic. This
+415 provided theoretical justification for our approach (Eq. (11)). We verified practical performance by benchmarking
+416 our method against the known (true) declaration times from simulated outbreaks of several infectious diseases
+417 (Fig. 3) and on empirical data by directly comparing to [2] (Fig. 4). We found that our method generated sensible
+418 and reasonably accurate estimates, given the fundamental difficulties of inferring Rs at low incidence. Integrating
+419 our method with newly developing approaches that improve on Rs estimates in these low data conditions [33],
+420 should further enhance performance and forms part of our future work.
+421     Fig. 3, Fig. 4 and S1 Fig also explained why time-triggered methods, such as the existing WHO guidelines, can be
+422 unreliable or deceptive. Replicate epidemics driven by the same time-series of reproduction numbers can engender
+423 significantly different relative declaration times ∆t95 . This variability exists even if Rs is known perfectly (i.e. when
+424 we have ∆t∗95 ). As no single, fixed time can reasonably approximate this distribution, time-triggered approaches are
+425 necessarily performance limited. Moreover, we can never guarantee the confidence in such a declaration because
+
+      medRxiv preprint doi: https://doi.org/10.1101/2020.07.13.20152082.this version posted October 10, 2020. The copyright holder for this preprint
+         (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                            It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                                                                                                   20
+426 zs and zs∗ also vary considerably for epidemics of the same disease even under identical transmission dynamics.
+427 These issues will only worsen with the additional noise deriving from non-ideal surveillance.
+428    Exploring non-ideal surveillance noise and rigorously assessing its impact on the tail dynamics of epidemics
+429 was the main motivation for developing our method. Consequently, we investigated two prevalent and potentially
+430 dominant sources of noise in surveillance – unreported and imported cases [9, 26]. While both [6] and [7] looked
+431 at the effect of constant under-reporting on declarations, general insight into the more realistic time-varying case is
+432 lacking. Further, the influence of importation on the epidemic tail has, to our knowledge, not yet been examined.
+433 By adapting zs to various surveillance hypotheses we proved two key results and developed a flexible framework
+434 for incorporating and analysing the influence of other related noise sources.
+435    First, we showed that any type of random under-reporting will precipitate early declarations, which worsen as
+436 the fraction of unreported cases increases (Eq. (13)). Second, we found that any random importation process will
+437 lead to late declarations that become more delayed as the fraction of imports increase (Eq. (15)). Moreover, under-
+438 reporting and importation processes can respectively, cause falsely early and late starts (i.e. t0 in our notation) to
+439 the sequence of zero incidence days that are used to determine declaration times, thus exacerbating the bias from
+440 each noise source. We illustrated the biases of both unreported and imported cases using empirical data (Fig. 5),
+441 clarifying how the epidemic tail is sensitive to these imperfections in the collection or reporting of incidence data.
+442    The theoretical framework we employed to reveal these biases can also help generate insight into other noise
+443 sources and surveillance hypotheses. It provides a scheme for investigating case misidentification, asymptomatic
+444 transmission and reporting delays, among others. The first occurs when cases of a co-circulating diseases are
+445 misattributed to the disease of interest due to overlapping symptoms and is common among influenza-like illnesses
+446 [8]. The disease of interest is then effectively over-reported, which may be modelled as a false importation process
+447 with Ms as the over-reported cases in Eq. (4), but past Ms counts do not contribute to Is (and so are not in its
+448 total infectiousness term). It then follows that declaration times will be delayed.
+449    Asymptomatic transmission and reporting delays are effectively types of under-reporting. In the first, the cases
+450 observed at any time represent only the symptomatic fraction of actual infections. Consequently, a formulation
+451 similar to Eq. (3) applies, with variations depending on whether the asymptomatic proportion has the same or a
+452 different serial interval distribution [36]. The result is that end-of-epidemic declarations that do not account for
+453 asymptomatic transmission will be early. Reporting delays act as time-varying under-reporting fractions, which
+454 especially degrade the more recent case days [10]. While the model required is more involved than Eq. (3), since
+455 the declaration times largely depend on cumulative case counts, they are also likely to be premature.
+456    While our method presents a clean framework for estimating the lifetime of an epidemic and investigating
+457 surveillance noise sources, it has several limitations. It commonly assumes that the serial interval distribution is
+
+      medRxiv preprint doi: https://doi.org/10.1101/2020.07.13.20152082.this version posted October 10, 2020. The copyright holder for this preprint
+        (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                            It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                                                                                                   21
+458 known [12]. However, if surveillance is poor and changes to the serial interval (e.g. contractions due to interventions
+459 [30]) are not measured or included in computing zs then declaration times might be biased. Moreover, we neglect
+460 transmission heterogeneity, are necessarily hindered by the difficulty of estimating reproduction numbers at low
+461 incidence and do not consider interactions among noise sources. While these factors could limit the accuracy of our
+462 predicted declaration times, many can be accommodated as future extensions. We can incorporate heterogeneity
+463 by using negative binomial renewal models [1], improve on low incidence estimates by capitalising on specialised
+464 methods [33] and extend the models in Fig. 1 to examine mixed noise types.
+465    A key contribution of this work has been clarifying and highlighting how realistic imperfections in the collection
+466 or reporting of incidence data can significantly influence and bias the tail dynamics of an epidemic. Heightened
+467 surveillance should therefore be sustained even in periods of negligible incidence. Intensive testing and tracing
+468 is especially essential as it provides a means of measuring and compensating for case under-reporting, which we
+469 found to be among the strongest sources of bias. Maintaining good quality screening and geodata is also important
+470 since having accurate case origins can prevent misidentification, which is a main cause of unknown or unrecognised
+471 imports. These sentiments echo many issues currently being faced across the COVID-19 pandemic [19, 37].
+472    Real-time assessments of epidemic dynamics are crucial for understanding and aptly responding to unfolding
+473 epidemics [21]. We hope that the analytic approach developed here will serve as a useful tool for gaining ongoing
+474 insight into the tail dynamics of an outbreak, motivate the adoption of more event-triggered decision making and
+475 provide clear impetus for improving and sustaining surveillance across all phases of an epidemic. Our method
+476 is available at https://github.com/kpzoo/End-of-epidemic-declarations. Our future work aims to develop this tool
+477 from its current form as a passive means of understanding and uncovering biases to an approach that can actively
+478 infuse additional data streams (e.g. case ascertainment ratios) to compensate for these biases in end-of-epidemic
+479 declarations.
+480                                                              ACKNOWLEDGMENTS
+481    KVP and CAD acknowledge joint centre funding from the UK Medical Research Council and Department for
+482 International Development under grant reference MR/R015600/1. RNT thanks Christ Church (Oxford) for funding
+483 via a Junior Research Fellowship. CAD thanks the UK National Institute for Health Research Health Protection
+484 Research Unit (NIHR HPRU) in Modelling Methodology at Imperial College London in partnership with Public
+485 Health England (PHE) for funding (grant HPRU-2012–10080). The funders had no role in study design, data
+486 collection and analysis, decision to publish, or preparation of the manuscript.
+
+     medRxiv preprint doi: https://doi.org/10.1101/2020.07.13.20152082.this version posted October 10, 2020. The copyright holder for this preprint
+         (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                                     It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                                                                                                                                       22
+487                                                                      AUTHOR C ONTRIBUTIONS
+488    Conceptualization: KVP and RNT. Formal analysis, investigation, methodology, project administration, software,
+489 visualisation and writing (original draft preparation): KVP. Validation: KVP, RJ, RNT and CAD. Writing (review
+490 and editing): KVP, RNT, RJ and CAD.
+491                                                                                 R EFERENCES
+492   1. Lee H, Nishiura H. Sexual transmission and the probability of an end of the Ebola virus disease epidemic. J Theor Biol. 2019;471:1–12.
+493   2. Nishiura H, Miyamatsu Y, Mizumoto K. Objective determination of end of MERS outbreak, South Korea. Emerg Infect Dis. 2016;22:146–8.
+494   3. WHO. WHO recommended criteria for declaring the end of the Ebola virus disease outbreak; 2020.                     Available from: https://www.who.int/who-documents-detail/
+495       who-recommended-criteria-for-declaring-the-end-of-the-ebola-virus-disease-outbreak.
+496   4. Wallinga J, Lipsitch M. How generation intervals shape the relationship between growth rates and reproductive numbers. Proc R Soc B. 2007;274:599–604.
+497   5. Fraser C. Estimating Individual and Household Reproduction Numbers in an Emerging Epidemic. PLOS One. 2007;8:e758.
+498   6. Thompson R, Morgan O, Jalave K. Rigorous surveillance is necessary for high confidence in end-of-outbreak declarations for Ebola and other infectious diseases. Phil Trans R
+499       Soc B. 2019;374:20180431.
+500   7. Djaafara B, Imai N, Hamblion E, et al. A quantitative framework to define the end of an outbreak: application to Ebola Virus Disease. medRxiv. 2020;(20024042).
+501   8. White L, Pagano M. Reporting errors in infectious disease outbreaks, with an application to Pandemic Influenza A/H1N1. Epidemiol Perspec Innov. 2010;7(12).
+502   9. Churcher T, Cohen J, Ntshalintshali N, et al. Measuring the path toward malaria elimination. Science. 2014;344(6189):1230–32.
+503  10. Yan P, Chowell G. Quantitative Methods for Investigating Infectious Disease Outbreaks. vol. 70 of Texts in Applied Mathematics. Cham, Switzerland: Springer; 2019.
+504  11. Fraser C, Cummings D, Klinkenberg D, et al. Influenza Transmission in Households During the 1918 Pandemic. Am J Epidemiol. 2011;174(5):505–14.
+505  12. Cori A, Ferguson N, Fraser C, et al. A New Framework and Software to Estimate Time-Varying Reproduction Numbers During Epidemics. Am J Epidemiol. 2013;178(9):1505–12.
+506  13. Astrom K, Bernhardsson B. Comparison of periodic and event based sampling for first order systems. Proc IFAC World Conf. 1999:301–6.
+507  14. Parag K. On signalling and estimation limits for molecular birth-processes. J Theor Biol. 2019;480:262–73.
+508  15. Rabi M, Moustakides G, Baras J. Adaptive Sampling for Linear State Estimation. SIAM Journal of Control and Optimization. 2012;50(2):672–702.
+509  16. Parag K, Vinnicombe G. Point Process Analysis of Noise in Early Invertebrate Vision. PLOS Comput Biol. 2017;13(10):e1005687.
+510  17. Lemmon M. Event-Triggered Feedback in Control, Estimation, and Optimization. vol. 406 of Networked Control Systems. London: Springer; 2010. p. 293–358.
+511  18. Bhatia S, Cori A, Parag K, et al.. Short-term forecasts of COVID-19 deaths in multiple countries.; 2020. Available from: https://mrc-ide.github.io/covid19-short-term-forecasts.
+512  19. Pybus O, Rambaut A, du Plessis L, Zarebski A, et al.. Preliminary analysis of SARS-CoV-2 importation & establishment of UK transmission lineages; 2020. Available from:
+513       https://virological.org/t/preliminary-analysis-of-sars-cov-2-importation-establishment-of-uk-transmission-lineages [cited 13 June 2020].
+514  20. Thompson R, Hollingsworth D, Isham V, et al. Key questions for modelling COVID-19 exit strategies. Proc R Soc B. 2020;287(1932):20201405.
+515  21. Cauchemez S, Boelle P, Thomas G, et al. Estimating in Real Time the Efficacy of Measures to Control Emerging Communicable Diseases. Am J Epidemiol. 2006;164(6):591–7.
+516  22. Parag K, Donnelly C. Using information theory to optimise epidemic models for real-time prediction and estimation. PLOS Comput Biol. 2020;16(7):e1007990.
+517  23. De Serres G, Gay N, Farrington P. Epidemiology of Transmissible Diseases after Elimination. Am J Epidemiol. 2000;151(11).
+518  24. Parag K, Donnelly C. Adaptive Estimation for Epidemic Renewal and Phylogenetic Skyline Models. Syst Biol. 2020;(syaa035).
+519  25. Thompson R, Stockwin J, van Gaalen R, et al. Improved inference of time-varying reproduction numbers during infectious disease outbreaks. Epidemics. 2019;29:100356.
+520  26. Azmon A, Faes C, Hens N. On the estimation of the reproduction number based on misreported epidemic data. Stats Med. 2014;33:1176–92.
+521  27. Raikov D. On the decomposition of Poisson laws. Dokl Acad Sci URSS. 1937;14:9–11.
+522  28. Roberts M, Nishiura H. Early Estimation of the Reproduction Number in the Presence of Imported Cases: Pandemic Influenza H1N1- 2009 in New Zealand. PLOS One.
+523       2011;6(5):e17835.
+524  29. Van Kerkhove M, Bento A, Mills H, et al. A review of epidemiological parameters from Ebola outbreaks to inform early public health decision-making. Sci Data. 2015;2:150019.
+525  30. Ali S, Wang L, Lau E, et al. Serial interval of SARS-CoV-2 was shortened over time by nonpharmaceutical interventions. Science. 2020;369(6507):1106–9.
+526  31. White L, Pagano M. A likelihood-based method for real-time estimation of the serial interval and reproductive number of an epidemic. Stats Med. 2008;27:2999–3016.
+527  32. Ferguson N, Laydon D, Nedjati-Gilani G, et al. Impact of non-pharmaceutical interventions (NPIs) to reduce COVID- 19 mortality and healthcare demand. Imperial College
+528       London; 2020.
+529  33. Parag K. Improved estimation of time-varying reproduction numbers at low case incidence and between epidemic waves. medRxiv. 2020;2020.09.14.20194589.
+530  34. Parag K, du Plessis L, Pybus O. Jointly inferring the dynamics of population size and sampling intensity from molecular sequences. Mol Biol Evol. 2020;37(8):2414–29.
+
+      medRxiv preprint doi: https://doi.org/10.1101/2020.07.13.20152082.this version posted October 10, 2020. The copyright holder for this preprint
+          (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                                     It is made available under a CC-BY-NC-ND 4.0 International license .
+                                                                                                                                                                                      23
+531   35. Brauer F, van den Driessche P, Wu J, editors. Mathematical Epidemiology. Lecture Notes in Mathematics. Berlin, Germany: Springer-Verlag; 2008.
+532   36. Park S, Cornforth D, Dushoff J, et al. The time scale of asymptomatic transmission affects estimates of epidemic potential in the COVID-19 outbreak. Epidemics. 2020;31:100392.
+533   37. Li R, Pei S, Chen B, et al. Substantial undocumented infection facilitates the rapid dissemination of novel coronavirus (SARS-CoV-2). Science. 2020;368(6490):489–93.
+534                                                                      S UPPORTING I NFORMATION
+    Fig. S1: Event and time-triggered declarations. We compare 95% event-triggered declaration times to the WHO
+    time-triggered equivalent for Ebola virus disease over 1000 simulated epidemics. Left panels show the true (∆t∗95 )
+    and estimated (∆t95 ) declaration times (based on Eq. (10) and Eq. (9)) relative to the time of the last observed case.
+    The significant variability in both, which reflects the different shapes of possible epidemic curves with the same
+    reproduction number profile (Rs ) indicates why time-triggered approaches such as the WHO one [3] (∆tW HO ,
+    which is based on 42 days plus the time to recovery) can be insufficient. The error between the true and estimated
+    times (δt95 ) and the serial interval and reproduction number profile used are shown in the right panels.

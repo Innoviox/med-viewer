@@ -1,0 +1,599 @@
+       medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209064.this version posted October 12, 2020. The copyright holder for this
+       preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                      perpetuity.
+                                           It is made available under a CC-BY-ND 4.0 International license .
+Social Distancing with Movement Restrictions and
+the Effective Replication Number of COVID-19: Multi-
+Country Analysis Based on Phone Mobility Data
+Mounir Ould Settia* and Ari Voutilainena
+aInstitute of Public Health and Clinical Nutrition, University of Eastern Finland, Kuopio, Finland
+*Correspondence should be addressed to M. Ould Setti (mounir.ould.setti@uef.fi)
+Linking phone mobility data to the effective replication number (Rt) could help evaluation of the impact of social distancing
+on the coronavirus disease 2019 (COVID-19) spread and estimate the time lag (TL) needed for the effect of movement
+restrictions to appear. We used a time-series analysis to discover how patterns of five indicators of mobility data relate to
+changes in Rt of 125 countries distributed over three groups based on Rt-mobility correlation. Group 1 included 71
+countries in which Rt correlates negatively with residential and positively with other mobility indicators. Group 2 included
+25 countries showing an opposite correlation pattern to Group 1. Group 3 included the 29 remaining countries. We chose
+the best-fit TL based on forecast and linear regression models. We used linear mixed models to evaluate how mobility
+indicators and the stringency index (SI) relate with Rt. SI reflects the strictness of governmental responses to COVID-19.
+With a median of 14 days, TLs varied across countries as well as across groups of countries. There was a strong negative
+correlation between SI and Rt in most countries belonging to Group 1 as opposed to Group 2. SI (units of 10%) associated
+with decreasing Rt in Group 1 [β -0.15, 95% CI -0.15 – (-0.14)] and Group 3 [-0.05, -0.07 – (-0.03)], whereas, in Group 2, SI
+associated with increasing Rt (0.13, 0.11 – 0.16). Mobile phone mobility data could contribute evaluations of the impact of
+social distancing with movement restrictions on the spread of the COVID-19.
+                                                                                     To account for the strength of restriction actions,
+Introduction                                                                    researchers from Blavatnik School of Government
+By October 6, 2020, nearly 36 million humans have come                          developed the stringency index (SI), an indicator of the
+down with the coronavirus disease 2019 (COVID-19) with                          strictness of governmental responses to COVID-19.[6] Based
+the death toll exceeding one million.[1] While the virus                        on qualitative measures of restriction policies, SI, however,
+continues to spread exponentially in some countries and                         does not reflect the extent to which the legislated measures
+others brace for a second wave of the disease, governments                      are enforced in practice or the social compliance and
+are tracking the effective reproduction number (Rt) to                          response, which could vary across cultures, regions, and
+evaluate disease spread and the effectiveness of social                         times independently of the restriction policies.
+distancing and movement restrictions.[2] Whereas the more                            Aggregated mobile community mobility data track the
+commonly known basic reproduction number (R0) reflects                          population mobility behavior and, during a pandemic, the
+the innate capacity of an infectious agent to spread,[3] Rt                     data could provide good indicators of the regional extent of
+captures the dynamic changes of its spread that vary over                       social distancing. Multiple studies have used mobility data
+time as a result of societies changing their behavior and                       to evaluate the social adherence to movement restriction
+gaining immunity. To reduce an individual’s capacity to                         policies against COVID-19[7] and to investigate how
+transmit COVID-19, governments have been implementing                           changes in mobility relate to the COVID-19 incidence and
+a variety of movement restrictions. To evaluate the                             Rt.[8]
+effectiveness of these measures, researchers have attempted                          As a function of the performance of health systems in
+to systematically associate changes in COVID-19 incidence                       tracking, testing, and reporting cases, a time lag (TL) is
+with changes in Rt to schedule restriction actions. For                         expected between the implementation of a restriction action
+example, Alfano and Ercolano[4] used the ACAPS                                  and the possible change in disease incidence. Linka et al.
+#COVID19 Government Measures Dataset, which gathers                             have identified great variability in TLs across countries
+implementation dates of restriction interventions in several                    regarding COVID-19 incidence.[8] TLs can i) provide an idea
+countries and regions.[5] Despite including some regional                       of countries’ early detection capabilities of COVID-19 cases,
+data, the dataset does not allow proper aggregation of                          ii) improve planning of lockdown exit strategies, iii) guide
+restriction interventions at the country level. Moreover, the                   the length of recommended quarantines, and iv) permit a
+dataset lacks information regarding the strength of                             timeframe
+           NOTE: This preprint reports new research that has not been certified by peer reviewto prepare
+                                                                                               and         forbepredicted
+                                                                                                   should not               disease
+                                                                                                                 used to guide clinicalpeaks.
+                                                                                                                                        practice.
+restriction actions.
+Ould Setti & Voutilainen 2020 (preprint)                                                                                                          1
+
+       medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209064.this version posted October 12, 2020. The copyright holder for this
+       preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                      perpetuity.
+                                           It is made available under a CC-BY-ND 4.0 International license .
+                                                       Social Distancing and Rt of COVID-19
+    The object of this study is to analyze how patterns of                        We used the daily SI computed by the OxCGRT[6] as a
+mobility data can be linked to COVID-19 Rt changes in 125                     single numerical measure to aggregate different types of gov-
+countries with and without consideration of SI.                               ernmental responses and levels of restriction policies in each
+                                                                              country. From Wikidata we obtained demographics, the
+Methods
+                                                                              number of internet users, and the Human Development in-
+Data Sources and Variables of Interest
+COVID-19 Community Mobility Reports[9] provided coun-                         dex (HDI) for each country.
+try-specific mobility data. Google aggregates anonymized                      Data Analysis
+position data from users who have the Location History ac-                    We performed all analyses by means of the R version
+tivated on their mobile phones to reflect regional trends of                  4.0.2.[16]
+                                                                              Preliminary Analysis
+community mobility in different regions and varied places.
+                                                                              First, we organized the data as timeseries of daily mobility,
+The dataset consists of daily regional percentages of change
+                                                                              SI, and Rt. Second, we derived 30 datasets from the
+from the median value of the corresponding weekday during
+                                                                              timeseries for each country by lagging the mobility
+the 5-week baseline period (Jan 3 to Feb 6, 2020.) By Septem-
+                                                                              observations by 1 to 30 days forward (corresponding to
+ber 18, 2020, the dataset was publicly available. In addition
+                                                                              possible TL values).[17] As a preliminary analysis, we
+to the mobility data, we obtained data on COVID-19 daily
+                                                                              evaluated trends in mobility indicators and SI and estimated
+case incidence from the GitHub COVID-19 repository of
+                                                                              change-points in country-specific trends for each mobility
+Johns Hopkins University[1] and data on policy responses
+                                                                              indicator and SI using the Buishand range test.[18]
+and stringency of government measures for 180 countries
+                                                                              Moreover, based on the directions of Pearson’s correlation
+from the Oxford COVID-19 Government Response Tracker
+                                                                              coefficients (r) between mobility indicators and Rt changes,
+(OxCGRT).[6]
+                                                                              we identified three groups of countries. Group 1 included 71
+    In this study, we focused on the period from 15 February
+                                                                              countries with positive correlations of Rt with retail, grocery,
+to 11 September 2020 with days as a time unit. For each
+                                                                              transit, and work mobility but a negative correlation of Rt
+country, we considered days starting from the 2nd con-
+                                                                              with residential mobility. The reason of that choice was that
+firmed COVID-19 case. After excluding countries with less
+                                                                              increased residential mobility is expected to associate with a
+than 60 days reporting new cases, mobility, or SI, we re-
+                                                                              decrease in disease spread as opposed to the other mobility
+tained 125 countries for the analysis. The analyzed countries
+                                                                              indicators. Group 2 included 25 countries showing an
+had a median observation time of 188 days. COVID-19
+                                                                              opposite correlation pattern to Group 1. Group 3 included 29
+Open-Data GitHub repository eased access to data
+                                                                              remaining countries. We compared the groups’
+sources.[10] This study needed no ethical review since the
+                                                                              sociodemographic characteristics using Kruskal-Wallis
+observations concerned countries, not identified per-
+                                                                              Ranks Sum test.
+sons.[11]
+                                                                              Predictive Modeling
+    With the help of the R-package Epi-Estim,[12] we calcu-
+                                                                              We applied Facebook Prophet, an open-source forecasting
+lated daily changes in Rt for each country based on the
+                                                                              package for timeseries,[19] to fit additive non-linear models
+COVID-19 incidence. As the virus is suggested to spread
+                                                                              regarding changes of Rt in each country over its 30 datasets
+faster than SARS but slower than H1N1,[13] we used, as a
+                                                                              (the possible TL values) and used the five mobility variables
+parameter in our computations of Rt, the serial interval of
+                                                                              as regressors. We did not adjust for seasonality or trend. We
+COVID-19 proposed by Nishiura et al.[14] [mean 4.7, stand-
+                                                                              evaluated the accuracy of each Prophet forecast using the
+ard deviation (SD) 2.9]. From Google’s COVID-19 Commu-
+                                                                              mean absolute percentage error (MAPE), estimated by
+nity Mobility Reports we obtained the indicators of daily
+                                                                              means of the Prophet’s cross validation function, and the
+changes in mobility in five categories: retails and recreation
+                                                                              adjusted explanatory power, R².
+places (named in analyses as ‘retail’), grocery stores and
+                                                                                  Similarly, for each country’s 30 datasets, we fitted a linear
+pharmacies (grocery), transit stations (transit), residential
+                                                                              regression model with Rt as the dependent variable and the
+places (residential), and workplaces (work). Google Com-
+                                                                              five lagged mobility indicators as independent variables.
+munity Mobility Reports also comprises information on mo-
+                                                                              Selection of the Best Fitting Time Lag
+bility in parks, but like Vokó and Pitter,[15] we omitted this                We assumed that the TL remains constant over time and
+variable from our analyses as the effect of the time spent in                 does not vary across mobility indicators. To select the best-
+parks on disease spread is unclear.                                           fit TL value for each country, we evaluated the following
+                                                                              parameters for the Prophet’s forecast models: MAPE and the
+Ould Setti & Voutilainen 2020 (preprint)                                                                                                      2
+
+                           medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209064.this version posted October 12, 2020. The copyright holder for this
+                           preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                                          perpetuity.
+                                                               It is made available under a CC-BY-ND 4.0 International license .
+                                                                                                           Social Distancing and Rt of COVID-19
+adjusted R², and the following parameters for the linear                                                                                    and workplace mobility. It occurred mostly (in 40 – 60
+regression models: p-value, the adjusted R², the F-test value,                                                                              countries) during the second and third weeks of March
+and the likelihood-ratio. We also examined cross-correlation                                                                                coinciding with the beginning of rigorous lockdown policies,
+plots of Rt with all mobility indicators.[20]                                                                                               as the US and European countries started closing borders.
+   We based the final choice regarding the best-fit TL on                                                                                   The second changing point of mobility trends was more
+manual inspections of country-anonymized plots of rescaled                                                                                  widely scattered and occurred around mid-June,
+performance indicators (Supplementary material). We                                                                                         corresponding to the slow return to baseline patterns of
+prioritized early change points over the late ones, criteria                                                                                mobility.
+concerning the regression models over Prophet-forecasts’                                                                                        The mean best-fit TL was 14.6 days [median 14,
+performances, MAPE over Prophet-forecasts’ adjusted R²,                                                                                     interquartile range (IQR) 10 – 19] (Figs. 1 and 2). Continent-
+and rapid changes in curves over extreme values.                                                                                            wise, Europe had the lowest median TL (12.5 days, IQR 10 –
+The Stringency Index                                                                                                                        14.75) followed by Asia & Oceania (14, 10 – 20), the
+After lagging each country’s mobility data using its best-fit                                                                               Americas (16, 10 – 19), and Africa (16, 9.5 – 22).
+TL, we fitted a linear mixed model for each Group to                                                                                            In comparison to Group 2, Group 1 had significantly
+evaluate the role of mobility indicators and stringency as                                                                                  shorter TLs, lower percentages of forecasting error (MAPE),
+fixed effects factors and countries as random factors in                                                                                    an older population, and a higher HDI (Table 1). The
+predicting Rt. We also fitted linear mixed models to predict                                                                                forecasting models performed well, especially in Group 1,
+Rt with SI alone. We applied the maximum likelihood                                                                                         with MAPE as low as 6% in the US for example (Table 2).
+method and we scaled the fixed factors to their respective                                                                                      In all countries, SI associated with mobility indicators
+datasets prior to modeling. We used the R packages                                                                                          through correlation and linear regressions (p-values < 0.001
+‘lme4’[21], ‘afex’[22], and ‘insight’[23] to fit and assess the                                                                             in the models of 124 countries). There was a strong negative
+mixed effects models.                                                                                                                       correlation between SI and Rt in most countries belonging
+Results                                                                                                                                     to Group 1. In most countries belonging to Group 2, the
+The inspection of mobility trends suggested the existence of                                                                                correlation was positive (Fig. 3).
+two major changing points in most countries. The first                                                                                          Table 3 summarizes results of the analysis of the full
+changing point in mobility trends corresponded to the first                                                                                 linear mixed models with effect sizes labelled according to
+change from normal to social distancing with an increase of                                                                                 Funder & Ozer.[24] Models fitted to Groups 1 and 2 showed
+residential mobility and a decrease of grocery, transit, retail,                                                                            substantial explanatory power (conditional R² = 0.44 and
+                                                                 30                                                  30                                                      30
+                                           Number of countries
+                                                                 20                                                  20                                                      20
+                                                                 5 10                                                5 10                                                    5 10
+                                                                 0                                                   0                                                       0
+                                                                        0     5     10   15   20   25     30                5      10    15    20     25      30                    0     5     10   15   20   25     30
+                                                                             Time lag (days) in group 1                          Time lag (days) in group 2                              Time lag (days) in group 3
+Number of countries
+                      10                                                                      10                                                10                                                        10
+                      5                                                                       5                                                 5                                                         5
+                      0                                                                       0                                                 0                                                         0
+                             0    5   10           15             20    25     30                  5      10   15   20      25     30                 0       5    10   15    20    25     30                              10      15           20
+                                 Time lag (days) in Africa                                         Time lag (days) in the Americas                    Time lag (days) in Asia & Oceania                             Time lag (days) in Europe
+Fig. 1 Distribution of the estimated time lag over groups and continents Group 1 (n = 71) includes countries with a positive correlation of the
+effective replication number with mobility in retail, grocery, transit, and workplace, and a negative correlation of the effective replication number with
+residential mobility; group 2 (n = 25) includes countries with a negative correlation of the effective replication number with mobility in retail, grocery,
+transit, and workplace, and a positive correlation of the effective replication number with residential mobility; group 3 (n = 29) includes the remaining
+countries.
+Ould Setti & Voutilainen 2020 (preprint)                                                                                                                                                                                                         3
+
+       medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209064.this version posted October 12, 2020. The copyright holder for this
+        preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                             perpetuity.
+                                              It is made available under a CC-BY-ND 4.0 International license .
+                                                             Social Distancing and Rt of COVID-19
+Table 1 Characteristics of the studied countries by Group                                                          mobility forecasts Rt even with
+                                                                                                                   an accuracy of 90%. Based on
+                                     Total           Group 1          Group 2           Group 3     p-value*
+                                                                                                                   our findings, specifically the
+  n                                   125                 71              25               29
+                                                                                                                   directions      of    correlations
+                                     188.0              194.0           176.0        186.0 [179.0,    <0.001       between community mobility
+  Timeseries length (days)          [179.0,            [185.5,         [173.0,           193.0]
+                                    198.0]             201.5]          182.0]                                      indicators and Rt, we suggest
+                                  14.0 [10.0,        13.0 [9.0,      18.0 [16.0,       12.0 [9.0,     <0.001       that it is possible to distribute
+  Best-fit time lag
+                                     19.0]              15.0]           22.0]             23.0]
+  Rt ~ mobility linear re-         0.3 [0.2,          0.4 [0.2,     0.3 [0.1, 0.4]   0.2 [0.1, 0.3]   <0.001       countries into distinct groups
+  gression (adjusted R²) a            0.5]               0.6]
+                                                                                                                   that differ from each other
+                                   0.2 [0.1,          0.2 [0.1,     0.3 [0.2, 0.4]   0.3 [0.2, 0.5]    0.01
+  MAPE of Rt forecast b
+                                      0.4]               0.3]                                                      regarding the effectiveness of
+                                   0.2 [0.1,          0.4 [0.1,     0.1 [0.0, 0.4]   0.1 [0.0, 0.3]   0.007
+  Cumulative cases (%)
+                                      0.7]               0.8]                                                      social distancing and movement
+  Population aged 19 and          34.2 [22.3,       25.5 [20.1,      46.6 [41.5,      32.6 [25.4,     <0.001       restrictions in reducing Rt. Most
+  younger (%)                        43.3]              37.3]           54.0]             49.1]
+  Population 20 – 39 years        31.1 [26.5,       28.7 [25.1,      33.6 [32.0,      31.1 [26.9,     <0.001       European countries belonged to
+  (%)                                34.0]              33.2]           36.4]             33.9]                    Group 1 and none belonged to
+  Population 40 – 59 years        23.4 [18.3,       25.4 [21.3,      18.4 [14.6,      25.0 [16.8,     <0.001
+  (%)                                27.7]              28.6]           20.8]             27.7]                    Group 2.
+  Population aged 60 and          11.8 [7.0,         16.3 [8.8,     6.8 [4.8, 9.2]     11.8 [6.8,     <0.001
+  older (%)                          23.2]              25.5]                             23.7]
+                                                                                                                       Countries differ from each
+  Human Development In-            0.8 [0.6,          0.8 [0.7,     0.6 [0.5, 0.7]   0.8 [0.7, 0.8]   <0.001       other regarding how promptly
+  dex                                 0.9]               0.9]
+                                  64.4 [35.8,       74.5 [56.3,      33.0 [13.4,      64.4 [26.5,     <0.001       they report diseased persons as
+  Internet users (%)
+                                     81.4]              86.5]           45.2]             81.4]                    confirmed COVID-19 cases.
+                                  66.0 [47.5,       73.9 [56.1,      51.2 [36.5,      58.8 [42.7,     0.001
+  Urban population (%)                                                                                             This TL is termed as the time
+                                     81.2]              83.4]           66.2]             80.4]
+                                   0.7 [0.6,          0.8 [0.7,     0.7 [0.6, 0.7]   0.6 [0.6, 0.7]   <0.001
+  SI ~ mobility correlation  c                                                                                     delay,[8] or the positivity
+                                      0.8]               0.8]
+  Rt ~ SI correlation
+                                  -0.4 [-0.6,       -0.6 [-0.7, -   0.1 [0.1, 0.4]     -0.1 [-0.4,    <0.001       detection time,[25] and it could
+                                      0.0]               0.4]                             0.1]
+                                                                                                                   correspond to the necessary
+  Note. Numbers indicate median [interquartile range]. * Kruskal-Wallis Ranks Sum test for across                  time before the effect of
+  groups comparison. (%) as a proportion of the country’s population, in per cent. MAPE, mean abso-                restriction actions is seen on
+  lute percentage error; Rt, effective replication number; SI, Stringency Index. a as a measure of good-
+  ness-of-fit of the linear regression model of Rt on mobility indicators. mean absolute percentage
+                                                                                b                                  COVID-19 disease spread. As an
+  error for accuracy of the forecast model predicting Rt with mobility indicators. c mean of the absolute          estimator of this TL, we propose
+  values of the Pearson correlations of SI with each of the five mobility indicators.
+                                                                                                                   a country-specific value relying
+0.42, respectively), unlike the model fitted to Group 3                              on cross-correlation and performance criteria of regression
+(conditional R² = 0.05). Removing SI from the mixed models                           models. Based on our results, the effects of restriction actions
+brought significance to retail mobility in Group 1 [β 0.09,                          appear after a median of 14 days. This estimation is in
+95% confidence interval (CI) 0.05 – 0.14], and to grocery (-                         accordance with TLs proposed by Alfano and Ercolano[4]
+0.14, -0.22 – -0.06) and transit (0.12, 0.01 – 0.23) mobility in                     (10 days), and Linka et al.[8] (17 days). Furthermore, our
+Group 3; the other factors retained the same pattern. The                            results indicate that the median TL in Europe (12.5 days) is
+analysis of the mixed models of Rt on SI without mobility                            shorter than in the rest of the world (15 days).
+variables (rescaling not needed) suggested an association of                             If we assume that social distancing works at reducing Rt,
+high stringency with disease spread in Group 2, with an                              the association between mobility data and Rt could function
+increase of 0.13 in Rt for every 10% of increase in SI (95% CI,                      as an indicator of the accuracy of daily case incidence esti-
+0.11 – 0.16). SI without mobility variables associated with a                        mates. However, our findings propose that social distancing
+decrease in Rt in Group 1 (β -0.15 for units of 10% of SI, 95%                       could have the opposite effect on COVID-19 spread in some
+CI -0.15 – -0.14) and Group 3 (-0.05, -0.07 – -0.03).                                countries. Whether or not this paradoxical effect is due to bi-
+Discussion                                                                           ased mobility data or to residential community spread, we
+Through a timeseries regression study, we examined how                               confirmed the observation with the results of the mixed
+mobility patterns from aggregated mobile phones data relate                          models regarding SI and Rt. Undoubtedly, also factors other
+to the variation of COVID-19 Rt in 125 countries during the                          than social distancing and restriction measures, such as the
+period from February 15 to September 11, 2020. Our                                   non-compliance with hygiene measures[26] or the lack of
+analyses showed that changes in community mobility for                               public trust in their government[27], can affect Rt.
+their part explain the variation in Rt and that community
+Ould Setti & Voutilainen 2020 (preprint)                                                                                                            4
+
+       medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209064.this version posted October 12, 2020. The copyright holder for this
+       preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                                  perpetuity.
+                                                       It is made available under a CC-BY-ND 4.0 International license .
+                                                                   Social Distancing and Rt of COVID-19
+                         Saudi Arabia                                                                                        US
+                               Rwanda                                                                                 Canada
+                                   Libya                                                                             Portugal
+                            Cameroon                                                                               Argentina
+                                   Egypt                                                                    United Kingdom
+                            Costa Rica                                                                              Tanzania
+                             Argentina                                                                          Netherlands
+                                                                                                                     Belgium
+                                   Spain
+                                                                                                                    Germany
+                               Portugal
+                                                                                                                         Qatar
+                  Dominican Republic
+                                                                                                        Dominican Republic
+                               Vietnam
+                                                                                                                 Switzerland
+                                 Turkey
+                                                                                                                       Russia
+                                 Poland                                                                               Mexico
+                         New Zealand                                                                                Australia
+                          Netherlands                                                                                     Chile
+                              Lebanon                                                                                    Spain
+                                     Haiti                                                                             Ireland
+                              Germany                                                                                     India
+                               Ecuador                                                                          Bangladesh
+                                Croatia                                                                                Austria
+                            Singapore                                                                                     Peru
+                         Korea, South                                                                              Colombia
+                             Indonesia                                                                               Thailand
+                             Colombia                                                                             Costa Rica
+                              Tanzania                                                                                     Iraq
+                               Senegal                                                                                 France
+                               Hungary                                                                               Czechia
+                                 Gabon                                                                            Philippines
+                              Denmark                                                                                    Brazil
+                               Thailand                                                                               Belarus
+                               Sweden                                                                              Indonesia
+                               Morocco                                                                               Ecuador
+                                     Mali                                                                            Hungary
+                                                                                                                           Italy
+                              Malaysia
+                                                                                                                    Romania
+                             Honduras
+                                                                                                                      Norway
+                                Estonia
+                                                                                                                        Serbia
+                              Australia
+                                                                                                                     Morocco
+                          Luxembourg
+                                                                                                                  Singapore
+                              Lithuania
+                                                                                                                    Malaysia
+                                  Latvia                                                                                Oman
+                           Kazakhstan                                                                                Slovenia
+                                 France                                                               United Arab Emirates
+                                       Fiji                                                                              Israel
+                                Canada                                                                         Korea, South
+                                Ukraine                                                                               Finland
+                           Switzerland                                                                               Sweden
+                            Nicaragua                                                                                Jamaica
+                                  Japan                                                             Bosnia and Herzegovina
+                                 Ireland                                                                          Cameroon
+                      United Kingdom                                                                                Lithuania
+                                  Serbia                                                                              Croatia
+                                Norway                                                                                 Turkey
+                                    Laos                                                                        Luxembourg
+                                 Jordan                                                                                 Japan
+                                     Iraq                                                                             Greece
+                                Finland                                                                              Moldova
+                                                                                                                    Lebanon
+                          Cabo Verde                                Group                                      New Zealand                                              Group
+                                       US
+                               Slovenia                                                                            Honduras
+                               Slovakia
+                                                                        1                                             Estonia                                               1
+                                                                                                                       Poland
+                           Kyrgyzstan
+                                 Kuwait
+                                                                        2                                               Latvia                                              2
+                                                                                                               Saudi Arabia
+                                   Israel                                                                                                                                   3
+                                Greece
+                                                                        3                                            Slovakia
+                                                                                                                     Georgia
+                         Cote dƋIvoire
+                                                                                                                      Bahrain
+                                 Austria
+                                                                                                                         Egypt
+                                 Russia                                                                         Cabo Verde
+                               Moldova                                                                                Taiwan
+                                Mexico                                                                                Zambia
+                                     Italy                                                                          Denmark
+                                    India                                                                       Afghanistan
+                               Georgia                                                                                 Kuwait
+                           El Salvador                                                                               Vietnam
+                               Czechia                                                                               Panama
+                             Botswana                                                                                Rwanda
+                          South Africa                                                                           Kyrgyzstan
+                             Paraguay                                                                                    Niger
+                               Panama                                                                             Guatemala
+                               Belgium                                                                               Senegal
+                                 Angola                                                                          Kazakhstan
+                United Arab Emirates                                                                                   Burma
+                              Romania                                                                                  Jordan
+                                Nigeria                                                                        Mozambique
+                                   Niger                                                                            Mauritius
+              Bosnia and Herzegovina                                                                                      Laos
+                                 Bolivia                                                                       Cote dƋIvoire
+                             Barbados                                                                                 Uganda
+                                                                                                                      Nigeria
+                                   Nepal
+                                                                                                                   Paraguay
+                                 Burma
+                                                                                                                    Mongolia
+                                  Belize
+                                                                                                               Burkina Faso
+                                  Oman
+                                                                                                                     Uruguay
+                            Guatemala
+                                                                                                                     Pakistan
+                                    Chile                                                                             Ukraine
+                               Bulgaria                                                                           Venezuela
+                                Belarus                                                                            Sri Lanka
+                             Tajikistan                                                                                Bolivia
+                            Philippines                                                                            Botswana
+                               Pakistan                                                                           Zimbabwe
+                            Venezuela                                                                             Nicaragua
+                                  Kenya                                                                                Ghana
+                                Bahrain                                                                          El Salvador
+                                Zambia                                                                                    Togo
+                 Trinidad and Tobago                                                                                 Bulgaria
+                               Namibia                                                                                   Benin
+                                 Ghana                                                                                       Fiji
+                          Afghanistan                                                                              Barbados
+                                Yemen                                                                                 Yemen
+                                   Qatar                                                                                 Nepal
+                                   Brazil                                                                              Gabon
+                          Bangladesh                                                                                       Mali
+                               Uruguay                                                                                   Libya
+                                    Togo                                                                           Tajikistan
+                                    Peru                                                                                Belize
+                                Uganda                                                                                     Haiti
+                                                                                                       Trinidad and Tobago
+                         Mozambique
+                                                                                                                       Angola
+                               Jamaica
+                                                                                                                South Africa
+                            Cambodia
+                                                                                                        Papua New Guinea
+                  Papua New Guinea
+                                                                                                                  Cambodia
+                         Burkina Faso
+                                                                                                                     Namibia
+                                   Benin                                                                                Kenya
+                                            0    10      20     30                                                             -1.0      -0.5          0.0          0.5
+                                              Time lag (days)                                                                       Pearson's correlation coefficient
+Fig. 2 Estimated time lag by country Note. The following countries                        Fig. 3 Pearson’s correlation coefficient of the association between
+had a p-value > 0.05 of the regression model of their effective reproduc-                 the effective reproduction number and the stringency index by
+tion number on lagged mobility, and were so excluded: Sri Lanka, Mon-                     country Note. Positive correlation values suggest that a high stringency
+golia, Mauritius, Taiwan, and Zimbabwe.                                                   was favoring disease spread.
+Ould Setti & Voutilainen 2020 (preprint)                                                                                                                                      5
+
+                                                                                                                                                                                                                                                                                                                                                                                        6
+                                                                                                                                                                          Table 2 Time lag and prediction performances by country
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209064.this version posted October 12, 2020. The copyright holder for this
+                                                                                                                                                                           Country                      TL    MAPE      Adj. R²       Country          TL    MAPE      Adj. R²       Country                 TL    MAPE      Adj. R²       Country                TL   MAPE   Adj. R²
+                                                                                                                                                                           Afghanistan                  22     0.17       0.62        Egypt             4     0.37      0.51         Libya                    3      0.3      0.22         Saudi Arabia           3     0.2    0.65
+                                                                                                                                                                           Angola                       16     0.41       0.12        El Salvador      15      0.3      0.38         Lithuania               11     0.12       0.2         Senegal                9    0.15    0.33
+                                                                                                                                                                           Argentina                     5      0.1       0.72        Estonia          10     0.43      0.3          Luxembourg              11     0.29      0.45         Serbia                 13   0.28    0.47
+                                                                                                                                                                           Australia                    10     0.17       0.56        Fiji             11     0.88      0.09         Malaysia                10      0.2      0.33         Singapore               8   0.49    0.25
+                                                                                                                                                                           Austria                      14     0.19       0.55        Finland          13     0.07      0.42         Mali                    10     0.33      0.25         Slovakia               14   0.19    0.32
+                                                                                                                                                                           Bahrain                      21     0.23       0.13        France           11     0.25      0.41         Mauritius               16     1.01      0.01         Slovenia               14   0.41    0.45
+preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                                                                                                                           Bangladesh                   23     0.08       0.58        Gabon             9     0.18      0.42         Mexico                  15     0.04      0.68         South Africa           16   0.21    0.57
+                                                                                                                                                                           Barbados                     17     0.91       0.09        Georgia          15     0.54      0.1          Moldova                 15     0.08      0.43         Spain                   6   0.09    0.55
+                                                                                                                                                                           Belarus                      19     0.16       0.39        Germany           7      0.1      0.49         Mongolia                27     0.82      0.03         Sri Lanka              28   0.36    0.01
+                                                                                                                                   Social Distancing and Rt of COVID-19
+                                                                                                                                                                           Belgium                      16     0.28       0.52        Ghana            22     0.55      0.26         Morocco                 10     0.08      0.43         Sweden                 10   0.21    0.28
+                                                                                                                                                                           Belize                       18     0.33       0.32        Greece           14      0.2      0.25         Mozambique              28     0.15      0.19         Switzerland            12   0.08    0.57
+                                                                                                                                                                           Benin                        29     0.24       0.09        Guatemala        19     0.08      0.28         Namibia                 22     0.47      0.47         Taiwan                  8   1.64    0.02
+                                                                                                                                                                           Bolivia                      17     0.05       0.36        Haiti             7     0.26      0.26         Nepal                   18     0.12      0.25         Tajikistan             20   0.07    0.52
+                                                                                                                                                                           Bosnia and Herzegovina       17     0.18       0.4         Honduras         10     0.27      0.38         Netherlands              7     0.52      0.62         Tanzania               9    0.29    0.66
+                                                                                                                                                                           Botswana                     15     1.45       0.12        Hungary           9     0.17      0.41         New Zealand              7     0.49      0.16         Thailand               10   0.23    0.41
+                                                                                                                                                                           Brazil                       23     0.04       0.58        India            15     0.05      0.7          Nicaragua               12     0.61      0.11         Togo                   25   0.16    0.1
+                                                                                                                                                                           Bulgaria                                                   Indonesia                                      Niger                                                 Trinidad and Tobago
+                                                               perpetuity.
+                                                                                                                                                                                                        19     0.19       0.11                          8     0.06      0.61                                 17     0.56      0.09                                22   0.32    0.13
+                                                                                                                                                                           Burkina Faso                 29     0.41       0.1         Iraq             13     0.12      0.39         Nigeria                 17     0.17      0.45         Turkey                  7   0.09    0.29
+                                                                                                                                                                           Burma                        18     0.43       0.24        Ireland          12     0.21      0.48         Norway                  13     0.37      0.34         Uganda                 27   0.34    0.2
+                                                                                                                                                                           Cabo Verde                   13     0.16       0.12        Israel           14     0.14      0.43         Oman                    19     0.25      0.41         Ukraine                12   0.05    0.4
+                                                                                                                                                                           Cambodia                     28     4.97       0.32        Italy            15      0.1       0.7         Pakistan                20     0.25      0.22         United Arab Emirates   17   0.26    0.46
+                                                                                                                                                                           Cameroon                      3     0.49       0.12        Jamaica          28     0.35      0.16         Panama                  16     0.15      0.23         United Kingdom         13   0.11    0.72
+                                                                                                                                                                           Canada                       11     0.09       0.83        Japan            12     0.31      0.48         Papua New Guinea        29     1.17      0.33         Uruguay                24   0.46    0.08
+                                                                                                                                                                           Chile                        19     0.05       0.65        Jordan           13     0.35      0.12         Paraguay                16     0.18      0.04         US                     14   0.06    0.76
+                                                                                                                                                                           Colombia                      8     0.08       0.58        Kazakhstan       11     0.25      0.19         Peru                    25     0.29      0.37         Venezuela              21   0.26    0.06
+                                                                                                                                                                                                                                                                                                                                                                                        Ould Setti & Voutilainen 2020 (preprint)
+                                                                                                                                                                           Costa Rica                    5     0.11       0.66        Kenya            21     0.21      0.49         Philippines             20      0.2      0.58         Vietnam                7    0.46    0.1
+                                                                                                                                                                           Ivory Coast                  14     0.25       0.13        South Korea       8     0.38      0.24         Poland                   7     0.13       0.4         Yemen                  23   0.35    0.18
+                                    It is made available under a CC-BY-ND 4.0 International license .
+                                                                                                                                                                           Croatia                       7     0.25       0.15        Kuwait           14     0.11      0.35         Portugal                 6     0.16       0.8         Zambia                 22   0.56    0.17
+                                                                                                                                                                           Czechia                      15     0.06       0.33        Kyrgyzstan       14     0.22      0.19         Qatar                   23     0.12      0.7          Zimbabwe               24   1.15    0.04
+                                                                                                                                                                           Denmark                       9     0.36       0.19        Laos             13      1.5      0.21         Romania                 17     0.08      0.73
+                                                                                                                                                                           Dominican Republic            6     0.08       0.59        Latvia           11     0.55      0.22         Russia                  15     0.08      0.58
+                                                                                                                                                                           Ecuador                       7     0.37       0.53        Lebanon           7     0.09      0.28         Rwanda                   3     0.42      0.18
+                                                                                                                                                                           Note. TL, time lag; MAPE, mean absolute percentage error of the forecast model (the lower, the better is the forecast); Adj. R², adjusted r-squared of the regression model.
+
+        medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209064.this version posted October 12, 2020. The copyright holder for this
+        preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                        perpetuity.
+                                             It is made available under a CC-BY-ND 4.0 International license .
+                                                         Social Distancing and Rt of COVID-19
+Table 3 Results of linear mixed models predicting COVID-19 effective replication number (Rt) based on mobility and stringency
+                                        Rt - Group 1                                Rt - Group 2                                   Rt - Group 3
+  Predictors a            Estimates             CI            p       Estimates            CI              p        Estimates              CI            p
+  (Intercept)                  1.3        1.18 – 1.42      <0.001         1.41        1.14 – 1.68       <0.001         1.19           1.11 – 1.27     <0.001
+  retail mobility               0         -0.05 – 0.04      0.937        -0.68       -0.85 – -0.50      <0.001         -0.02         -0.13 – 0.09      0.756
+  grocery mobility           -0.11       -0.14 – -0.08     <0.001         0.16        0.02 – 0.30        0.024         -0.07         -0.16 – 0.01      0.096
+  transit mobility            0.28        0.23 – 0.33      <0.001         0.02        -0.12 – 0.16        0.78         0.07          -0.05 – 0.18      0.256
+  residential mobility        0.26        0.22 – 0.31      <0.001        -0.54       -0.68 – -0.40      <0.001         0.06          -0.03 – 0.16      0.188
+  workplace mobility          0.14        0.11 – 0.17      <0.001        -0.39       -0.48 – -0.30      <0.001         0.03          -0.03 – 0.09      0.372
+  Stringency Index           -0.28       -0.31 – -0.25     <0.001         0.06        0.00 – 0.12        0.047         -0.15        -0.21 – -0.10     <0.001
+  Random Effects
+  σ2                      0.52                                        1.01                                         1.29
+  τ 00                    0.28                                        0.40                                         0.04
+  ICC                     0.35                                        0.32                                         0.03
+  n (countries)           71                                          25                                           29
+  Observations            12736                                       3928                                         4930
+  (days)
+  Marginal R² /           0.143 / 0.444                               0.154 / 0.423                                0.017 / 0.047
+  Conditional R²
+  Note. CI, 95% confidence interval; ICC, Intraclass Correlation Coefficient; Rt, effective replication number; σ2, total variance; τ 00, random-inter-
+  cept-variance. a all predictors’ scales have been standardized.
+      In the absence of a single criterium not contradicting
+                                                                                 Conflicts of Interest
+with other performance criteria, we had to select the best                       The authors declare no conflict of interest to disclose.
+model based on plots inspections. This approximate
+inspection is often used in sensitivity analyses for variable                    References
+                                                                                 1.    Dong E, Du H, Gardner L. An interactive web-based dashboard to
+selection, but although we tried to reduce the bias by                                 track COVID-19 in real time. Lancet Infect Dis. 2020 May;20(5):533–
+anonymizing the plots, we recognized the reproducibility                               4.
+limit and the human error susceptibility of this method.                         2.    Kuniya T. Evaluation of the effect of the state of emergency for the first
+                                                                                       wave of COVID-19 in Japan. Infect Dis Model. 2020;5:580–7.
+Another limitation in our TL estimation is the lack of
+                                                                                 3.    Diekmann O, Heesterbeek JA, Metz JA. On the definition and the
+confidence intervals.                                                                  computation of the basic reproduction ratio R0 in models for
+                                                                                       infectious diseases in heterogeneous populations. J Math Biol.
+Conclusion
+                                                                                       1990;28(4):365–82.
+Mobile phone data could contribute to predictions of the Rt
+                                                                                 4.    Alfano V, Ercolano S. The Efficacy of Lockdown Against COVID-19:
+of COVID-19 and to estimations of the TL between social                                A Cross-Country Panel Analysis. Appl Health Econ Health Policy.
+distancing with movement restrictions and Rt, which,                                   2020 Aug 1;18(4):509–17.
+according to our results, greatly vary across countries. In                      5.    ACAPS. #COVID19 Government Measures Dataset [Internet].
+                                                                                       ACAPS. 2020 [cited 2020 Aug 29]. Available from:
+general, social distancing and high stringency indices are
+                                                                                       https://www.acaps.org/covid19-government-measures-dataset
+associated with a reduction in the spread of COVID-19. We                        6.    Hale T, Sam Webster, Anna Petherick, Toby Phillips, Beatriz Kira.
+recommend authorities to estimate country-specific TLs                                 Oxford COVID-19 Government Response Tracker [Internet].
+through a more accurate method, such as using                                          Blavatnik School of Government; 2020. Available from:
+                                                                                       www.bsg.ox.ac.uk/covidtracker
+individualized tracking data. The country-specific TL could
+                                                                                 7.    Saha J, Barman B, Chouhan P. Lockdown for COVID-19 and its impact
+be particularly practical in revising the commonly enforced                            on community mobility in India: An analysis of the COVID-19
+14-day quarantine period for susceptible individuals and                               Community Mobility Reports, 2020. Child Youth Serv Rev. 2020
+travelers returning to their home country.                                             Sep;116:105160.
+                                                                                 8.    Linka K, Peirlinck M, Kuhl E. The reproduction number of COVID-19
+Acknowledgments                                                                        and its correlation with public health interventions. Comput Mech.
+Many thanks to Redouane Benazzouz for his comments and                                 2020 Jul 28;1–16.
+                                                                                 9.    Google. COVID-19 Community Mobility Report [Internet]. COVID-19
+support, and to Kerstin Gackle and Caroline Allen for their
+                                                                                       Community Mobility Report. 2020 [cited 2020 Aug 31]. Available
+advice on academic writing.                                                            from: https://www.google.com/covid19/mobility?hl=en
+Ould Setti & Voutilainen 2020 (preprint)                                                                                                                       7
+
+      medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209064.this version posted October 12, 2020. The copyright holder for this
+       preprint (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in
+                                                                        perpetuity.
+                                             It is made available under a CC-BY-ND 4.0 International license .
+                                                         Social Distancing and Rt of COVID-19
+10. Wahltinez O, Lee M, Erlinger A, Daswani M, Yawalkar P, Murphy K,            20. Venables WN, Ripley BD. Modern Applied Statistics with S [Internet].
+    et al. COVID-19 Open-Data: curating a fine-grained, global-scale data           4th ed. New York: Springer-Verlag; 2002 [cited 2020 Sep 20]. (Statistics
+    repository     for    SARS-CoV-2.            2020;   Available    from:         and Computing, Statistics,Computing Venables,W.N.:Statistics w.S-
+    https://github.com/GoogleCloudPlatform/covid-19-open-data                       PLUS).                            Available                        from:
+11. Ienca M, Vayena E. On the responsible use of digital data to tackle the         https://www.springer.com/gp/book/9780387954578
+    COVID-19 pandemic. Nat Med. 2020 Mar 27;1–2.                                21. Bates D, Maechler M, Bolker [aut B, cre, Walker S, Christensen RHB,
+12. Cori A, Ferguson NM, Fraser C, Cauchemez S. A New Framework and                 et al. lme4: Linear Mixed-Effects Models using “Eigen” and S4
+    Software to Estimate Time-Varying Reproduction Numbers During                   [Internet]. 2020 [cited 2020 Sep 7]. Available from: https://CRAN.R-
+    Epidemics. Am J Epidemiol. 2013 Nov 1;178(9):1505–12.                           project.org/package=lme4
+13. Swerdlow DL, Finelli L. Preparation for Possible Sustained                  22. Singmann H, Bolker B, Westfall J, Aust F, Ben-Shachar MS, Højsgaard
+    Transmission of 2019 Novel Coronavirus: Lessons From Previous                   S, et al. afex: Analysis of Factorial Experiments [Internet]. 2020 [cited
+    Epidemics. JAMA. 2020 Mar 24;323(12):1129–30.                                   2020        Sep      7].      Available     from:      https://CRAN.R-
+14. Nishiura H, Linton NM, Akhmetzhanov AR. Serial interval of novel                project.org/package=afex
+    coronavirus (COVID-19) infections. Int J Infect Dis. 2020 Apr;93:284–       23. Lüdecke D, Makowski D, Patil I, Waggoner P. insight: Easy Access to
+    6.                                                                              Model Information for Various Model Objects [Internet]. 2020 [cited
+15. Vokó Z, Pitter JG. The effect of social distance measures on COVID-19           2020        Sep      7].      Available     from:      https://CRAN.R-
+    epidemics in Europe: an interrupted time series analysis. GeroScience.          project.org/package=insight
+    2020 Jun 11;1–8.                                                            24. Funder DC, Ozer DJ. Evaluating Effect Size in Psychological Research:
+16. R Core Team. R: A Language and Environment for Statistical                      Sense and Nonsense. Adv Methods Pract Psychol Sci. 2019 Jun
+    Computing [Internet]. Vienna, Austria: R Foundation for Statistical             1;2(2):156–68.
+    Computing; 2020. Available from: https://www.R-project.org                  25. Cartenì A, Francesco LD, Martino M. How mobility habits influenced
+17. Guan W, Ni Z, Hu Y, Liang W, Ou C, He J, et al. Clinical                        the spread of the COVID-19 pandemic: Results from the Italian case
+    Characteristics of Coronavirus Disease 2019 in China. N Engl J Med.             study. Sci Total Environ. 2020 Nov 1;741:140489.
+    2020 Apr 30;382(18):1708–20.                                                26. Nivette A, Ribeaud D, Murray A, Steinhoff A, Bechtiger L, Hepp U, et
+18. Buishand TA. Some methods for testing the homogeneity of rainfall               al. Non-compliance with COVID-19-related public health measures
+    records. J Hydrol. 1982 Aug 1;58(1):11–27.                                      among young adults in Switzerland: Insights from a longitudinal
+19. Taylor SJ, Letham B. Forecasting at scale [Internet]. PeerJ Inc.; 2017          cohort study. Soc Sci Med 1982. 2020 Sep 16;268:113370.
+    Sep [cited 2020 Sep 6]. Report No.: e3190v2. Available from:                27. Elgar FJ, Stefaniak A, Wohl MJA. The trouble with trust: Time-series
+    https://peerj.com/preprints/3190                                                analysis of social capital, income inequality, and COVID-19 deaths in
+                                                                                    84 countries. Soc Sci Med 1982. 2020 Sep 16;113365.
+Ould Setti & Voutilainen 2020 (preprint)                                                                                                                    8

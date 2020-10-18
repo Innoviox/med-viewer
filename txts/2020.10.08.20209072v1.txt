@@ -1,0 +1,615 @@
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209072.this version posted October 13, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                        It is made available under a CC-BY-ND 4.0 International license .
+   1      Estimating the impact of disruptions due to COVID-19 on HIV
+   2      transmission and control among men who have sex with men in
+   3      China
+   4      Ross. D. Booton1, 2, *, §, Gengfeng Fu3, *, Louis MacGregor1, Jianjun Li3, Jason J. Ong4, 5, 6,
+   5      Joseph D. Tucker4, 5, 7, 8, Katy M.E. Turner1, Weiming Tang4, 7, 8, Peter Vickerman1, Kate M.
+   6      Mitchell2
+   7
+          1
+   8        University of Bristol, Bristol, United Kingdom
+          2
+   9        MRC Centre for Global Infectious Disease Analysis, Department of Infectious Disease Epidemiology, Imperial
+  10      College London, London, United Kingdom
+          3
+  11        Jiangsu provincial center for disease control and prevention, Nanjing, Jiangsu province, China
+          4
+  12        Social Entrepreneurship to Spur Health (SESH) Global, Guangzhou, China
+          5
+  13        Faculty of Infectious and Tropical Diseases, London School of Hygiene & Tropical Medicine, London, United
+  14      Kingdom
+          6
+  15        Central Clinical School, Monash University, Melbourne, Australia
+          7
+  16        University of North Carolina Project-China, Guangzhou, China
+          8
+  17        University of North Carolina at Chapel Hill, Chapel Hill, United States
+          *
+  18        Considered joint first author
+          §
+  19        Correspondence: Dr. Ross D. Booton, Bristol Veterinary School, University of Bristol, Bristol, BS40 5DU,
+  20      rdbooton@gmail.com
+  21
+  22      E-mail addresses of authors:
+  23                RDB: rdbooton@gmail.com
+  24                GF: fugf@jscdc.cn
+  25                LM: louis.macgregor@bristol.ac.uk
+  26                JL: babbittlee@jscdc.cn
+  27                JJO: Jason.Ong@monash.edu
+  28                JDT: jdtucker@med.unc.edu
+  29                KMET: katy.turner@bristol.ac.uk
+  30                WT: Weiming_tang@med.unc.edu
+  31                PV: peter.vickerman@bristol.ac.uk
+  32                KMM: kate.mitchell@imperial.ac.uk
+  33
+  34      Keywords:
+  35      COVID-19 pandemic, men who have sex with men, modeling, HIV transmission, key and vulnerable
+  36      populations, People’s Republic of China
+  37      Word count:
+  38      Abstract: 344. Main text: 3604.
+       NOTE: This preprint reports new research that has not been certified by peer review and should not be used to guide clinical practice.
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209072.this version posted October 13, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                        It is made available under a CC-BY-ND 4.0 International license .
+  39      Abstract
+  40      Introduction The COVID-19 pandemic is impacting HIV care globally, with gaps in HIV
+  41      treatment expected to increase HIV transmission and HIV-related mortality. We estimated
+  42      how COVID-19-related disruptions could impact HIV transmission and mortality among men
+  43      who have sex with men (MSM) in four cities in China.
+  44
+  45      Methods Regional data from China indicated that the number of MSM undergoing facility-
+  46      based HIV testing reduced by 59% during the COVID-19 pandemic, alongside reductions in
+  47      ART initiation (34%), numbers of sexual partners (62%) and consistency of condom use
+  48      (25%). A deterministic mathematical model of HIV transmission and treatment among MSM
+  49      in China was used to estimate the impact of these disruptions on the number of new HIV
+  50      infections and HIV-related deaths. Disruption scenarios were assessed for their individual
+  51      and combined impact over 1 and 5 years for a 3-, 4- or 6-month disruption period.
+  52
+  53      Results Our China model predicted that new HIV infections and HIV-related deaths would
+  54      be increased most by disruptions to viral suppression, with 25% reductions for a 3-month
+  55      period increasing HIV infections by 5-14% over 1 year and deaths by 7-12%. Observed
+  56      reductions in condom use increased HIV infections by 5-14% but had minimal impact (<1%)
+  57      on deaths. Smaller impacts on infections and deaths (<3%) were seen for disruptions to
+  58      facility testing and ART initiation, but reduced partner numbers resulted in 11-23% fewer
+  59      infections and 0.4-1.0% fewer deaths. Longer disruption periods of 4 and 6 months amplified
+  60      the impact of combined disruption scenarios. When all realistic disruptions were modelled
+  61      simultaneously, an overall decrease in new HIV infections was always predicted over one
+  62      year (3-17%), but not over 5 years (1% increase-4% decrease), while deaths mostly increased
+  63      over one year (1-2%) and 5 years (1.2 increase – 0.3 decrease).
+  64
+  65      Conclusions The overall impact of COVID-19 on new HIV infections and HIV-related
+  66      deaths is dependent on the nature, scale and length of the various disruptions. Resources
+  67      should be directed to ensuring levels of viral suppression and condom use are maintained to
+  68      mitigate any adverse effects of COVID-19 related disruption on HIV transmission and
+  69      control among MSM in China.
+  70
+  71
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209072.this version posted October 13, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                        It is made available under a CC-BY-ND 4.0 International license .
+  72      Introduction
+  73      Globally, 37.9 million people are living with HIV (PLWH) [1], with men who have sex with
+  74      men (MSM) disproportionally affected [2]. In China, a recent systematic review indicated an
+  75      HIV prevalence of 5.7% (95% CI:5.4-6.1%) among MSM, with increasing HIV prevalence in
+  76      this group over time (2001-2018) [3]. Efforts to manage the HIV epidemic in China have
+  77      been made increasingly difficult by the emergent COVID-19 pandemic [4,5], having
+  78      significant potential to affect the HIV care continuum and patterns of sexual risk behaviour in
+  79      numerous settings worldwide [6–10]. Close examination of this syndemic is a key issue for
+  80      global public health [11].
+  81
+  82      Among PLWH in China - who already face high levels of HIV stigma, psychological
+  83      distress, and suboptimal adherence to antiretroviral therapy (ART) [4] - the COVID-19
+  84      pandemic has presented further barriers to HIV control [5]. Quarantine and social distancing
+  85      reduce access to routine HIV testing which reduces the identification and treatment of new
+  86      HIV infections [12]. Timely linkage to HIV services and initiation of ART have been
+  87      affected during the COVID-19 pandemic, with many hospitals designated for treatment of
+  88      COVID-19 suspending taking on new patients with HIV [4]. The COVID-19 pandemic has
+  89      hindered ART, due to hospital visits being restricted from city lockdowns/traffic controls [4].
+  90      In February 2020, a survey in China found 32.6% of PLWH were at risk of ART
+  91      discontinuation and about half (48.6%) did not know where to get ART in the near future
+  92      [13]. These gaps in HIV treatment could lead to increased HIV-related deaths and higher risk
+  93      of HIV transmission. Conversely, MSM in other countries have reported having fewer sexual
+  94      partners during periods of COVID-19-related lockdown, which may temporarily reduce HIV
+  95      transmission [7].
+  96
+  97      Mathematical modelling can be used to capture the complexity of these changes and estimate
+  98      the impacts of COVID-19 on HIV epidemiology. One modelling study of PLWH in Africa
+  99      projected that a 6-month interruption in ART supply across 50% of the population on
+ 100      treatment could lead to a 60% increase in HIV-related deaths over a 1-year period [14].
+ 101      Another modelling study on low-and-middle-income countries (LMIC) projected that HIV-
+ 102      related deaths would increase by 10% over the next five years, with the greatest impact on
+ 103      mortality estimated to be from ART interruptions [15]. However, neither of these studies
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209072.this version posted October 13, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                        It is made available under a CC-BY-ND 4.0 International license .
+ 104      used observed COVID-19 impact data to inform their modelled disruptions, which is
+ 105      essential for obtaining reliable projections for the true scale of COVID-19 disruptions.
+ 106
+ 107      To our knowledge no COVID-19 impact modelling has been published focussing on key
+ 108      populations, who are the main groups affected by HIV [16]. In addition, no model projections
+ 109      have to date incorporated observed data from the COVID-19 disruption. In this study, we
+ 110      addressed this by collating data on the impact of COVID-19 and resulting lockdown
+ 111      measures on HIV testing and treatment among PLWH, sexual risk behaviour and condom use
+ 112      among MSM in China. We used a deterministic model of HIV transmission and treatment
+ 113      among MSM in China to estimate the impact of these disruptions on new HIV infections and
+ 114      HIV-related deaths. We identified where HIV prevention and treatment efforts should be
+ 115      focussed to help mitigate potential adverse effects of COVID-19.
+ 116
+ 117      Methods
+ 118      Observed disruptions due to COVID-19 in China
+ 119      Estimates of changes in HIV testing (among MSM), treatment initiation and viral load
+ 120      suppression (among all PLWH) came from surveillance data from Jiangsu province (HIV
+ 121      testing/clinics), from the first quarter of 2019 and 2020 [17]. Estimates of changes in number
+ 122      of sexual partners and consistency of condom use came from an online survey conducted
+ 123      among MSM (N=731) across 31 provinces in China between 18/05/2020-02/06/2020, during
+ 124      the COVID-19 pandemic. From these data, we estimated the following percentage changes
+ 125      due to the disruption caused by COVID-19, compared to the pre-COVID period (before
+ 126      01/01/2020):
+ 127
+ 128         I.     The number of MSM undergoing facility-based HIV testing in the first quarter of
+ 129                2019 was 6436 compared to 2641 in 2020, a reduction of 59% (95% CI:58-60%).
+ 130        II.     The number of PLWH initiating ART in the first quarter of 2019 was 315 compared
+ 131                to 208 in 2020, a reduction of 34% (95% CI:29-39%).
+ 132       III.     There was no change in viral suppression (VS) among PLWH. 95.3% (940/986; 95%
+ 133                CI:93.8-96.6%) of viral load tests showed VS in the first quarter of 2019, with similar
+ 134                numbers in 2020 (96.0%, 928/967; 95% CI:94.5-97.1%). The proportion of diagnosed
+ 135                PLWH who had a viral load test was similar in both years: 4.7% in the first quarter of
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209072.this version posted October 13, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                        It is made available under a CC-BY-ND 4.0 International license .
+ 136                2019 and 4.3% in the first quarter of 2020. Note most viral load tests in this region are
+ 137                conducted in the 3rd/4th quarter.
+ 138       IV.      62% (313/506) of MSM reported reduced numbers of sexual partners compared to the
+ 139                pre-pandemic period (among those who had male partners in the last six months).
+ 140        V.      25% (126/506) of MSM used fewer condoms with their partners compared to the pre-
+ 141                pandemic period.
+ 142
+ 143      Mathematical model
+ 144      We used a model of HIV testing/transmission/treatment among MSM in China which was
+ 145      previously developed to evaluate the long-term impact of an HIV self-testing intervention in
+ 146      four cities (Guangzhou/Shenzhen/Jinan/Qingdao) [18]. All individuals within the model are
+ 147      categorised by infection status, risk (≤/>two male anal sex partners in the last three months),
+ 148      anal       sex       role      (always        insertive/versatile/always         receptive),      infection     stage
+ 149      (acute/CD4>500/351-500/200-350/<200 cells/µl), and diagnosed/ART status. Uninfected
+ 150      MSM enter the population upon sexual debut and leave through migration or non-HIV/HIV-
+ 151      related death. Those not on ART move into more advanced stages of infection, while those
+ 152      on ART do not; their mortality is modelled as a function of infection stage at ART initiation
+ 153      (Fig.S2).
+ 154
+ 155      Both facility-based and self-testing are modelled, and MSM are distinguished by whether or
+ 156      not they have previously tested. Those on ART who drop out re-enter the diagnosed
+ 157      compartments. HIV transmission occurs via anal sex between MSM at a rate which depends
+ 158      on HIV disease stage/ART coverage/VS/total partners/total sex acts/sexual role/condom
+ 159      efficacy and use. The model was calibrated to MSM city-level HIV epidemics, parameterised
+ 160      using        demographic/behaviour                 data     from      CDC/trials,          calibrated    to     local
+ 161      city/province/national-level              estimates      (“fitting   metrics”)       of     HIV     prevalence/ART
+ 162      coverage/diagnosis/incidence/population size [18]. The model was solved in R.3.5.1.
+ 163      Model/schematics (Figs.S2-3), parameters/fitting metrics (Table S6) and fitting metrics
+ 164      (Fig.S1) are given in the supplement.
+ 165
+ 166      Base case scenario (no COVID-19)
+ 167      The model was run for five years until 01/01/2025 using the fitted model parameters, with all
+ 168      parameters constant at their 2019 values from 01/01/2020 onwards. These base case runs
+ 169      predicted the non-COVID-19 trajectory of HIV prevalence and care for each city.
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209072.this version posted October 13, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                        It is made available under a CC-BY-ND 4.0 International license .
+ 170
+ 171      COVID-19-related disruption scenarios
+ 172      Disruption scenarios were implemented from 01/01/2020 and run for 3 months, after which
+ 173      all parameters were reset to their original pre-COVID-19 values. Comparisons of these
+ 174      scenarios with the base case were made over one (01/01/2021) and five years (01/01/2025).
+ 175
+ 176      The following observed disruption scenarios were based on the observed disruptions –
+ 177      reductions in:
+ 178           A. facility-based HIV testing (59%)
+ 179           B. ART initiation (34%)
+ 180           C. number of sexual partnerships (31–62%)
+ 181           D. condom use (12.5–25%)
+ 182
+ 183      Although data from Jiangsu province suggested no disruption to VS, disruptions in ART
+ 184      provision have been reported to the WHO [19]. We explored an additional hypothetical
+ 185      scenario where VS was reduced by 10% (consistent with reductions in ART access among
+ 186      MSM in United States [7]) and 25% (consistent with disruptions to ART uptake reported
+ 187      among PLWH in China [4]):
+ 188           E. Reduction in VS of 10/25%
+ 189
+ 190      The data on sexual partnerships and condom use estimated the proportion of MSM having
+ 191      fewer partnerships/using condoms less frequently (not of their overall reductions). We
+ 192      sampled partnership and condom use parameters from uniform distributions with bounds of
+ 193      half-reported to full-reported reductions. Reductions in condom use were modelled as a
+ 194      reduction in the proportion of sex acts in which a condom is used. Reductions in HIV testing
+ 195      and ART initiations were modelled as reductions in the facility-based HIV testing rate and
+ 196      ART initiation rate, and reductions in partner numbers were modelled as reductions in
+ 197      numbers of partners per year (applied across all risk groups). VS reductions were modelled as
+ 198      increases in infectiousness and HIV-related mortality among those on ART, assuming a
+ 199      proportion (10%/25%) of virally suppressed MSM stop taking ART, having the same
+ 200      infectiousness and HIV-related mortality as individuals not on ART. No reduction in HIV
+ 201      self-testing rates were modelled, in line with local observations in Jiangsu.
+ 202
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209072.this version posted October 13, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                        It is made available under a CC-BY-ND 4.0 International license .
+ 203      We assessed the impact of each disruption (A,B,C,D,E) separately, and also assessed the
+ 204      combined impact of these disruptions occurring simultaneously (±scenario-E). The impacts
+ 205      of disruptions lasting 3, 4 and 6 months were assessed.
+ 206
+ 207      The outcome measures used to assess the disruption caused by COVID-19 were total and
+ 208      relative percentage change in new infections and HIV-related deaths, compared to the base
+ 209      case, non-COVID-19 scenario. These impacts were evaluated over 1-year (01/01/2020-
+ 210      01/01/2021) and 5-years (01/01/2020-01/01/2025). All impact measures were expressed as
+ 211      median values and 95% credible intervals (95% CrI), across the 100 selected parameter sets
+ 212      in each city, and across the 400 parameter sets from all cities.
+ 213
+ 214      We analysed the sensitivity of these scenarios (A,B,C,D,E) to different magnitudes of
+ 215      disruption (0,25,50,75,100%) over 1 and 5 years with a 3-month disruption. We plot the %
+ 216      change in new HIV infections and HIV-related deaths as a function of each individual
+ 217      disruption parameter.
+ 218
+ 219      Results
+ 220      The percentage change in impact measures (new HIV infections and HIV-related deaths) did
+ 221      not vary between each city, with greater within-city variation across the scenarios. Therefore,
+ 222      all results are presented as the overall impact across four cities (Table S1,
+ 223      Guangzhou/Shenzhen/Jinan/Qingdao), with results for each city in the supplement (Tables
+ 224      S2-5).
+ 225
+ 226      Single and combined 3-month disruptions
+ 227      Realistic disruptions to facility-based HIV testing, ART initiation and condom use were each
+ 228      estimated to lead to an increase in new HIV infections among MSM (Fig.1a, Tables S1-S5).
+ 229      Disruptions to condom use (scenario-D) lasting 3 months were predicted to lead to the largest
+ 230      overall relative increase in HIV infections, of 7.8% (95% CrI:4.5-13.8%) over one year
+ 231      (Fig.1a), with relative increases of 2.3% (1.7-2.9%) and 1.7% (1.2-2.4%) predicted over 1
+ 232      year for realistic 3-month disruptions to facility-based HIV testing (scenario-A) and ART
+ 233      initiations (scenario-B), respectively. Reductions in numbers of sexual partners (scenario-C)
+ 234      were predicted to reduce HIV infections, by a median 16.2% (11.1-23.2%) over one year
+ 235      among MSM following a 3-month disruption.
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209072.this version posted October 13, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                        It is made available under a CC-BY-ND 4.0 International license .
+ 236
+ 237      A hypothetical 10%/25% reduction in VS (E10/E25) would lead to increased numbers of
+ 238      HIV infections. 25% reductions in VS increased new HIV infections by 7.4% (4.7-14.0%)
+ 239      over one year given a 3-month disruption.
+ 240
+ 241      The effect of each disruption scenario on the relative percentage change in HIV infections
+ 242      was always smaller over five years than after one year (but not the absolute difference in HIV
+ 243      infections, which generally increased over 5 years), with a more rapid decrease in effect over
+ 244      5 years seen for disruptions to partnership numbers, condom use and VS (Fig.1a).
+ 245
+ 246      When all of the observed disruptions (A+B+C+D) were modelled simultaneously, a decrease
+ 247      in new HIV infections was always predicted over one year (median 8.7%, (2.8%-17.2%)), but
+ 248      over 5 years this impact reduced to a 1.6% (-0.6%-4.3%) decrease in new HIV infections due
+ 249      to the disruptions to HIV testing (increase 1.7%, 1.2%-2.4%) and ART initiation (increase
+ 250      1.1%, 0.7-1.8%) having a longer-lasting effect on ART outcomes, with ART taking longer
+ 251      post-disruption to return to pre-disruption levels.
+ 252
+ 253      HIV-related deaths were also predicted to increase following disruptions to HIV testing/ART
+ 254      initiations/condom use/VS (scenarios-A,B,D,E), and decrease following disruptions to
+ 255      partnerships (scenario-C) (Fig.1b, Tables S1-S5). Small impacts (<1%) on HIV-related
+ 256      deaths were predicted over one year for 3-month disruptions to HIV testing, partner numbers
+ 257      or condom use. Larger increases in HIV-related deaths were predicted to occur following 3-
+ 258      month disruptions to ART initiations – a 1.8% (1.5-2.0%) increase over one year–and,
+ 259      especially, VS – a 10.1% (7.6-12.7%) increase over one year following a 25% VS reduction.
+ 260      The observed disruptions together (A+B+C+D) resulted in 1.5% (1.1-1.8%) more HIV-
+ 261      related deaths over one year and 0.6% (-0.3-1.2%) over five years.
+ 262
+ 263      Including reductions of 10%/25% in levels of VS alongside the other, observed scenarios
+ 264      (A+B+C+D+E10, A+B+C+D+E25) always led to an increase in new HIV infections, and,
+ 265      particularly, an increase in HIV-related deaths, over a 1- or 5-year time horizon, compared to
+ 266      the observed scenarios (A+B+C+D) alone (Figs.1a,b).
+ 267
+ 268      Sensitivity in disruption duration
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209072.this version posted October 13, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                        It is made available under a CC-BY-ND 4.0 International license .
+ 269      When comparing the impacts of two combined disruption scenarios (A+B+C+D and
+ 270      A+B+C+D+E25) for disruptions lasting 3/4/6 months, we found impacts on both new HIV
+ 271      infections and HIV-related deaths were approximately linear, with a 4-month disruption
+ 272      leading to around 34% greater impact than a 3-month disruption, and a 6-month disruption
+ 273      around two times the impact of a 3-month disruption, over both the 1- and 5-year time
+ 274      horizons (Fig.2).
+ 275
+ 276      Impact in different cities
+ 277      The absolute numbers of predicted additional/prevented infections and deaths varied for each
+ 278      city (Tables S2-S5), related to differing MSM population sizes, but the percentage changes in
+ 279      infections and deaths did not vary substantially between cities (Fig.3, Tables S2-S5). For
+ 280      example, for scenario A+B+C+D, the overall predicted reduction in new HIV infections over
+ 281      one year varied from 8.7% (-2.8-17.2%) in Qingdao to 9.1% (2.5-15.0%) in Jinan, with far
+ 282      greater within-city than between-city uncertainty (Fig.3).
+ 283
+ 284      Over 5 years, realistic 3-month disruptions to HIV testing, ART initiations, sexual risk
+ 285      behaviour and condom use (scenario A+B+C+D) would lead to on average 3 fewer new HIV
+ 286      infections but 1 additional HIV-related death among MSM in Jinan and Qingdao, 6 fewer
+ 287      infections and 3 additional deaths in Guangzhou, and to 18 fewer HIV infections but 9
+ 288      additional HIV-related deaths among MSM in Shenzhen.
+ 289
+ 290      The combined hypothetical scenario (A+B+C+D+E) lasting for 3 months, over 5 years,
+ 291      would lead to an average 3 additional new HIV infections in Guangzhou, 7 in Shenzhen but
+ 292      no change in Jinan and Qingdao, with 11 additional HIV-related deaths in Guangzhou, 33 in
+ 293      Shenzhen and 3 in Jinan and Qingdao.
+ 294
+ 295      Sensitivity in disruption magnitude
+ 296      Over 1 or 5 years, with a 3-month disruption, the relationship between the magnitude of the
+ 297      disruption (0,25,50,75,100%) and the projected impact was always linear (Fig.S4-5, Table
+ 298      S7-8), with higher values of % disruption leading to increases in new HIV infections and
+ 299      HIV-related deaths for four disruption parameters (facility testing/ART initiation/condom
+ 300      use/VS) but not for partnership disruption, (fewer infections and deaths).
+ 301
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209072.this version posted October 13, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                        It is made available under a CC-BY-ND 4.0 International license .
+ 302      For a 3-month disruption evaluated over a 1-year, theoretical disruption scenarios A-E50
+ 303      (affecting 50% of MSM) increased new HIV-infections by 1.8%, 2.4%, -16.7% (decrease),
+ 304      15.8% and 11.3% respectively, and increased HIV-related deaths by 0.1%, 2.5%, -0.4%
+ 305      (decrease), 0.5% and 18.2% respectively (Fig.S4, Table S7). If disruption scenarios affected
+ 306      100% of MSM (A-E100), then new HIV-infections were projected to increase to 3.7%, 4.9%,
+ 307      -30.2% (decrease for 95% affecting MSM – the model requires >0 partnerships), 38.7% and
+ 308      29.3% respectively. Scenarios A-E100 would also cause HIV related deaths to increase to
+ 309      0.3%, 5.3%, -0.8% (decrease – for 95% disruption), 1% and 35.7% respectively.
+ 310
+ 311      Discussion
+ 312      Available data in this analysis suggests that the COVID-19 pandemic and measures
+ 313      undertaken against it have resulted in reduced rates of HIV testing and treatment among
+ 314      MSM in this region of China but have not so far had an impact on VS rates. Survey data also
+ 315      suggested MSM in China had fewer partners and used condoms less often during the
+ 316      COVID-19 pandemic. Using these data in our modelling analysis, simulating realistic 3-
+ 317      month disruptions to HIV testing, ART initiation, condom use and partner numbers, we
+ 318      found fewer new HIV infections are projected to occur among MSM in China over 2020 (9%
+ 319      fewer) than would have occurred in the absence of the COVID-19 pandemic, with a smaller
+ 320      decrease (2%) seen over 5 years. This decrease was largely due to reductions in sexual
+ 321      partner numbers counteracting a reduction in ART initiations and condom use. Our models
+ 322      do suggest these disruptions will lead to small increases in HIV-related deaths (2% over 1
+ 323      year and 1% over 5 years). When we also evaluated potential reductions in VS of 25%
+ 324      alongside these observed disruptions, we predicted a 4% decrease in new HIV infections and
+ 325      10% increase in HIV-related deaths over one year. When evaluating the effects of each
+ 326      individual disruption separately, new HIV infections were most adversely affected by
+ 327      disruptions in condom use and VS, and HIV-related deaths by reductions in VS. Therefore,
+ 328      our results suggest HIV prevention and treatment efforts should focus on maintaining use of
+ 329      condoms and VS among MSM in China to mitigate short- and long-term adverse effects of
+ 330      the COVID-19 disruption.
+ 331
+ 332      Although disruptions to VS had consequences for HIV incidence/mortality, data from Jiangsu
+ 333      [17] indicated no change in VS among PLWH due to COVID-19 disruption. Other surveys
+ 334      among PLWH in China indicate disruptions to ART access [4] which could lead to
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209072.this version posted October 13, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                        It is made available under a CC-BY-ND 4.0 International license .
+ 335      reductions in VS. It is critically important to quantify such reductions in treatment access and
+ 336      VS among MSM in China, and we suggest that future surveys should focus their efforts on
+ 337      determining the true scale of the disruption to VS, which is likely to be delayed and could
+ 338      occur after observed treatment disruptions.
+ 339
+ 340      The length of disruption is also critical in determining the longer-term impacts of COVID-19.
+ 341      Throughout our main analysis we used a disruption length of 3 months, with sensitivity
+ 342      analyses (with longer 4/6-month disruptions) demonstrating a linear relationship between the
+ 343      duration of disruption and the change in both new HIV infections and HIV-related deaths,
+ 344      with a doubling in disruption duration leading to a doubling in the impact. When assessing
+ 345      the combined impact of the observed disruptions, the direction of the linear relationship was
+ 346      different for HIV-related deaths (positive – longer duration gave more deaths) and new HIV
+ 347      infections (negative – longer duration gave fewer new infections).
+ 348
+ 349      The absolute numbers of new HIV infections and HIV-related deaths varied between the four
+ 350      cities in China modelled, due to the different population sizes, epidemiology and care cascade
+ 351      in each city (reflected in data used for calibration [18]). However, the percentage change in
+ 352      impact measures did not vary between each city, with much greater within-city variation.
+ 353      This result is surprising, considering each city has different future projected HIV prevalence
+ 354      (5.0 – 12.2% in 2036, based on data specific to these cities [20] in Booton et al. [18]) and are
+ 355      in two different provinces (Guangdong/Shandong). Therefore, the impact predicted in this
+ 356      study is likely to be applicable to MSM within any city/region in China.
+ 357
+ 358      We may compare our results to other modelling studies predicting the potential impact of
+ 359      COVID-19 related disruption on HIV prevention and treatment. Jewell et al. [14] used
+ 360      multiple African models of 3 month disruptions affecting 50% from 01/04/2020, reporting
+ 361      increases in HIV incidence of <1% from the suspension of HIV testing (compared to our
+ 362      prediction of 1-2% for 50% reductions in facility testing, scenario-A50, all scenarios in Table
+ 363      S7), <2% from no new ART initiations (2-4%, scenario-B50), 2-9% from the interruption of
+ 364      condom availability (12-33%, scenario-D50), 4-89% from ART interruption (9-31% for 50%
+ 365      reduction in VS, scenario-E50). Suspension of testing for 50% increased deaths by <1%
+ 366      (<1%, scenario-A50), ART initiation <2% (2-3%, scenario-B50) and condom availability 0%
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209072.this version posted October 13, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                        It is made available under a CC-BY-ND 4.0 International license .
+ 367      (0-1%, scenario-D50) with ART interruption causing an increase of 17-62% (14-25%,
+ 368      scenario-E50). Our results align well with these estimates, considering the different
+ 369      methodology/definitions of disruption/population (all adults/children, compared to solely
+ 370      MSM) and underlying models and data (different settings/treatment/condom use). This is a
+ 371      major strength of our study, the use of early data from China, to estimate data-driven (rather
+ 372      than theoretical) magnitudes of COVID-19-related disruptions. Another major strength of this
+ 373      study was performing our analysis on four separate cities from two distinct regions within
+ 374      China. In addition, our analysis involves various scenarios and the effects of combining these
+ 375      enables us to better understand the relative impact of different disruptions.
+ 376
+ 377      Generalising our results to LMIC should be done with consideration of the differences
+ 378      between China and the respective country. Early estimates of COVID-19 impacts on
+ 379      testing/treatment/sexual risk behaviour were available as China was the first centre of the
+ 380      COVID-19 pandemic, and as more data becomes available, other LMIC countries may report
+ 381      different survey data. Our modelling analysis was able to highlight which of these disruptions
+ 382      are likely to have the biggest negative impacts on HIV incidence and deaths, indicating
+ 383      disruptions which should be prioritised for monitoring and mitigation in other countries.
+ 384
+ 385      Our analysis has some limitations which should be acknowledged. Not all of the disruption
+ 386      estimates were MSM specific, and MSM may have had more substantial disruption when
+ 387      compared to other populations (MSM facility testing was reduced by 59%, compared to 29%
+ 388      for the entire population [17]). Therefore, we may have underestimated the disruption to ART
+ 389      initiations. The survey data only gave semi-quantitative estimates of disruptions to
+ 390      partnerships and condom use i.e. proportion of MSM having fewer partners and not the
+ 391      overall reduction in partner numbers. We accounted for this by exploring uncertainty in the
+ 392      reduction and sampling from a wider distribution of estimates. Further, the disruption
+ 393      estimates for testing/ART initiations/VS came from Jiangsu, different to the cities we model
+ 394      (Guangdong/Shandong), and estimates for disruptions to partner numbers/condom use came
+ 395      from 31 provinces, meaning we may not have fully captured the impact of COVID-19 in each
+ 396      city. Finally, we have not modelled the direct impacts of COVID-19 infection. Future
+ 397      extensions work could include modelling the potential characteristics of co-infection between
+ 398      HIV and COVID-19.
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209072.this version posted October 13, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                        It is made available under a CC-BY-ND 4.0 International license .
+ 399
+ 400      Conclusions
+ 401      The COVID-19 emergency is impacting HIV care worldwide, as face-to-face consultations
+ 402      and laboratory testing are reduced, drug and condom manufacture and transport are
+ 403      interrupted, and lockdowns affect peoples’ ability to access testing or collect medicines. Gaps
+ 404      in HIV treatment could lead to increased deaths from HIV and further HIV transmission,
+ 405      placing further burdens upon healthcare systems. The overall impact of COVID-19 on new
+ 406      HIV infections and HIV-related deaths is expected to be low to moderate for MSM in China,
+ 407      but this is dependent on the scale and length of the various disruptions. Resources should be
+ 408      urgently directed to ensuring VS and condom use remain high in order to mitigate any
+ 409      adverse effects of COVID-19 disruption on HIV transmission and control among MSM in
+ 410      China.
+ 411
+ 412      Competing interests
+ 413      KMM has received an honorarium from Gilead for speaking outside of the submitted work.
+ 414      All other authors have no competing interests.
+ 415
+ 416      Authors’ contributions
+ 417      Conception and design of the study: RDB, GF, JJO, JDT, KMET, WT, PV, KMM.
+ 418      Acquisition of data: GF, JL, WT. Mathematical modelling: RDB, LM, KMET, PV, KMM.
+ 419      Coding and simulations: RDB. Analysis and interpretation of results: RDB, GF, LM, JL, JJO,
+ 420      JDT, KMET, WT, PV, KMM. Writing and drafting of the manuscript: RDB, GF, LM, JL,
+ 421      JJO, JDT, KMET, WT, PV, KMM. Approval of the submitted manuscript: RDB, GF, LM,
+ 422      JL, JJO, JDT, KMET, WT, PV, KMM.
+ 423
+ 424      Acknowledgements
+ 425      Funding: This work was supported by Global Public Health strand of the Elizabeth
+ 426      Blackwell Institute for Health Research, funded under the University of Bristol’s QR GCRF
+ 427      strategy (ISSF3: 204813/Z/16/Z). This work was also supported by the US NIH (NIAID
+ 428      K24AI143471, 1R01AI114310) and the NIHR Health Protection Research Unit in
+ 429      Behavioural Science and Evaluation at the University of Bristol (award number
+ 430      NIHR200877). This work was also supported by Health Data Research UK, which is funded
+ 431      by the UK Medical Research Council, Engineering and Physical Sciences Research Council,
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209072.this version posted October 13, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                        It is made available under a CC-BY-ND 4.0 International license .
+ 432      Economic and Social Research Council, National Institute for Health Research, Chief
+ 433      Scientist Office of the Scottish Government Health and Social Care Directorates, Health and
+ 434      Social Care Research and Development Division (Welsh Government), Public Health
+ 435      Agency (South Western Ireland), British Heart Foundation and Wellcome (award number
+ 436      CFC0129).
+ 437
+ 438      Additional files
+ 439      Additional file 1: Supplement Supplement.docx
+ 440      Information on file format. Further details of the mathematical model and full results.
+ 441
+ 442
+ 443      List of abbreviations
+ 444      HIV human immunodeficiency virus
+ 445      COVID-19 the disease caused by the SARS-CoV-2 (2019-nCoV) coronavirus.
+ 446      PLWH people living with HIV
+ 447      MSM men who have sex with men
+ 448      ART antiretroviral therapy
+ 449      LMIC low- and middle-income countries
+ 450      VS viral suppression
+ 451      CrI credible interval
+ 452      CI confidence interval
+ 453      CDC centre for disease control
+ 454
+ 455      References
+ 456      1.       Joint United Nations Programme on HIV/AIDS (UNAIDS). World AIDS day 2019
+ 457               fact sheet. Glob HIV AIDS Stat. 2019;
+ 458      2.       Beyrer C, Baral SD, Van Griensven F, Goodreau SM, Chariyalertsak S, Wirtz AL, et
+ 459               al. Global epidemiology of HIV infection in men who have sex with men. Lancet.
+ 460               2012;380(9839):367–77.
+ 461      3.       Dong MJ, Peng B, Liu ZF, Ye QN, Liu H, Lu XL, et al. The prevalence of HIV among
+ 462               MSM in China: A large-scale systematic analysis. BMC Infect Dis. 2019;19(1):1000.
+ 463      4.       Sun S, Hou J, Chen Y, Lu Y, Brown L, Operario D. Challenges to HIV Care and
+ 464               Psychological Health During the COVID-19 Pandemic Among People Living with
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209072.this version posted October 13, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                        It is made available under a CC-BY-ND 4.0 International license .
+ 465               HIV in China. AIDS Behav. 2020;(May 7):1–2.
+ 466      5.       Jiang H, Zhou Y, Tang W. Maintaining HIV care during the COVID-19 pandemic.
+ 467               Lancet HIV. 2020;7(5):e308–9.
+ 468      6.       Ridgway JP, Schmitt J, Friedman E, Taylor M, Devlin S, McNulty M, et al. HIV Care
+ 469               Continuum and COVID-19 Outcomes Among People Living with HIV During the
+ 470               COVID-19 Pandemic, Chicago, IL. AIDS Behav. 2020;(May 7):1–3.
+ 471      7.       Sanchez TH, Zlotorzynska M, Rai M, Baral SD. Characterizing the Impact of COVID-
+ 472               19 on Men Who Have Sex with Men Across the United States in April, 2020. AIDS
+ 473               Behav. 2020;24(7):2024–32.
+ 474      8.       Luis H, Fridayantara WD, Mahariski P, Wignall FS, Irwanto I, Gedela K. Evolving
+ 475               ART crisis for people living with HIV in Indonesia. Lancet HIV. 2020;7(6):e384–5.
+ 476      9.       Ponticiello M, Mwanga-Amumpaire J, Tushemereirwe P, Nuwagaba G, King R,
+ 477               Sundararajan R. “Everything is a Mess”: How COVID-19 is Impacting Engagement
+ 478               with HIV Testing Services in Rural Southwestern Uganda. AIDS Behav. 2020;(May
+ 479               25):1–4.
+ 480      10.      Santos GM, Ackerman B, Rao A, Wallach S, Ayala G, Lamontage E, et al. Economic,
+ 481               Mental Health, HIV Prevention and HIV Treatment Impacts of COVID-19 and the
+ 482               COVID-19 Response on a Global Sample of Cisgender Gay Men and Other Men Who
+ 483               Have Sex with Men. AIDS Behav. 2020;(Jul 11):1–11.
+ 484      11.      Shiau S, Krause KD, Valera P, Swaminathan S, Halkitis PN. The Burden of COVID-
+ 485               19 in People Living with HIV: A Syndemic Perspective. AIDS Behav.
+ 486               2020;24(8):2244–9.
+ 487      12.      Pinto RM, Park S. COVID-19 Pandemic Disrupts HIV Continuum of Care and
+ 488               Prevention: Implications for Research and Practice Concerning Community-Based
+ 489               Organizations and Frontline Providers. AIDS Behav. 2020;24(9):2486–9.
+ 490      13.      Guo W, Weng HL, Bai H, Liu J, Wei XN, Zhou K, et al. Quick community survey on
+ 491               the impact of COVID-19 outbreak for the healthcare of people living with HIV.
+ 492               Zhonghua Liu Xing Bing Xue Za Zhi. 2020;41(5):662–6.
+ 493      14.      Jewell BL, Mudimu E, Stover J, ten Brink D, Phillips AN, Smith JA, et al. Potential
+ 494               effects of disruption to HIV programmes in sub-Saharan Africa caused by COVID-19:
+ 495               results from multiple mathematical models. Lancet HIV. 2020;
+ 496      15.      Hogan AB, Jewell BL, Sherrard-Smith E, Vesga JF, Watson OJ, Whittaker C, et al.
+ 497               Potential impact of the COVID-19 pandemic on HIV, tuberculosis, and malaria in low-
+ 498               income and middle-income countries: a modelling study. Lancet Glob Heal. 2020;
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209072.this version posted October 13, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                        It is made available under a CC-BY-ND 4.0 International license .
+ 499      16.      UNAIDS. Topics: Key populations [Internet]. [cited 2020 Sep 28]. Available from:
+ 500               https://www.unaids.org/en/topic/key-populations
+ 501      17.      Shi L, Tang W, Hu H, Qiu T, Marley G, Lui X, et al. Impact of the COVID-19
+ 502               Pandemic on HIV Care Continuum in Jiangsu, China. Prepr with Lancet [Internet].
+ 503               2020; Available from: http://dx.doi.org/10.2139/ssrn.3612033
+ 504      18.      Booton RD, Ong JJ, Lee A, Liu A, Huang W, Wei C, et al. Modelling the impact of an
+ 505               HIV testing intervention on HIV transmission among men who have sex with men in
+ 506               China. medRxiv. 2020;
+ 507      19.      World Health Organization. Disruption in HIV, Hepatitis and STI services due to
+ 508               COVID-19 [Internet]. Global HIV, Hepatitis and STI Programmes. 2020. Available
+ 509               from: https://www.who.int/docs/default-source/hiv-hq/disruption-hiv-hepatitis-sti-
+ 510               services-due-to-covid19.pdf?sfvrsn=5f78b742_6
+ 511      20.      Tang W, Wei C, Cao B, Wu D, Li K, Lu H, et al. Crowdsourcing to expand HIV
+ 512               testing among men who have sex with men in China: A closed cohort stepped wedge
+ 513               cluster randomized controlled trial. PLoS Med. 2018;15(8):e1002645.
+ 514
+ 515
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209072.this version posted October 13, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                        It is made available under a CC-BY-ND 4.0 International license .
+ 516           Figures
+ 517
+ 518      Figure 1: The percentage change in (a) new HIV infections and (b) HIV-related deaths under disruption
+ 519      scenarios evaluated over a 1- and 5-year time horizon (blue and orange respectively) in four cities in China.
+ 520      Bars indicate median values, while error bars show the 95% credible intervals for each scenario and time
+ 521      horizon. Scenarios are as follows: A) Reduction in facility-based HIV testing (59%), B) Reduction in ART
+ 522      initiation (34%), C) Reduction in number of sexual partnerships (31 – 62%), D) reduction in condom use (12.5 –
+ 523      25%) E10) Reduction in viral suppression of 10%, E25) Reduction in viral suppression of 10%.
+ 524
+ 525
+ 526      Figure 2: The percentage change in new HIV infections and HIV-related deaths for scenarios (a) A+B+C+D
+ 527      and (b) A+B+C+D+E25 for varying disruption periods (3, 4 and 6 months) and time horizons (1- and 5-year) in
+ 528      four cities in China. Dots indicate median values.
+
+medRxiv preprint doi: https://doi.org/10.1101/2020.10.08.20209072.this version posted October 13, 2020. The copyright holder for this preprint
+  (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                        It is made available under a CC-BY-ND 4.0 International license .
+ 529
+ 530      Figure 3: The percentage change in new HIV infections and HIV-related deaths for scenario A+B+C+D for
+ 531      different cities (Guangzhou, Shenzhen, Jinan and Qingdao), and time horizons (1- and 5-year). Bars indicate
+ 532      median values and error bars show the 95% credible intervals.
+ 533

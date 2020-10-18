@@ -1,0 +1,480 @@
+   medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211730.this version posted October 14, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                               All rights reserved. No reuse allowed without permission.                                         1
+ 1           Antivenom accessibility impacts mortality and severity of Brazilian snake
+ 2                          envenomation: a geospatial information systems analysis
+ 3
+ 4
+ 5     Authors:
+ 6     Jinny Jing Ye1, João Felipe Hermann Costa Scheidt2, Luciano de Andrade2, Thiago
+ 7     Augusto Hernandes Rocha3, Hui Wen Fan4, Wuelton Monteiro5,6, Ricardo Palacios7,
+ 8     Catherine Ann Staton1,8, João Ricardo Nickenig Vissoci1,8, Charles John Gerardo1
+ 9
+10     Affiliations:
+11     1 Duke University Medical Center, Department of Surgery, Division of Emergency
+12     Medicine, Durham, North Carolina, United States of America;
+13     2 State University of Maringá, Department of Medicine, Maringá, Parana, Brazil;
+14     3 Federal University of Minas Gerais, Belo Horizonte, Minas Gerais, Brazil;
+15     4 Butantan Institute, São Paulo, São Paulo, Brazil;
+16     5 State University of Amazonas, Manaus, Amazonas, Brazil;
+17     6 Tropical Medicine Foundation Dr. Heitor Vieira Dourado, Manaus, Amazonas, Brazil;
+18     7 Clinical Trials and Pharmacovigilance Center, Instituto Butantan, São Paulo, Brazil;
+19     8 Duke Global Health Institute, Durham, North Carolina, United States of America;
+20
+21     Author Disclosure Information:
+22     Dr. Catherine Ann Staton would like to disclose salary support from the National
+23     Institutes of Health Fogarty International Center K01- TW010000-01A1 (PI Staton);
+24     Dr. Charles John Gerardo: Salary support BTG International Inc;
+25     Jinny Jing Ye: Project funding from Duke Brazil Initiative Grant;
+26
+27     Abstract: 333 words
+28     Plain text: 1,515 words
+29     Tables: 3
+30     Figures: 6
+31     References: 21
+32
+33     Corresponding author:
+34     Professor João Ricardo Nickenig Vissoci
+35     Duke Emergency Medicine, Duke University Medical Center
+36     Durham, North Carolina, 27703, United States of America
+37     jnv4@duke.edu
+38
+39
+40
+          NOTE: This preprint reports new research that has not been certified by peer review and should not be used to guide clinical practice.
+
+   medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211730.this version posted October 14, 2020. The copyright holder for this preprint
+      (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                               All rights reserved. No reuse allowed without permission.                                   2
+41     Abstract
+42
+43     Background
+44     In 2017, the World Health Organization declared the snakebite envenomation as a
+45     neglected tropical disease. Annually, snakebite envenomation causes approximately
+46     400,000 permanent disabilities and 95,000 deaths worldwide. People with the greatest
+47     risk of envenomation lack access to adequate health care, including treatment with
+48     antivenom. We developed an analysis of accessibility to antivenom in Brazil in order to
+49     verify the impacts on mortality.
+50
+51     Methods and Findings
+52     Information about number of accidents, deaths, antivenom, medical assistance, and
+53     species, were retrieved from the Brazilian Health Informatics Department (DATASUS)
+54     from 2010 to 2015 and analyzed using geostatistics to evaluate the association between
+55     snakebite accidents and mortality. An Spatial analysis using Global Moran’s I was
+56     performed in order to verify the presence of spatiality as an independent variable to the
+57     distribution of the accidents. In addition, we also tested three different analysis of
+58     regression using Ordinary Least Square (OLS), Spatial Error, and Geographically
+59     Weighed Regression (GWR), together with the information obtained from the DATASUS
+60     and sociodemographic indicators, to verify the spatial-temporal distribution of
+61     envenomation cases and time to reach the healthcare centers. The regression
+62     presenting the lowest Akaike Criterion Information (AIC), highest adjusted R², and
+63     variables with p < 0.05 was selected to represent our model. Lastly, the accessibility
+64     index was performed using 2-step floating catchment area based on the amount of
+65     hospital beds and inhabitants. This study revealed 141,039 cases of snakebites, 598
+66     deaths, and mortality rate of 3.13 per 1,000,000 inhabitants. Moreover, GWR presented
+67     the best fit (AIC = 55477.56; adjusted R² = 0.55) and showed that illiteracy, income,
+68     percentage of urban population, percentage of antivenom, accessibility index for
+69     hospital beds with antivenom, proportion of cases with more than 3 hours to reach
+70     healthcare are correlated with the mortality rate by snakebite (p < 0.05).
+71
+72     Conclusion
+73     This study identified regions affected by snakebite and how the accessibility to
+74     antivenom treatment plays an important role in the mortality in Brazil. Public
+75     interventions can located to those most vulnerable regions in order to improve the
+76     accident outcome.
+77
+78     Keywords: snake bites, health services accessibility, spatial analysis, poisoning,
+79     epidemiology
+80
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211730.this version posted October 14, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                                All rights reserved. No reuse allowed without permission.                                   3
+ 81     Introduction
+ 82
+ 83               Snake envenomation is a neglected tropical disease of global importance (1).
+ 84     Estimations around the world are between 1.2 and 5.5 million bites, 421,000
+ 85     envenomations, 20,000-95,000 deaths, and 400,000 permanent disabilities annually (2).
+ 86     The morbidity and mortality related to this disease primarily impacts resource-limited
+ 87     countries as well as those with lower income earning and other socioeconomic
+ 88     indicators of poverty (3).
+ 89               In Brazil between 2001 and 2012, 1,192,667 incidents and 2,664 deaths resulting
+ 90     from terrestrial venomous animals (snakes, scorpions, bees, spiders, and caterpillars)
+ 91     were reported. Of these, 28% of all incidences and 54% of deaths were attributed to
+ 92     snake envenomation (4). Of the reported snakebites, 70% of them were from the
+ 93     Bothrops genus. Bothrops envenomation can cause many clinically significant effects
+ 94     from local swelling and bleeding to muscle necrosis, acute kidney injury and cerebral
+ 95     hemorrhage (5) (6). Thus, it becomes important for victims to reach health assistance in
+ 96     time.
+ 97               Access to snake-specific antivenom is limited because of expensive
+ 98     manufacturing and long transport time to healthcare facility (7). Feitosa et al. 2015
+ 99     found delays in healthcare access in the Amazon is associated with greater severity and
+100     mortality related to snake envenomation (8). Additionally, socioeconomic inequalities
+101     have also been linked with lower access health care (9). There is substantial research
+102     on the uneven distribution of health care facilities in Brazil (10). However, there is no
+103     analysis on accessibility to healthcare and its impacts on snakebite mortality rates in
+104     Brazil. Besides, it has not yet been reported how social inequalities are associated with
+105     snakebite outcomes.
+106               Therefore, the aim of this study is to analyze the accessibility to antivenom taking
+107     into the account the sociodemographics indicators in Brazil in order to verify its impacts
+108     on snakebite envenomation mortality using spatial analysis.
+109
+110     Methods
+111     Study Design
+112               This study used cross-sectional data on country-wide snakebite envenomations
+113     from 2010 to 2015 from National System Identification of Notifiable Diseases (SINAN)
+114     stored at DATASUS. We conducted an exploratory spatial analysis to evaluate the
+115     geospatial association of snake envenomation mortality in Brazil with socioeconomic
+116     predictors (illiteracy, income, percentage of urban area, and human development
+117     index), and healthcare access predictors (number of beds, hospitals and health
+118     professionals, quantity of antivenom administrated, antivenom coverage, and time to
+119     reach the healthcare centers).
+120
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211730.this version posted October 14, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                                All rights reserved. No reuse allowed without permission.                                   4
+121     Study population and location
+122               Brazil has a population of 190,732,694 people distributed to 5 regions (North,
+123     Northeast, Midwest, Southeast and South) (Figure 1)(11). In recent years, the Brazilian
+124     economy has grown rapidly, and the country’s gross domestic product (GDP) is
+125     currently the ninth largest globally (9). Brazil has also faced an economic and political
+126     crisis since 2010. Despite the growth in the recent years, not all segments of the
+127     Brazilian population have benefited uniformly from this rapid development, resulting in
+128     substantial income inequality within and between regions of the country, as depicted in
+129     Figure 1 (9).
+130
+131
+132
+133       Figure 1. Brazilian gross domestic product on the left and the vegetation on the right.
+134
+135     Data sources and variables
+136
+137     Data extraction
+138               Data regardless sociodemographic indicators were extracted from the Brazilian
+139     Institute of Geography and Statistic 2010 Census (11), while information about
+140     healthcare centers were obtained from DATASUS and the National Register of Health
+141     Facilities (CNES).
+142
+143     Snakebite envenomation data
+144               The number of envenomations, hospitalizations from envenomations, deaths
+145     from envenomations, time to reach healthcare centers and number of envenomations
+146     that were treated with antivenom were collected from SINAN (12). Snakebite outcomes
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211730.this version posted October 14, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                                All rights reserved. No reuse allowed without permission.                                   5
+147     included: mortality, systemic and local complications. An aggregate indicator for
+148     snakebite negative outcomes was generated by a sum of the municipality level mortality
+149     and complications. Snakebite specific healthcare indicators were: proportion of cases
+150     notified more than 3 hours to reach healthcare assistance, and proportions of cases
+151     with notified antivenom usage.
+152
+153     Data analysis
+154               All analyses in this study were conducted at the municipality-level. Snakebite
+155     frequency and complications, socioeconomic indicators and healthcare access were
+156     summarized using descriptive statistics.
+157
+158     Availability of care in hospitals with antivenom
+159               We calculated the availability of hospitals with antivenom by mapping the
+160     facilities that received antivenom obtained from the Butantã Institute, agency
+161     responsible for producing and distributing antivenom across the country. To evaluate
+162     the accessibility to hospitals with antivenom, we used the two-step floating catchment
+163     area (2SFCA) method (13). The 2SFCA creates an index of hospitals with antivenom
+164     weighted by population in two concurrent steps. In the first step, a buffer was created
+165     with a Euclidean 120 kilometer (km) radius surrounding each hospital with antivenom.
+166     This buffer was created to collect the population potentially covered in all locations (k)
+167     within the threshold. The 120 km range limit was used to estimate a travel distance of
+168     two hours to the nearest hospital by car or public transport. The second step consists of
+169     summing up the initial ratios in overlapped service areas to measure accessibility for a
+170     demand location, where residents have access to multiple supply locations. These
+171     steps produced an accessibility index of hospital bed availability with antivenom for
+172     each municipality. A higher accessibility index indicates more hospital bed available with
+173     antivenom for a given municipality.
+174
+175     Spatial regression
+176               The Ordinary Least Square (OLS), Spatial Error and geographically weighted
+177     regression (GWR) were used to verify the regression with the best fit capable to
+178     elucidate the correlation between sociodemographic and healthcare indicators with the
+179     mortality rates by snakebite. The regression with the highest adjusted R², lowest AIC,
+180     and significant variables (p < 0.05) was chosen as the main model for the study. The
+181     spatial autocorrelation and the OLS model were processed using GeoDa software
+182     version 1.10.0.8 (Laboratory of Spatial Analysis, University of Illinois at Urbana-
+183     Champaign, Urbana, USA). The GWR model was calculated and implemented using R
+184     Studio. The maps were generated using QGIS version 2.14.23.
+185
+186
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211730.this version posted October 14, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                                 All rights reserved. No reuse allowed without permission.                                  6
+187
+        Table 1. Data source and selected variables for the analysis.
+                 Source                                                Variables                                      Website
+        DATASUS                           Snakebite envenomation data:                                      http://www2.datasus.go
+        SINAN                             Frequency of cases by municipality;                               v.br/DATASUS/index.ph
+                                          Frequency of hospital admissions by municipalities;               p?area=0203
+                                          Frequency of deaths by municipality;
+                                          Frequency of local and systemic complications by
+                                          municipality;
+                                          Frequency of cases receiving antivenom by
+                                          municipality;
+                                          Frequency of cases reaching the hospital with
+                                          antivenom with time > 3 hours.
+        CNES                              Availability of care in hospitals with antivenom;                 http://cnes.datasus.gov.
+        and                               Geolocation and hospital beds of all hospitals in the             br/
+        Butantã Institute                 country;
+                                          List of hospitals receiving antivenom.
+        IBGE                              Socioeconomic indicators:                                         https://atlasescolar.ibge
+                                          Average income per capita by municipality;                        .gov.br/
+                                          Proportion of urban population by municipality;
+                                          Illiteracy rates by municipality.
+        DATASUS: Departamento de Informática do Sistema Único de Saúde do Brasil; SINAN: Sistema de
+        Informação de Agravos de Notificação; CNES: Cadastro Nacional de Estabelecimentos de Saúde;
+        IBGE: Instituto Brasileiro de Geografia e Estatística.
+188
+189
+190     Results
+191
+192               Between 2010 and 2015, there were a total of 141,039 reported cases of snake
+193     envenomation. 598 resulted in death and 27,047 had systemic complications from
+194     envenomation. The most frequent cases occurred in the North region (50,102 bites),
+195     followed by Southeast (32,474 bites), and least was the South region (12,130 bites).
+196     The North region was also in the lead regions with deaths, followed by the Northeast,
+197     similar pattern observed to Systemic and Local complications (Table 1).
+198               According to the registry, the majority of snakebite envenomation received
+199     antivenom at some point during their care trajectory. However, the North, Northeast and
+200     Midwest had higher proportion of cases with more than 3 hours to reach healthcare
+201     (Table 1). Similarly, these were the same regions with lower number of hospitals with
+202     lower scores for accessibility for antivenom per population.
+203
+204
+205
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211730.this version posted October 14, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                                All rights reserved. No reuse allowed without permission.                                   7
+        Table 2. Municipalities indicators of sociodemographics and snakebite envenomations information of
+        each region in Brazil from 2010-2015.
+        Indicators                    North       Northeast         Midwest       Southeast              South              Amazon
+        Population                  15.86mi         53.08mi         14.05mi         80.35mi             27.38mi               3.48mi
+                                    (9.31%)        (27.83%)          (7.37%)       (42.12%)            (14.35%)              (1.82%)
+        Percentage of                56.7%            55.2%           71.9%           75%                60.7%                83.4%
+        Urban areas
+        Envenomation                 50,102          31,075           15,258         32,474              12,130                8,480
+                                   (35.52%)        (22.03%)        (10.81%)        (23.02%)             (8.60%)              (6.01%)
+        Deaths                         181              188              61            132                  36                   47
+                                   (30.26%)        (31.43%)        (10.20%)        (22.07%)             (6.02%)              (7.85%)
+        Systemic                      6,884            5,895           2,721          6,815               1,732                1,603
+        complications              (28.62%)        (24.51%)        (11.31%)        (28.34%)             (7.20%)              (6.67%)
+        Proportions of               47,459          27,685           14,490         29,822              11,047                7,893
+        cases with                  (33.7%)         (19.6%)          (10.3%)        (21.2%)              (7.8%)              (6.04%)
+        notified
+        antivenom
+        usage
+        Proportion of                22,809            9,485           3,180          5,143               1,681                4,413
+        cases notified              (16.6%)           (6.9%)         (2.31%)        (3.74%)             (1.22%)             (10.43%)
+        more than 3
+        hours to reach
+        healthcare
+        assistance
+        Number of                      231              416             189            564                 502                   40
+        hospitals with             (12.14%)        (21.91%)        (29.62%)        (26.42%)             (9.91%)              (2.10%)
+        antivenom
+206
+207
+208
+209
+210
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211730.this version posted October 14, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                                All rights reserved. No reuse allowed without permission.                                   8
+211
+212       Figure 2. Geographical distribution of snakebite occurrences by snake in Brazil from
+213                                                                2010 to 2015.
+214
+215
+216                                Figure 3. Accidents and deaths per 100,000 inhabitants.
+217
+218
+219
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211730.this version posted October 14, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                                All rights reserved. No reuse allowed without permission.                                   9
+220
+221      Figure 4. Population-level sociodemographic characteristics and distribution of hospital
+222                                                     resources throughout Brazil.
+223
+224
+225                                               Figure 5. Hospitals with antivenom.
+226
+227
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211730.this version posted October 14, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                                All rights reserved. No reuse allowed without permission.                                 10
+228
+        Table 3. Comparison between Ordinary Least Square (OLS), Spatial error and Global geographically
+        weighed regression (GWR).
+                                           OLS                                  Spatial Error                           GWR
+                                                                                                                            Estimation
+                                                      Standard                                 Standard Estimation
+        Variables         Estimative P                               Estimative        p                                     standard
+                                                        error                                    error        Mean
+                                                                                                                             deviation
+        Illiteracy            -0.64        <0.01        0.113            0.07        0.57        0.141         -0.67             1.84
+        Income                -0.05        <0.01        0.004           -0.02       <0.01        0.004         -0.04             0.06
+        Percentage
+        of Urban              -0.24        <0.01        0.035           -0.37       <0.01        0.034         -0.23             0.32
+        area
+        Antivenom             26.19        <0.01        2.338           13.58        2.20         0.0         26.17              24.75
+        Accessibility
+                               4.31        <0.01        0.780            1.30        1.28        0.311          4.25             21.12
+        index
+        Proportion
+        of cases
+        notified
+        more than 3
+                              25.85        <0.01        2.900            9.94        2.64         0.0         25.71              23.75
+        hours to
+        reach
+        healthcare
+        assistance
+        AIC                 58546.8                                   57231.8                               55477.56
+        Adjusted R²          0.1127                                    0.3394                                 0.5581
+229
+230
+231
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211730.this version posted October 14, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                                All rights reserved. No reuse allowed without permission.                                 11
+232
+233            Figure 6. GWR results of significant variables related to the increasing rates of
+234                                                            snakebite mortality.
+235
+236
+237
+238
+239
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211730.this version posted October 14, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                                All rights reserved. No reuse allowed without permission.                                 12
+240     Discussion
+241
+242               This study is the first nationwide analysis that evaluates the geospatial impact of
+243     access to healthcare and antivenom on snakebite mortality. We found a heterogeneous
+244     distribution of snakebite mortality and accessibility to healthcare. This is probably
+245     attributed to Brazil's continental dimensions where there are several costumes and
+246     cultures (14, 15).
+247               However, the results showed that mortality particularly affected rural and
+248     underdeveloped regions of the country. This geographical disparity is corroborated by
+249     some studies that revealed that snakebite is a poverty disease and its mortality is
+250     correlated with the workforce in agriculture (3, 16). Additionally, the GWR also showed
+251     that low illiteracy, income, and percentage of urban area are related to the increased
+252     snakebite mortality. Similar study conducted by Suraweera et al (2020) in India also
+253     verified that these indicators are correlated with snakebite mortality (17).
+254               Access to antivenom in Brazil varied across the nation with metropolitan areas in
+255     the South and Southeast having abundant access compared to the Northwest. Reduced
+256     access to antivenom in the North is associated with higher rates of mortality in our
+257     study. These are well supplied with antivenom as informed by some studies (18, 19),
+258     but the mortality stands out because of the difficulties to reach the healthcare centers,
+259     mostly because the main means of locomotion in the amazon is by fluvial transport (20).
+260     In addition, those patients that managed to reach healthcare assistance beyond 3 hours
+261     were significantly higher in the north suggesting the struggles with the transport.
+262               As for the majority of patients in the country, it was capable to look for health
+263     assistance in 3 hours. Our finding is also consistent with findings in Costa Rica where
+264     the majority of care received was within 2 hours, even in mountainous and rural regions
+265     or other areas with high snakebite incidence. (21)
+266
+267     Limitations
+268               First, although SINAN is intended to be a nationally comprehensive and accurate
+269     database on important notifiable diseases, SINAN is as susceptible as other large
+270     population-level databases to reliability and consistency of data collection. Additionally,
+271     provider-level reporting of snakebites relies on accurate recognition and diagnosis.
+272     Thus, underreporting may not capture the whole scope of this important neglected
+273     tropical disease. Second, using a 120km radius to define the catchment area of public
+274     hospitals may not be uniform considering rainforest or rural areas cover 60% of Brazil.
+275     Despite these limitations, our findings are to our knowledge one of the first studies
+276     highlighting the geographical variability of mortality snake envenomations in association
+277     with access to antivenom and healthcare.
+278
+279
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211730.this version posted October 14, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                                All rights reserved. No reuse allowed without permission.                                 13
+280     Conclusion
+281               In Brazil low illiteracy, income, percentage of urban area, and accessibility to
+282     antivenom and healthcare centers are related to the increasing of snakebite mortality.
+283     It’s noteworthy to mention that this paper provides regions that lack in those indicators
+284     and might useful for the development of better public actions in order to obtain more
+285     favorable outcomes.
+286
+287     References
+288
+289     1.        Ranawaka UK, Lalloo DG, de Silva HJ. Neurotoxicity in snakebite--the limits of
+290     our knowledge. PLoS Negl Trop Dis. 2013;7(10):e2302.
+291     2.        Fox S, Rathuwithana AC, Kasturiratne A, Lalloo DG, de Silva HJ.
+292     Underestimation of snakebite mortality by hospital statistics in the Monaragala District of
+293     Sri Lanka. Trans R Soc Trop Med Hyg. 2006;100(7):693-5.
+294     3.        Harrison RA, Hargreaves A, Wagstaff SC, Faragher B, Lalloo DG. Snake
+295     envenoming: a disease of poverty. PLoS Negl Trop Dis. 2009;3(12):e569.
+296     4.        Chippaux JP. Epidemiology of envenomations by terrestrial venomous animals in
+297     Brazil based on case reporting: from obvious facts to contingencies. J Venom Anim
+298     Toxins Incl Trop Dis. 2015;21:13.
+299     5.        Cruz LS, Vargas R, Lopes AA. Snakebite envenomation and death in the
+300     developing world. Ethn Dis. 2009;19(1 Suppl 1):S1-42-6.
+301     6.        de Oliveiraa SS, de Souza Sampaioa V, Sachetta JdAG, Campos E, Fanc HW,
+302     de Lacerdaa MVG, et al. Snakebites in the Brazilian Amazon: Current Knowledge and
+303     Perspectives. 2016.
+304     7.        Chippaux JP. Estimating the global burden of snakebite can help to improve
+305     management. PLoS Med. 2008;5(11):e221.
+306     8.        Feitosa EL, Sampaio VS, Salinas JL, Queiroz AM, da Silva IM, Gomes AA, et al.
+307     Older Age and Time to Medical Assistance Are Associated with Severity and Mortality of
+308     Snakebites in the Brazilian Amazon: A Case-Control Study. PLoS One.
+309     2015;10(7):e0132237.
+310     9.        Rasella D, Basu S, Hone T, Paes-Sousa R, Ocké-Reis CO, Millett C. Child
+311     morbidity and mortality associated with alternative policy responses to the economic
+312     crisis in Brazil: A nationwide microsimulation study. PLoS Med. 2018;15(5):e1002570.
+313     10.       Garcia-Subirats I, Vargas I, Mogollon-Perez AS, De Paepe P, da Silva MR,
+314     Unger JP, et al. Inequities in access to health care in different health systems: a study in
+315     municipalities of central Colombia and north-eastern Brazil. Int J Equity Health.
+316     2014;13:10.
+317     11.       IBGE. Instituto Brasileiro de Geografia e Estatística. Séries estatísticas & séries
+318     históricas. Rio de Janeiro. 2018.
+
+    medRxiv preprint doi: https://doi.org/10.1101/2020.10.13.20211730.this version posted October 14, 2020. The copyright holder for this preprint
+       (which was not certified by peer review) is the author/funder, who has granted medRxiv a license to display the preprint in perpetuity.
+                                                All rights reserved. No reuse allowed without permission.                                 14
+319     12.       Bochner R, Fiszon JT, Machado C. A profile of snake bites in Brazil, 2001 to
+320     2012. 2014.
+321     13.       Wang F, Luo W. Assessing spatial and nonspatial factors for healthcare access:
+322     towards an integrated approach to defining health professional shortage areas. Health
+323     Place. 2005;11(2):131-46.
+324     14.       United Nations DoEaSA, Population Division. World Population Prospects: The
+325     2017 Revision. In: United Nations DoEaSA, Population Division, editor. 2017.
+326     15.       Bochner R. The international view of envenoming in Brazil: myths and realities.
+327     Journal of Venomous Animals and Toxins including Tropical Diseases. 2013;19(1):29.
+328     16.       Babo Martins S, Bolon I, Chappuis F, Ray N, Alcoba G, Ochoa C, et al.
+329     Snakebite and its impact in rural communities: The need for a One Health approach.
+330     PLoS Negl Trop Dis. 2019;13(9):e0007608.
+331     17.       Suraweera W, Warrell D, Whitaker R, Menon G, Rodrigues R, Fu SH, et al.
+332     Trends in snakebite deaths in India from 2000 to 2019 in a nationally representative
+333     mortality study. Elife. 2020;9.
+334     18.       Gutiérrez JM, Williams D, Fan HW, Warrell DA. Snakebite envenoming from a
+335     global perspective: Towards an integrated approach. Toxicon. 2010;56(7):1223-35.
+336     19.       Gutiérrez JM, Fan HW, Silvera CLM, Angulo Y. Stability, distribution and use of
+337     antivenoms for snakebite envenomation in Latin America: Report of a workshop.
+338     Toxicon. 2009;53(6):625-30.
+339     20.       Morgado AV, Portugal LdS, Mello AJR. Acessibilidade na Região Amazônica
+340     através do transporte hidroviário. Journal of Transport Literature. 2013;7:97-123.
+341     21.       Hansson E, Sasa M, Mattisson K, Robles A, Gutiérrez JM. Using geographical
+342     information systems to identify populations in need of improved accessibility to
+343     antivenom treatment for snakebite envenoming in Costa Rica. PLoS neglected tropical
+344     diseases. 2013;7(1):e2009.
+345
+346
