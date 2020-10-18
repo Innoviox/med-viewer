@@ -1,16 +1,31 @@
 from sklearn.feature_extraction.text import TfidfVectorizer
 import json
 import pickle
+import re
 
 with open("pdfs.json") as json_file:
     raw_papers = json.load(json_file)
 
-pkl_db = {}
+doi_db = {}
+index_db = []
 articles = []
 max_features = 5000
 
-for i, key in enumerate(raw_papers):
-    name = raw_papers["articles"][i]["filename"]
+for i, item in enumerate(raw_papers['articles']):
+    name = item["filename"]
+
+    # Match the last 2 /
+    doi = re.search(r'/(([^/])+/([^/])+)$', item['doi'].strip()).group(1)
+
+    # Set the corresponding dicts
+    doi_db[doi] = {
+        'title': item["title"],
+        'abstract': item['abstract'],
+        'index': i
+    }
+
+    index_db.append(doi)
+
     with open("txts/" + raw_papers["articles"][i]["filename"] + ".txt", "r") as f:
         content = f.read()
         articles.append(content)
@@ -26,8 +41,9 @@ v = TfidfVectorizer(input='content',
 
 X = v.fit_transform(articles)
 data = {}
-
-data["db"] = raw_papers
+data["doi_db"] = doi_db
+data["index_db"] = index_db
 data["X"] = X
 with open('vectorized.pkl', "wb") as f:
     pickle.dump(data, f)
+
