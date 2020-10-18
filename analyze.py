@@ -26,4 +26,3 @@ print(v.get_feature_names())
 
 print(X.shape)
 print(X.todense())
-
