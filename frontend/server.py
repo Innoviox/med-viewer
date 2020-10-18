@@ -12,12 +12,12 @@ PDFS = json.loads(open("pdfs.json").read())
 
 @app.context_processor
 def utils():
-    def get_pdfs():
+    def get_pdfs(number=6, width=3):
         ## todo: customize
-        pdfs = PDFS['articles'][:6]
+        pdfs = PDFS['articles'][:number]
         for i in pdfs:
-            i['abstract'] = ' '.join(i['abstract'].split(' ')[:150]) + '...'
-        return pdfs
+            i['abstract'] = ' '.join(i['abstract'].split(' ')[:50]) + ' ...'
+        return [pdfs[i:i+width] for i in range(0, number, width)]
     return {'get_pdfs': get_pdfs}
 
 def set_user(f):
