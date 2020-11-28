@@ -3,12 +3,12 @@ import airtable
 import json
 import svm
 app = Flask(__name__)
-app.secret_key = open("secret_key").read()
+app.secret_key = open("frontend/secret_key").read()
 
-key = open("airtable_key").read()
+key = open("frontend/airtable_key").read()
 db = airtable.Airtable('appvViVoTQrAVwGwR', 'hackgt', key)
 
-PDFS = json.loads(open("pdfs.json").read())
+PDFS = json.loads(open("frontend/pdfs.json").read())
 
 @app.context_processor
 def utils():
